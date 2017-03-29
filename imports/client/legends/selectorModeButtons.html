@@ -1,0 +1,28 @@
+<template name="selectorModeButtons">
+
+<div class="btn-group-horizontal btn-group" data-toggle="buttons">
+  <label class="btn btn-primary {{dataLoadedDisabled}}" id="buttonBuild">
+    <span class="glyphicon glyphicon-road" aria-hidden="true"></span>
+  		Build
+		{{#if dataLoadedGet}}
+			<span id="spinLoad"><i class="fa fa-refresh fa-spin fa-fw"></i></span>
+		{{/if}}
+
+  </label>
+  <label class="btn btn-primary active" id="buttonInfo" >
+		<i class="fa fa-info"></i>
+     	Info
+  </label>
+  <!--label class="btn btn-primary" id="buttonRank" >
+		<i class="fa fa-trophy"></i>
+     	Ranking
+  </label-->
+  <label class="btn btn-primary" id="buttonScenario" >
+		<i class="fa fa-trophy"></i>
+     	Scenarios
+  </label>
+
+</div>
+
+
+</template>

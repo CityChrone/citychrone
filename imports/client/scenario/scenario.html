@@ -1,0 +1,54 @@
+<template name="scenario">
+{{loadToMap}}
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id='scenarioModal'>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Scenarios</h4>
+      </div>
+      <div class="modal-body" id="scenarioModalBody">
+        {{#if toUpdate}}
+          {{updateScenario}}
+        {{/if}}
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>name</th>
+            <th>score</th>
+            <th>average <br> velocity</th>
+            <th>cost [€]</th>
+            <th>cost/benefit €/[km/h]</th>
+            <th>date</th>
+            <th>see map</th>
+          </tr>
+        </thead>
+        <tbody>
+        {{#each getScoreList}}
+          {{>scenarioList}}
+        {{/each}}
+        </tbody>
+      </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</template>
+
+<template name='scenarioList'>
+<tr class="a score" id = "{{giveID _id}}">
+  <td>
+    {{name}}
+  </td>
+  <td>{{toFixed stats.score 1}}</td>
+  <td>{{toFixed stats.velocity 3}} [km/h]</td>
+  <td>{{toFixed stats.budget 0}}M€</td>
+  <td>{{scoreOncost stats.budget stats.score 2}}M€</td>
+  <td>{{niceDate creationDate}}</td>
+  <td><buttom class="btn btn-default seeResultScenario">see result</buttom></td>
+</tr>
+
+</template>

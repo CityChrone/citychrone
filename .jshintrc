@@ -1,0 +1,21 @@
+{
+  "esversion": 6
+  //,"unused" : true
+  ,"devel": true
+  ,"jquery" : true
+  ,"module" : true
+  ,"node" : true
+  ,"worker" : true
+  ,"browser" : true
+  ,"globals" : {
+    "_" : false
+    ,"lodash" : false
+    ,"Mongo" : false
+    ,"Meteor" : false
+    ,"ReactiveVar" : false
+    ,"L" : false
+    ,"Blaze" : false
+    ,"moment" : false
+    ,"location" : false
+  }
+}
