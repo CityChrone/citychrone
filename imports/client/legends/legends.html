@@ -1,0 +1,62 @@
+<template name="infoInfo">
+	<div class='centPerCent'>
+		<div class='row'>
+			<div class='alert bg-primary'>
+			{{#if buttonSelected 'info'}}
+				[info]
+				click on exagons for
+				isochrones and info
+				{{#if dataLoadedGet}}
+				<span id="spinLoad"><i class="fa fa-refresh fa-spin fa-fw"></i></span>
+				{{/if}}
+
+			{{/if}}
+			{{#if buttonSelected 'build'}}
+				<div>[build]</div>
+				<div>click on metro stops or "add Metro" to build new lines!</div>
+				<div>Then click "compute" and see the results.</div>
+			{{/if}}
+			</div>
+		</div>
+		<div class='row'>
+			<a class="btn btn-primary" href="http://world.citychrone.org" role="button" style="color: #fff">
+				<span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+				Back to World Map</a>
+		</div>
+	</div>
+</template>
+
+<template name="legendHex">
+<div class=' alert alert-info info legend '>
+	<div class='text-center text-muted ' style='white-space : nowrap;'>
+		{{{title.title}}}
+		<br>
+		{{title.unity}}
+	</div>
+	{{#each item in listColor}}
+		<div class='legendColor'>
+			<span class = 'colorSpan' style="background:{{item.color}}; opacity:0.5"></span>
+				<span class='fontSmall'>{{item.html}}</span>
+		</div>
+	{{/each}}
+</div>
+</template>
+
+<template name="legendBudget">
+<div class='centPerCent'>
+<div class='row '>
+	<div class='alert alert-success info legend ncol-xs-12'>
+		<div class='text-center' style='white-space : nowrap;'>
+
+			budget {{budget}}M<i class="fa fa-eur" aria-hidden="true"></i><br>
+			stop = 100M<i class="fa fa-eur" aria-hidden="true"></i><br>
+			tube = 30M<i class="fa fa-eur" aria-hidden="true"></i>/km
+		</div>
+
+	<div id='alertBudget'>
+	</div>
+
+	</div>
+</div>
+</div>
+</template>

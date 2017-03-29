@@ -1,0 +1,163 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CSAPoint	imports/api/CSA-algorithm/CSA-loop.js	/^var CSAPoint = function(point, arrayC, arrayN, startTime, areaHex, windTime, zeroTime){$/;"	f
+CSAPoint	public/workers/workerCSA.js	/^var CSAPoint = function(point, arrayC, arrayN, startTime, areaHex, windTime, zeroTime, pointsVenues) {$/;"	f
+Ebar	imports/api/CSA-algorithm/CSA-loop.js	/^var Ebar = 675.0;$/;"	v
+Ebar	public/workers/workerCSA.js	/^var Ebar = 675.;$/;"	v
+Format	imports/client/info/RadarChart.js	/^	var Format = d3.format('%');$/;"	v
+METEOR_SETTINGS	setting.json	/^	"METEOR_SETTINGS": {$/;"	f
+MONGO_URL	setting.json	/^        	"MONGO_URL": "mongodb:\/\/localhost:5555\/citychrone",$/;"	f
+N	imports/api/CSA-algorithm/CSA-loop.js	/^var N= 2.5;$/;"	v
+N	public/workers/workerCSA.js	/^var N = 2.5;$/;"	v
+NODE_OPTIONS	setting.json	/^		"NODE_OPTIONS" : "--max_old_space_size=4096"    $/;"	f
+PORT	setting.json	/^        	"PORT": 5555,$/;"	f
+SpinMapInitHook	imports/client/lib/leaflet.spin.js	/^    var SpinMapInitHook = function () {$/;"	c
+Spinner	imports/client/lib/spin.js	/^    }$/;"	c
+Spinner.opacity	imports/client/lib/spin.js	/^    Spinner.prototype.opacity = function (el, i, val, o) {$/;"	m
+TBus	imports/api/CSA-algorithm/CSA-loop.js	/^var TBus = 67.0*60;$/;"	v
+TBus	public/workers/workerCSA.js	/^var TBus = 67.0 * 60.0;$/;"	v
+Template.body.template.scenario.currentScenario.creationDate	imports/client/scenario/scenario.js	/^		'name' : newName,$/;"	p
+Template.body.template.scenario.currentScenario.name	imports/client/scenario/scenario.js	/^	Template.body.template.scenario.currentScenario = {$/;"	p
+_	server/main.js	/^var _;$/;"	v
+a	imports/api/CSA-algorithm/CSA-loop.js	/^var a = 0.0;$/;"	v
+a	public/workers/workerCSA.js	/^var a = 0.;$/;"	v
+addNewLines	imports/api/CSA-algorithm/addNewLines.js	/^function addNewLines(metroLinesFetched, limT){$/;"	f
+areaHex	public/workers/workerCSA.js	/^var areaHex = 1;$/;"	v
+arrayC	public/workers/workerCSA.js	/^var arrayC = [];$/;"	v
+arrayN	public/workers/workerCSA.js	/^var arrayN = {};$/;"	v
+axis	imports/client/info/RadarChart.js	/^	var axis = g.selectAll(".axis")$/;"	v
+b	imports/api/CSA-algorithm/CSA-loop.js	/^var b = 0.7;$/;"	v
+b	public/workers/workerCSA.js	/^var b = 0.7;$/;"	v
+babel-runtime	package.json	/^    "babel-runtime": "^6.18.0",$/;"	f
+bootstrap	package.json	/^    "bootstrap": "^3.3.7",$/;"	f
+bootstrap-sass	package.json	/^    "bootstrap-sass": "^3.3.7",$/;"	f
+bootstrap_alert.warning	imports/client/legends/legends.js	/^	var bootstrap_alert = function() {};$/;"	f
+castTo16	public/workers/workerCSA.js	/^var castTo16 = function(arrayArray) {$/;"	f
+city	imports/client/info/hexagons/hex.js	/^var city = getCity();$/;"	v
+city	imports/client/rank/rank.js	/^var city = getCity();$/;"	v
+city	public/workers/workerCSA.js	/^var city = 'roma';$/;"	v
+computeNeigh	imports/api/CSA-algorithm/computeNeigh.js	/^function computeNeigh(stop, stops, P2S, S2S, points){$/;"	f
+computeTfor2Stops	imports/api/CSA-algorithm/addNewLines.js	/^function computeTfor2Stops(dist, Vf, a){\/\/dist in meters$/;"	f
+const	imports/api/CSA-algorithm/CSA-loop.js	/^var Ebar = 675.0;$/;"	f
+const	imports/api/CSA-algorithm/computeNeigh.js	/^import {getCity, serverOsrm} from '..\/parameters.js';$/;"	f
+const	imports/api/CSA-algorithm/isochrone.js	/^import  math from 'mathjs';$/;"	f
+const	imports/client/info/hexagons/colorHex.js	/^};$/;"	f
+const	imports/client/info/hexagons/hex.js	/^const ry = (hexCoor[1][1] - CenterHex[city][1])\/sines[1];$/;"	f
+const	imports/client/info/hexagons/hexsGeoJson.js	/^import { styleHex } from '\/imports\/client\/info\/hexagons\/colorHex.js';$/;"	f
+const	imports/client/legends/timeRadioButtons.js	/^import { zeroTime, budget, HexArea, getCity ,timesOfDay, maxDuration } from '\/imports\/api\/parameters.js';$/;"	f
+const	imports/client/modify/updateArrays.js	/^import {getCity , maxDuration } from '\/imports\/api\/parameters.js';$/;"	f
+const	imports/client/modify/workers.js	/^import { zeroTime,timesOfDay, maxDuration , HexArea, getCity } from '\/imports\/api\/parameters.js';$/;"	f
+const	imports/client/scenario/scenario.js	/^import '.\/scenario.html';$/;"	f
+const	imports/lib/utils.js	/^const mergeSortedC = function(left, right){$/;"	f
+const	imports/server/startup/InitArrayConnections.js	/^import {metroLines} from '\/imports\/api\/DBs\/metroLinesDB.js';$/;"	f
+const	imports/server/startup/neighStopsPoints.js	/^import { cities } from '\/imports\/api\/DBs\/citiesDB.js';$/;"	f
+const	public/workers/workerCSA.js	/^var Ebar = 675.;$/;"	f
+const.color	imports/client/info/hexagons/colorHex.js	/^	opacity: 1,$/;"	p
+const.dashArray	imports/client/info/hexagons/colorHex.js	/^	color: 'white',$/;"	p
+const.fillOpacity	imports/client/info/hexagons/colorHex.js	/^	dashArray: '3',$/;"	p
+const.opacity	imports/client/info/hexagons/colorHex.js	/^	weight: 2,$/;"	p
+const.weight	imports/client/info/hexagons/colorHex.js	/^const isochrone_style = {$/;"	p
+css.merge	imports/client/lib/spin.js	/^  function merge (obj) {$/;"	f
+d3	package.json	/^    "d3": "^4.2.5",$/;"	f
+d3-scale-chromatic	package.json	/^    "d3-scale-chromatic": "^1.0.2",$/;"	f
+dependencies	package.json	/^  "dependencies": {$/;"	f
+env	setting.json	/^    "env":{$/;"	f
+export	imports/api/DBs/velocityDb.js	/^	venuesByType[venuesByName[name]] = name;$/;"	f
+export	imports/api/parameters.js	/^};$/;"	f
+export	imports/client/budget/computeScore.js	/^export const computeScore = function(vel){$/;"	f
+export	imports/client/budget/metroCost.js	/^import {Mongo} from 'meteor\/mongo';$/;"	f
+export	imports/client/info/hexagons/colorHex.js	/^};$/;"	f
+export	imports/client/legends/legends.js	/^} from '\/imports\/client\/budget\/metroCost.js';$/;"	f
+export	imports/client/modify/addStop.js	/^import { popUpMarker } from '\/imports\/client\/modify\/popUpMarker.js';$/;"	f
+export	imports/client/modify/events.js	/^import {stopMarker} from '.\/style.js';$/;"	f
+export	imports/client/modify/style.js	/^import {Template} from 'meteor\/templating';$/;"	f
+export.Arts & Entertainment	imports/api/DBs/velocityDb.js	/^	"Spiritual Center": "p",$/;"	p
+export.Education	imports/api/DBs/velocityDb.js	/^	"Outdoors & Recreation": "r",$/;"	p
+export.Food	imports/api/DBs/velocityDb.js	/^	"Office": "o",$/;"	p
+export.Government Building	imports/api/DBs/velocityDb.js	/^	"Nightlife Spot": "n",$/;"	p
+export.Medical Center	imports/api/DBs/velocityDb.js	/^export const venuesByName = {$/;"	p
+export.Nightlife Spot	imports/api/DBs/velocityDb.js	/^	"Shop & Service": "s",$/;"	p
+export.Office	imports/api/DBs/velocityDb.js	/^	"Medical Center": "m",$/;"	p
+export.Outdoors & Recreation	imports/api/DBs/velocityDb.js	/^	"Government Building": "g",$/;"	p
+export.Shop & Service	imports/api/DBs/velocityDb.js	/^	"Arts & Entertainment": "a",$/;"	p
+export.Spiritual Center	imports/api/DBs/velocityDb.js	/^	"Food": "f",$/;"	p
+export.bootstrap_alert	imports/client/legends/legends.js	/^	var bootstrap_alert = function() {};$/;"	f
+export.draw	imports/client/info/RadarChart.js	/^export const RadarChart = {$/;"	m
+export.draw.cfg.factor	imports/client/info/RadarChart.js	/^	 h: 600,$/;"	p
+export.draw.cfg.factorLegend	imports/client/info/RadarChart.js	/^	 factor: 1,$/;"	p
+export.draw.cfg.h	imports/client/info/RadarChart.js	/^	 w: 600,$/;"	p
+export.draw.cfg.radius	imports/client/info/RadarChart.js	/^  var cfg = {$/;"	p
+export.draw.cfg.w	imports/client/info/RadarChart.js	/^	 radius: 5,$/;"	p
+export.opacity	imports/client/modify/style.js	/^			weight : 10,$/;"	p
+export.opacity	imports/client/modify/style.js	/^			weight : 3,$/;"	p
+export.roma	imports/api/parameters.js	/^export let CenterCity = {$/;"	p
+export.roma	imports/api/parameters.js	/^export let CenterHex = {$/;"	p
+export.weight	imports/client/modify/style.js	/^export const styleMarkerClicked = {$/;"	p
+export.weight	imports/client/modify/style.js	/^export const styleMarkerUnClicked = {$/;"	p
+findAccel	imports/api/CSA-algorithm/addNewLines.js	/^function findAccel(name) {$/;"	f
+findFreq	imports/api/CSA-algorithm/addNewLines.js	/^function findFreq(name) {$/;"	f
+findSpeed	imports/api/CSA-algorithm/addNewLines.js	/^function findSpeed(name) {$/;"	f
+fs	package.json	/^    "fs": "0.0.1-security",$/;"	f
+g	imports/client/info/RadarChart.js	/^	var g = d3.select(id)$/;"	v
+getColor.Spinner	imports/client/lib/spin.js	/^  function Spinner (o) {$/;"	c
+getColor.defaults.length	imports/client/lib/spin.js	/^  , length: 7             \/\/ The length of each line$/;"	p
+getColor.defaults.lines	imports/client/lib/spin.js	/^  var defaults = {$/;"	p
+getColor.defaults.radius	imports/client/lib/spin.js	/^  , radius: 10            \/\/ The radius of the inner circle$/;"	p
+getColor.defaults.scale	imports/client/lib/spin.js	/^  , scale: 1.0            \/\/ Scales overall size of the spinner$/;"	p
+getColor.defaults.width	imports/client/lib/spin.js	/^  , width: 5              \/\/ The line thickness$/;"	p
+hexList.roma.coordinates	imports/api/parameters.js	/^hexList.roma = {$/;"	p
+hexList.torino.coordinates	imports/api/parameters.js	/^	"type": "Polygon",$/;"	p
+hexList.torino.type	imports/api/parameters.js	/^hexList.torino = {$/;"	p
+hexList.vienna.coordinates	imports/api/parameters.js	/^hexList.vienna = {"type":"Polygon","coordinates":[[[16.253606654579997,48.19558550775174],[16.252259151845518,48.194027827303785],[16.24956414637656,48.194027827303785],[16.24821664364208,48.19558550775174],[16.24956414637656,48.19714318819969],[16.252259151845518,48.19714318819969],[16.253606654579997,48.19558550775174]]]};$/;"	p
+hexList.vienna.type	imports/api/parameters.js	/^hexList.vienna = {"type":"Polygon","coordinates":[[[16.253606654579997,48.19558550775174],[16.252259151845518,48.194027827303785],[16.24956414637656,48.194027827303785],[16.24821664364208,48.19558550775174],[16.24956414637656,48.19714318819969],[16.252259151845518,48.19714318819969],[16.253606654579997,48.19558550775174]]]};$/;"	p
+ins	imports/client/lib/spin.js	/^  function ins (parent \/* child1, child2, ...*\/) {$/;"	f
+jszip	package.json	/^    "jszip": "^3.1.2",$/;"	f
+leaflet	package.json	/^    "leaflet": "^1.0.0",$/;"	f
+leaflet-path-drag	package.json	/^    "leaflet-path-drag": "^1.0.1",$/;"	f
+leaflet-providers	package.json	/^    "leaflet-providers": "^1.1.15",$/;"	f
+let	imports/client/legends/hexsRadioButtons.js	/^import '\/imports\/client\/legends\/hexsRadioButtons.html';$/;"	f
+let	imports/client/legends/legends.js	/^export const createLegends = function(name, toAdd = true) {$/;"	f
+let	imports/client/rank/rank.js	/^});$/;"	f
+let	imports/client/scenario/scenario.js	/^});$/;"	f
+let.budget	imports/client/scenario/scenario.js	/^		'score' : 0,$/;"	p
+let.city	imports/api/DBs/velocityDb.js	/^	let cond = {$/;"	p
+let.city	imports/server/startup/neighStopsPoints.js	/^	let cond = {'city':city};$/;"	p
+let.color	imports/client/info/hexagons/colorHex.js	/^		fillColor: color,$/;"	p
+let.efficency	imports/client/scenario/scenario.js	/^		'budget' : 0,$/;"	p
+let.fill	imports/client/info/hexagons/colorHex.js	/^		color: color,$/;"	p
+let.fillColor	imports/client/info/hexagons/colorHex.js	/^	let style = {$/;"	p
+let.fillOpacity	imports/client/info/hexagons/colorHex.js	/^		fill: true,$/;"	p
+let.geometry	imports/client/info/hexagons/hex.js	/^    "type": "Feature",$/;"	p
+let.latlng	imports/client/budget/metroCost.js	/^	let stopTemp = {$/;"	p
+let.latlng	imports/client/modify/addStop.js	/^	let stopTemp = {'latlng':[markerTarget._latlng.lat, markerTarget._latlng.lng]};$/;"	p
+let.latlng	imports/client/modify/addStop.js	/^	let stopTemp = {'latlng':latlng};$/;"	p
+let.score	imports/client/scenario/scenario.js	/^		'velocity' : 0,$/;"	p
+let.type	imports/client/info/hexagons/hex.js	/^  let polygon = {$/;"	p
+let.velocity	imports/client/scenario/scenario.js	/^	let stats = {$/;"	p
+mathjs	package.json	/^    "mathjs": "^3.4.1",$/;"	f
+meteor-node-stubs	package.json	/^    "meteor-node-stubs": "~0.2.0",$/;"	f
+module.exports.SpinMapInitHook	imports/client/lib/leaflet.spin.js	/^          SpinMapMixin: SpinMapMixin,$/;"	p
+module.exports.SpinMapMixin	imports/client/lib/leaflet.spin.js	/^        module.exports = {$/;"	p
+name	package.json	/^  "name": "tableCityChrone",$/;"	f
+onmessage	public/workers/workerCSA.js	/^var pointsVenues = [];$/;"	f
+pointsVenues	public/workers/workerCSA.js	/^var pointsVenues = [];$/;"	v
+private	package.json	/^  "private": true,$/;"	f
+radius	imports/client/info/RadarChart.js	/^	var radius = cfg.factor*Math.min(cfg.w\/2, cfg.h\/2);$/;"	v
+scripts	package.json	/^  "scripts": {$/;"	f
+selScenario.moments.score	imports/client/scenario/scenario.js	/^		'velocity' : velocity,$/;"	p
+selScenario.moments.velocity	imports/client/scenario/scenario.js	/^	selScenario.moments[Template.body.data.timeOfDay.get()] = {$/;"	p
+sheet.addRule	imports/client/lib/spin.js	/^    }$/;"	c
+sheet.addRule.lines	imports/client/lib/spin.js	/^    Spinner.prototype.lines = function (el, o) {$/;"	m
+spin	imports/client/lib/leaflet.spin.js	/^    var SpinMapMixin = {$/;"	m
+start	package.json	/^    "start": "meteor run"$/;"	f
+startTime	public/workers/workerCSA.js	/^var startTime = 0;$/;"	v
+tooltip	imports/client/info/RadarChart.js	/^	var tooltip;$/;"	v
+total	imports/client/info/RadarChart.js	/^	var total = allAxis.length;$/;"	v
+turf	package.json	/^    "turf": "^3.0.14"$/;"	f
+values	public/workers/workerCSA.js	/^var values = function(obj) {$/;"	f
+windTime	public/workers/workerCSA.js	/^var windTime = 0;$/;"	v
+zeroTime	public/workers/workerCSA.js	/^var zeroTime = 0;$/;"	v

@@ -1,0 +1,15 @@
+<template name="timeRadioButtons">
+<div class="btn-group-horizontal btn-group" role="group" aria-label="...">
+	{{#each getTimes}}
+		{{>timeButton}}
+	{{/each}}
+</div>
+</template>
+
+
+<template name='timeButton'>
+	<button class="btn btn-warning timeBtn {{isActive}}" id="timeBtn_{{time}}" data-time="{{time}}" onclick="this.blur();">
+		<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+		{{hour}}:00
+	</button>
+</template>

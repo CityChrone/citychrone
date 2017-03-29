@@ -1,0 +1,26 @@
+{
+  "name": "tableCityChrone",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.18.0",
+    "bootstrap": "^3.3.7",
+    "bootstrap-sass": "^3.3.7",
+    "d3": "^4.2.5",
+    "d3-scale-chromatic": "^1.0.2",
+    "fs": "0.0.1-security",
+    "jszip": "^3.1.2",
+    "kdbush": "^1.0.1",
+    "leaflet": "^1.0.0",
+    "leaflet-path-drag": "^1.0.1",
+    "leaflet-providers": "^1.1.15",
+    "mathjs": "^3.4.1",
+    "meteor-node-stubs": "~0.2.0",
+    "rbush": "^2.0.1",
+    "rbush-knn": "^2.0.0",
+    "turf": "^3.0.14",
+    "webworker-threads": "^0.7.11"
+  }
+}

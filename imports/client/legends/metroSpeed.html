@@ -1,0 +1,65 @@
+<template name="metroSpeed">
+	<div class='centPerCent'>
+		<div class='row'>
+			<div class='alert bg-info'>
+				<div class="btn-group-horizontal btn-group" role="group" aria-label="...">
+					{{#each getMetros}}
+						{{>metroChooseButton}}
+					{{/each}}
+				</div>
+				{{#if isMetroChosen}}
+					<div>
+					Speed:
+					</div>
+					<div class="btn-group-horizontal btn-group" role="group" aria-label="...">
+						{{#each getSpeeds}}
+							{{>metroSpeedButton}}
+						{{/each}}
+					</div>
+					<div>
+					Frequency:
+					</div>
+					<div class="btn-group-horizontal btn-group" role="group" aria-label="...">
+						{{#each getFrequencies}}
+							{{>metroFreqButton}}
+						{{/each}}
+					</div>
+				{{/if}}
+			</div>
+		</div>
+	</div>
+</template>
+
+
+<template name='metroChooseButton'>
+	<button class="btn metroChooseBtn {{isActive}}"
+			id="metroChooseBtn_{{lineName}}"
+			data-name="{{lineName}}"
+			style="background-color: {{color}}"
+			onclick="this.blur();">
+		{{name}}
+	</button>
+</template>
+
+
+<template name='metroSpeedButton'>
+	<button class="btn {{colorClass}} metroSpeedBtn {{isActive}}"
+			id="metroSpeedBtn_{{topSpeed}}"
+			data-speed="{{topSpeed}}"
+			data-acceleration="{{acceleration}}"
+			data-name="{{name}}"
+			onclick="this.blur();">
+			{{name}}
+	</button>
+</template>
+
+
+<template name='metroFreqButton'>
+	<button class="btn {{colorClass}} metroFreqBtn {{isActive}}"
+			id="metroFreqBtn_{{frequency}}"
+			data-freq="{{frequency}}"
+			data-name="{{name}}"
+			onclick="this.blur();">
+			{{name}}
+	</button>
+</template>

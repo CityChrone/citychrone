@@ -1,0 +1,26 @@
+<template name='popUp'>
+	{{#if isFeatures "btnVelocity" "btnIsochrones"}}
+		<div class='h3 text-muted text-center'>
+			Access Velocity
+		</div>
+		<div class='h5 text-center row'>
+			<span class = 'col-xs-6'>
+				Current : <span class ='label' style='{{labelColor this.properties.vAvg}}'>  {{ valVelocity this.properties.vAvg}} </span>
+			</span>
+			<span class = 'col-xs-6'>
+				New : <span class ='label' style='{{labelColor this.properties.vAvgNew}}'> {{ valVelocity this.properties.vAvgNew}} </span>
+			</span>
+		</div>
+	{{/if}}
+
+	{{#if isFeature "btnAccessibility"}}
+	<div id="accessDivContainer" style="width: 400px; height: 300px;">
+		<div class='h3 text-muted text-center'>
+			Accessibility <small >measured</small> {{avgAccessibility}}
+		</div>
+
+		<div id="accessPopupChart" style="position: relative; width: 400px; height: 300px;"></div>
+	</div>
+	{{/if}}
+
+</template>
