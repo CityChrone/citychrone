@@ -87,5 +87,26 @@ const initPoints = function(city) {
 	return pointsArray;
 };
 
+const initArrayPop = function(city) {
+	console.log('start InitPop');
 
-export {points, stops, initPoints};
+	var arrayPop = [];
+
+	points.find({'city':city}, {
+		fields: {
+			'pop': 1,
+			'_id': 1,
+		},
+		sort : {
+			'pos' : 1
+		}
+	}).forEach(function(doc, index) {
+		arrayPop.push(doc.pop);
+	});
+	//console.log('end arrayPop : ', arrayPop.length);
+	return arrayPop;
+};
+
+
+
+export {points, stops, initPoints, initArrayPop};

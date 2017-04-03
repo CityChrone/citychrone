@@ -6,17 +6,17 @@ import { Tracker } from 'meteor/tracker';
 import { scenarioDB, initScenario} from '/imports/api/DBs/scenarioDB.js';
 import {getCity, budget} from '/imports/api/parameters.js';
 
-import {computeScore} from '/imports/client/budget/computeScore.js';
-import { costLines } from '/imports/client/budget/metroCost.js';
-import { addMarkerStop, addSubLine, addLine2DB } from '/imports/client/modify/addStop.js';
+import {computeScore, costLines} from '/imports/client/legends/budget.js';
+
+ import { addMarkerStop, addSubLine, addLine2DB } from '/imports/client/modify/addStop.js';
 import { styleHex } from '/imports/client/info/hexagons/colorHex.js';
-import { unionPoints, updateGeojson,updateGeojsonDiff, findFieldtoUpdate} from "/imports/client/info/hexagons/unionHexs.js";
+import { updateGeojson, updateGeojsonDiff} from "/imports/client/info/hexagons/hexsGeojson.js";
 
 import './scenario.html';
 const deleteEmptyItem = function(array2Add){
 	for(let key in array2Add){
 		if(array2Add[key].pos.length == 0)
-			delete array2Add[key];
+			delete array2Add[key]; 
 	}
 };
 
@@ -110,7 +110,7 @@ const setScenarioDefault = function() {
 	Meteor.call('updateScenario',selScenario, selScenario._id );
 };
 
-
+/*
 export const loadNewTime = function(time) {
 
 	const city = getCity();
@@ -152,7 +152,7 @@ export const loadNewTime = function(time) {
 		});
 	}
 };
-
+*/
 const loadScenario = function(id) {
 	let selScenario = scenarioDB.findOne({'_id':id}, {sort:{'_id':1}} );
 	if (!selScenario)
@@ -224,13 +224,13 @@ Template.scenario.events({});
 
 Template.scenario.helpers({
 	'toUpdate'(){
-		return Template.body.template.scenario.toSave.get() && Template.body.data.newHexsComputed ;
+		return Template.scenario.RV.toSave.get() && Template.body.data.newHexsComputed ;
 	},
 	'updateScenario'(){ //è un helper così viene eseguito ogni volta che cambiano i valori delle variabili
-		if(!Template.body.template.scenario.toSave.get()) //controllo se va aggiornato
+		if(!Template.scenario.RV.toSave.get()) //controllo se va aggiornato
 			return '';
 
-		Template.body.template.scenario.toSave.set(false);
+		Template.scenario.RV.toSave.set(false);
 		updateScenario();
 
 		return '';
@@ -250,32 +250,34 @@ Template.scenario.helpers({
 		return listScenario;
 	},
 	'loadToMap'(){
-		if(Template.body.data.timeOfDay && Template.body.data.buttonsHexRV){
-			let scenarioId = Template.body.template.scenario.currentScenarioIdRV.get();
-			console.log('load to map', scenarioId)
+		console.log('loadToMap', Template.scenario.RV.currentScenarioIdRV.get());
+		if(Template.body.data.timeOfDay && Template.quantityButtons.modeSelectedRV && Template.quantityButtons.quantitySelectedRV){
+			let scenarioId = Template.scenario.RV.currentScenarioIdRV.get();
+			//console.log('load to map', scenarioId, Template.quantityButtons.modeSelectedRV.get())
 			let scenario = scenarioDB.findOne({'_id':scenarioId, 'moments':{'$exists':true}});
 			let time = Template.body.data.timeOfDay.get();
-			console.log('load to map', scenarioId)
-			switch(Template.body.data.buttonsHexRV.get()) {
-				case 'selected':
-					Template.body.data.geoJson = updateGeojson(Template.body.data.geoJson,
+			//console.log('scenario found', scenario, Template.quantityButtons.quantitySelectedRV.get(), time)
+			Template.body.data.geoJson.remove(Template.body.data.map);
+			switch(Template.quantityButtons.modeSelectedRV.get()) {
+				case 'btnCurrent':
+
+					Template.body.data.geoJson = updateGeojson(
 													 scenario, 
-													 Template.body.data.buttonsQuantityRV.get(), 
-													 Template.body.data.buttonsModeRV.get(),
+													 Template.quantityButtons.quantitySelectedRV.get(), 
 													 time)
 					break;
-				case 'diff':
-					let scenarioDefaultId =  Template.body.template.scenario.scenarioDefaultIdRV.get()
+				case 'btnDiff':
+					let scenarioDefaultId =  Template.scenario.data.scenarioDefaultId
 					let scenarioDefault =  scenarioDB.findOne({'_id':scenarioDefaultId});
-					Template.body.data.geoJson = updateGeojsonDiff(Template.body.data.geoJson,
+					Template.body.data.geoJson = updateGeojsonDiff(
 														 scenario, scenarioNew,
-														 Template.body.data.buttonsQuantityRV.get, 
-														 Template.body.data.buttonsModeRV.get(),
+														 Template.quantityButtons.quantitySelectedRV.get(), 
+														 Template.quantityButtons.modeSelectedRV.get(),
 														 time)
 
 					break;
 			}
-
+			Template.body.data.geoJson.addTo(Template.body.data.map);
 			if($('#buttonBuild').hasClass('active')){
 				Template.body.data.map.eachLayer(function (layer) {
 					if('lineName' in layer){
@@ -288,20 +290,23 @@ Template.scenario.helpers({
 });
 
 Template.scenario.onCreated(function(){
-	console.log('SCENARIO CREATED');
+	//console.log('SCENARIO CREATED');
 
 
-	Template.body.template.scenario = {};
-	Template.body.template.scenario.toSave = new ReactiveVar(false); //se è stato ricalcolato e deve essere salvato
-	Template.body.template.scenario.currentScenarioIdRV = new ReactiveVar(-1);	
-	Template.body.template.scenario.scenarioDefaultId = new ReactiveVar(-1);
+	Template.scenario.RV = {};
+	Template.scenario.RV.toSave = new ReactiveVar(false); //se è stato ricalcolato e deve essere salvato
+	Template.scenario.RV.currentScenarioIdRV = new ReactiveVar(-1);	
 	
-	Template.body.template.scenario.createScenario = createScenario;
-	Template.body.template.scenario.updateScenario = updateScenario;
-	Template.body.template.scenario.loadScenario = loadScenario;
-	Template.body.template.scenario.deleteEmptyItem = deleteEmptyItem;
+	Template.scenario.data = {};
+	Template.scenario.data.scenarioDefaultId = {};
+	
+	Template.scenario.function = {};
+	Template.scenario.function.createScenario = createScenario;
+	Template.scenario.function.updateScenario = updateScenario;
+	Template.scenario.function.loadScenario = loadScenario;
+	Template.scenario.function.deleteEmptyItem = deleteEmptyItem;
 	//Template.body.template.scenario.loadScenarioVel = loadScenarioVel;
-	Template.body.template.scenario.setScenarioDefault = setScenarioDefault;
+	Template.scenario.function.setScenarioDefault = setScenarioDefault;
 
 });
 Template.scenario.onRendered(function(){
@@ -310,15 +315,20 @@ Template.scenario.onRendered(function(){
 	Meteor.subscribe('scenario', city);
 
 	Meteor.subscribe('scenarioDef', city, function() {
-	    Template.body.template.scenario.scenarioDefaultId = scenarioDB.findOne({'default':true, 'city' : city}, {sort:{'creationDate':-1}})._id; //scenario contenente i dati senza modifiche
-	    if (!Template.body.template.scenario.scenarioDefaultId)
+		let scenarioDef = scenarioDB.findOne({'default':true, 'city' : city}, {sort:{'creationDate':-1}});
+		//console.log('loaded', scenarioDef);
+	    Template.scenario.data.scenarioDefaultId = scenarioDef._id; //scenario contenente i dati senza modifiche
+	    if (!Template.scenario.data.scenarioDefaultId)
 	      console.error("Default scenario non trovato!");
 	    else {
-	        Template.body.template.scenario.currentScenarioIdRV.set(Template.body.template.scenario.scenarioDefaultId);
+	        Template.scenario.RV.currentScenarioIdRV.set(Template.scenario.data.scenarioDefaultId);
+	        let times = Object.keys(scenarioDef.moments);
+	        Template.body.data.timeOfDay.set(times[0]);
+	        //console.log('current scenario setted to default',  Template.scenario.RV.currentScenarioIdRV.get())
 	    }
       Template.body.function.checkDataLoaded(-1);
       //Template.body.data.timeOfDay.set(timesOfDay[0]);
-      console.log("Default scenario caricato ");
+      //console.log("Default scenario caricato ");
  	});
 
 });
@@ -333,7 +343,7 @@ Template.scenario.onRendered(function(){
 
 	if(line.subline || line.lineName.length > 3){
 		let indexLine = line.indexLine;
-		console.log('subline Scenario', line.indexLine, line);
+		//console.log('subline Scenario', line.indexLine, line);
 		let firstStopLine = Template.body.collection.metroLines.findOne({'stops.latlng' : stopsStops[0].latlng});
 		if(!firstStopLine){ console.log('error stop not found');}
 		let firstStop = {};
@@ -357,7 +367,7 @@ Template.scenario.onRendered(function(){
 		let indexLine = line.indexLine;
 		Template.body.data.listNumLines[indexLine]++;
 		let nameLine = Template.body.data.listNameLines[indexLine];
-		console.log(line);
+		//console.log(line);
 		addLine2DB(line.city, nameLine, indexLine, [], line.speedName, line.frequencyName);
 
 		//console.log('insertLine2', line);

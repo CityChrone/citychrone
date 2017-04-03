@@ -1,8 +1,13 @@
+import '/imports/client/legends/budget.html';
+import turf from 'turf';
+import {Mongo} from 'meteor/mongo';
+import {
+	Template
+} from 'meteor/templating';
+
 import { budget,costMetroStop,costTubeKm, getCity } from '../../api/parameters.js';
 
-import turf from 'turf';
-import Template from 'meteor/templating';
-import {Mongo} from 'meteor/mongo';
+
 export const computeBadget =  function(numStop, totLength){
 	return budget - (numStop) * costMetroStop - totLength * costTubeKm;
 };
@@ -77,4 +82,46 @@ export const CheckCostDragStop = function(linesDb, marker){
 		}
 	});
 	return costLines(newLines) > 0;
+};
+
+
+Template.legendBudget.helpers({
+	'budget' () {
+		return costLines(Template.body.collection.metroLines).toFixed(0);
+	},
+	'notBudget' () {
+		allertNoBadget();
+	}
+});
+
+export const computeScore = function(vel){
+	let totVel = 0;
+	let count = 0;
+	vel.forEach(function(doc){
+		if (isNaN(doc))
+			return;
+		totVel += doc;
+		count +=1;
+	});
+	if(count>0){
+		return totVel / count;
+	}else{
+		return 0;
+	}
+};
+
+
+export const allertNoBadget = function() {
+	var bootstrap_alert = function() {};
+	bootstrap_alert.warning = function(message) {
+		if (message == '') {
+			$('#alertBudget').html('');
+		} else {
+			$('#alertBudget').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><span>' + message + '</span></div>');
+		}
+	};
+	bootstrap_alert.warning('Not enough budget!');
+	window.setTimeout(function() {
+		bootstrap_alert.warning('');
+	}, 1000);
 };

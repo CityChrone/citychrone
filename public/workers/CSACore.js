@@ -106,18 +106,21 @@ const tree = function(point, Tpoint, Tstop, arrayN, arrayC, startTime){
 	var P2PTime = arrayN.P2PTime;
 	var P2STime = arrayN.P2STime;
 	var S2STime = arrayN.S2STime;
-	
+	startTime = parseInt(startTime);
 	var posPoint = point.pos;
-	Tpoint[posPoint] = startTime;
+		console.log('point', posPoint, Tpoint[posPoint], typeof startTime)
+	Tpoint[posPoint] = parseInt(startTime);
 
 
 	// **** Initialize time for neigh point
 
 	for (var i = 0, lenghtP = P2PPos[posPoint].length; i < lenghtP; i++) {
+		console.log('pointN', i, P2PPos[posPoint][i], typeof P2PTime[posPoint][i])
 		Tpoint[P2PPos[posPoint][i]] = P2PTime[posPoint][i] + startTime;
 	}
 
 	for (var i = 0, lenghtS = P2SPos[posPoint].length; i < lenghtS; i++) {
+		console.log('stopN', i, P2SPos[posPoint][i], typeof P2STime[posPoint][i])
 		Tstop[P2SPos[posPoint][i]] = P2STime[posPoint][i] + startTime;
 	}
 
@@ -142,6 +145,8 @@ const tree = function(point, Tpoint, Tstop, arrayN, arrayC, startTime){
 			}
 		}
 	}
+	console.log('point after 1/2', posPoint, Tpoint[posPoint])
+
 	for (var point_i = 0, len_point = Tpoint.length; point_i < len_point; point_i++) {
 		if (P2SPos[point_i]) {
 			for (var i = 0, lenghtS = P2SPos[point_i].length; i < lenghtS; i++) {
@@ -153,6 +158,7 @@ const tree = function(point, Tpoint, Tstop, arrayN, arrayC, startTime){
 			}
 		}
 	}
+	console.log('point after', posPoint, Tpoint[posPoint])
 
 	return Tpoint;
 };
@@ -162,7 +168,7 @@ let CSAPoint = function(point, arrayC, arrayN, startTime, areaHex, pointsVenues,
 
 	arrayPop = arrayPop || [];
 	const infTime = Math.pow(10, 12);
-
+	console.log('starting computing');
 	var totPoint = arrayN.P2SPos.length;
 	var totStop = arrayN.S2SPos.length;
 	var Tstop = new Array(totStop).fill(infTime);
@@ -182,6 +188,7 @@ let CSAPoint = function(point, arrayC, arrayN, startTime, areaHex, pointsVenues,
 	}
 	// **** Update point time after computed stop time
 	//console.log(computeVel(Tpoint,areaHex))
+	console.log('ending computing', countNonReached, Tpoint.length, startTime, point.pos,Tpoint[point.pos] );
 	return {
 		'vAvg': computeVel(Tpoint,areaHex),
 		'accessNew': computeAccess(Tpoint,pointsVenues,accessNew),

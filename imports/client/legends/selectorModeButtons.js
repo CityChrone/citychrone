@@ -17,6 +17,9 @@ Template.selectorModeButtons.helpers({
 	'dataLoadedDisabled'(){
 		if(!Template.body.data.scenarioComputed.get())
 			return 'disabled';
+	},
+	'isCreateNewScenario'(){
+		return Template.body.data.isCreateNewScenario.get();
 	}
 });
 

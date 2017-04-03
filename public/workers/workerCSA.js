@@ -1,47 +1,8 @@
 //importScripts('/workers/libAccessibility.js');
 let module = {exports:{}};
 importScripts('/workers/CSACore.js');
+importScripts('/workers/mergeArrays.js');
 
-const mergeSortedCOld = function(left, right){
-    var result  = new Uint32Array(left.length + right.length),
-        il      = 0,
-        ir      = 0;
-
-    while (il < left.length && ir < right.length){
-        if (left[il+2] < right[ir+2]){
-            result.set([left[il],left[il+1],left[il+2],left[il+3]], il+ir);
-            il+=4;
-        } else {
-        	result.set([right[il],right[il+1],right[il+2],right[il+3]], il+ir);
-            //result.push(right[ir],right[ir+1],right[ir+2],right[ir+3]);
-            ir+=4;
-        }
-    }
-
-    result.set(left.slice(il), il+ir)
-    result.set(right.slice(ir), il+ir)
-
-
-    return result;
-};
-
-const mergeSortedC = function(left, right){
-    var result  = [],
-        il      = 0,
-        ir      = 0;
-
-    while (il < left.length && ir < right.length){
-        if (left[il+2] < right[ir+2]){
-            result.push(left[il],left[il+1],left[il+2],left[il+3]);
-            il+=4;
-        } else {
-            result.push(right[ir],right[ir+1],right[ir+2],right[ir+3]);
-            ir+=4;
-        }
-    }
-
-    return result.concat(left.slice(il)).concat(right.slice(ir));
-};
 
 
 
@@ -78,25 +39,8 @@ onmessage = function(e) {
 	if (e.data.arrayCDef) {
 		arrayCDef = e.data.arrayCDef.slice();
 		arrayC = e.data.arrayCDef.slice();
-		/*for (var c_i = 0; c_i < e.data.arrayCDef.length; c_i += 4) {
-			arrayCDef[c_i] = e.data.arrayCDef[c_i];
-			arrayCDef[c_i + 1] = e.data.arrayCDef[c_i + 1];
-			arrayCDef[c_i + 2] = e.data.arrayCDef[c_i + 2];
-			arrayCDef[c_i + 3] = e.data.arrayCDef[c_i + 3];
-		}
-		e.data.arrayCDef = {};*/
-		//console.log('arrayCDef workers loaded', e.data.arrayCDef, arrayCDef, arrayC);
 	} else if (e.data.arrayC2Add) {
 		arrayC = mergeSortedC(arrayCDef, e.data.arrayC2Add);
-		/*arrayC = new Uint32Array(arrayCTemp);
-		for (var c_i = 0; c_i < e.data.arrayCDef.length; c_i += 4) {
-			arrayCDef[c_i] = e.data.arrayCDef[c_i];
-			arrayCDef[c_i + 1] = e.data.arrayCDef[c_i + 1];
-			arrayCDef[c_i + 2] = e.data.arrayCDef[c_i + 2];
-			arrayCDef[c_i + 3] = e.data.arrayCDef[c_i + 3];
-		}
-		e.data.arrayCDef = {};*/
-		//console.log('arrayC merged', arrayC, arrayCDef, e.data.arrayC2Add);
 	}
 	else if (e.data.P2PDef) {
 		arrayN.P2PPos = e.data.P2PDef.pos.map(function(arr) {
@@ -113,7 +57,6 @@ onmessage = function(e) {
 		});
 
 		e.data.P2PDef = {};
-		//console.log('P2PDef workers loaded', arrayN);
 	}
 	else if (e.data.P2SDef) {
 		arrayN.P2SPos = e.data.P2SDef.pos.map(function(arr) {
@@ -130,7 +73,6 @@ onmessage = function(e) {
 		});
 
 		e.data.P2SDef = {};
-		//console.log('P2SDef workers loaded', arrayN);
 	}
 	else if (e.data.S2SDef) {
 		arrayN.S2SPos = e.data.S2SDef.pos.map(function(arr) {
@@ -151,76 +93,14 @@ onmessage = function(e) {
 	}
 	else if (e.data.P2S2Add) {
 		let P2S2Add = e.data.P2S2Add
-		arrayN.P2SPos = arrayNDef.P2SPos.map((originArray, pos)=>{
-			let isToAdd = pos in P2S2Add;
-			if(isToAdd){
-				let toAdd = [];
-				toAdd = P2S2Add[pos].pos
-				let newLength = originArray.length + toAdd.length;
-				let newArray = new Uint16Array(newLength);
-				newArray.set(originArray);
-				newArray.set(toAdd, originArray.length);
-				return newArray;
-			}else{
-				return originArray;
-			}
-		});
-		arrayN.P2STime = arrayNDef.P2STime.map((originArray, pos)=>{
-			let isToAdd = pos in P2S2Add;
-			if(isToAdd){
-				let toAdd = []
-				toAdd = P2S2Add[pos].time
-				let newLength = originArray.length + toAdd.length;
-				let newArray = new Uint16Array(newLength);
-				newArray.set(originArray);
-				newArray.set(toAdd, originArray.length);
-				return newArray}
-			else{
-				return originArray;
-			}
-		});
-		e.data.P2S2Add = {};
-		//console.log('load P2S2Add', arrayN, arrayNDef)
+		arrayN.P2SPos = mergeArrayN(arrayNDef.P2SPos, P2S2Add, 'pos')
+		arrayN.P2STime = mergeArrayN(arrayNDef.P2STime, P2S2Add, 'time')
 	}
 	else if (e.data.S2S2Add) {
 		let S2S2Add = e.data.S2S2Add
-		//console.log('S2SAdd', S2S2Add);
-		arrayN.S2SPos = arrayNDef.S2SPos.map((originArray, pos)=>{
-			let isToAdd = pos in S2S2Add;
-			if(isToAdd){
-				let toAdd = [];
-				toAdd = S2S2Add[pos].pos
-				let newLength = originArray.length + toAdd.length;
-				let newArray = new Uint16Array(newLength);
-				newArray.set(originArray);
-				newArray.set(toAdd, originArray.length);
-				return newArray;
-			}else{
-				return originArray;
-			}
-		});
-		arrayN.S2STime = arrayNDef.S2STime.map((originArray, pos)=>{
-			let isToAdd = pos in S2S2Add;
-			if(isToAdd){
-				let toAdd = []
-				toAdd = S2S2Add[pos].time
-				let newLength = originArray.length + toAdd.length;
-				let newArray = new Uint16Array(newLength);
-				newArray.set(originArray);
-				newArray.set(toAdd, originArray.length);
-				return newArray}
-			else{
-				return originArray;
-			}
-		});
+		arrayN.S2SPos = mergeArrayN(arrayNDef.S2SPos, S2S2Add, 'pos')
+		arrayN.S2STime = mergeArrayN(arrayNDef.S2STime, S2S2Add, 'time')
 
-		for (let pos in S2S2Add){
-			let array2Add = S2S2Add[pos];
-			if(!(pos in  arrayN.S2SPos)){
-				arrayN.S2SPos[pos] = new Uint16Array(array2Add.pos)
-				arrayN.S2STime[pos] = new Uint16Array(array2Add.time)
-			}
-		}
 		e.data.S2S2Add = {};
 		//console.log('load S2S2Add', arrayN, arrayNDef)
 	}

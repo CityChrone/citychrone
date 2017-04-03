@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 import './timeRadioButtons.html';
-// import { runCSA, CSAPoint } from '/imports/api/CSA-algorithm/CSA-loop.js';
+//import { runCSA, CSAPoint } from '/imports/api/CSA-algorithm/CSA-loop.js';
 //import { vel } from '../../api/velocityDb.js';
 import { colorShell, colorDiff,styleVelNew, styleVel, styleDiff, styleHex } from '/imports/client/info/hexagons/colorHex.js';
 import { hexagon } from '/imports/client/info/hexagons/hex.js';
@@ -39,7 +39,7 @@ Template.timeButton.helpers({
 			return '';
 
 		if (Template.body.data.allSetAndReady.get())
-			loadNewTime(Template.body.data.timeOfDay.get());
+			//loadNewTime(Template.body.data.timeOfDay.get());
 			/*
 			ATTENZIONE: il caricamento dei tempi dallo scenario di default dipende
 			da queste due variabili reattive: allSetAndReady è settata dopo il caricamento degli zip,

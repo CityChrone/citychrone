@@ -6,6 +6,9 @@ import {
 } from 'meteor/meteor';
 // import { runCSA, CSAPoint } from '/imports/api/CSA-algorithm/CSA-loop.js';
 //import { vel } from '../../api/velocityDb.js';
+
+import { scenarioDB} from '/imports/api/DBs/scenarioDB.js';
+
 import {
 	colorShell,
 	colorDiff,
@@ -48,7 +51,7 @@ let functionButtonHex = function(mycase) {
 
 Template.quantityButtons.onCreated(function(){
 	Template.quantityButtons.modeSelectedRV = new ReactiveVar('btnCurrent')
-	Template.quantityButtons.quantitySelectedRV = new ReactiveVar('btnVelocity')
+	Template.quantityButtons.quantitySelectedRV = new ReactiveVar('newVels')
 
 })
 
@@ -65,13 +68,6 @@ Template.quantityButtons.events({
 			//loadNewTime(Template.body.data.timeOfDay.get())
 			//addGeojson();
 		}
-		// else {
-
-			//if($('#stationButton').hasClass('active')){
-			// $(e.target).removeClass('active');
-			// Template.body.data.legendHexRV.set(false);
-			// Template.body.data.map.removeLayer(Template.body.data.geoJson);
-		// }
 	},
 
 	'click .quantityButton' (e) {
@@ -79,23 +75,31 @@ Template.quantityButtons.events({
 			$('.quantityButton').removeClass('active');
 			$(e.target).addClass('active');
 			let target = e.target.id;
-			Template.body.data.quantitySelectedRV.set(target);
 			console.log(target)
-			/*if(target == 'btnIsochrones'){
+			if(target == 't'){
 				let point = Template.body.collection.points.findOne({}, {sort : {'dTerm':1}})
-				let scenario = {}
-				switch(Template.body.data.buttonsHex) {
-					case 'velHex':
-						scenario = Template.body.data.defaultScenario;
-						break;
-					case 'velNewHex':
-						scenario = Template.body.data.defaultScenario;
-						break;
-				}
-				computeIsochrone(point, scenario)
+				let scenario = {};
+				let startTime = Template.body.data.timeOfDay.get();
+				let scenarioID = Template.scenario.RV.currentScenarioIdRV.get();
+				Meteor.call('isochrone', [point, scenarioID, startTime], (error, result) => {
+					let modifier = 'moments.'+ startTime.toString() + '.t'
+					let toSet = {}
+					toSet[modifier] = result
+					scenarioDB.update({'_id':scenarioID}, {'$set':toSet}, (err)=>{
+						if(err){ console.log(err)
+						}
+						else{
+							let scenarioUpdated = scenarioDB.findOne({'_id':scenarioID})
+							//console.log('return isochrone server side', result, scenarioID, scenarioUpdated, err);
+							Template.quantityButtons.quantitySelectedRV.set(target);
+						}
+						return true;
+					});
+				});
+				//computeIsochrone(point, scenario)
 			}else{
-				loadNewTime(Template.body.data.timeOfDay.get())
-			}*/
+				Template.quantityButtons.quantitySelectedRV.set(target);
+			}
 		}
 	},
 });

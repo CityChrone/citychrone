@@ -3,35 +3,13 @@ import { Template } from 'meteor/templating';
 import turf from 'turf';
 import { getCity } from '/imports/api/parameters.js';
 import {polyMetro, stopMarker, styleMarkerClicked, styleMarker, styleMarkerUnClicked} from '/imports/client/modify/style.js';
-import {CheckCostAddStop, CheckCostDragStop} from '/imports/client/budget/metroCost.js';
+import {CheckCostAddStop, CheckCostDragStop} from '/imports/client/legends/budget.js';
 import {allertNoBadget} from '/imports/client/legends/legends.js';
 import {markerEvent, mapClickAddStopEvent} from '/imports/client/modify/events.js';
 import { popUpMarker } from '/imports/client/modify/popUpMarker.js';
 
 
-/*
-export const mapOnClickLine = function(e){
-	//console.log('click!!', e);
-	L.DomEvent.stopPropagation(e);
-	let stopTemp = {'latlng':[e.latlng.lat, e.latlng.lng]};
-	let check = CheckCostAddStop(Template.body.collection.metroLines,stopTemp,Template.body.data.nameLine);
-	if(check){
-		let marker = newDragStop([e.latlng.lat, e.latlng.lng]);
-		marker.addTo(Template.body.data.map);
-		marker['temp'] = true;
-		Template.body.data.StopsMarker[marker['_leaflet_id']] = marker;
-		if(Template.body.data.markerClicked != null){
-			//console.log('style!!',Template.body.data.markerClicked, marker);
-			Template.body.data.markerClicked.setStyle(styleMarkerUnClicked);
-		}
-		Template.body.data.markerClicked = marker;
-		marker.setStyle(styleMarkerClicked);
 
-	}else{
-		allertNoBadget();
-	}
-};
-*/
 export const mapClickAddStop = function(e){
 	//console.log('click!!', e);
 	L.DomEvent.stopPropagation(e);
@@ -71,31 +49,7 @@ export const addMarkerStop = function(latlng, lineName){
 	}});
 	return marker
 }
-/*
-export const newDragStop = function(latlng, lineName = Template.body.data.nameLine){
-	Template.body.data.newHexsComputed = false;
-	let metroLine = Template.body.collection.metroLines.findOne({'lineName': lineName})
-	let colorLine = metroLine.color;
-	let indexLine = metroLine.indexLine
-	let markerStop = stopMarker(latlng,colorLine, true).addTo(Template.body.data.map);
 
-	markerStop['indexLine'] = indexLine;
-	markerStop['lineName'] = lineName;
-
-	Template.body.collection.metroLines
-		.update({'city':city, 'lineName': lineName},
-		{'$push':{
-			'stops':{
-				'latlng' : latlng,
-				'_leaflet_id' : markerStop._leaflet_id,
-			}
-	}});
-
-
-	markerStop.on('dragend', stopOnDragend);
-	return markerStop;
-};
-*/
 export const giveDragMarkerStop = function(latlng, lineName, colorLine, indexLine){
 	let markerStop = stopMarker(latlng,colorLine, true);
 	markerStop['temp'] = true;
@@ -106,7 +60,6 @@ export const giveDragMarkerStop = function(latlng, lineName, colorLine, indexLin
 	return markerStop;
 };
 
-//export makeDragMarkerStop = function(latlng, lineName, colorLine, indexLine)
 
 export const stopOnDblclick = function(e){
 	e.target.remove();
@@ -271,42 +224,10 @@ export const observeNewLineChanges = function(){
 	var city = getCity();
 	return Template.body.collection.metroLines.find({city:city}).observe({
 		added : function(newDoc) {
-			Template.body.data.mapEdited.set(true);
+			//Template.body.data.mapEdited.set(true);
 			//oldL = oldDoc.stops.length;
 			newL = newDoc.stops.length;
-			//console.log(newDoc);
 
-			/*if(newDoc['temp']){
-				let changed = false;
-				newDoc.stops.forEach((stop, index) => {
-					//console.log(stop);
-					if( !('_leaflet_id' in stop)){
-						changed = true;
-						let marker = giveDragMarkerStop(stop['latlng'], newDoc['lineName'], newDoc['color'], newDoc['indexLine'])
-						marker.addTo(Template.body.data.map);
-						Template.body.data.StopsMarker[marker['_leaflet_id']] = marker;
-						newDoc.stops[index]._leaflet_id = marker._leaflet_id;
-					}
-				});
-				if(changed){
-					let lineStop = newDoc.stops.map(function(stop){return stop.latlng;});
-					if(lineStop.length > 2){
-						let smoothPolyLine = turf.bezier(turf.lineString(lineStop),10000, 0.4);
-						Template.body.data.polylineMetro[newDoc.bezier_id].setLatLngs(smoothPolyLine.geometry.coordinates);
-					} else if(lineStop.length == 2){
-						Template.body.data.polylineMetro[newDoc.bezier_id].setLatLngs(lineStop);
-
-					Template.body.collection.metroLines.update(
-									{'_id'  : newDoc._id},
-									{'$set':{ 'stops' :  newDoc.stops} }
-						, (err, doc)=>{
-							console.log('update', err, doc, Template.body.collection.metroLines.findOne({'_id'  : newDoc._id}));
-						});
-					}
-				}
-				console.log('temp!! added', newDoc, changed);
-
-			}else {*/
 			let line = newDoc
 			let layer = {};
 	 		if(line.type == 'metro'){
@@ -314,20 +235,26 @@ export const observeNewLineChanges = function(){
 	 			layer = polyMetro(line['shape'],line['color']).addTo(Template.body.data.map);
 				line.stops.forEach((stop, index) => {
 	 				if( !('_leaflet_id' in stop)){
-	 					//console.log(stop)
+	 					console.log(stop)
 		 				let marker = stopMarker(stop.latlng,line['color']).addTo(Template.body.data.map);
+		 					 					console.log(stop)
 		 				marker['indexLine'] = line.indexLine;// || _.indexOf(Template.body.data.listNameLines, line.lineName.slice(0,3));
 						marker['lineName'] = line.lineName;
 						marker['temp'] = false;
 						marker.addTo(Template.body.data.map);
+								 					 					console.log(stop)
 						marker.bringToBack();//adding to the list of markers to change visibility when swiching between info-build
-						Template.body.data.StopsMarker[marker['_leaflet_id']] = marker; //console.log('stops.' + stop.toString() + '._leaflet_id')
+								 					 					console.log(stop)
+
+						//Template.body.data.StopsMarker[marker['_leaflet_id']] = marker; //console.log('stops.' + stop.toString() + '._leaflet_id')
 	//Ha che mi serve?!?!
+			 				console.log(stop)
+
 		 				let arrayP = 'stops.' + stop.toString() + '._leaflet_id';
 		 				line.stops[index]['_leaflet_id'] = marker['_leaflet_id']
+		 				console.log(stop)
 		 			}
 	 			});
-
 	 			Template.body.collection.metroLines.update(
 							{'_id'  : line._id},
 							{'$set':{ 'stops' :  line.stops} }
@@ -347,9 +274,9 @@ export const observeNewLineChanges = function(){
 			//}
 		},
 		changed : function(newDoc) {
-			Template.body.data.mapEdited.set(true);
+			//Template.body.data.mapEdited.set(true);
 			let lineStop = newDoc.stops.map(function(stop){return stop.latlng;});
-			console.log('changed',newDoc)
+			// console.log('changed',newDoc)
 			if(newDoc.temp){
 				if(lineStop.length > 2){
 						let smoothPolyLine = turf.bezier(turf.lineString(lineStop),10000, 0.4);

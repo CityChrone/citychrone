@@ -1,8 +1,7 @@
 import {connections, initConnections } from '/imports/api/DBs/connectionsDB.js';
 import {points, stops} from '/imports/api/DBs/stopsAndPointsDB.js';
 import { mergeSortedC } from '/imports/lib/utils.js';
-import { timesOfDay, maxDuration  } from '/imports/api/parameters.js';
-import { metroSpeeds, metroFrequencies  } from '/imports/client/legends/metroSpeed.js';
+import { timesOfDay, maxDuration, metroSpeeds, metroFrequencies  } from '/imports/api/parameters.js';
 import math from 'mathjs';
 import turf from 'turf';
 
