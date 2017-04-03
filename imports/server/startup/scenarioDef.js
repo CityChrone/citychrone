@@ -5,7 +5,7 @@ import turf from 'turf';
 import math from 'mathjs';
 
 import { scenarioDB, initScenario } from '/imports/api/DBs/scenarioDB.js';
-import {points, stops, initPoints} from '/imports/api/DBs/stopsAndPointsDB.js';
+import {points, stops, initPoints, initArrayPop} from '/imports/api/DBs/stopsAndPointsDB.js';
 import { initVel } from '/imports/api/DBs/velocityDb.js';
 import { connections } from '/imports/api/DBs/connectionsDB.js';
 import { metroLines } from '/imports/api/DBs/metroLinesDB.js';
@@ -50,13 +50,15 @@ const computeDataCity = function(city){
  	console.log('computeData')
  	let areaHex = turf.area(points.findOne({'city':city}).hex)/ (math.pow(10, 6));
  	let stopsList = stops.find({'city':city}, {fields : {'pos':1, 'point':1, 'city':1}, sort :{'pos':1}}).fetch();
+ 	let arrayPop = initArrayPop(city)
  	return {
 		'arrayN': arrayN, 
 		'arrayC': arrayC, 
 		'listPoints': listPoints, 
 		'pointsVenues': pointsVenues,
 		'areaHex' : areaHex,
-		'stops' : stopsList
+		'stops' : stopsList,
+		'arrayPop': arrayPop
 	 };
 };
 
@@ -65,12 +67,16 @@ const setScenarioDefault = function(city){
 	let results = [];
 	let scenario = initScenario(city, 'default', startTime);
 	scenario.default = true;
-	let listPoints = initPoints(city);
-	let arrayN = initNeighStopAndPoint(city);
+	
+	let dataCity = computeDataCity(city)
+
+	let listPoints = dataCity.listPoints;
+	let arrayN = dataCity.arrayN;
 	let arrayC = initArrayC(city, 0, 27.*3600.);
- 	let pointsVenues = initPointsVenues(listPoints);
- 	let areaHex = turf.area(points.findOne({'city':city}).hex)/ (math.pow(10, 6));
- 	 let stopsList = stops.find({'city':city}, {fields : {'pos':1, 'point':1, 'city':1}, sort :{'pos':1}}).fetch();
+ 	let pointsVenues = dataCity.pointsVenues;
+ 	let areaHex = dataCity.areaHex;
+ 	let stopsList = dataCity.stopsList;
+ 	let arrayPop = dataCity.arrayPop;
 
  	console.log(areaHex, points.findOne({'city':city}).hex);
 
@@ -78,37 +84,30 @@ const setScenarioDefault = function(city){
  	for(let time_i in timesOfDay){
  		let newVels = [];
  		let newAccess = [];
- 		let newPopPot = [];
+ 		let newPotPop = [];
 		let startTime = timesOfDay[time_i];
 		for (var point_i = 0; point_i < listPoints.length; point_i++) {
 			var point = listPoints[point_i];
-			var returned = worker.CSAPoint(point, arrayC, arrayN, startTime, areaHex, pointsVenues);
+			var returned = worker.CSAPoint(point, arrayC, arrayN, startTime, areaHex, pointsVenues, arrayPop);
 			//console.log(point, returned);
-			if(point.pos %500 == 0) console.log(startTime/3600, returned.vAvg, point.pos)
+			if(point.pos %200 == 0) console.log(startTime/3600, returned.vAvg,returned.popMean, point.pos)
 			newVels.push(returned.vAvg);
 			newAccess.push(returned.accessNew);
-			newPopPot.push(returned.popMean);
+			newPotPop.push(returned.popMean);
 		}
-
+ 
 		scenario.moments[startTime.toString()] = scenario.moments[startTime.toString()] || {};
 
 		let moment = scenario.moments[startTime.toString()]
 		moment.newVels = newVels;
-		moment.newAccess = newVels;
-		moment.newPopPot = newPopPot;
+		moment.newAccess = newAccess;
+		moment.newPotPop = newPotPop;
 	}
 
 	console.log(Object.keys(scenario));
 	scenarioDB.insert(scenario);
 
-	return {
-		'arrayN': arrayN, 
-		'arrayC': arrayC, 
-		'listPoints': listPoints, 
-		'pointsVenues': pointsVenues,
-		'areaHex' : areaHex,
-		'stops' : stopsList
-	 }
+	return dataCity
 
 } 
 

@@ -10,50 +10,7 @@ import {stopOnClick,stopOnDragend,stopOnDblclick, fireClickMap} from '/imports/c
 import { markerBuild, markerEvent,mapClickAddStopEvent } from '/imports/client/modify/events.js';
 import { zeroTime, budget, HexArea, getCity ,timesOfDay, maxDuration } from '/imports/api/parameters.js';
 
-export const metroSpeeds = [
-	{
-		name: "Low",
-		topSpeed: 12,
-		acceleration: 0.6,
-		colorClass: 'btn-danger'
-	},
-	{
-		name: "Med",
-		topSpeed: 20,
-		acceleration: 0.9,
-		colorClass: 'btn-warning'
-	},
-	{
-		name: "High",
-		topSpeed: 30,
-		acceleration: 1.3,
-		colorClass: 'btn-success'
-	}
-];
 
-export const metroFrequencies = [
-	{
-		name: "Off",
-		frequency: 0,
-		colorClass: 'btn-default'
-	},
-	{
-		name: "Low",
-		frequency: 15*60,
-		colorClass: 'btn-danger'
-	},
-	{
-		name: "Med",
-		frequency: 8*60,
-		colorClass: 'btn-warning'
-	},
-	{
-		name: "High",
-		frequency: 2*60,
-		colorClass: 'btn-success'
-	},
-
-];
 
 Template.metroSpeed.helpers({
 

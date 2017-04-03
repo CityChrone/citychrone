@@ -10,24 +10,7 @@ import '/imports/client/legends/quantityButtons.js';
 import '/imports/client/legends/timeRadioButtons.js';
 import '/imports/client/legends/metroSpeed.js';
 
-import {
-	colorDiff,
-	maxValueDiff,
-	colorAccessDiff,
-	shell,
-	shellDiff,
-	shellDiffAccess,
-	mycolor,
-	shellIso,
-	colorIso,
-	colorShell,
-	styleVelNew,
-	styleVel,
-	styleDiff,
-	styleHex,
-	shellAccess,
-	colorAccess
-} from '/imports/client/info/hexagons/colorHex.js';
+import {returnShell, styleHex, computeAvgAccessibility, color} from '/imports/client/info/hexagons/colorHex.js';
 import {
 	budget,
 	costMetroStop,
@@ -35,9 +18,6 @@ import {
 	getCity
 } from '/imports/api/parameters.js';
 
-import {
-	costLines
-} from '/imports/client/budget/metroCost.js';
 
 export const createLegends = function(name, toAdd = true) {
 	let createControl = function(template, position) {
@@ -91,11 +71,12 @@ export const createLegends = function(name, toAdd = true) {
 };
 
 const makeColorLegend = function(shell, color){
+	//console.log(shell, color)
 	objColor = [];
 	
 	for (let i = 0; i < shell.length - 1; i++) {
 		objColor.push({
-			'color': color[i + 1],
+			'color': color((shell[i] + shell[i + 1])/2),
 			'html': shell[i].toString() + '-' + shell[i + 1].toString()
 		});
 	}
@@ -108,69 +89,21 @@ const makeColorLegend = function(shell, color){
 
 Template.legendHex.helpers({
 	'listColor' () {
-		//console.log(Template.body.data.legendHexRV);
 
-		let feature = Template.quantityButtons.modeSelectedRV.get();
+		let feature = Template.quantityButtons.quantitySelectedRV.get();
 		let mode =	Template.quantityButtons.modeSelectedRV.get();
-
-		let objColor = [],
-			shellTemp;
-
-
-		switch (feature) {
-			case "btnVelocity":
-				switch (mode) {
-					case 'Current':
-						objColor = makeColorLegend(shell, mycolor);
-						break;
-					case 'diff':
-						objColor = makeColorLegend(shellDiff, colorDiff);
-						break;
-
-				}
-				return objColor;
-			case 'btnIsochrones':
-				switch (mode) {
-					case 'Current':
-						objColor = makeColorLegend(shellIso, colorIso);
-						break;
-					case 'diff':
-						objColor = makeColorLegend(shellDiff, colorDiff);
-						break;
-
-				}
-				return objColor;
-			case 'btnAccessibility':
-				switch (mode) {
-					case 'Current':
-						objColor = makeColorLegend(shellAccess, colorAccess);
-						break;
-					case 'diff':
-						objColor = makeColorLegend(shellDiff, colorDiff);
-						break;
-
-				}
-				return objColor;
-			case 'btnPotPop':
-				switch (mode) {
-					case 'Current':
-						objColor = makeColorLegend(shellIso, colorIso);
-						break;
-					case 'diff':
-						objColor = makeColorLegend(shellDiffAccess, colorAccessDiff);
-						break;
-
-				}
-				return objColor;
-		}
+		let shell =	returnShell(feature, mode);
+		let selColor = color(feature, mode);
+		return makeColorLegend(shell, selColor);
 
 	},
 	'title' () {
-		let feature = Template.quantityButtons.modeSelectedRV.get();
+		let feature = Template.quantityButtons.quantitySelectedRV.get();
+		console.log('title!!', feature)
 		//let mode =	Template.quantityButtons.modeSelectedRV.get();
 
 		switch (feature) {
-			case 'btnVelocity':
+			case 'newVels':
 				return {
 					title: 'access-velocity',
 					'unity': '[km/h]'
@@ -180,44 +113,20 @@ Template.legendHex.helpers({
 					title: 'accessibility',
 					'unity': ''
 				};
-			case 'btnPotPop':
+			case 'newPotPop':
 				return {
 					title: 'potential population',
 					'unity': '[Thousand]'
 				};
-			case 'btnAccessibility':
+			case 't':
 				return {
-					title: 'btnIsochrones',
-					'unity': 'tima'
+					title: 'isochrone',
+					'unity': 'time'
 				};
 		}
 	}
 });
 
-Template.legendBudget.helpers({
-	'budget' () {
-		return costLines(Template.body.collection.metroLines).toFixed(0);
-	},
-	'notBudget' () {
-		allertNoBadget();
-	}
-});
-
-
-export const allertNoBadget = function() {
-	var bootstrap_alert = function() {};
-	bootstrap_alert.warning = function(message) {
-		if (message == '') {
-			$('#alertBudget').html('');
-		} else {
-			$('#alertBudget').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><span>' + message + '</span></div>');
-		}
-	};
-	bootstrap_alert.warning('Not enough budget!');
-	window.setTimeout(function() {
-		bootstrap_alert.warning('');
-	}, 1000);
-};
 
 
 Template.infoInfo.helpers({

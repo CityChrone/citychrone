@@ -1,14 +1,16 @@
 <template name="selectorModeButtons">
 
 <div class="btn-group-horizontal btn-group" data-toggle="buttons">
+    {{#if isCreateNewScenario}}
   <label class="btn btn-primary {{dataLoadedDisabled}}" id="buttonBuild">
-    <span class="glyphicon glyphicon-road" aria-hidden="true"></span>
-  		Build
-		{{#if dataLoadedGet}}
-			<span id="spinLoad"><i class="fa fa-refresh fa-spin fa-fw"></i></span>
-		{{/if}}
+      <span class="glyphicon glyphicon-road" aria-hidden="true"></span>
+    		Create new Scenario
+  		{{#if dataLoadedGet}}
+  			<span id="spinLoad"><i class="fa fa-refresh fa-spin fa-fw"></i></span>
+  		{{/if}}
 
   </label>
+  {{/if}}
   <label class="btn btn-primary active" id="buttonInfo" >
 		<i class="fa fa-info"></i>
      	Info

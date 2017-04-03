@@ -5,27 +5,23 @@ import './popUp.html';
 import {CSAPoint} from '/imports/api/CSA-algorithm/CSA-loop.js';
 import { zeroTime, timesOfDay, maxDuration , getCity, HexArea } from '/imports/api/parameters.js';
 import { hexagon} from '/imports/client/info/hexagons/hex.js';
-import {isoColor, isoColorNew, colorShell, computeAvgAccessibility}  from '/imports/client/info/hexagons/colorHex.js';
+import {isoColor, isoColorNew, color, computeAvgAccessibility}  from '/imports/client/info/hexagons/colorHex.js';
 import { updateArrays } from '/imports/client/modify/updateArrays.js';
 import { RadarChart } from './RadarChart.js';
 import { venuesToName, venuesByType } from '/imports/api/DBs/velocityDb.js';
 
 
 Template.popUp.events({
-	'click #isochrone'(e) {
-		if(!$('#btnIsochrones').hasClass('active')){
-		}
-	},
 });
 
 Template.popUp.helpers({
 	'isFeature'(feature) {
 		//console.log(this);
-		return Template.body.data.legendFeature.get() == feature;
+		return Template.quantityButtons.quantitySelectedRV.get() == feature;
 	},
 	'isFeatures'(feature1, feature2) {
 		//console.log(this);
-		let feaSel = Template.body.data.legendFeature.get()
+		let feaSel = Template.quantityButtons.quantitySelectedRV.get()
 		return  (feaSel == feature1 ||  feaSel == feature2 );
 	},
 
@@ -82,17 +78,28 @@ Template.popUp.helpers({
 		return (avg * 100 / count).toFixed(0);
 
 	},
-	'labelColor'(val) {
+	'labelColor'(feature, val) {
 		//console.log(this);
-		return "background-color:"+ colorShell(val).fillColor+';';
+		let mode =	Template.quantityButtons.modeSelectedRV.get();
+		let selColor = color(feature, mode);
+		return "background-color:"+ selColor(val)+';';
 	},
-	'valVelocity'(val){
+	'toString'(feature, val){
 		//console.log(val)
 		$("#accessPopupChart").html('');
+		switch(feature){
+			case 'newVels':
+				let valFixed = parseFloat(val).toFixed(2);
+				if(val > 0){ return valFixed.toString() + ' km/h';}
+				else { return 'Not Av.';}
+				break;
+			case 'newPotPop':		
+				valFixed = parseFloat(val/1000).toFixed(0);
+				if(val > 0){ return valFixed.toString() + 'K';}
+				else { return 'Not Av.';}
+				break;
 
-		let valFixed = parseFloat(val).toFixed(2);
-		if(val > 0){ return valFixed.toString() + ' km/h';}
-		else { return 'Not Av.';}
+		}
 	},
 	'dataLoadedGet'(){
 		return !Template.body.data.dataLoaded.get();
