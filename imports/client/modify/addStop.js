@@ -33,7 +33,7 @@ export const mapClickAddStop = function(e){
 
 export const addMarkerStop = function(latlng, lineName){
 	let line = Template.body.collection.metroLines.findOne({'lineName': lineName});
-	console.log(line, lineName);
+	//console.log(line, lineName);
 	Template.body.data.mapEdited.set(true);
   let marker = giveDragMarkerStop(latlng, lineName, line['color'], line['indexLine']);
 	marker.addTo(Template.body.data.map);
@@ -235,24 +235,19 @@ export const observeNewLineChanges = function(){
 	 			layer = polyMetro(line['shape'],line['color']).addTo(Template.body.data.map);
 				line.stops.forEach((stop, index) => {
 	 				if( !('_leaflet_id' in stop)){
-	 					console.log(stop)
+	 					//console.log(stop)
 		 				let marker = stopMarker(stop.latlng,line['color']).addTo(Template.body.data.map);
-		 					 					console.log(stop)
 		 				marker['indexLine'] = line.indexLine;// || _.indexOf(Template.body.data.listNameLines, line.lineName.slice(0,3));
 						marker['lineName'] = line.lineName;
 						marker['temp'] = false;
 						marker.addTo(Template.body.data.map);
-								 					 					console.log(stop)
 						marker.bringToBack();//adding to the list of markers to change visibility when swiching between info-build
-								 					 					console.log(stop)
 
 						//Template.body.data.StopsMarker[marker['_leaflet_id']] = marker; //console.log('stops.' + stop.toString() + '._leaflet_id')
 	//Ha che mi serve?!?!
-			 				console.log(stop)
 
 		 				let arrayP = 'stops.' + stop.toString() + '._leaflet_id';
 		 				line.stops[index]['_leaflet_id'] = marker['_leaflet_id']
-		 				console.log(stop)
 		 			}
 	 			});
 	 			Template.body.collection.metroLines.update(

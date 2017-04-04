@@ -1,20 +1,39 @@
 import { Router } from 'meteor/iron:router';
 import {hexList, CenterHex} from '/imports/api/parameters.js';
+import '/imports/client/map/map.js';
+import '/imports/client/routes/city/city.js';
 
 Router.route('/city/:city', function () {
-  if (!this.params.city || !hexList[this.params.city] || !CenterHex[this.params.city])
-    this.redirect('/city/roma');
+  //if (!this.params.city || !hexList[this.params.city] || !CenterHex[this.params.city])
+    //this.redirect('/city/roma');
 
   console.log("router set city " + this.params.city);
+  let data = {'city': this.params.city}  
+  this.render('city',{
+  	data: function(){
+  		return {'data':data};
+  	}
+  });
 });
 
 
-Router.route('/:path?', function () {
-  console.log("home route");
-  this.redirect('/city/roma');
+Router.route('/map', function () {
+  //if (!this.params.city || !hexList[this.params.city] || !CenterHex[this.params.city])
+    //this.redirect('/city/roma');
+
+  this.render('map',{
+    data: function(){
+      return {'data':'data'};
+    }
+  });
 });
 
 Router.route('/node_modules/leaflet/dist/images/', function () {
   console.log("imgLeaflet");
   this.redirect('/node_modules/leaflet/dist/images/');
 });
+/*
+Router.route('/:path?', function () {
+  console.log("home route");
+  this.redirect('/city/roma');
+});*/

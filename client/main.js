@@ -1,7 +1,7 @@
-
 import { Meteor } from 'meteor/meteor';
 import '/imports/client/routes.js';
-import '/imports/client/body.js';
+//import 'meteor/bootstrap-select';
+//import '/imports/client/body.js';
 
 Meteor.startup(function(){
 	_ = lodash;
