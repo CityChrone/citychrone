@@ -1,0 +1,91 @@
+import { Template } from 'meteor/templating';
+import { Meteor } from 'meteor/meteor';
+// import { Session } from 'meteor/session';
+import { Router } from 'meteor/iron:router';
+import { ReactiveDict } from 'meteor/reactive-dict';
+import {leaflet} from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import 'leaflet-providers';
+import '/imports/client/lib/leaflet.spin.js';
+import '/imports/client/map/map.html';
+
+Template.map.onCreated(function() {
+	Template.map.data = {};
+});
+
+Template.map.onRendered(function() {
+	L.Icon.Default.imagePath = '/node_modules/leaflet/dist/images/';
+    Template.map.data.OpenStreetMap_Mapnik = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      minZoom: 3,
+      maxZoom: 20,
+      tileSize: 256,
+     // attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      });
+    Template.map.data.here = L.tileLayer.provider('HERE.normalDayTransit',{
+        app_id : 'IbEW2PDzNwdzV4pFf35t',
+        app_code : 'yIfUWrkTbLG_cdWMxlLK5g',
+        minZoom: 3,
+        maxZoom: 20,
+        tileSize: 256,
+        //detectRetina:true,
+	    });
+    Template.map.data.Thunderforest_Transport = L.tileLayer('http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png', {
+      //attribution: '&copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      minZoom: 3,
+      maxZoom: 20,
+      tileSize: 256,
+      //detectRetina: true
+    });
+    Template.map.data.Thunderforest_TransportDark = L.tileLayer('http://{s}.tile.thunderforest.com/transport-dark/{z}/{x}/{y}.png', {
+      //attribution: '&copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      minZoom: 3,
+      maxZoom: 20,
+    });
+    Template.map.data.Esri_WorldImagery = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      minZoom: 3,
+      maxZoom: 20,
+      //attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    });
+    Template.map.data.Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
+      //attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      subdomains: 'abcd',
+      minZoom: 3,
+      maxZoom: 20,
+      ext: 'png'
+    });
+    Template.map.data.Stamen_Toner = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.{ext}', {
+	//attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	subdomains: 'abcd',
+	minZoom: 0,
+	maxZoom: 20,
+	ext: 'png'
+	});
+
+  Template.map.data.baseMaps = {
+      "Default": Template.map.data.here,
+      "Transport": Template.map.data.Thunderforest_Transport,
+      "Transport night" : Template.map.data.Thunderforest_TransportDark,
+      "OpenStreetMap" : Template.map.data.OpenStreetMap_Mapnik,
+      'Sat' : Template.map.data.Esri_WorldImagery,
+      'B&WLite' : Template.map.data.Stamen_TonerLite,
+      'B&W' : Template.map.data.Stamen_Toner
+
+  };
+
+
+ 	Template.map.data.map = L.map('mapid',{
+    //renderer: L.canvas(),
+      center: [10, 10],
+    	zoom: 3,
+    	dragging: true,
+    	zoomControl : false,
+    	layers: [Template.map.data.baseMaps.Default],
+    	doubleClickZoom:false,
+    	attributionControl:false,
+    	zoomDelta:0.2,
+    	zoomSnap:0.2,
+    	inertia:false
+  	});
+
+ 	Template.map.data.map.spin(true);
+});

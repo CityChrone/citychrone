@@ -99,7 +99,6 @@ Template.legendHex.helpers({
 	},
 	'title' () {
 		let feature = Template.quantityButtons.quantitySelectedRV.get();
-		console.log('title!!', feature)
 		//let mode =	Template.quantityButtons.modeSelectedRV.get();
 
 		switch (feature) {

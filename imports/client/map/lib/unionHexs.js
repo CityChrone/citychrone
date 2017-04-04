@@ -1,24 +1,15 @@
 import {addEdge2Lists,clusterEdges,MultyPolLabel,unionHexs} from "/imports/api/CSA-algorithm/isochrone.js";
-import {rx, ry, cosines, sines} from '/imports/client/info/hexagons/hex.js';
-import {returnShell, styleHex, computeAvgAccessibility} from '/imports/client/info/hexagons/colorHex.js';
 
 
-const unionPoints = function(listPoints){
+const unionPoints = function(listPoints, hexClass){
     let listSeg = {} 
     let listLabel = {}
     
     //console.log('start erasing...', listPoints)
+
     listPoints.forEach(function(p, index){
-        
-        let hexagon = [];
-        for (let i = 0; i < 6; i++) {
-            let x = p.point.coordinates[0] + rx * cosines[i];
-            let y = p.point.coordinates[1] + ry * sines[i];
-            hexagon.push([x,y]);
-        }
-    
+        let hexagon = hexClass.hexagon(p.point.coordinates).coordinates
   //first and last vertex must be the same
-        hexagon.push(hexagon[0]);
 
         let label = index
         for(let i = 0; i < 6; i++){

@@ -1,9 +1,9 @@
 import { Template } from 'meteor/templating';
 import { Blaze } from 'meteor/blaze';
-import { styleHex, returnShell, computeAvgAccessibility } from '/imports/client/info/hexagons/colorHex.js';
-import { findClosestPoint } from '/imports/client/info/hexagons/findClosestPoint.js'
+import { styleHex, returnShell, computeAvgAccessibility } from '/imports/client/map/lib/colorHex.js';
+import { findClosestPoint } from '/imports/client/map/lib/findClosestPoint.js'
 import { computeIsochrone } from '/imports/client/modify/updateArrays.js';
-import {shellify, unionPoints, findFieldtoUpdate} from '/imports/client/info/hexagons/unionHexs.js';
+import {shellify, unionPoints, findFieldtoUpdate} from '/imports/client/map/lib/unionHexs.js';
 import { scenarioDB} from '/imports/api/DBs/scenarioDB.js';
 
 //If in section INFO click on Hex open PopUp Isochrone, in section Build  click on map.

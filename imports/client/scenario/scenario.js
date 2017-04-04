@@ -110,49 +110,6 @@ const setScenarioDefault = function() {
 	Meteor.call('updateScenario',selScenario, selScenario._id );
 };
 
-/*
-export const loadNewTime = function(time) {
-
-	const city = getCity();
-	let scenario = {}
-	switch(Template.body.data.buttonsHex) {
-		case 'velHex':
-			scenario = Template.body.data.defaultScenario
-			Template.body.data.geoJson = updateGeojson(Template.body.data.geoJson,
-											 scenario, 
-											 Template.body.data.buttonsFeature, 
-											 Template.body.data.buttonsHex,
-											 time)
-			break;
-		case 'velNewHex':
-			scenario = Template.body.template.scenario.currentScenario
-			Template.body.data.geoJson = updateGeojson(Template.body.data.geoJson,
-											 scenario, 
-											 Template.body.data.buttonsFeature, 
-											 Template.body.data.buttonsHex,
-											 time)
-			break;
-		case 'diffHex':
-			scenario = Template.body.data.defaultScenario
-			scenarioNew = Template.body.template.scenario.currentScenario
-			Template.body.data.geoJson = updateGeojsonDiff(Template.body.data.geoJson,
-												 scenario, scenarioNew,
-												 Template.body.data.buttonsFeature, 
-												 Template.body.data.buttonsHex,
-												 time)
-
-			break;
-	}
-
-	if($('#buttonBuild').hasClass('active')){
-		Template.body.data.map.eachLayer(function (layer) {
-			if('lineName' in layer){
-				layer.bringToFront();
-			}
-		});
-	}
-};
-*/
 const loadScenario = function(id) {
 	let selScenario = scenarioDB.findOne({'_id':id}, {sort:{'_id':1}} );
 	if (!selScenario)
@@ -250,7 +207,7 @@ Template.scenario.helpers({
 		return listScenario;
 	},
 	'loadToMap'(){
-		console.log('loadToMap', Template.scenario.RV.currentScenarioIdRV.get());
+		//console.log('loadToMap', Template.scenario.RV.currentScenarioIdRV.get());
 		if(Template.body.data.timeOfDay && Template.quantityButtons.modeSelectedRV && Template.quantityButtons.quantitySelectedRV){
 			let scenarioId = Template.scenario.RV.currentScenarioIdRV.get();
 			//console.log('load to map', scenarioId, Template.quantityButtons.modeSelectedRV.get())

@@ -51,6 +51,7 @@ const computeDataCity = function(city){
  	let areaHex = turf.area(points.findOne({'city':city}).hex)/ (math.pow(10, 6));
  	let stopsList = stops.find({'city':city}, {fields : {'pos':1, 'point':1, 'city':1}, sort :{'pos':1}}).fetch();
  	let arrayPop = initArrayPop(city)
+ 	let centerPoint = points.findOne({'city':city});
  	return {
 		'arrayN': arrayN, 
 		'arrayC': arrayC, 
@@ -58,7 +59,8 @@ const computeDataCity = function(city){
 		'pointsVenues': pointsVenues,
 		'areaHex' : areaHex,
 		'stops' : stopsList,
-		'arrayPop': arrayPop
+		'arrayPop': arrayPop,
+		'oneHex' : centerPoint.hex
 	 };
 };
 
@@ -104,6 +106,8 @@ const setScenarioDefault = function(city){
 		moment.newPotPop = newPotPop;
 	}
 
+
+
 	console.log(Object.keys(scenario));
 	scenarioDB.insert(scenario);
 
@@ -115,8 +119,21 @@ const checkCities = function(){
 	let promiseCities = findCities()
 
   	console.log('check Cities', promiseCities);
-	
-	//setScenarioDefault('torino')
+			
+			/*city = 'roma'
+			let scenarioDef = scenarioDB.findOne({'city':city, 'default':true});
+			console.log(scenarioDef)
+			let startTime = Object.keys(scenarioDef.moments)[0];
+			let moment = scenarioDef.moments[startTime.toString()];
+			let maxVelPoint = {'pos':0, 'newVel':0}
+			moment['newVels'].forEach((newVel, index)=>{
+				console.log(newVel, index, maxVelPoint.newVel)
+				if(parseFloat(newVel) > parseFloat(maxVelPoint.newVel)){
+				 maxVelPoint = {'pos':index, 'newVel':newVel}
+				}
+
+			});
+			console.log(city, maxVelPoint, points.findOne({'city':city,'pos':maxVelPoint.pos}).hex.coordinates[0][0]);*/	
 
 	Promise.all(promiseCities).then( values => { 
 		const cities =  _.union(values[0])
@@ -131,6 +148,16 @@ const checkCities = function(){
 			}else{
 				citiesData[city] = computeDataCity(city);
 			}
+
+			let scenarioDef = scenarioDB.findOne({'city':city, 'default':true});
+			let startTime = Object.keys(scenarioDef.moments)[0];
+			let moment = scenarioDef.moments[startTime.toString()];
+			let maxVelPoint = {'pos':0, 'newVel':0}
+			moment['newVels'].forEach((newVel, index)=>{
+				if(newVel > maxVelPoint.newVel) maxVelPoint = {'pos':index, 'newVel':newVel}
+			});
+			citiesData[city]['centerCity'] = points.findOne({'city':city,'pos':maxVelPoint.pos}).hex.coordinates[0][0];
+			console.log(city, citiesData[city]['centerCity']);
 		}
 		console.log('citiesData crearted', Object.keys(citiesData))
 

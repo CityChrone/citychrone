@@ -31,3 +31,4 @@ momentjs:moment
 cfs:standard-packages
 cfs:gridfs
 cfs:filesystem
+kookoskar:bootstrap-select
