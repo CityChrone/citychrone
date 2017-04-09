@@ -1,11 +1,11 @@
 <template name='popUp'>
 		<div class=' text-muted text-center'>
 			Access Velocity : 
-			<span class ='label' style='{{labelColor 'newVels' this.properties.newVels}}'>  {{ toString 'newVels' this.properties.newVels}} </span>
+			<span class ='label' style='{{labelColor 'newVels' this.newVels}}'>  {{ toString 'newVels' this.newVels}} </span>
 		</div>
 		<div class=' text-muted text-center'>
 			potential population : 
-			<span class ='label' style='{{labelColor 'newPotPop' this.properties.newPotPop}}'>  {{ toString 'newPotPop' this.properties.newPotPop}} </span>
+			<span class ='label' style='{{labelColor 'newPotPop' this.newPotPop}}'>  {{ toString 'newPotPop' this.newPotPop}} </span>
 		</div>
 
 	{{#if isFeature "newAccess"}}

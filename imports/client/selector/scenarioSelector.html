@@ -1,0 +1,11 @@
+<template name="scenarioSelector">
+<div>
+	{{#if isSelected}}
+	{{title}}
+	<button href='#' class="btn btn-primary scenarioButton active" id="scenarioSelected"  onclick="this.blur();">
+		select scenario
+	</button>
+	{{/if}}
+</div>
+
+</template>

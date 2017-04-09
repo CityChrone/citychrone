@@ -5,12 +5,11 @@ import {
 	Meteor
 } from 'meteor/meteor';
 import '/imports/client/selector/quantitySelector.html'
-// import { runCSA, CSAPoint } from '/imports/api/CSA-algorithm/CSA-loop.js';
-//import { vel } from '../../api/velocityDb.js';
-
+import { scenarioDB } from '/imports/api/DBs/scenarioDB.js';
 
 Template.quantitySelector.onCreated(function(){
 	Template.quantitySelector.quantitySelectedRV = new ReactiveVar('newVels')
+	Template.quantitySelector.quantityDiffSelectedRV = new ReactiveVar(false)
 
 })
 
@@ -22,10 +21,10 @@ Template.quantitySelector.events({
 			let target = e.target.id;
 			console.log(target)
 			if(target == 't'){
-				let point = Template.body.collection.points.findOne({}, {sort : {'dTerm':1}})
+				let point = Template.city.collection.points.findOne({}, {sort : {'dTerm':1}})
 				let scenario = {};
-				let startTime = Template.body.data.timeOfDay.get();
-				let scenarioID = Template.scenario.RV.currentScenarioIdRV.get();
+				let startTime = Template.timeSelector.timeSelectedRV.get();
+				let scenarioID = Template.city.RV.currentScenarioId.get();
 				Meteor.call('isochrone', [point, scenarioID, startTime], (error, result) => {
 					let modifier = 'moments.'+ startTime.toString() + '.t'
 					let toSet = {}
@@ -36,7 +35,7 @@ Template.quantitySelector.events({
 						else{
 							let scenarioUpdated = scenarioDB.findOne({'_id':scenarioID})
 							//console.log('return isochrone server side', result, scenarioID, scenarioUpdated, err);
-							Template.quantityButtons.quantitySelectedRV.set(target);
+							Template.quantitySelector.quantitySelectedRV.set(target);
 						}
 						return true;
 					});
