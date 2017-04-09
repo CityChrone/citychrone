@@ -15,7 +15,7 @@ export const numBinDiff = 10;
 export const numBinIso = 18.;
 export const numBinPop = 20;
 
-export const colorVelList = ['#000000', '#993404', "#f16913", "#fdae6b", '#74c476', '#31a354', '#006d2c', "#6baed6", "#4292c6", "#2171b5", '#08519c', '#f768a1', '#dd3497', '#ae017e', '#49006a'];
+export const colorVelList = ['#000000', '#993404', "#f16913", "#fdae6b", '#74c476', '#31a354', '#006d2c', "#6baed6", "#4292c6", "#2171b5", '#08519c', '#f768a1', '#dd3497', '#ae017e', '#49006a', '#49006a'];
 export const shellVel = [0., 3., 5., 6, 7., 8, 9., 10, 11., 12, 13., 14, 17, 20.];
 export const colorVel = function(val) {
 	let i = 0;
@@ -46,11 +46,10 @@ export const colorDiffAccess = d3.scaleSequential(d3Inter.interpolateBlues).doma
 export const shellAccess = _.range(0, 1.001, 1./8)
 export const colorAccess = d3.scaleSequential(d3Inter.interpolateRdBu).domain([0, 1]).clamp(true)
 
-export const returnShell = function(feature, mode){
+export const returnShell = function(feature, diff){
 	//console.log('return shell', mode, feature)
-	switch(mode) {
-		case 'btnCurrent':
-			switch(feature) {
+	if(!diff){
+		switch(feature) {
 				case 'newVels':
 					return shellVel;
 				case 'newAccess':
@@ -60,7 +59,7 @@ export const returnShell = function(feature, mode){
 				case 'newPotPop':
 					return shellPotPop
 			}
-		case 'btnDiff':
+		}else{
 			switch(feature) {
 				case 'newVels':
 					return shellDiffVel;
@@ -72,13 +71,12 @@ export const returnShell = function(feature, mode){
 					return shellDiffPotPop
 
 			}
-	}
+		}
 };
 
-export const color = function(feature, mode){
+export const color = function(feature, diff){
 	//console.log(feature, mode, 'styleHex!!')
-	switch(mode) {
-		case 'btnCurrent':
+		if (!diff){
 			switch(feature) {
 				case 'newVels':
 					return colorVel;
@@ -89,7 +87,7 @@ export const color = function(feature, mode){
 				case 'newPotPop':
 					return colorPotPop;
 			}
-		case 'btnDiff':
+		}else{
 			switch(feature) {
 				case 'newVels':
 					return colorDiffVel;
@@ -101,14 +99,13 @@ export const color = function(feature, mode){
 					return colorDiffPotPop;
 
 			}
-	}
+		}
 };
 
-export const styleHex = function(feature, mode){
+export const styleHex = function(feature, diff){
 	//console.log(feature, mode, 'styleHex!!')
-	switch(mode) {
-		case 'btnCurrent':
-			switch(feature) {
+	if(!diff){			
+		switch(feature) {
 				case 'newVels':
 					return styleVel;
 				case 'newAccess':
@@ -118,7 +115,7 @@ export const styleHex = function(feature, mode){
 				case 'newPotPop':
 					return stylePotPop;
 			}
-		case 'btnDiff':
+		}else{
 			switch(feature) {
 				case 'newVels':
 					return styleDiffVel;
@@ -130,7 +127,7 @@ export const styleHex = function(feature, mode){
 					return styleDiffPotPop;
 
 			}
-	}
+		}
 };
 
 const isochrone_style = {

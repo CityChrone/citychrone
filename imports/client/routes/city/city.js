@@ -4,56 +4,54 @@ import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
-import { makeGeoJsonHexs } from '/imports/client/map/lib/hexsGeojson.js';
-import { fillPointTree } from '/imports/client/map/lib/findClosestPoint.js'
+import { scenarioDB } from '/imports/api/DBs/scenarioDB.js';
+
+import { geoJsonClass } from '/imports/client/map/geojson/hexsGeojson.js';
+import { fillPointTree } from '/imports/client/map/geojson/findClosestPoint.js'
 //import {} from '/imports/client/'
-import { hexagonCity } from '/imports/client/map/lib/hexagonCity.js'
+import { hexagonCity } from '/imports/client/map/geojson/hexagonCity.js'
 
 import { createControl } from '/imports/client/map/legends.js';
 
 import '/imports/client/selector/quantitySelector.js';
-
 import '/imports/client/selector/timeSelector.js';
+import '/imports/client/selector/scenarioSelector.js';
+import '/imports/client/map/geojson/legendGeojson.js';
 
+ 
 import '/imports/client/routes/city/city.html';
 
 Template.city.helpers({
 	'loadGeojsonToMap'(){
-		if(/*Template.timeButtons.data.timeOfDay &&*/ Template.quantitySelector.quantitySelectedRV){
-			let scenarioId = Template.city.RV.currentScenarioId.get();
-			//console.log('load to map', scenarioId, Template.quantityButtons.modeSelectedRV.get())
-			let scenario = scenarioDB.findOne({'_id':scenarioId, 'moments':{'$exists':true}});
-			let time = Template.city.data.timeOfDay.get();
-			//console.log('scenario found', scenario, Template.quantityButtons.quantitySelectedRV.get(), time)
-			Template.city.data.geoJson.remove(Template.body.data.map);
-			switch(Template.quantityButtons.modeSelectedRV.get()) {
-				case 'btnCurrent':
+		console.log('loadGeojsonToMap',)
+			if(Template.city.RV.currentScenarioId.get()){
+				console.log('loadGeojsonToMap after')
+				let scenarioId = Template.city.RV.currentScenarioId.get();
+				console.log('load to map', scenarioId, Template.quantitySelector.quantitySelectedRV.get())
+				let scenario = scenarioDB.findOne({'_id':scenarioId, 'moments':{'$exists':true}});
+				let time = Template.timeSelector.timeSelectedRV.get();
+				console.log('time',time)				
+				if( !Template.quantitySelector.quantityDiffSelectedRV.get() ){
+						Template.city.data.geoJson.updateGeojson(
+														 scenario, 
+														 Template.quantitySelector.quantitySelectedRV.get(),
+														 false, 
+														 time);
+				
+				}
+				else{
+						let scenarioDefaultId =  Template.scenario.data.scenarioDefaultId
+						let scenarioDefault =  scenarioDB.findOne({'_id':scenarioDefaultId});
+						Template.city.data.geoJson.updateGeojsonDiff(
+															 scenario, scenarioNew,
+															 Template.quantitySelector.quantitySelectedRV.get(), 
+															 Template.quantitySelector.modeSelectedRV.get(),
+															 time)
 
-					Template.body.data.geoJson = updateGeojson(
-													 scenario, 
-													 Template.quantityButtons.quantitySelectedRV.get(), 
-													 time)
-					break;
-				case 'btnDiff':
-					let scenarioDefaultId =  Template.scenario.data.scenarioDefaultId
-					let scenarioDefault =  scenarioDB.findOne({'_id':scenarioDefaultId});
-					Template.body.data.geoJson = updateGeojsonDiff(
-														 scenario, scenarioNew,
-														 Template.quantityButtons.quantitySelectedRV.get(), 
-														 Template.quantityButtons.modeSelectedRV.get(),
-														 time)
-
-					break;
+				}
+			
 			}
-			Template.body.data.geoJson.addTo(Template.body.data.map);
-			if($('#buttonBuild').hasClass('active')){
-				Template.body.data.map.eachLayer(function (layer) {
-					if('lineName' in layer){
-						layer.bringToFront();
-					}
-				});
-			}
-		}
+		return true;
 	}
 });
 
@@ -76,10 +74,10 @@ Template.city.onCreated(function(){
 // *******  DATA  ***********
 
   Template.city.data = {};
-  Template.city.data.dataToLoad = 2;
-
-  Template.city.data.blazePopUp = -1; //REmove popUp template from blaze afther closing popUp
-  Template.city.data.blazePopUpMarker = -1; //REmove popUp template from blaze afther closing popUpMArker
+  Template.city.data.dataToLoad = 3;
+  Template.city.data.city = '';
+	Template.city.data.hexClass = {}
+	Template.city.data.geoJson = new geoJsonClass;
 
   //********. Reactive Var ************ 
   Template.city.RV = {};
@@ -90,22 +88,18 @@ Template.city.onCreated(function(){
 }); 
 
 Template.city.onRendered(function() {
-	console.log( Router.current().params)
 
 	let city = Router.current().params.city;
 	Template.city.data.city = city;
-
-	Template.city.data.dataToLoad = 2;
-	Template.city.data.hexClass = {}
 	
-	Template.city.function.checkDataLoaded = function(num) {
+	Template.city.function.checkDataLoaded = function(num = -1) {
 		Template.city.data.dataToLoad  += num
 		if (Template.city.data.dataToLoad  > 0){
 		Template.map.data.map.spin(true);
 			return;
 		}
 		Template.map.data.map.spin(false);
-		Template.body.data.dataLoaded.set(true);
+		Template.city.RV.dataLoaded.set(true);
 	};
 
 	Meteor.call('giveDataBuildScenario', city,'listPoints', function(err, risp){
@@ -118,21 +112,38 @@ Template.city.onRendered(function() {
 		    Template.city.collection.points.insert(doc);
 		}           
 		fillPointTree(Template.city.collection.points); 
-
-		Template.city.function.checkDataLoaded(-1);
+		Template.city.data.geoJson.setPoints(Template.city.collection.points);
+		Template.city.function.checkDataLoaded();
  	});
-
-
 
 	Meteor.call('giveDataBuildScenario', city,'oneHex', function(err, risp){
 		console.log('oneHex', risp, risp.coordinates[0].reverse());
-		Template.city.data.hexClass = new hexagonCity(risp.coordinates[0])
+		Template.city.data.hexClass = new hexagonCity(risp.coordinates[0]);
+		Template.city.data.geoJson.setHexClass(Template.city.data.hexClass);
+		Template.city.function.checkDataLoaded();
  	});
 
  	Meteor.call('giveDataBuildScenario', city,'centerCity', function(err, risp){
 		console.log('centerCity', risp,);
 		//Template.city.data.hexClass = new hexagonCity(risp.coordinates[0])
 		Template.map.data.map.setView(risp.reverse(), 12,{animate: true, duration: 5.0})
+		Template.city.function.checkDataLoaded();
+ 	});
+
+ 	Meteor.subscribe('scenarioDef', city, function() {
+		let scenarioDef = scenarioDB.findOne({'default':true, 'city' : city}, {sort:{'creationDate':-1}});
+		//console.log('loaded', scenarioDef);
+	    Template.city.data.scenarioDefaultId = scenarioDef._id; //scenario contenente i dati senza modifiche
+	    if (!Template.city.data.scenarioDefaultId)
+	      console.error("Default scenario non trovato!");
+	    else {
+	        Template.city.RV.currentScenarioId.set(Template.city.data.scenarioDefaultId);
+	        let times = Object.keys(scenarioDef.moments);
+	        Template.timeSelector.timeSelectedRV.set(times[0]);
+	    }
+      Template.city.function.checkDataLoaded(-1);
+      console.log("Default scenario caricato ", Template.timeSelector.timeSelectedRV.get(),Template.city.RV.currentScenarioId.get());
+      	Template.city.function.checkDataLoaded();
  	});
 
 	/*
@@ -156,11 +167,13 @@ Template.city.onRendered(function() {
   	});*/
 
   	//CREATE CONTROLS
-  	let control = createControl([Template.quantitySelector, Template.timeSelector], "topright", Template.map.data.map, true)
-  	console.log('control', control)
 
-	Template.city.data.geoJson = makeGeoJsonHexs();
-	Template.city.data.geoJson.addTo(Template.map.data.map);
+  	let controlTL = createControl([Template.quantitySelector, Template.timeSelector, Template.scenarioSelector], "topleft", Template.map.data.map, true);
+  	let controlTR = createControl([Template.legendGeojson], "topright", Template.map.data.map, true);
+
+	Template.city.data.geoJson = new geoJsonClass;
+	console.log(Template.city.data.geoJson);
+	Template.city.data.geoJson.geojson.addTo(Template.map.data.map);
 
 	Template.city.data.popup = L.popup();
 

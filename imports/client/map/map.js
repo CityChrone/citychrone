@@ -79,13 +79,19 @@ Template.map.onRendered(function() {
     	zoom: 3,
     	dragging: true,
     	zoomControl : false,
-    	layers: [Template.map.data.baseMaps.Default],
+    	layers: [Template.map.data.baseMaps['B&WLite']],
     	doubleClickZoom:false,
     	attributionControl:false,
     	zoomDelta:0.2,
     	zoomSnap:0.2,
     	inertia:false
   	});
+
+  Template.map.data.ControlbaseMap = L.control.layers(Template.map.data.baseMaps).addTo(Template.map.data.map);
+
+  Template.map.data.mapScale = L.control.scale({position : 'bottomright'}).addTo(Template.map.data.map);
+  Template.map.data.zoom = L.control.zoom( {position : 'bottomright'} );
+  Template.map.data.zoom.addTo(Template.map.data.map);
 
  	Template.map.data.map.spin(true);
 });

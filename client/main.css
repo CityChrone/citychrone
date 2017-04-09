@@ -12,9 +12,14 @@ html, body, #mapid  {
 .centPerCent { 
     height: 100%; 
     width: 100%;
-    margin-left: 15px;
+    /*margin-left: 15px;*/
 }
 
+.limitInfo {
+      width: 150px;
+      /*color: #E36E3C;*/
+
+}
 
 .addStop {
     padding: 6px 8px;

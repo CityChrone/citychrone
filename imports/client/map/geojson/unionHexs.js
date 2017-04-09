@@ -8,9 +8,9 @@ const unionPoints = function(listPoints, hexClass){
     //console.log('start erasing...', listPoints)
 
     listPoints.forEach(function(p, index){
-        let hexagon = hexClass.hexagon(p.point.coordinates).coordinates
+        let hexagon = hexClass.hexagon(p.point.coordinates).geometry.coordinates[0]
   //first and last vertex must be the same
-
+        //console.log(hexagon, hexClass, hexClass.hexagon(p.point.coordinates), p.point.coordinates)
         let label = index
         for(let i = 0; i < 6; i++){
             let seg = [hexagon[i],hexagon[i+1]]

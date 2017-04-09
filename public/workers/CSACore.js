@@ -108,19 +108,19 @@ const tree = function(point, Tpoint, Tstop, arrayN, arrayC, startTime){
 	var S2STime = arrayN.S2STime;
 	startTime = parseInt(startTime);
 	var posPoint = point.pos;
-		console.log('point', posPoint, Tpoint[posPoint], typeof startTime)
+	//console.log('point', posPoint, Tpoint[posPoint], typeof startTime)
 	Tpoint[posPoint] = parseInt(startTime);
 
 
 	// **** Initialize time for neigh point
 
 	for (var i = 0, lenghtP = P2PPos[posPoint].length; i < lenghtP; i++) {
-		console.log('pointN', i, P2PPos[posPoint][i], typeof P2PTime[posPoint][i])
+		//console.log('pointN', i, P2PPos[posPoint][i], typeof P2PTime[posPoint][i])
 		Tpoint[P2PPos[posPoint][i]] = P2PTime[posPoint][i] + startTime;
 	}
 
 	for (var i = 0, lenghtS = P2SPos[posPoint].length; i < lenghtS; i++) {
-		console.log('stopN', i, P2SPos[posPoint][i], typeof P2STime[posPoint][i])
+		//console.log('stopN', i, P2SPos[posPoint][i], typeof P2STime[posPoint][i])
 		Tstop[P2SPos[posPoint][i]] = P2STime[posPoint][i] + startTime;
 	}
 
@@ -129,6 +129,7 @@ const tree = function(point, Tpoint, Tstop, arrayN, arrayC, startTime){
 	for (var c_i = 0, totC = arrayC.length; c_i < totC; c_i += 4) {
 		var posStopStart = arrayC[c_i];
 		var timeStartC = arrayC[c_i + 2];
+		//if(c_i%100000 == 0) console.log(c_i, arrayC.length)
 		if (Tstop[posStopStart] <= timeStartC) {
 			var posStopArr = arrayC[c_i + 1];
 			var timeArr = arrayC[c_i + 3];
@@ -136,6 +137,7 @@ const tree = function(point, Tpoint, Tstop, arrayN, arrayC, startTime){
 				Tstop[posStopArr] = timeArr;
 				var stopNArrayPos = S2SPos[posStopArr];
 				for (var stopN_i = 0, lenghtS = stopNArrayPos.length; stopN_i < lenghtS; stopN_i++) {
+					//console.log('stopNArrayPos', stopNArrayPos.length)
 					var posStopArrN = stopNArrayPos[stopN_i];
 					var timeArrN = timeArr + S2STime[posStopArr][stopN_i];
 					if (Tstop[posStopArrN] > timeArrN) {
@@ -145,7 +147,7 @@ const tree = function(point, Tpoint, Tstop, arrayN, arrayC, startTime){
 			}
 		}
 	}
-	console.log('point after 1/2', posPoint, Tpoint[posPoint])
+	//console.log('point after 1/2', posPoint, Tpoint[posPoint])
 
 	for (var point_i = 0, len_point = Tpoint.length; point_i < len_point; point_i++) {
 		if (P2SPos[point_i]) {
@@ -158,7 +160,7 @@ const tree = function(point, Tpoint, Tstop, arrayN, arrayC, startTime){
 			}
 		}
 	}
-	console.log('point after', posPoint, Tpoint[posPoint])
+	//console.log('point after', posPoint, Tpoint[posPoint])
 
 	return Tpoint;
 };
@@ -168,7 +170,7 @@ let CSAPoint = function(point, arrayC, arrayN, startTime, areaHex, pointsVenues,
 
 	arrayPop = arrayPop || [];
 	const infTime = Math.pow(10, 12);
-	console.log('starting computing');
+	//console.log('starting computing');
 	var totPoint = arrayN.P2SPos.length;
 	var totStop = arrayN.S2SPos.length;
 	var Tstop = new Array(totStop).fill(infTime);
@@ -188,7 +190,7 @@ let CSAPoint = function(point, arrayC, arrayN, startTime, areaHex, pointsVenues,
 	}
 	// **** Update point time after computed stop time
 	//console.log(computeVel(Tpoint,areaHex))
-	console.log('ending computing', countNonReached, Tpoint.length, startTime, point.pos,Tpoint[point.pos] );
+	//console.log('ending computing', countNonReached, Tpoint.length, startTime, point.pos,Tpoint[point.pos] );
 	return {
 		'vAvg': computeVel(Tpoint,areaHex),
 		'accessNew': computeAccess(Tpoint,pointsVenues,accessNew),

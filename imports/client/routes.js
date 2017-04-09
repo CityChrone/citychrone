@@ -2,6 +2,7 @@ import { Router } from 'meteor/iron:router';
 import {hexList, CenterHex} from '/imports/api/parameters.js';
 import '/imports/client/map/map.js';
 import '/imports/client/routes/city/city.js';
+import '/imports/client/routes/world/world.js';
 
 Router.route('/city/:city', function () {
   //if (!this.params.city || !hexList[this.params.city] || !CenterHex[this.params.city])
@@ -27,6 +28,18 @@ Router.route('/map', function () {
     }
   });
 });
+
+Router.route('/world', function () {
+  //if (!this.params.city || !hexList[this.params.city] || !CenterHex[this.params.city])
+    //this.redirect('/city/roma');
+
+  this.render('world',{
+    data: function(){
+      return {'data':'data'};
+    }
+  });
+});
+
 
 Router.route('/node_modules/leaflet/dist/images/', function () {
   console.log("imgLeaflet");

@@ -119,7 +119,8 @@ const checkCities = function(){
 	let promiseCities = findCities()
 
   	console.log('check Cities', promiseCities);
-			
+	//setScenarioDefault('roma');
+
 			/*city = 'roma'
 			let scenarioDef = scenarioDB.findOne({'city':city, 'default':true});
 			console.log(scenarioDef)
@@ -165,13 +166,24 @@ const checkCities = function(){
 		console.log('reason', reason);
 	});
 };
-
+ 
 Meteor.methods({
 	'giveDataBuildScenario' : function(city,data){
 		console.log(city, data)
 		let toReturn = citiesData[city][data] || [];
 		return toReturn;
 	},
+	'giveListCitiesScenario' : function(){
+		let cities = [];
+		for(city in citiesData){
+			let latlng = citiesData[city].oneHex.coordinates[0][0].slice().reverse();
+			console.log(city, latlng)
+			cities.push({'city':city, 'latlng':latlng})
+		}
+		console.log(cities)
+		return cities;
+	},
+
 });
 
 export {checkCities, dataCities}
