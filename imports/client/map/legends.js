@@ -6,20 +6,21 @@ import {
 
 import '/imports/client/map/legends.html';
 
-let createControl = function(templates, position, map, toAdd = true, close=true) {
+let createControl = function(templates, position, map, classToStyle="", toAdd = true, close=true) {
 	let Co = L.Control.extend({
 		options: {
 			position: position
 		},
 
 		onAdd: function(map) {
-			const container = L.DomUtil.create('div', 'alert alert-info info legend '+'position');
+			const container = L.DomUtil.create('div', 'panel panel-default '+ classToStyle);
 			L.DomEvent.disableClickPropagation(container);
 			let legendsCurrent = Blaze.renderWithData(Template.legends, this, container);
 			//console.log(Template.legends, legendsCurrent, legendsCurrent.lastNode())
 			templates.forEach((template)=>{
-				console.log(template)
-				Blaze.renderWithData(template, this, legendsCurrent.lastNode());
+				console.log($(legendsCurrent.lastNode()).children().last())
+				let find = $('.toggleContent')
+				Blaze.renderWithData(template, this, $(legendsCurrent.lastNode()).children().last()[0]);
 			})
 			return container;
 		}
@@ -34,14 +35,24 @@ Template.legends.helpers({
 });
 
 Template.legends.events({
-	'click .closeButton'(e){
+	'click .toggleButton'(e){
 		//console.log(closed, Template.instance())
+		//console.log(Template.instance().$('.toggleContent').parent(2), Template.instance().$('.toggleContent').attr('class'))
+					console.log(Template.instance().$('.toggleContent').parents().eq(0), Template.instance().$('.toggleContent').parents().eq(1))
+
+		if(Template.instance().$('.toggleContent').parents().eq(1).hasClass('leftBar')){
+			console.log(Template.instance().$('.toggleContent').parents().eq(0), Template.instance().$('.toggleContent').parents().eq(1))
+			Template.instance().$('.toggleContent').parents().eq(1).toggleClass('leftBar')
+			Template.instance().$('.toggleContent').parents().eq(1).toggleClass('ToleftBar')
+		}else if(Template.instance().$('.toggleContent').parents().eq(1).hasClass('ToleftBar')){
+			Template.instance().$('.toggleContent').parents().eq(1).toggleClass('leftBar')
+			Template.instance().$('.toggleContent').parents().eq(1).toggleClass('ToleftBar')
+		}
+
 		Template.instance().$('.toggleContent').toggleClass('hidden')
+		//console.log(Template.instance().$('.leaflet-control').attr('class'))
+		
 	},
-		'click .infoButton'(e){
-		//console.log(closed, Template.instance())
-		Template.instance().$('.toggleContent').toggleClass('hidden')
-	}
 });
 
 

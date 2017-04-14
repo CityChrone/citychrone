@@ -9,18 +9,27 @@ html, body, #mapid  {
   width: 100%;
 }
 
-.centPerCent { 
-    height: 100%; 
-    width: 100%;
-    /*margin-left: 15px;*/
-}
-
-.limitInfo {
-      width: 150px;
+.leftBar {
+      width: 250px;
       /*color: #E36E3C;*/
 
 }
 
+.marginBar{
+  margin: 10px;
+}
+
+.colorSpan {
+   width: 16px;
+   height: 16px;
+   font: 10px/12px Arial, Helvetica, sans-serif;
+   float: left;
+   margin-right: 8px;
+   margin-top: 1px;
+   opacity: 0.7;
+}
+
+/*
 .addStop {
     padding: 6px 8px;
     font: 14px/16px Arial, Helvetica, sans-serif;
@@ -34,21 +43,14 @@ html, body, #mapid  {
     color: #777;
 }
 
-.colorSpan {
-   width: 16px;
-   height: 16px;
-   font: 10px/12px Arial, Helvetica, sans-serif;
-   float: left;
-   margin-right: 8px;
-   margin-top: 1px;
-   opacity: 0.7;
-}
 .fontSmall{
    width: 9px;
    height: 9px;
    font: 12px/14px Arial, Helvetica, sans-serif;
 }
+*/
 
+/*
 @font-face {
   font-family: "fontcustom";
   src: url(".fontcustom/fontcustom_ddab3355b1b7f2a98b1f23eec4837bcd.eot?") format("embedded-opentype");
@@ -101,3 +103,4 @@ html, body, #mapid  {
 .icon-hex_white_many:before { content: "\f108"; }
 .icon-isoRounded:before { content: "\f109"; }
 .icon-isoSimple:before { content: "\f10a"; }
+*/

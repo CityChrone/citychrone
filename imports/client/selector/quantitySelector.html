@@ -1,22 +1,31 @@
 <template name="quantitySelector">
+	
+	<div class="h3 text tex-center"> Layers </div>
+	<div class='marginBar'>
+		<span class="h4 text-muted text-left"> quantity: </span>
+		 <select class="selectpicker" data-width="fit" id="quantityPicker" data-style="btn-primary">
+		<option class="" id="newVels"  onclick="this.blur();">
+			Velocity
+		</option>
+		<option class="" id="newPotPop" onclick="this.blur();">
+			Pot-pop
+		</option>
+			<option class="" id="t" onclick="this.blur();">
+			Isochrones
+		</option>
+		<!--
+			<button class="btn btn-primary quantityButton" id="newAccess" onclick="this.blur();">
+				Accessibility
+			</button>
+		!-->
 
-<div class="btn-group-horizontal btn-group" role="group" aria-label="...">
-	 <select class="selectpicker" data-width="fit">
-	<option href='#' class="btn btn-primary quantityButton active" id="newVels"  onclick="this.blur();">
-		Velocity
-	</option>
-	<option class="btn btn-primary quantityButton" id="newPotPop" onclick="this.blur();">
-		pot-pop
-	</option>
-		<option class="btn btn-primary quantityButton" id="t" onclick="this.blur();">
-		isochrones
-	</option>
-	</select>
-	<!--
-	<button class="btn btn-primary quantityButton" id="newAccess" onclick="this.blur();">
-		Accessibility
-	</button>
-	!-->
-</div>
+		</select>
+	</div>
+	<div class='marginBar text-left'>
+	{{> quantityDescription}}
+	</div>
+	<div class='marginBar text-left'>
+	{{> timeSelector}}
+	</div>
 
 </template>

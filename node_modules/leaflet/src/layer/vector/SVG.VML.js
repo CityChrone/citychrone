@@ -38,6 +38,7 @@ L.SVG.include(!L.Browser.vml ? {} : {
 	_update: function () {
 		if (this._map._animatingZoom) { return; }
 		L.Renderer.prototype._update.call(this);
+		this.fire('update');
 	},
 
 	_initPath: function (layer) {
@@ -51,6 +52,7 @@ L.SVG.include(!L.Browser.vml ? {} : {
 		container.appendChild(layer._path);
 
 		this._updateStyle(layer);
+		this._layers[L.stamp(layer)] = layer;
 	},
 
 	_addPath: function (layer) {
@@ -66,6 +68,7 @@ L.SVG.include(!L.Browser.vml ? {} : {
 		var container = layer._container;
 		L.DomUtil.remove(container);
 		layer.removeInteractiveTarget(container);
+		delete this._layers[L.stamp(layer)];
 	},
 
 	_updateStyle: function (layer) {

@@ -7,59 +7,50 @@ import { scenarioDB } from '/imports/api/DBs/scenarioDB.js';
 import '/imports/client/map/popUps/popUpGeojson.js';
 
 //If in section INFO click on Hex open PopUp Isochrone, in section Build  click on map.
-const hexOnClick = function(e){ 
-	let latlng = [parseFloat(e.latlng.lng),parseFloat(e.latlng.lat)]
-	let NearestPos = findClosestPoint(latlng)[0].pos
-	let feature = e.target.feature;
-	let time = Template.timeSelector.timeSelectedRV.get();
-	let scenarioID = Template.city.RV.currentScenarioId.get();
-	let scenario = scenarioDB.findOne({'_id':scenarioID});
-	let moment = _.get(scenario, ["moments", time], []);
+
+export const clickGeojson = function(latlng){
+    let NearestPos = findClosestPoint([latlng[1], latlng[0]])[0].pos
+    let time = Template.timeSelector.timeSelectedRV.get();
+    let scenarioID = Template.city.RV.currentScenarioId.get();
+    let scenario = scenarioDB.findOne({'_id':scenarioID});
+    let moment = _.get(scenario, ["moments", time], []);
     let point = {};
-	point['newVels'] = moment['newVels'][NearestPos];
-	point['newAccess'] = moment['newAccess'][NearestPos];
-	point['newPotPop'] = moment['newPotPop'][NearestPos];
-	
-	if($('#t').hasClass('active')){
-		let point = Template.city.collection.points.findOne({'_id':NearestPos.toString()})
-		let startTime = time;
-		Meteor.call('isochrone', [point, scenarioID, startTime], (error, result) => {
-			let modifier = 'moments.'+ startTime.toString() + '.t'
-			let toSet = {}
-			toSet[modifier] = result
-			scenarioDB.update({'_id':scenarioID}, {'$set':toSet}, (err)=>{
-				if(err){ console.log(err)
-				}
-				else{
-					let scenarioUpdated = scenarioDB.findOne({'_id':scenarioID})
-					//console.log('return isochrone server side', result, scenarioID, scenarioUpdated, err);
-					Template.quantitySelector.quantitySelectedRV.set('t');
-				}
-				return true;
-			});
-		});
+    point['newVels'] = moment['newVels'][NearestPos];
+    point['newAccess'] = moment['newAccess'][NearestPos];
+    point['newPotPop'] = moment['newPotPop'][NearestPos];
+    
+    if($('#quantityPicker').val() == 'Isochrones'){
+        let point = Template.city.collection.points.findOne({'_id':NearestPos.toString()})
+        let startTime = time;
+        Meteor.call('isochrone', [point, scenarioID, startTime], (error, result) => {
+            let modifier = 'moments.'+ startTime.toString() + '.t'
+            let toSet = {}
+            toSet[modifier] = result
+            scenarioDB.update({'_id':scenarioID}, {'$set':toSet}, (err)=>{
+                if(err){ console.log(err)
+                }
+                else{
+                    let scenarioUpdated = scenarioDB.findOne({'_id':scenarioID})
+                    //console.log('return isochrone server side', result, scenarioID, scenarioUpdated, err);
+                    Template.quantitySelector.quantitySelectedRV.set('t');
+                }
+                return true;
+            });
+        });
     }
-		
-    console.log("hex clickt", this);
     const container = L.DomUtil.create('div', 'popUp');
     Blaze.renderWithData(Template.popUpGeojson, point, container);
     L.DomEvent.disableClickPropagation(container);
     let popUp = L.popup();
     popUp.setContent(container);
-    popUp.setLatLng(e.latlng);
+    popUp.setLatLng(latlng);
     popUp.openOn(Template.map.data.map);
 
-    /*
-	if(Template.body.data.blazePopUp != -1){
-		Blaze.remove(Template.city.data.blazePopUp);
-	}
-	const container = L.DomUtil.create('div', 'popUp');
-    L.DomEvent.disableClickPropagation(container);
-	Template.body.data.blazePopUp = Blaze.renderWithData(Template.popUp, point, container);
-	Template.body.data.popup.setContent(container);
-	Template.body.data.popup.setLatLng(e.latlng);
-	Template.body.data.popup.openOn(Template.body.data.map);
-	}*/
+}
+
+const hexOnClick = function(e){ 
+	let latlng = [parseFloat(e.latlng.lat), parseFloat(e.latlng.lng)];
+    clickGeojson(latlng);
 };
 
 class geoJsonClass{
@@ -72,13 +63,13 @@ class geoJsonClass{
                 layer.on('click', hexOnClick);
             }
         });
-        console.log('createGeoJson', this);
+        //console.log('createGeoJson', this);
         
     }
     updateGeojson(scenario, quantity, diff = false, time, shell=null){
         this.quantity = quantity;
         this.diff = diff;
-        console.log(scenario,time, quantity, 'class!!')
+        //console.log(scenario,time, quantity, 'class!!')
         this.geojson.clearLayers();
         this.geojson.setStyle(styleHex(quantity, diff));
         shell = shell || returnShell(quantity, diff);
@@ -97,7 +88,7 @@ class geoJsonClass{
         });
         let pointShellify = shellify(points, quantity, shell)
 
-        console.log('shellify',shell, pointShellify, points)
+       // console.log('shellify',shell, pointShellify, points)
         for (let low in pointShellify) {
             geoJsonUnion = unionPoints(pointShellify[low],  this.hexClass);
             //console.log('union', low, geoJsonUnion)
@@ -155,12 +146,12 @@ const updateGeojsonDiff = function(scenario,scenarioNew, buttonsFeature,buttonsH
             break;
     }
 
-    console.log('update Scenario Diff', time, feature, scenario, values, valuesNew, points)
+   // console.log('update Scenario Diff', time, feature, scenario, values, valuesNew, points)
 
 
     let pointShellify = shellify(points, feature, shell)
 
-    console.log(pointShellify)
+   // console.log(pointShellify)
     for (let low in pointShellify) {
 
         geoJsonUnion = unionPoints(pointShellify[low]);
