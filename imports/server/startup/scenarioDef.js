@@ -32,6 +32,15 @@ const findCities = function(){
 
 };
 
+const findCitiesDef = function(){
+	let field = 'city'
+	let citiesDef = scenarioDB.rawCollection().distinct(field, {'default':true})
+	console.log('findCities!!', citiesDef);
+	return [citiesDef]
+
+};
+
+
 const initPointsVenues = function(listPoints){
 	pointsVenues = []
 	for (var point_i = 0; point_i < listPoints.length; point_i++) {
@@ -64,10 +73,10 @@ const computeDataCity = function(city){
 	 };
 };
 
-const setScenarioDefault = function(city){
+export const computeScenarioDefault = function(city){
 	let startTime = timesOfDay[0];
 	let results = [];
-	let scenario = initScenario(city, 'default', startTime);
+	let scenario = initScenario(city, 'default', 'citychrone', startTime);
 	scenario.default = true;
 	
 	let dataCity = computeDataCity(city)
@@ -107,64 +116,45 @@ const setScenarioDefault = function(city){
 	}
 
 
-
+	scenarioDB.remove({'city':city, 'default':true});
 	console.log(Object.keys(scenario));
 	scenarioDB.insert(scenario);
 
-	return dataCity
+	return scenario;
 
 } 
 
+export const addCityToList = function(scenarioDef){
+	let city = scenarioDef.city
+	//console.log(city, ' founded scenario def');
+
+		//if(computeScenDef){
+	//citiesData[city] = setScenarioDefault(city);
+		//}else{
+	citiesData[city] = computeDataCity(city);
+		//}
+
+	let startTime = Object.keys(scenarioDef.moments)[0];
+	let moment = scenarioDef.moments[startTime.toString()];
+	let maxVelPoint = {'pos':0, 'newVel':0}
+	moment['newVels'].forEach((newVel, index)=>{
+		if(newVel > maxVelPoint.newVel) maxVelPoint = {'pos':index, 'newVel':newVel}
+	});
+	citiesData[city]['centerCity'] = points.findOne({'city':city,'pos':maxVelPoint.pos}).hex.coordinates[0][0];
+	citiesData[city]['centerCity'].reverse();
+	//console.log(city, citiesData[city]['centerCity']);
+	return true;
+}
+
 const checkCities = function(){
-	let promiseCities = findCities()
+	let promiseCities = findCitiesDef()
 
   	console.log('check Cities', promiseCities);
-	//setScenarioDefault('roma');
 
-			/*city = 'roma'
-			let scenarioDef = scenarioDB.findOne({'city':city, 'default':true});
-			console.log(scenarioDef)
-			let startTime = Object.keys(scenarioDef.moments)[0];
-			let moment = scenarioDef.moments[startTime.toString()];
-			let maxVelPoint = {'pos':0, 'newVel':0}
-			moment['newVels'].forEach((newVel, index)=>{
-				console.log(newVel, index, maxVelPoint.newVel)
-				if(parseFloat(newVel) > parseFloat(maxVelPoint.newVel)){
-				 maxVelPoint = {'pos':index, 'newVel':newVel}
-				}
-
-			});
-			console.log(city, maxVelPoint, points.findOne({'city':city,'pos':maxVelPoint.pos}).hex.coordinates[0][0]);*/	
-
-	Promise.all(promiseCities).then( values => { 
-		const cities =  _.union(values[0])
-		console.log('cities',cities)
-		for(let city_i in cities){ 	
-			let city = cities[city_i]	
-			let computeScenDef = scenarioDB.find({'city':city, 'default':true}).count() == 0;
-			console.log(city, 'compute Scenario default?', computeScenDef);
-
-			if(computeScenDef){
-				citiesData[city] = setScenarioDefault(city);
-			}else{
-				citiesData[city] = computeDataCity(city);
-			}
-
-			let scenarioDef = scenarioDB.findOne({'city':city, 'default':true});
-			let startTime = Object.keys(scenarioDef.moments)[0];
-			let moment = scenarioDef.moments[startTime.toString()];
-			let maxVelPoint = {'pos':0, 'newVel':0}
-			moment['newVels'].forEach((newVel, index)=>{
-				if(newVel > maxVelPoint.newVel) maxVelPoint = {'pos':index, 'newVel':newVel}
-			});
-			citiesData[city]['centerCity'] = points.findOne({'city':city,'pos':maxVelPoint.pos}).hex.coordinates[0][0];
-			console.log(city, citiesData[city]['centerCity']);
-		}
-		console.log('citiesData crearted', Object.keys(citiesData))
-
-	}, reason => {
-		console.log('reason', reason);
+  	scenarioDB.find({'default':true}).forEach(function(scenarioDef, index){
+		addCityToList(scenarioDef)
 	});
+	console.log('citiesData crearted', Object.keys(citiesData))
 };
  
 Meteor.methods({
@@ -176,7 +166,7 @@ Meteor.methods({
 	'giveListCitiesScenario' : function(){
 		let cities = [];
 		for(city in citiesData){
-			let latlng = citiesData[city].oneHex.coordinates[0][0].slice().reverse();
+			let latlng = citiesData[city]['centerCity'];
 			console.log(city, latlng)
 			cities.push({'city':city, 'latlng':latlng})
 		}

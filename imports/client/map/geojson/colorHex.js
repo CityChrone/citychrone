@@ -7,15 +7,15 @@ import d3 from 'd3'
 //const shell = [0.,3., 5.,7.,9.,11.,13.,15,17, 20.];
 export const maxValueDiff = 2.;
 export const maxValueAccessDiff = 1.;
-export const maxValueIso = 3. * 3600.
+export const maxValueIso = 2. * 3600.
 export const maxValuePotPop = 1000000;
 
 export const numBinAccess = 15;
 export const numBinDiff = 10;
-export const numBinIso = 18.;
+export const numBinIso = 8.;
 export const numBinPop = 20;
 
-export const colorVelList = ['#000000', '#993404', "#f16913", "#fdae6b", '#74c476', '#31a354', '#006d2c', "#6baed6", "#4292c6", "#2171b5", '#08519c', '#f768a1', '#dd3497', '#ae017e', '#49006a', '#49006a'];
+export const colorVelList = ['#000000', '#993404', "#f16913", "#fdae6b", '#74c476', '#31a354', '#006d2c', "#6baed6", "#4292c6", "#2171b5", '#08519c', '#f768a1', '#dd3497', '#ae017e', '#49006a'];
 export const shellVel = [0., 3., 5., 6, 7., 8, 9., 10, 11., 12, 13., 14, 17, 20.];
 export const colorVel = function(val) {
 	let i = 0;
@@ -34,8 +34,13 @@ export const shellDiffPotPop = _.range(0, maxValueDiff,  maxValueDiff/numBinDiff
 export const colorDiffPotPop = d3.scaleSequential(d3Inter.interpolateBlues).domain([0, maxValueDiff]).clamp(true)
 
 
-export const shellIsochrone =  _.range(-maxValueIso/numBinIso+1, maxValueIso,  maxValueIso/numBinIso)
-export const colorIsochrone = d3.scaleSequential(d3Inter.interpolateSpectral).domain([0, maxValueIso]).clamp(true)
+export const shellIsochrone =  _.range(maxValueIso/numBinIso, maxValueIso+1,  maxValueIso/numBinIso)
+shellIsochrone.unshift(1)
+shellIsochrone.unshift(0)
+export const colorIsochrone = function(val){
+	if(val < 1) return '#08519c'
+	else return d3.scaleSequential(d3Inter.interpolateSpectral).domain([maxValueIso, 0]).clamp(true)(val);
+}
 
 export const shellDiffVel = _.range(0, maxValueDiff,  maxValueDiff/numBinDiff)
 export const colorDiffVel = d3.scaleSequential(d3Inter.interpolateBlues).domain([0, maxValueDiff]).clamp(true)

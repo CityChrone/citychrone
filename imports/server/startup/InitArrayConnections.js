@@ -1,6 +1,7 @@
 import {connections} from '/imports/api/DBs/connectionsDB.js';
 import {metroLines} from '/imports/api/DBs/metroLinesDB.js';
 
+connections._ensureIndex({'tStart':1, 'tEnd':1, 'city':1});
 
 const initArrayC = function(city, startTime, endTime) {
 	console.log('initArrayC per ' + city + " " + startTime + " => " + endTime);
@@ -9,7 +10,7 @@ const initArrayC = function(city, startTime, endTime) {
 		'tStart':{'$gte':startTime},
 		'tEnd':{'$lte':endTime},
 		'city':city
-	}, {sort : {'tStart':1}}).fetch();
+	}, {sort : {'tStart':1}, fields:{'pStart':1, 'pEnd':1, 'tStart':1, 'tEnd':1, '_id':0}}).fetch();
 
 	console.log("trovati " + conns.length);
 

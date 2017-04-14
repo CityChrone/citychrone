@@ -27,7 +27,7 @@ Template.timeSelector.helpers({
 		let scenario = scenarioDB.findOne({'_id':scenarioID})
 		let times = Object.keys(scenario.moments);
 		let timesRet = times.map((time)=>{
-			let timeFormat = moment("1900-01-01 00:00:00").add(time, 'seconds').format("HH:mm:ss")
+			let timeFormat = moment("1900-01-01 00:00:00").add(time, 'seconds').format("HH:mm")
 			return {'time':timeFormat};})
 		//console.log(times, timesRet[0]);
 		//$('.selectpicker').selectpicker('refresh');

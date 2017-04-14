@@ -8,13 +8,19 @@ import fs from 'fs';
 
 import { initArrayC} from '/imports/server/startup/InitArrayConnections.js';
 import { initNeighStopAndPoint } from '/imports/server/startup/neighStopsPoints.js';
+import { computeScenarioDefault, addCityToList } from '/imports/server/startup/scenarioDef.js';
 
-Router.route('/exportzip/:city', function () {
-  console.log("exportzip " + this.params.city);
-  // var request = this.request;
-  // var response = this.response;
+Router.route('/computeScenarioDef/:city', function () {
+	let city = this.params.city
 
-  this.response.end('Zip per ' + this.params.city + ' esportati!');
+	let scenarioDef = computeScenarioDefault(city);
+
+	console.log('computedScenario def', city);
+	addCityToList(scenarioDef);
+	console.log('added to list city def', city);
+ 	this.response.end('default scenarion computed of \n', city);
+	//this.response.end('Zip per ' + this.params.city + ' esportati!');
+
 }, {where: 'server'});
 
 

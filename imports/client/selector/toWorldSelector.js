@@ -6,7 +6,11 @@ import '/imports/client/selector/toWorldSelector.html'
 
 Template.toWorldSelector.helpers({});
 
-Template.toWorldSelector.events({});
+Template.toWorldSelector.events({
+	'click #toWorld'(e){
+		Router.go('/world');
+	}
+});
 
 
 Template.toWorldSelector.onCreated(function(){});

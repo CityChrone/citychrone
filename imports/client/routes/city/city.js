@@ -17,7 +17,7 @@ import '/imports/client/selector/quantitySelector.js';
 import '/imports/client/selector/timeSelector.js';
 import '/imports/client/selector/scenarioSelector.js';
 import '/imports/client/map/geojson/legendGeojson.js';
-
+import '/imports/client/selector/buttonsChangePage.js';
  
 import '/imports/client/routes/city/city.html';
 
@@ -126,7 +126,8 @@ Template.city.onRendered(function() {
  	Meteor.call('giveDataBuildScenario', city,'centerCity', function(err, risp){
 		console.log('centerCity', risp,);
 		//Template.city.data.hexClass = new hexagonCity(risp.coordinates[0])
-		Template.map.data.map.setView(risp.reverse(), 12,{animate: true, duration: 5.0})
+		Template.map.data.map.setView(risp, 12,{animate: true, duration: 5.0});
+		Template.map.data.centerCity = risp;
 		Template.city.function.checkDataLoaded();
  	});
 
@@ -168,8 +169,8 @@ Template.city.onRendered(function() {
 
   	//CREATE CONTROLS
 
-  	let controlTL = createControl([Template.quantitySelector, Template.timeSelector, Template.scenarioSelector], "topleft", Template.map.data.map, true);
-  	let controlTR = createControl([Template.legendGeojson], "topright", Template.map.data.map, true);
+  	let controlTL = createControl([Template.quantitySelector, Template.scenarioSelector, Template.buttonsChangePage], "topleft",  Template.map.data.map, 'leftBar', true);
+  	let controlTR = createControl([Template.legendGeojson], "topright",  Template.map.data.map,'', true);
 
 	Template.city.data.geoJson = new geoJsonClass;
 	console.log(Template.city.data.geoJson);

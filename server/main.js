@@ -20,6 +20,7 @@ import { initArrayC} from '/imports/server/startup/InitArrayConnections.js';
 import { initNeighStopAndPoint } from '/imports/server/startup/neighStopsPoints.js';
 
 import { checkCities } from '/imports/server/startup/scenarioDef.js';
+import '/imports/server/router.js';
 
 var _;
 

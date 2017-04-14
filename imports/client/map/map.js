@@ -14,7 +14,9 @@ Template.map.onCreated(function() {
 });
 
 Template.map.onRendered(function() {
-	L.Icon.Default.imagePath = '/node_modules/leaflet/dist/images/';
+	L.Icon.Default.imagePath = '/pipo/images/';
+  console.log(L)
+
     Template.map.data.OpenStreetMap_Mapnik = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       minZoom: 3,
       maxZoom: 20,
@@ -79,13 +81,15 @@ Template.map.onRendered(function() {
     	zoom: 3,
     	dragging: true,
     	zoomControl : false,
-    	layers: [Template.map.data.baseMaps['B&WLite']],
-    	doubleClickZoom:false,
-    	attributionControl:false,
-    	zoomDelta:0.2,
-    	zoomSnap:0.2,
+    	layers: [Template.map.data.baseMaps['Default']],
+    	//doubleClickZoom:false,
+    	//attributionControl:false,
+    	//zoomDelta:0.2,
+    	//zoomSnap:0.2,
     	inertia:false
   	});
+
+    L.Icon.Default.imagePath = '/pipo/images/';
 
   Template.map.data.ControlbaseMap = L.control.layers(Template.map.data.baseMaps).addTo(Template.map.data.map);
 
