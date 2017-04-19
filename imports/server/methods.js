@@ -18,10 +18,10 @@ Meteor.methods({
   'metroLines'(city){
     return metroLines.find({'city' : city}).fetch();
   },
-  'isochrone'(args){
-      let point = args[0];
-      let scenarioID = args[1]; 
-      let startTime = args[2];
+  'isochrone'(point, scenarioID, startTime){
+      //let point = args[0];
+      //let scenarioID = args[1]; 
+      //let startTime = args[2];
       console.log('call isochrone!! points', point, scenarioID, startTime);
       var scenario = scenarioDB.findOne({'_id':scenarioID});
       let city = scenario.city;

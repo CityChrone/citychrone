@@ -24,11 +24,9 @@ import '/imports/client/routes/city/city.html';
 Template.city.helpers({
 	'loadGeojsonToMap'(){
 		console.log('loadGeojsonToMap',)
-			if(Template.city.RV.currentScenarioId.get()){
+			if(Template.city.RV.currentScenario.get()){
 				console.log('loadGeojsonToMap after')
-				let scenarioId = Template.city.RV.currentScenarioId.get();
-				console.log('load to map', scenarioId, Template.quantitySelector.quantitySelectedRV.get())
-				let scenario = scenarioDB.findOne({'_id':scenarioId, 'moments':{'$exists':true}});
+				let scenario = Template.city.RV.currentScenario.get();
 				let time = Template.timeSelector.timeSelectedRV.get();
 				console.log('time',time)				
 				if( !Template.quantitySelector.quantityDiffSelectedRV.get() ){
@@ -66,6 +64,7 @@ Template.city.onCreated(function(){
 	Template.city.collection = {};
 	Template.city.collection.points  = new Mongo.Collection(null); //Local DB for points
 	Template.city.collection.metroLines = new Mongo.Collection(null); //Local DB for metroLines
+	Template.city.collection.scenarioDB = new Mongo.Collection(null); //Local DB for metroLines
 
 
 //*********TEMPLATE***********
@@ -82,7 +81,9 @@ Template.city.onCreated(function(){
   //********. Reactive Var ************ 
   Template.city.RV = {};
   Template.city.RV.dataLoaded = new ReactiveVar(false); //true when finished load data
-  Template.city.RV.currentScenarioId  = new ReactiveVar(false); 
+  Template.city.RV.currentScenarioId = new ReactiveVar(false); 
+  Template.city.RV.currentScenario = new ReactiveVar(false); 
+
 
 
 }); 
@@ -138,12 +139,12 @@ Template.city.onRendered(function() {
 	    if (!Template.city.data.scenarioDefaultId)
 	      console.error("Default scenario non trovato!");
 	    else {
-	        Template.city.RV.currentScenarioId.set(Template.city.data.scenarioDefaultId);
+	        Template.city.RV.currentScenario.set(scenarioDef);
 	        let times = Object.keys(scenarioDef.moments);
 	        Template.timeSelector.timeSelectedRV.set(times[0]);
 	    }
       Template.city.function.checkDataLoaded(-1);
-      console.log("Default scenario caricato ", Template.timeSelector.timeSelectedRV.get(),Template.city.RV.currentScenarioId.get());
+      console.log("Default scenario caricato ", Template.timeSelector.timeSelectedRV.get(),Template.city.RV.currentScenario.get());
       	Template.city.function.checkDataLoaded();
  	});
 
