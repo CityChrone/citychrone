@@ -26,6 +26,7 @@ export const clickGeojson = function(latlng){
             let modifier = 'moments.'+ startTime.toString() + '.t'
             let toSet = {}
             toSet[modifier] = result
+            console.log('called method isochrone');
             scenarioDB.update({'_id':scenarioID}, {'$set':toSet}, (err)=>{
                 if(err){ console.log(err)
                 }
@@ -36,6 +37,7 @@ export const clickGeojson = function(latlng){
                 }
                 return true;
             });
+            return true;
         });
     }
     const container = L.DomUtil.create('div', 'popUp');
