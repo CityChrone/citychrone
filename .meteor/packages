@@ -17,7 +17,6 @@ standard-minifier-js@1.2.3    # JS minifier run for production mode
 es5-shim@4.6.15                # ECMAScript 5 compatibility for older browsers.
 ecmascript@0.6.3              # Enable ECMAScript2015+ syntax in app code
 
-insecure@1.0.7                # Allow all DB writes from clients (for prototyping)
 reactive-dict@1.1.8
 fortawesome:fontawesome
 shell-server@0.2.3
