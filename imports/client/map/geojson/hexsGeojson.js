@@ -11,7 +11,7 @@ import '/imports/client/map/popUps/popUpGeojson.js';
 export const clickGeojson = function(latlng){
     let NearestPos = findClosestPoint([latlng[1], latlng[0]])[0].pos
     let time = Template.timeSelector.timeSelectedRV.get();
-    let scenarioID = Template.city.RV.currentScenarioId.get();
+    let scenarioID = Template.city.RV.currentScenario.get()._id;
     let scenario = scenarioDB.findOne({'_id':scenarioID});
     let moment = _.get(scenario, ["moments", time], []);
     let point = {};
@@ -22,12 +22,16 @@ export const clickGeojson = function(latlng){
     if($('#quantityPicker').val() == 'Isochrones'){
         let point = Template.city.collection.points.findOne({'_id':NearestPos.toString()})
         let startTime = time;
-        Meteor.call('isochrone', [point, scenarioID, startTime], (error, result) => {
+        Meteor.apply('isochrone', [point, scenarioID, startTime], noRetry = false, onResultReceived = (error, result) => {
+            console.log(result, error)
             let modifier = 'moments.'+ startTime.toString() + '.t'
             let toSet = {}
             toSet[modifier] = result
             console.log('called method isochrone');
-            scenarioDB.update({'_id':scenarioID}, {'$set':toSet}, (err)=>{
+            scenario.moments[startTime.toString()].t = result;
+            Template.city.RV.currentScenario.set(scenario)
+            Template.quantitySelector.quantitySelectedRV.set('t');     
+            /*scenarioDB.update({'_id':scenarioID}, {'$set':toSet}, (err)=>{
                 if(err){ console.log(err)
                 }
                 else{
@@ -36,7 +40,7 @@ export const clickGeojson = function(latlng){
                     Template.quantitySelector.quantitySelectedRV.set('t');
                 }
                 return true;
-            });
+            });*/
             return true;
         });
     }
