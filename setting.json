@@ -1,9 +1,7 @@
 {
-    "env":{
-	"METEOR_SETTINGS": {
-        	"PORT": 5555,
-        	"MONGO_URL": "mongodb://localhost:5555/citychrone",
-		"NODE_OPTIONS" : "--max_old_space_size=4096"    
-		}
-	}
+  "public": {
+    "analyticsSettings": {
+      "Google Analytics" : {"trackingId": "UA-92404457-1"}
+    }
+  }
 }
