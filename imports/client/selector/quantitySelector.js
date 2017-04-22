@@ -17,9 +17,17 @@ Template.quantitySelector.onCreated(function(){
 
 let text2field = {
 	'Velocity' : 'newVels',
-	'Pot-pop' : 'newPotPop',
+	'Daily Pop' : 'newPotPop',
 	'Isochrones': 't'
+};
+let invertKeys2Value = function(myObj){
+	let newObj = {}
+	_.forEach(myObj, function(v,key){
+		newObj[v] = key;
+	});
+	return newObj
 }
+let field2text = invertKeys2Value(text2field)
 
 let eventQuantitySelected = function(e){
 	let target = text2field[e.target.value];
@@ -53,6 +61,14 @@ let eventQuantitySelected = function(e){
 
 Template.quantitySelector.events({
 });
+
+Template.quantitySelector.helpers({
+	'nameQuantity'(field){
+		console.log(field, field2text[field])
+		return field2text[field]
+	}
+});
+
 
 Template.quantitySelector.onRendered(function() {
 		
