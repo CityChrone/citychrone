@@ -5,13 +5,13 @@
 		<span class="h4 text-muted text-left"> quantity: </span>
 		 <select class="selectpicker" data-width="fit" id="quantityPicker" data-style="btn-primary">
 		<option class="" id="newVels"  onclick="this.blur();">
-			Velocity
+			{{nameQuantity "newVels"}}
 		</option>
 		<option class="" id="newPotPop" onclick="this.blur();">
-			Pot-pop
+			{{nameQuantity "newPotPop"}}
 		</option>
 			<option class="" id="t" onclick="this.blur();">
-			Isochrones
+			{{nameQuantity "t"}}
 		</option>
 		<!--
 			<button class="btn btn-primary quantityButton" id="newAccess" onclick="this.blur();">
