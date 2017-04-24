@@ -15,7 +15,7 @@ Template.quantitySelector.onCreated(function(){
 
 });
 
-let text2field = {
+export let text2field = {
 	'Velocity' : 'newVels',
 	'Daily Pop' : 'newPotPop',
 	'Isochrones': 't'
@@ -27,7 +27,7 @@ let invertKeys2Value = function(myObj){
 	});
 	return newObj
 }
-let field2text = invertKeys2Value(text2field)
+export let field2text = invertKeys2Value(text2field)
 
 let eventQuantitySelected = function(e){
 	let target = text2field[e.target.value];

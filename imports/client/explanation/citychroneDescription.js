@@ -3,7 +3,16 @@ import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
 import '/imports/client/explanation/citychroneDescription.html';
 
-Template.citychroneDescription.helpers({});
+Template.citychroneDescription.helpers({
+	shareData: function() {
+    return { 
+    	title: 'CityChrone - visualizing city kwonledge.',
+    	url: 'http://citychrone.org',
+    	description : "sharing information"
+    	 }
+  }
+
+});
 
 Template.citychroneDescription.events({});
 
