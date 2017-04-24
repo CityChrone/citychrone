@@ -3,6 +3,7 @@ import { hexList, CenterHex } from '/imports/api/parameters.js';
 import '/imports/client/map/map.js';
 import '/imports/client/routes/city/city.js';
 import '/imports/client/routes/world/world.js';
+import '/imports/client/initClient.js';
 
 Router.route('/city/:city', function () {
   //if (!this.params.city || !hexList[this.params.city] || !CenterHex[this.params.city])
@@ -17,6 +18,18 @@ Router.route('/city/:city', function () {
   });
 });
 
+Router.route('/world', function () {
+  //if (!this.params.city || !hexList[this.params.city] || !CenterHex[this.params.city])
+    //this.redirect('/city/roma');
+
+  this.render('world',{
+    data: function(){
+      return {'data':'data'};
+    }
+  });
+});
+
+
 
 Router.route('/map', function () {
   //if (!this.params.city || !hexList[this.params.city] || !CenterHex[this.params.city])
@@ -29,15 +42,10 @@ Router.route('/map', function () {
   });
 });
 
-Router.route('/world', function () {
+Router.route('/', function () {
   //if (!this.params.city || !hexList[this.params.city] || !CenterHex[this.params.city])
-    //this.redirect('/city/roma');
+    this.redirect('/world');
 
-  this.render('world',{
-    data: function(){
-      return {'data':'data'};
-    }
-  });
 });
 
 
