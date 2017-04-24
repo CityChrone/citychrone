@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 import turf from 'turf';
 
 import {returnShell, color} from '/imports/client/map/geojson/colorHex.js';
-
+import { field2text } from '/imports/client//selector/quantitySelector.js';
 import '/imports/client/map/geojson/legendGeojson.html';
 
 const makeColorLegend = function(shell, color, functionToShell){
@@ -27,7 +27,7 @@ let dataQuantity = function(quantity){
 	switch (quantity) {
 			case 'newVels':
 				return {
-					title: 'Velocity',
+					title: field2text['newVels'],
 					'unity': '[km/h]',
 					'functionToShell' : undefined
 				};
@@ -38,13 +38,13 @@ let dataQuantity = function(quantity){
 				};
 			case 'newPotPop':
 				return {
-					title: 'potential population',
+					title: field2text['newPotPop'],
 					'unity': '[individuals]',
 					'functionToShell' : (val) => { return (val/1000.).toString() + 'K';}
 				};
 			case 't':
 				return {
-					title: 'isochrone',
+					title: field2text['t'],
 					'unity': '[min]',
 					'functionToShell' : (val) => { 
 						if (val == 0) return "start";

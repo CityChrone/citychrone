@@ -13,7 +13,9 @@ import '/imports/client/explanation/citychroneDescription.js';
 import '/imports/client/routes/world/world.html';
 
 
-Template.world.helpers({});
+Template.world.helpers({
+
+});
 
 Template.world.events({});
 
