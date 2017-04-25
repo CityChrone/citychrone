@@ -30,7 +30,6 @@ Router.route('/world', function () {
 });
 
 
-
 Router.route('/map', function () {
   //if (!this.params.city || !hexList[this.params.city] || !CenterHex[this.params.city])
     //this.redirect('/city/roma');
