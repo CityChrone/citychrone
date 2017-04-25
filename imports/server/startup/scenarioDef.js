@@ -50,11 +50,12 @@ const initPointsVenues = function(listPoints){
 	return pointsVenues;
 };
 
-const computeDataCity = function(city){
+const computeDataCity = function(city, computeArrayC = true){
 	let startTime = timesOfDay[0];
 	let listPoints = initPoints(city);
 	let arrayN = initNeighStopAndPoint(city);
-	let arrayC = initArrayC(city, startTime, startTime + 3.*3600.);
+	let arrayC = [];
+	if(computeArrayC) arrayC = initArrayC(city, startTime, startTime + 3.*3600.);
  	let pointsVenues = initPointsVenues(listPoints);
  	console.log('computeData')
  	let areaHex = turf.area(points.findOne({'city':city}).hex)/ (math.pow(10, 6));
@@ -79,7 +80,7 @@ export const computeScenarioDefault = function(city){
 	let scenario = initScenario(city, 'default', 'citychrone', startTime);
 	scenario.default = true;
 	
-	let dataCity = computeDataCity(city)
+	let dataCity = computeDataCity(city, false)
 
 	let listPoints = dataCity.listPoints;
 	let arrayN = dataCity.arrayN;
@@ -118,7 +119,10 @@ export const computeScenarioDefault = function(city){
 
 	scenarioDB.remove({'city':city, 'default':true});
 	console.log(Object.keys(scenario));
-	scenarioDB.insert(scenario);
+	scenarioDB.insert(scenario, (e)=>{
+		addCityToList(scenario);
+	});
+	
 
 	return scenario;
 
