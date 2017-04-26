@@ -8,7 +8,7 @@ import fs from 'fs';
 
 import { initArrayC} from '/imports/server/startup/InitArrayConnections.js';
 import { initNeighStopAndPoint } from '/imports/server/startup/neighStopsPoints.js';
-import { computeScenarioDefault, addCityToList } from '/imports/server/startup/scenarioDef.js';
+import { computeScenarioDefault, addCityToList, checkCities } from '/imports/server/startup/scenarioDef.js';
 
 Router.route('/computeScenarioDef/:city', function () {
 	let city = this.params.city
@@ -24,4 +24,8 @@ Router.route('/computeScenarioDef/:city', function () {
 
 }, {where: 'server'});
 
+Router.route('/reloadCities', function () {
+  checkCities();
+
+}, {where: 'server'});
 

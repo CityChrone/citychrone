@@ -16,7 +16,7 @@ export const numBinIso = 8.;
 export const numBinPop = 20;
 
 export const colorVelList = ['#000000', '#993404', "#f16913", "#fdae6b", '#74c476', '#31a354', '#006d2c', "#6baed6", "#4292c6", "#2171b5", '#08519c', '#f768a1', '#dd3497', '#ae017e', '#49006a'];
-export const shellVel = [0., 3., 5., 6, 7., 8, 9., 10, 11., 12, 13., 14, 17, 20.];
+export const shellVel = [0., 2., 4., 5, 6., 7, 8., 9, 10., 11, 12., 13, 15, 17.];
 export const colorVel = function(val) {
 	let i = 0;
 	//let maxV = 16.;
@@ -27,8 +27,50 @@ export const colorVel = function(val) {
 	return color
 };
 
-export const shellPotPop =  _.range(0, maxValuePotPop,  maxValuePotPop/numBinPop)
-export const colorPotPop = d3.scaleSequential(d3Inter.interpolateSpectral).domain([0, maxValuePotPop]).clamp(true)
+
+/*
+let minPop = 4
+let maxPop = 8
+
+var logBase = d3.scaleLog()
+    .domain([10000, Math.pow(10,5), Math.pow(10,6), Math.pow(10,7)])
+    .range(["red", "orange", "green", "blue"])
+    //.interpolate(d3Inter.interpolateSpectral)
+*/
+let colorV = ['#fde0dd','#fcc5c0','#fa9fb5','#f768a1','#dd3497','#ae017e','#7a0177','#49006a']
+let red = d3Inter.interpolateReds
+let grey = d3Inter.interpolateGreys
+let green = d3Inter.interpolateGreens
+let orange = d3Inter.interpolateOranges
+let blue = d3Inter.interpolateBlues
+let purple = d3Inter.interpolateRdPu;
+let yellowOrangeRed = d3Inter.interpolateYlOrRd
+let orangeRed = d3Inter.interpolateOrRd
+let third = orangeRed;
+let fourth = purple;
+let second =  blue;
+let first = grey;
+export const shellPotPop =  [0, 50000, 100000, 200000, 300000, 400000, 500000, 600000,700000,800000, 900000, 1000000,1500000, 2000000,2500000, 3000000]
+//export const colorPotPop = d3.scaleSequential(d3Inter.interpolateSpectral).domain([0, maxValuePotPop]).clamp(true)
+export const colorPopList = ['#000000', first(0.7), first(0.4), second(1), second(0.85), second(0.7),second(0.5),second(0.3), third(0.3), third(0.4), third(0.5),third(0.6),third(0.7), fourth(0.5), fourth(0.6),fourth(0.8),fourth(1)];
+export const colorPotPop = function(val) {
+	let i = 0;
+	//let maxV = 16.;
+	for (i = 0; i < shellPotPop.length; i++) {
+		if (val < shellPotPop[i]) break;
+	}
+	if (i < colorPopList.length)
+	{
+		return colorPopList[i];
+	}
+	else {
+		return colorPopList[colorPopList.length-1];
+	}
+};
+
+
+
+//export const colorPotPop = logBase
 
 export const shellDiffPotPop = _.range(0, maxValueDiff,  maxValueDiff/numBinDiff)
 export const colorDiffPotPop = d3.scaleSequential(d3Inter.interpolateBlues).domain([0, maxValueDiff]).clamp(true)

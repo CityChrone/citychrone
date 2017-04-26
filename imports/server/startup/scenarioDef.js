@@ -135,17 +135,19 @@ export const addCityToList = function(scenarioDef){
 		//if(computeScenDef){
 	//citiesData[city] = setScenarioDefault(city);
 		//}else{
-	citiesData[city] = computeDataCity(city);
-		//}
+	if(! (city in citiesData)){
+		citiesData[city] = computeDataCity(city);
+			//}
 
-	let startTime = Object.keys(scenarioDef.moments)[0];
-	let moment = scenarioDef.moments[startTime.toString()];
-	let maxVelPoint = {'pos':0, 'newVel':0}
-	moment['newVels'].forEach((newVel, index)=>{
-		if(newVel > maxVelPoint.newVel) maxVelPoint = {'pos':index, 'newVel':newVel}
-	});
-	citiesData[city]['centerCity'] = points.findOne({'city':city,'pos':maxVelPoint.pos}).hex.coordinates[0][0];
-	citiesData[city]['centerCity'].reverse();
+		let startTime = Object.keys(scenarioDef.moments)[0];
+		let moment = scenarioDef.moments[startTime.toString()];
+		let maxVelPoint = {'pos':0, 'newVel':0}
+		moment['newVels'].forEach((newVel, index)=>{
+			if(newVel > maxVelPoint.newVel) maxVelPoint = {'pos':index, 'newVel':newVel}
+		});
+		citiesData[city]['centerCity'] = points.findOne({'city':city,'pos':maxVelPoint.pos}).hex.coordinates[0][0];
+		citiesData[city]['centerCity'].reverse();
+	}
 	//console.log(city, citiesData[city]['centerCity']);
 	return true;
 }
