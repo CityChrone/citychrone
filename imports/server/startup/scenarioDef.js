@@ -135,19 +135,17 @@ export const addCityToList = function(scenarioDef){
 		//if(computeScenDef){
 	//citiesData[city] = setScenarioDefault(city);
 		//}else{
-	if(! (city in citiesData)){
-		citiesData[city] = computeDataCity(city);
-			//}
+	citiesData[city] = computeDataCity(city);
+		//}
 
-		let startTime = Object.keys(scenarioDef.moments)[0];
-		let moment = scenarioDef.moments[startTime.toString()];
-		let maxVelPoint = {'pos':0, 'newVel':0}
-		moment['newVels'].forEach((newVel, index)=>{
-			if(newVel > maxVelPoint.newVel) maxVelPoint = {'pos':index, 'newVel':newVel}
-		});
-		citiesData[city]['centerCity'] = points.findOne({'city':city,'pos':maxVelPoint.pos}).hex.coordinates[0][0];
-		citiesData[city]['centerCity'].reverse();
-	}
+	let startTime = Object.keys(scenarioDef.moments)[0];
+	let moment = scenarioDef.moments[startTime.toString()];
+	let maxVelPoint = {'pos':0, 'newVel':0}
+	moment['newVels'].forEach((newVel, index)=>{
+		if(newVel > maxVelPoint.newVel) maxVelPoint = {'pos':index, 'newVel':newVel}
+	});
+	citiesData[city]['centerCity'] = points.findOne({'city':city,'pos':maxVelPoint.pos}).hex.coordinates[0][0];
+	citiesData[city]['centerCity'].reverse();
 	//console.log(city, citiesData[city]['centerCity']);
 	return true;
 }
@@ -158,7 +156,10 @@ const checkCities = function(){
   	console.log('check Cities', promiseCities);
 
   	scenarioDB.find({'default':true}).forEach(function(scenarioDef, index){
-		addCityToList(scenarioDef)
+  		let city = scenarioDef.city
+  		if(! (city in citiesData)){
+			addCityToList(scenarioDef)
+		}
 	});
 	console.log('citiesData crearted', Object.keys(citiesData))
 };
