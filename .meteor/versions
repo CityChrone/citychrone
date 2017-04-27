@@ -59,6 +59,7 @@ iron:router@1.1.2
 iron:url@1.1.0
 joshowens:shareit@1.0.2
 jquery@1.11.10
+json@1.0.3
 kookoskar:bootstrap-select@1.7.3
 launch-screen@1.1.1
 less@2.7.9

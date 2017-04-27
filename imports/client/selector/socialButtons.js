@@ -6,10 +6,14 @@ import '/imports/client/selector/socialButtons.html';
 Template.socialButtons.helpers({
 	shareData: function() {
     return { 
-    	title: 'CityChrone - visualizing city kwonledge.',
+    	title: 'CityChrone - visualizing city knowledge.',
     	url: 'http://citychrone.org',
-    	description : "sharing information",
-    	thumbnail:'/images/layers-2x.png'
+    	description : "\
+    	CityChrone is a project where knowledge about cities can be shared\
+    	and visualized. The starting point is the study of public transport systems,\
+    	 measuring its efficency, allowing easy comparison between different areas and even different cities.",
+    	thumbnail:'/public/images/citychroneSharing.png',
+    	image:'/public/images/citychroneSharing.png'
     	 }
   }
 

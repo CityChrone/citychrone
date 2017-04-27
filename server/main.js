@@ -21,6 +21,7 @@ import { initNeighStopAndPoint } from '/imports/server/startup/neighStopsPoints.
 
 import { checkCities } from '/imports/server/startup/scenarioDef.js';
 import '/imports/server/router.js';
+import  { dataCitiesDB } from '/imports/api/DBs/dataCitiesDB.js';
 
 var _;
 
@@ -28,6 +29,7 @@ var _;
 Meteor.startup(() => {
   // console.log(JSZip, fs);
   _ = lodash;
+
   checkCities();
 
   Meteor.publish('scenario', function scenarioList(city) {
@@ -71,11 +73,6 @@ Meteor.startup(() => {
     console.log('metroLines published ' + city, MetroLinesFetched.count());
     return MetroLinesFetched;
   });
-  //
-  // Meteor.publish('vel', function returnVel() {
-  // 	return vel.find({}, {sort :{'dTerm':1}});
-  // });
-
 
 
 });

@@ -33,7 +33,7 @@ const initArrayCOld = function(city, startTime, endTime) {
 		metronames.push(metro.lineName);
 		metronames.push(metro.lineName + "\r\n");
 	}
-
+ 
 	console.log("connections scartate metro",connections.find({
 		'tStart':{'$gte':startTime},
 		'tEnd':{'$lte':endTime},
