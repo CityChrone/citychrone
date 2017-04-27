@@ -12,8 +12,8 @@ Template.socialButtons.helpers({
     	CityChrone is a project where knowledge about cities can be shared\
     	and visualized. The starting point is the study of public transport systems,\
     	 measuring its efficency, allowing easy comparison between different areas and even different cities.",
-    	thumbnail:'/public/images/citychroneSharing.png',
-    	image:'/public/images/citychroneSharing.png'
+    	thumbnail:'/images/citychroneSharing.png',
+    	image:'/images/citychroneSharing.png'
     	 }
   }
 

@@ -18,7 +18,8 @@ import '/imports/client/selector/timeSelector.js';
 import '/imports/client/selector/scenarioSelector.js';
 import '/imports/client/map/geojson/legendGeojson.js';
 import '/imports/client/selector/buttonsChangePage.js';
- 
+import '/imports/client/selector/socialButtons.js';
+
 import '/imports/client/routes/city/city.html';
 
 Template.city.helpers({
@@ -170,7 +171,7 @@ Template.city.onRendered(function() {
 
   	//CREATE CONTROLS
 
-  	let controlTL = createControl([Template.quantitySelector, Template.scenarioSelector, Template.buttonsChangePage], "topleft",  Template.map.data.map, 'leftBar', true);
+  	let controlTL = createControl([Template.quantitySelector, Template.scenarioSelector, Template.buttonsChangePage, Template.socialButtons], "topleft",  Template.map.data.map, 'leftBar', true);
   	let controlTR = createControl([Template.legendGeojson], "topright",  Template.map.data.map,'', true);
 
 	Template.city.data.geoJson = new geoJsonClass;
