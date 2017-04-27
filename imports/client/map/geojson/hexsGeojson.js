@@ -19,6 +19,14 @@ export const clickGeojson = function(latlng){
     point['newAccess'] = moment['newAccess'][NearestPos];
     point['newPotPop'] = moment['newPotPop'][NearestPos];
     
+    analytics.track("Click Map", {
+        'eventName': "click geojson",
+        'city': scenario.city,
+        'pos':NearestPos,
+        'latlng':latlng,
+        'isIsochrone': $('#quantityPicker').val() == 'Isochrones',
+    });
+
     if($('#quantityPicker').val() == 'Isochrones'){
         let point = Template.city.collection.points.findOne({'_id':NearestPos.toString()})
         let startTime = time;
@@ -43,6 +51,7 @@ export const clickGeojson = function(latlng){
             });*/
             return true;
         });
+
     }
     const container = L.DomUtil.create('div', 'popUp');
     Blaze.renderWithData(Template.popUpGeojson, point, container);
