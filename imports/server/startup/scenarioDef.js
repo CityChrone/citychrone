@@ -1,8 +1,9 @@
+import { Meteor } from 'meteor/meteor';
 import JSZip from 'jszip';
 import fs from 'fs';
-import { Meteor } from 'meteor/meteor';
 import turf from 'turf';
 import math from 'mathjs';
+import { EJSON } from 'meteor/ejson';
 
 import { scenarioDB, initScenario } from '/imports/api/DBs/scenarioDB.js';
 import {points, stops, initPoints, initArrayPop} from '/imports/api/DBs/stopsAndPointsDB.js';
@@ -16,6 +17,7 @@ import { timesOfDay } from '/imports/api/parameters.js'
 
 import { initArrayC} from '/imports/server/startup/InitArrayConnections.js';
 import { initNeighStopAndPoint } from '/imports/server/startup/neighStopsPoints.js';
+import  { dataCitiesDB } from '/imports/api/DBs/dataCitiesDB.js';
 
 var worker = require("/public/workers/CSACore.js");
 
@@ -130,14 +132,8 @@ export const computeScenarioDefault = function(city){
 
 export const addCityToList = function(scenarioDef){
 	let city = scenarioDef.city
-	//console.log(city, ' founded scenario def');
 
-		//if(computeScenDef){
-	//citiesData[city] = setScenarioDefault(city);
-		//}else{
 	citiesData[city] = computeDataCity(city);
-		//}
-
 	let startTime = Object.keys(scenarioDef.moments)[0];
 	let moment = scenarioDef.moments[startTime.toString()];
 	let maxVelPoint = {'pos':0, 'newVel':0}
@@ -146,6 +142,8 @@ export const addCityToList = function(scenarioDef){
 	});
 	citiesData[city]['centerCity'] = points.findOne({'city':city,'pos':maxVelPoint.pos}).hex.coordinates[0][0];
 	citiesData[city]['centerCity'].reverse();
+	citiesData[city]['city'] = city;
+	console.log('finding', dataCitiesDB.find({'city':city}).count())
 	//console.log(city, citiesData[city]['centerCity']);
 	return true;
 }
