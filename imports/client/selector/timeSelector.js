@@ -16,14 +16,16 @@ Template.timeSelector.onCreated(function(){
 
 Template.timeSelector.events({
 	'change .selectpicker'(e){
-		console.log('selectpicker event', e);
+	//	console.log('selectpicker event', e);
 	} 
 });
 
 Template.timeSelector.helpers({
 	'getTimes'(){
 		//$('.selectpicker').selectpicker('render');
-		let scenarioID = Template.city.RV.currentScenario.get()._id
+		let templateRV = Template.city.RV || Template.newScenario.RV;
+		//console.log(templateRV)
+		let scenarioID = templateRV.currentScenario.get()._id
 		let scenario = scenarioDB.findOne({'_id':scenarioID})
 		let times = Object.keys(scenario.moments);
 		let timesRet = times.map((time)=>{
@@ -43,7 +45,10 @@ Template.timeSelector.helpers({
 		Meteor.setTimeout(func, 100)
 	},
 	'isScenario'(){
-		let scenarioID = Template.city.RV.currentScenario.get()._id
+
+		let templateRV = Template.city.RV || Template.newScenario.RV;
+		//console.log(templateRV)
+		let scenarioID = templateRV.currentScenario.get()._id
 		//console.log(scenarioDB.find({'_id':scenarioID}).count(), scenarioID, scenarioDB.find({'_id':scenarioID}).count() != 0)
 		return scenarioDB.find({'_id':scenarioID}).count() != 0;
 	},

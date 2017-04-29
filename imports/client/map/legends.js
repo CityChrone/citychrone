@@ -18,7 +18,7 @@ let createControl = function(templates, position, map, classToStyle="", toAdd = 
 			let legendsCurrent = Blaze.renderWithData(Template.legends, this, container);
 			//console.log(Template.legends, legendsCurrent, legendsCurrent.lastNode())
 			templates.forEach((template)=>{
-				console.log($(legendsCurrent.lastNode()).children().last())
+				//console.log($(legendsCurrent.lastNode()).children().last())
 				let find = $('.toggleContent')
 				Blaze.renderWithData(template, this, $(legendsCurrent.lastNode()).children().last()[0]);
 			})
@@ -38,7 +38,7 @@ Template.legends.events({
 	'click .toggleButton'(e){
 		//console.log(closed, Template.instance())
 		//console.log(Template.instance().$('.toggleContent').parent(2), Template.instance().$('.toggleContent').attr('class'))
-					console.log(Template.instance().$('.toggleContent').parents().eq(0), Template.instance().$('.toggleContent').parents().eq(1))
+					//console.log(Template.instance().$('.toggleContent').parents().eq(0), Template.instance().$('.toggleContent').parents().eq(1))
 
 		if(Template.instance().$('.toggleContent').parents().eq(1).hasClass('leftBar')){
 			console.log(Template.instance().$('.toggleContent').parents().eq(0), Template.instance().$('.toggleContent').parents().eq(1))

@@ -15,7 +15,7 @@ Template.map.onCreated(function() {
 
 Template.map.onRendered(function() {
 	L.Icon.Default.imagePath = '/pipo/images/';
-  console.log(L)
+  //console.log(L)
 
     Template.map.data.OpenStreetMap_Mapnik = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       minZoom: 3,
@@ -97,5 +97,5 @@ Template.map.onRendered(function() {
   Template.map.data.zoom = L.control.zoom( {position : 'bottomright'} );
   Template.map.data.zoom.addTo(Template.map.data.map);
 
- 	Template.map.data.map.spin(true);
+ 	//Template.map.data.map.spin(true);
 });

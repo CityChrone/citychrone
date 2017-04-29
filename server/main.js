@@ -30,7 +30,6 @@ Meteor.startup(() => {
   // console.log(JSZip, fs);
   _ = lodash;
 
-  checkCities();
 
   Meteor.publish('scenario', function scenarioList(city) {
 
@@ -74,5 +73,10 @@ Meteor.startup(() => {
     return MetroLinesFetched;
   });
 
-
+  console.log('finish publish!!');
+  return new Promise(function(resolve, reject ){
+    checkCities();
+    resolve(true);
+  });
 });
+

@@ -1,0 +1,9 @@
+ <template name="computeScenario">
+  <button class="btn btn-default {{dataLoadedDisabled}}" type="button" id="ComputeNewMap" onclick="this.blur();" >
+    <span class="glyphicon {{computeIcon}} " aria-hidden="true"></span>
+			Compute
+			{{#if dataLoadedGet}}
+				<span id="spinLoad"><i class="fa fa-refresh fa-spin fa-fw"></i></span>
+			{{/if}}
+ </button>
+</template> 

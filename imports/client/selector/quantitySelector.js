@@ -64,7 +64,7 @@ Template.quantitySelector.events({
 
 Template.quantitySelector.helpers({
 	'nameQuantity'(field){
-		console.log(field, field2text[field])
+		//console.log(field, field2text[field])
 		return field2text[field]
 	}
 });

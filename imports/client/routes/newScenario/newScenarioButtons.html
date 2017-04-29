@@ -1,0 +1,28 @@
+<template name="newScenarioButtons">
+
+
+<div class="h2 text-info">
+  New Scenario
+</div>
+
+{{>budget}}
+
+<button class="btn btn-default " data-toggle="button" type="button"  id="buttonAddCompute" onclick="this.blur();">
+  <span class="computeDone" id="addLine" >
+  	<i class="fa fa-subway"></i>
+    	Add Metro
+  </span>
+  <span class="computeDone hidden"  id="endMetro" >
+  	Stop Add
+  </span>
+
+</button>
+
+  <button class="btn btn-default " type="button" id="reload" onclick="this.blur();" >
+  	<i class="fa fa-trash-o" aria-hidden="true"></i>
+     Reset
+ </button>
+
+{{>computeScenario}}
+
+</template>

@@ -11,7 +11,8 @@ import '/imports/client/map/popUps/popUpGeojson.js';
 export const clickGeojson = function(latlng){
     let NearestPos = findClosestPoint([latlng[1], latlng[0]])[0].pos
     let time = Template.timeSelector.timeSelectedRV.get();
-    let scenarioID = Template.city.RV.currentScenario.get()._id;
+    let templateRV = Template.city.RV || Template.newScenario.RV;
+    let scenarioID = templateRV.currentScenario.get()._id;
     let scenario = scenarioDB.findOne({'_id':scenarioID});
     let moment = _.get(scenario, ["moments", time], []);
     let point = {};
@@ -28,7 +29,8 @@ export const clickGeojson = function(latlng){
     });
 
     if($('#quantityPicker').val() == 'Isochrones'){
-        let point = Template.city.collection.points.findOne({'_id':NearestPos.toString()})
+        let templateCollection = Template.city.collection || Template.newScenario.collection;
+        let point = templateCollection.points.findOne({'_id':NearestPos.toString()})
         let startTime = time;
         Meteor.apply('isochrone', [point, scenarioID, startTime], noRetry = false, onResultReceived = (error, result) => {
             console.log(result, error)
@@ -37,7 +39,7 @@ export const clickGeojson = function(latlng){
             toSet[modifier] = result
             console.log('called method isochrone');
             scenario.moments[startTime.toString()].t = result;
-            Template.city.RV.currentScenario.set(scenario)
+            templateRV.currentScenario.set(scenario)
             Template.quantitySelector.quantitySelectedRV.set('t');     
             /*scenarioDB.update({'_id':scenarioID}, {'$set':toSet}, (err)=>{
                 if(err){ console.log(err)
@@ -69,19 +71,31 @@ const hexOnClick = function(e){
 };
 
 class geoJsonClass{
-    constructor(quantity = 'newVels', diff = false) {
+    constructor(quantity = 'newVels', diff = false, click = true) {
         this.quantity = quantity;
         this.diff = diff;
         this.geojson = L.geoJson(null, {
         'style' : styleHex(quantity, diff),
         'onEachFeature' : function(feature, layer){
-                layer.on('click', hexOnClick);
+               if(click) layer.on('click', hexOnClick);
             }
         });
+        //this.geojson.on('click', hexOnClick)
         //console.log('createGeoJson', this);
         
     }
-    updateGeojson(scenario, quantity, diff = false, time, shell=null){
+    enableClick(){
+        this.geojson.eachLayer(function (layer) {
+            layer.on('click', hexOnClick);
+        })
+    }
+    disableClick(){
+        this.geojson.eachLayer(function (layer) {
+            layer.off('click', hexOnClick);
+        })
+
+    }
+    updateGeojson(scenario, quantity, diff = false, time, shell=null, back=false){
         this.quantity = quantity;
         this.diff = diff;
         //console.log(scenario,time, quantity, 'class!!')
@@ -111,8 +125,9 @@ class geoJsonClass{
             geoJsonUnion['properties'][quantity] = low;
             this.geojson.addData(geoJsonUnion)
         }
-
         this.geojson.setStyle(styleHex(quantity, diff));
+        
+        if(back) this.geojson.bringToBack()
 
 
         return this.geojson

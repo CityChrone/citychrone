@@ -104,10 +104,10 @@ export const computeScenarioDefault = function(city){
 			var point = listPoints[point_i];
 			var returned = worker.CSAPoint(point, arrayC, arrayN, startTime, areaHex, pointsVenues, arrayPop);
 			//console.log(point, returned);
-			if(point.pos %200 == 0) console.log(startTime/3600, returned.vAvg,returned.popMean, point.pos)
-			newVels.push(returned.vAvg);
-			newAccess.push(returned.accessNew);
-			newPotPop.push(returned.popMean);
+			if(point.pos % 2000 == 0) console.log(startTime/3600, returned.vAvg, returned.popMean, point.pos)
+			newVels.push(returned.newVels);
+			newAccess.push(returned.newAccess);
+			newPotPop.push(returned.newPotPop);
 		}
  
 		scenario.moments[startTime.toString()] = scenario.moments[startTime.toString()] || {};
@@ -130,22 +130,25 @@ export const computeScenarioDefault = function(city){
 
 } 
 
-export const addCityToList = function(scenarioDef){
-	let city = scenarioDef.city
+export const addCityToList = function(scenarioDef) {
+return new Promise( function(resolve, reject ){
+		resolve(true);
+		console.log("inside PROMISE");
+		let city = scenarioDef.city
 
-	citiesData[city] = computeDataCity(city);
-	let startTime = Object.keys(scenarioDef.moments)[0];
-	let moment = scenarioDef.moments[startTime.toString()];
-	let maxVelPoint = {'pos':0, 'newVel':0}
-	moment['newVels'].forEach((newVel, index)=>{
-		if(newVel > maxVelPoint.newVel) maxVelPoint = {'pos':index, 'newVel':newVel}
+		citiesData[city] = computeDataCity(city);
+		let startTime = Object.keys(scenarioDef.moments)[0];
+		let moment = scenarioDef.moments[startTime.toString()];
+		let maxVelPoint = {'pos':0, 'newVel':0}
+		moment['newVels'].forEach((newVel, index)=>{
+			if(newVel > maxVelPoint.newVel) maxVelPoint = {'pos':index, 'newVel':newVel}
+		});
+		citiesData[city]['centerCity'] = points.findOne({'city':city,'pos':maxVelPoint.pos}).hex.coordinates[0][0];
+		citiesData[city]['centerCity'].reverse();
+		citiesData[city]['city'] = city;
+		console.log('finding', dataCitiesDB.find({'city':city}).count())
+		//console.log(city, citiesData[city]['centerCity']);
 	});
-	citiesData[city]['centerCity'] = points.findOne({'city':city,'pos':maxVelPoint.pos}).hex.coordinates[0][0];
-	citiesData[city]['centerCity'].reverse();
-	citiesData[city]['city'] = city;
-	console.log('finding', dataCitiesDB.find({'city':city}).count())
-	//console.log(city, citiesData[city]['centerCity']);
-	return true;
 }
 
 const checkCities = function(){
@@ -156,7 +159,8 @@ const checkCities = function(){
   	scenarioDB.find({'default':true}).forEach(function(scenarioDef, index){
   		let city = scenarioDef.city
   		if(! (city in citiesData)){
-			addCityToList(scenarioDef)
+			let res = addCityToList(scenarioDef);
+			console.log("promise returned", res);
 		}
 	});
 	console.log('citiesData crearted', Object.keys(citiesData))

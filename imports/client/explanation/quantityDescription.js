@@ -5,7 +5,7 @@ import '/imports/client/explanation/quantityDescription.html';
 
 Template.quantityDescription.helpers({
 	'quantity'(val){
-		console.log(val, Template.quantitySelector.quantitySelectedRV.get())
+		//console.log(val, Template.quantitySelector.quantitySelectedRV.get())
 		return val == Template.quantitySelector.quantitySelectedRV.get();
 	}
 });

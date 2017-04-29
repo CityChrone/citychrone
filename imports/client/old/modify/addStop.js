@@ -224,8 +224,6 @@ export const observeNewLineChanges = function(){
 	var city = getCity();
 	return Template.body.collection.metroLines.find({city:city}).observe({
 		added : function(newDoc) {
-			//Template.body.data.mapEdited.set(true);
-			//oldL = oldDoc.stops.length;
 			newL = newDoc.stops.length;
 
 			let line = newDoc
