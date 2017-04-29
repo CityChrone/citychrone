@@ -9,11 +9,13 @@ Template.scenarioSelector.onCreated(function(){
 
 Template.scenarioSelector.helpers({
 	'isSelected'(){
-		return Template.city.RV.currentScenario.get()
+		let templateRV = Template.city.RV || Template.newScenario.RV;
+		return templateRV.currentScenario.get()
 	},
 	'title'(){
 		//let returned = scenarioDB.findOne({'_id':Template.city.RV.currentScenario.get()})
 		//console.log(returned, Template.city.RV.currentScenarioId.get())
-		return Template.city.RV.currentScenario.get().name;
+		let templateRV = Template.city.RV || Template.newScenario.RV;
+		return templateRV.currentScenario.get().name;
 	}
 });

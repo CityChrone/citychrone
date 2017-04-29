@@ -192,9 +192,9 @@ let CSAPoint = function(point, arrayC, arrayN, startTime, areaHex, pointsVenues,
 	//console.log(computeVel(Tpoint,areaHex))
 	//console.log('ending computing', countNonReached, Tpoint.length, startTime, point.pos,Tpoint[point.pos] );
 	return {
-		'vAvg': computeVel(Tpoint,areaHex),
-		'accessNew': computeAccess(Tpoint,pointsVenues,accessNew),
-		'popMean' : computePop(Tpoint, arrayPop),
+		'newVels': computeVel(Tpoint,areaHex),
+		'NewAccess': computeAccess(Tpoint,pointsVenues,accessNew),
+		'newPotPop' : computePop(Tpoint, arrayPop),
 		'tPoint' : Tpoint,
 		'pointNotReached' : countNonReached
 	};

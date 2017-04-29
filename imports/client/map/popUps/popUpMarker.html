@@ -1,0 +1,14 @@
+<template name='popUpMarker'>
+<div class="btn-group-vertical" role="group" aria-label="...">
+	<!--{{#if expand}}!-->
+	<button href="#" class="btn btn-info btn-sm" id="expMetro"  onclick="this.blur();">  
+		Expand metro 
+	</button>
+	<!--{{/if}}!-->
+	{{#if temp}}
+	<button class="btn btn-info btn-sm" id="remMetro" onclick="this.blur();">  
+			Remove stop 
+	</button>
+	{{/if}}
+	</div>
+</template>

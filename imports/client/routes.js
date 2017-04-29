@@ -3,6 +3,7 @@ import { hexList, CenterHex } from '/imports/api/parameters.js';
 import '/imports/client/map/map.js';
 import '/imports/client/routes/city/city.js';
 import '/imports/client/routes/world/world.js';
+import '/imports/client/routes/newScenario/newScenario.js';
 import '/imports/client/initClient.js';
 
 Router.route('/city/:city', function () {
@@ -17,6 +18,11 @@ Router.route('/city/:city', function () {
   	}
   });
 });
+
+Router.route('/newScenario/:city', function () {
+  this.render('newScenario');
+});
+
 
 Router.route('/world', function () {
   //if (!this.params.city || !hexList[this.params.city] || !CenterHex[this.params.city])

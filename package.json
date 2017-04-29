@@ -14,7 +14,7 @@
     "jszip": "^3.1.2",
     "kdbush": "^1.0.1",
     "leaflet": "^1.0.0",
-    "leaflet-path-drag": "^1.0.1",
+    "leaflet-path-drag": "^1.0.6",
     "leaflet-providers": "^1.1.15",
     "mathjs": "^3.4.1",
     "meteor-node-stubs": "~0.2.0",

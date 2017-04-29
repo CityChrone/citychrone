@@ -3,10 +3,6 @@ let module = {exports:{}};
 importScripts('/workers/CSACore.js');
 importScripts('/workers/mergeArrays.js');
 
-
-
-
-
 var values = function(obj) {
 	//console.log(obj);
 	var tmp = new Uint16Array(Object.keys(obj).length);
@@ -24,16 +20,15 @@ var castTo16 = function(arrayArray) {
 	}
 };
 
-var arrayC = [];
-var arrayCDef = [];
+let arrayC = [];
+let arrayCDef = [];
 let arrayCut = [];
-var arrayN = {};
+let arrayN = {};
 let arrayNDef = {}
-var city = 'roma';
-var startTime = 0;
-var areaHex = 1;
-var maxDuration = 0;
-var pointsVenues = [];
+let startTime = 0;
+let areaHex = 1;
+let maxDuration = 0;
+let pointsVenues = [];
 
 onmessage = function(e) {
 	if (e.data.arrayCDef) {
@@ -114,9 +109,9 @@ onmessage = function(e) {
 			//console.log(point, returned);
 			results.push({
 				'point': point,
-				'vAvg': returned.vAvg,
-				'accessNew' : returned.accessNew,
-				'popMean' : returned.popMean
+				'newVels': returned.newVels,
+				'NewAccess' : returned.NewAccess,
+				'newPotPop' : returned.newPotPop
 			});
 		}
 		//console.log('computed point', point);
@@ -129,8 +124,8 @@ onmessage = function(e) {
 			//console.log(point, points.length);
 		let result = {
 			'point': point,
-			'vAvg': returned.vAvg,
-			'accessNew' : returned.accessNew,
+			'newVel': returned.newVel,
+			'NewAccess' : returned.NewAccess,
 			'popMean' : returned.popMean,
 			'tPoint' : returned.tPoint
 		}
