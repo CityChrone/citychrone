@@ -16,19 +16,15 @@ let mergeArrays = require("/public/workers/mergeArrays.js");
 
 Meteor.methods({
   'metroLinesDefault'(city){
-    //console.log(metroLines.find().count())
     return metroLines.findOne({'city' : city});
   },
     'budget'(city){
-    //console.log(metroLines.find().count())
-    console.log(metroLines.findOne({'city' : city}, {fields:{'budget':1}}))
     return metroLines.findOne({'city' : city}, {fields:{'budget':1}});
   },
+  'serverOSRM'(city){
+    return metroLines.findOne({'city' : city}, {fields:{'serverOSRM':1}});
+  },
   'isochrone'(point, scenarioID, startTime){
-      //let point = args[0];
-      //let scenarioID = args[1]; 
-      //let startTime = args[2];
-      //console.log('call isochrone!! points', point, scenarioID, startTime);
       var scenario = scenarioDB.findOne({'_id':scenarioID});
       let city = scenario.city;
       if(scenario == [] || !(city in citiesData) ){ 

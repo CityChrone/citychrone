@@ -43,54 +43,6 @@ Template.newScenarioButtons.events({
 			$('#buttonAddCompute').removeClass('active');
 			//console.log('merker Clicked', Template.body.data.markerClicked);
 		}
-
-	},
-	'click #ComputeNewMap'() {
-		if(!Template.body.data.dataLoaded.get()) //se non ho caricato i dati (o non ho finito il nuovo calcolo) non faccio nulla
-			return;
-		if(Template.body.data.newHexsComputed && !Template.body.data.mapEdited.get()) //se ho iniziato il calcolo o l'ho già finito
-			return;
-
-		let city = Router.current().params.city;
-		var newName;
-
-		if (Template.body.data.mapEdited.get() && Template.body.template.scenario) {
-			Template.body.template.scenario.currentScenarioId = null;
-			Template.body.template.scenario.currentScenario = null;
-			var defName = "Scenario " + moment().format("DD/MM/YYYY HH:mm:ss");
-			newName = window.prompt("Give a name to this scenario", defName);
-			if (newName === "") {
-				newName = defName;
-			} else if (!newName)
-				return;
-		}
-
-		if(!$('#endMetro').hasClass('hidden')){
-			$('#endMetro').trigger('click'); //finisco di aggiungere la linea
-		}
-
-		for(let hexId in Template.body.data.listHex){
-			let hexagons = Template.body.data.listHex[hexId];
-			hexagons.hex.properties.vAvgNew = -1;
-			hexagons.hex.properties.accessNew = {};
-		}
-
-		$('#buttonInfo').trigger('click');
-		if($('#velNewHex').hasClass('active')){
-			Template.body.data.geoJson.setStyle(styleHex);
-		}else{
-			$('#velNewHex').trigger('click');
-		}
-
-		if (Template.body.data.mapEdited.get() && Template.body.template.scenario) {
-			Template.body.template.scenario.createScenario(newName);
-		}
-
-		Template.body.data.dataLoaded.set(false); //verrà settato a true alla fine del calcolo
-		Meteor.setTimeout(computeNewHex, 100);
-		$('#ComputeNewMap').removeClass('active');
-
-
 	},
 	'click #reload'(){
 		 location.reload();

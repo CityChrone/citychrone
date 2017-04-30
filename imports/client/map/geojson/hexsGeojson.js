@@ -98,12 +98,19 @@ class geoJsonClass{
     updateGeojson(scenario, quantity, diff = false, time, shell=null, back=false){
         this.quantity = quantity;
         this.diff = diff;
-        //console.log(scenario,time, quantity, 'class!!')
+        this.scenario = scenario;
+        this.time = time;
+        this.back = back;
+        this.shell = shell || returnShell(this.quantity, this.diff);
+        this.showGeojson()
+    }
+    showGeojson(){
         this.geojson.clearLayers();
-        this.geojson.setStyle(styleHex(quantity, diff));
-        shell = shell || returnShell(quantity, diff);
-        let values = _.get(scenario, ["moments", time, quantity], []);
+        this.geojson.setStyle(styleHex(this.quantity, this.diff));
+        let values = _.get(this.scenario, ["moments", this.time, this.quantity], []);
         let points = {}
+        let quantity = this.quantity;
+        //console.log(this.scenario,this.time, this.quantity, 'class!!')
 
         this.points.find({}).forEach(function(p, index){
             //console.log(p, values)
@@ -115,20 +122,19 @@ class geoJsonClass{
             }   
             points[p.pos] = p
         });
-        let pointShellify = shellify(points, quantity, shell)
+        let pointShellify = shellify(points, this.quantity, this.shell)
 
-       // console.log('shellify',shell, pointShellify, points)
+        //console.log('shellify',this.shell, pointShellify, points)
         for (let low in pointShellify) {
             geoJsonUnion = unionPoints(pointShellify[low],  this.hexClass);
             //console.log('union', low, geoJsonUnion)
             geoJsonUnion['properties'] = {}
-            geoJsonUnion['properties'][quantity] = low;
+            geoJsonUnion['properties'][this.quantity] = low;
             this.geojson.addData(geoJsonUnion)
         }
-        this.geojson.setStyle(styleHex(quantity, diff));
+        this.geojson.setStyle(styleHex(this.quantity, this.diff));
         
-        if(back) this.geojson.bringToBack()
-
+        if(this.back) this.geojson.bringToBack()
 
         return this.geojson
 
