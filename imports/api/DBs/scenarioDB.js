@@ -22,6 +22,7 @@ export const initScenario = function(city, name, author, time, metroLinesFetched
 	
 
 	let scenario = {
+		'author' : author,
 		'name' : name,
 		'creationDate'  : new Date(),
 		'lines' : metroLinesFetched,
@@ -45,8 +46,8 @@ Meteor.methods({
 					return;
 				}
 				//console.log('insert scenario new id', id);
-				if (Meteor.isClient)
-					Template.body.template.scenario.currentScenarioId = id;
+				//if (Meteor.isClient)
+					//Template.body.template.scenario.currentScenarioId = id;
 		});
 	},
 	'updateScenario' : function(obj, _id){

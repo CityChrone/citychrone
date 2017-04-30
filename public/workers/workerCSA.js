@@ -124,7 +124,7 @@ onmessage = function(e) {
 			//console.log(point, points.length);
 		let result = {
 			'point': point,
-			'newVel': returned.newVel,
+			'newVels': returned.newVels,
 			'NewAccess' : returned.NewAccess,
 			'popMean' : returned.popMean,
 			'tPoint' : returned.tPoint

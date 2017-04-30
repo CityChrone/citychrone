@@ -23,8 +23,6 @@ Template.metroLinesDraw.onCreated(function(){
 	Template.metroLinesDraw.collection.stops = new Mongo.Collection(null);
 	Template.metroLinesDraw.collection.lines = new Mongo.Collection(null);
 
-
-
 	//DATA
 	Template.metroLinesDraw.data = {}
 	Template.metroLinesDraw.data.polylineMetro = {}

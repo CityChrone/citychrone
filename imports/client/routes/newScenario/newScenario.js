@@ -57,7 +57,7 @@ Template.newScenario.onCreated(function(){
 // *******  COLLECTION  ***********
 	Template.newScenario.collection = {};
 	Template.newScenario.collection.points  = new Mongo.Collection(null); //Local DB for points
-	Template.newScenario.collection.metroLines = new Mongo.Collection(null); //Local DB for metroLines
+	//Template.newScenario.collection.metroLines = new Mongo.Collection(null); //Local DB for metroLines
 	Template.newScenario.collection.scenarioDB = new Mongo.Collection(null); //Local DB for metroLines
 
 
@@ -88,8 +88,6 @@ Template.newScenario.onRendered(function() {
 	loadScenarioData(city, Template.newScenario.RV);
 	Template.newScenario.data.geoJson.enableClick();
 
-
-	
 
   	//CREATE CONTROLS
 

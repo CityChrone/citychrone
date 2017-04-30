@@ -9,6 +9,7 @@ let countStep = 1000
 
 const workerOnMessage = function(e) {
 	//console.log(Template.body.template.scenario.currentScenario)
+	let scenario = Template.newScenario.RV.currentScenario.get();
 	if(e.data.tPoint) {
 		//console.log('isochrone!!', e.data);
 		let field = 't'
@@ -29,7 +30,8 @@ const workerOnMessage = function(e) {
 	        geoJson.addData(geoJsonUnion)
     	}
 	}else{
-		let moment = Template.body.template.scenario.currentScenario['moments'][Template.body.data.timeOfDay.get()]
+		let time = Template.timeSelector.timeSelectedRV.get()
+		let moment = scenario['moments'][time]
 		for(let point_i = 0; point_i < e.data.length; point_i++){
 			let data = e.data[point_i];
 			moment['newVels'][data.point.pos] = data.vAvg
@@ -37,35 +39,36 @@ const workerOnMessage = function(e) {
 			moment['newAccess'][data.point.pos] = accessNew
 
 		}
-		if(Template.body.data.countHex > countLimit){
+		if(Template.computeScenario.worker.CSAPointsComputed > countLimit){
 			//console.log('loaded new!! 1000', countStep, countLimit, Template.body.data.countHex,moment )
-			loadNewTime(Template.body.data.timeOfDay.get())
+			//loadNewTime(Template.body.data.timeOfDay.get())
+			Template.newScenario.data.geoJson.showGeojson()
 			countLimit += countStep;
 		}
 
-		Template.body.data.countHex+=e.data.length;
-		let time = new Date();
-		//console.log(Template.body.data.countHex, Template.body.collection.newVel.find().count());
-		if(Template.body.data.countHex == Template.body.collection.points.find().count()){
-			Template.body.data.dataLoaded.set(true);
-			Template.body.data.newHexsComputed = true;
-			//Template.body.template.rank.toInsert.set(true);
-			if (Template.body.template.scenario)
-				Template.body.template.scenario.toSave.set(true);
+		Template.computeScenario.worker.CSAPointsComputed += e.data.length;
 
-			Template.body.data.map.spin(false);
-			loadNewTime(Template.body.data.timeOfDay.get())
+		//console.log(Template.body.data.countHex, Template.body.collection.newVel.find().count());
+		if(Template.computeScenario.worker.CSAPointsComputed == Template.newScenario.collection.points.find().count()){
+			//Template.body.data.dataLoaded.set(true);
+			//Template.body.data.newHexsComputed = true;
+			//Template.body.template.rank.toInsert.set(true);
+			//if (Template.body.template.scenario)
+				//Template.body.template.scenario.toSave.set(true);
+
+			Template.map.data.map.spin(false);
+			Template.newScenario.data.geoJson.showGeojson()
 			//$('#rankModal').modal('show');
 
 
-			if($('#buttonBuild').hasClass('active')){//WHY?!?!
+			/*if($('#buttonBuild').hasClass('active')){//WHY?!?!
 				Template.body.data.map.eachLayer(function (layer) {
 					if('lineName' in layer){
 						layer.bringToFront();
 					}
 				});
 			}
-
+		*/
 		}
 		//console.log('added ', Template.body.data.countHex, 1.*Math.floor(time.getTime()/ 100)/10. );
 	}
