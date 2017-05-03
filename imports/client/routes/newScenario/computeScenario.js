@@ -9,7 +9,18 @@ import { maxTimeWalk, maxDistanceWalk, maxDuration} from '/imports/api/parameter
 import * as addNewStops from '/imports/client/routes/newScenario/addNewStops.js'
 import * as parameters from '/imports/api/parameters.js'
 import * as addNewConnections from '/imports/client/routes/newScenario/addNewConnections.js'
-Template.computeScenario.helpers({});
+import '/imports/client/routes/newScenario/saveScenario.js';
+Template.computeScenario.helpers({
+	'toSave'(){
+		console.log("toSave !!", Template.computeScenario.RV.toSave.get())
+		return Template.computeScenario.RV.toSave.get();
+	},
+	'dataLoadedGet'(){
+		console.log("dataLoadedGet !!", Template.computeScenario.RV.dataLoaded.get())
+
+		return !Template.computeScenario.RV.dataLoaded.get();
+	}
+});
 
 Template.computeScenario.events({
 	'click #ComputeNewMap'() {
@@ -23,13 +34,13 @@ Template.computeScenario.events({
 		//if (Template.body.data.mapEdited.get() && Template.body.template.scenario) {
 		Template.newScenario.RV.currentScenarioId.set(false);
 		Template.newScenario.RV.currentScenario.set(false);
-		var defName = "Scenario " + moment().format("DD/MM/YYYY HH:mm:ss");
+		/*var defName = "Scenario " + moment().format("DD/MM/YYYY HH:mm:ss");
 			newName = window.prompt("Give a name to this scenario", defName);
 			if (newName === "") {
 				newName = defName;
 			} else if (!newName)
 				return;
-		//}
+		//}*/
 
 		if(!$('#endMetro').hasClass('hidden')){
 			$('#endMetro').trigger('click'); //finisco di aggiungere la linea
@@ -56,14 +67,17 @@ Template.computeScenario.events({
 		let S2S2Add = addNewStops.fill2AddArray(Template.computeScenario.collection.stops.find().count())
 		let lines = Template.metroLinesDraw.collection.metroLines.find({'temp':true}).fetch();
 		let scenario = initScenario(city, name, author, time, lines, P2S2Add, S2S2Add);
-		console.log("scenario created", scenario);
+		
+		Template.computeScenario.RV.toSave.set(true);
+		console.log('compute!!',Template.computeScenario.RV.toSave.get())
+		//console.log("scenario created", scenario);
 		Template.newScenario.RV.currentScenario.set(scenario);
 		Template.newScenario.RV.currentScenarioId.set(scenario._id);
 		//Template.body.data.dataLoaded.set(false); //verrà settato a true alla fine del calcolo
-		Meteor.setTimeout(computeNewScenario(), 100);
+		//Meteor.setTimeout(
+			computeNewScenario()
+			//	, 100);
 		$('#ComputeNewMap').removeClass('active');
-
-
 	}
 });
 
@@ -90,6 +104,7 @@ Template.computeScenario.collection.stops = new Mongo.Collection(null)
   //********. Reactive Var ************ 
   Template.computeScenario.RV = {};
   Template.computeScenario.RV.dataLoaded = new ReactiveVar(false); //true when finished load data
+  Template.computeScenario.RV.toSave = new ReactiveVar(false); //set true when the user have to insert the name and uthor of the scenario
 
   //******** webWorker *************
   Template.computeScenario.worker = {}
@@ -114,6 +129,7 @@ let loadComputeScenarioData = function(city, RV){
 		if(num < 1){
 			Template.map.data.map.spin(false);
 			Template.computeScenario.RV.dataLoaded.set(true);
+
 		}
 		return true;
 	};
@@ -189,10 +205,12 @@ const computeNewScenario = function(){
 	let pointsCollection = Template.newScenario.collection.points;
 	let scenario = Template.newScenario.RV.currentScenario.get();
 	let serverOSRM = Template.computeScenario.data.serverOSRM;
+	console.log("start update Arrays")
 	let promiseAddStop = addNewStops.updateArrays(city, stopsCollection, pointsCollection, scenario, serverOSRM);
 
 
 	Promise.all(promiseAddStop).then(values => {
+		console.log("end update Arrays")
 
 		console.log('BEFORE', _.size(scenario.P2S2Add), _.size(scenario.S2S2Add))
 		addNewStops.deleteEmptyItem(scenario.P2S2Add);

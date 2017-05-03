@@ -4,9 +4,9 @@ import {
 	Router
 } from 'meteor/iron:router';
 
-export const maxTimeWalk = 900; //[second] Max distance allowed for walking path between stops and points.
-export const walkingVelocity = 5/3.6; // [meter/second].
-export const maxDistanceWalk = maxTimeWalk * maxTimeWalk; //Max distance allowed for walking path between stops and points.
+export const maxTimeWalk = 900.; //[second] Max distance allowed for walking path between stops and points.
+export const walkingVelocity = 5./3.6; // [meter/second].
+export const maxDistanceWalk = maxTimeWalk * walkingVelocity; //Max distance allowed for walking path between stops and points.
 export const timesOfDay = [7 * 3600];//, 12 * 3600, 17 * 3600, 22 * 3600];
 export const maxDuration = 3 * 3600; //max integration intervals, limit the lenght of array of connections.
 

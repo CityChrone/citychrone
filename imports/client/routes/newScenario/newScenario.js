@@ -27,6 +27,7 @@ import '/imports/client/routes/newScenario/newScenario.html';
 Template.newScenario.helpers({
 	'loadGeojsonToMap'(){
 		if(Template.newScenario.RV.currentScenario.get()){
+			//console.log('loadGeojsonToMap!!', Template.newScenario.RV.currentScenario.get())
 			let scenario = Template.newScenario.RV.currentScenario.get();
 			let time = Template.timeSelector.timeSelectedRV.get();
 			let quantitySel = Template.quantitySelector.quantitySelectedRV.get()
@@ -35,7 +36,7 @@ Template.newScenario.helpers({
 				geoJson.updateGeojson(scenario, quantitySel, false, time, null, true);
 			}
 			else{
-				let scenarioDefaultId =  Template.scenario.data.scenarioDefaultId
+				let scenarioDefaultId =  Template.scenario.data.scenarioDefaultId.get()
 				let scenarioDefault =  scenarioDB.findOne({'_id':scenarioDefaultId});
 				let mode = Template.quantitySelector.modeSelectedRV.get();
 				let geoJson = Template.newScenario.data.geoJson

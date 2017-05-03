@@ -126,7 +126,7 @@ onmessage = function(e) {
 			'point': point,
 			'newVels': returned.newVels,
 			'NewAccess' : returned.NewAccess,
-			'popMean' : returned.popMean,
+			'newPotPop' : returned.newPotPop,
 			'tPoint' : returned.tPoint
 		}
 		//console.log('computed point', point);
