@@ -24,7 +24,7 @@ import '/imports/server/router.js';
 import  { dataCitiesDB } from '/imports/api/DBs/dataCitiesDB.js';
 
 var _;
-
+ 
 
 Meteor.startup(() => {
   // console.log(JSZip, fs);
@@ -34,7 +34,7 @@ Meteor.startup(() => {
   Meteor.publish('scenario', function scenarioList(city) {
 
     //console.log('scenario published ' + city);
-    let res = scenarioDB.findOne({'default':true, 'city' : city}, {sort:{'creationDate':-1}, reactive: false, field:{'moments':0}} );
+    let res = scenarioDB.findOne({'default':true, 'city' : city}, {sort:{'creationDate':-1}, field:{'moments':0}} );
 
     return scenarioDB.find({'city':city}, {field:{'moments':0, 'P2S2Add': 0, 'S2S2Add':0, 'lines':0}});
   });

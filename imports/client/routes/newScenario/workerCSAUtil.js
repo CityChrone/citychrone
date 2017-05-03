@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating';
+import { computeScoreNewScenario } from '/imports/api/DBs/scenarioDB.js';
 //import { zeroTime,timesOfDay, maxDuration , HexArea, getCity } from '/imports/api/parameters.js';
 //import { loadNewTime } from '/imports/client/scenario/scenario.js';
 //import { unionPoints,  shellify} from '/imports/client/info/hexagons/unionHexs.js'
@@ -43,7 +44,7 @@ const workerOnMessage = function(e) {
 		}
 		if(Template.computeScenario.worker.CSAPointsComputed > countLimit){
 			//console.log('loaded new!! ', countStep, countLimit, Template.computeScenario.worker.CSAPointsComputed,moment )
-			//loadNewTime(Template.body.data.timeOfDay.get())
+			//loadNewTime(Template.body.data.timeOfDay.get());
 			Template.newScenario.RV.currentScenario.set(scenario);
 			//Template.newScenario.data.geoJson.updateGeojson(scenario, Template.quantitySelector.quantitySelectedRV.get())
 			countLimit += countStep;
@@ -62,6 +63,10 @@ const workerOnMessage = function(e) {
 			Template.map.data.map.spin(false);
 			//Template.newScenario.data.geoJson.showGeojson()
 			//$('#rankModal').modal('show');
+			scenario['scores'] = computeScoreNewScenario(scenario, time);
+			scenario['budget'] = Template.budget.function.cost();
+			console.log('scenario after scores',scenario)
+
 			Template.newScenario.RV.currentScenario.set(scenario);
 			Meteor.call('insertNewScenario', scenario);
 

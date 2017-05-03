@@ -37,6 +37,15 @@ export const initScenario = function(city, name, author, time, metroLinesFetched
 	return scenario;
 }; 
 
+export const computeScoreNewScenario = function(scenario, time){
+	let scores = {};
+	let moment = scenario['moments'][time]
+	scores['scoreVelocity'] = moment['newVels'].reduce((a, b) => a + b, 0);
+	scores['scorePotPop'] = moment['newPotPop'].reduce((a, b) => a + b, 0);
+	return scores;
+
+};
+
 Meteor.methods({
 	'insertNewScenario' : function(obj){
 		//console.log('insert scenario', obj);
@@ -53,6 +62,13 @@ Meteor.methods({
 	'updateScenario' : function(obj, _id){
 		//console.log("update scenario", _id);
 		scenarioDB.update({'_id':_id}, obj);
+	},
+	'updateNameAuthorScenario' : function(title, author, _id){
+		let res = scenarioDB.update({'_id':_id}, {"$set":{'name':title, 'author':author}},
+			(err, numModified)=>{
+				//console.log("scenario updated", title, author, _id, numModified, err);
+			});
+		//console.log("scenario updated", title, author, _id, res);
 	},
 	 'scenarioDef' : function(city){
 	 	let res = scenarioDB.findOne({'default':true, 'city' : city}, {sort:{'creationDate':-1}, reactive: false} );

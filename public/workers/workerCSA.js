@@ -29,6 +29,7 @@ let startTime = 0;
 let areaHex = 1;
 let maxDuration = 0;
 let pointsVenues = [];
+let arrayPop = [];
 
 onmessage = function(e) {
 	if (e.data.arrayCDef) {
@@ -105,7 +106,7 @@ onmessage = function(e) {
 
 		for (var point_i = 0; point_i < points.length; point_i++) {
 			var point = points[point_i];
-			var returned = CSAPoint(point, arrayC, arrayN, startTime, areaHex, pointsVenues);
+			var returned = CSAPoint(point, arrayC, arrayN, startTime, areaHex, pointsVenues, arrayPop);
 			//console.log(point, returned);
 			results.push({
 				'point': point,
@@ -120,7 +121,7 @@ onmessage = function(e) {
 	}
 	else if (e.data.isochrone) {
 		let point = e.data.isochrone.point;
-		let returned = CSAPoint(point, arrayC, arrayN, startTime, areaHex, pointsVenues);
+		let returned = CSAPoint(point, arrayC, arrayN, startTime, areaHex, pointsVenues, arrayPop);
 			//console.log(point, points.length);
 		let result = {
 			'point': point,
@@ -158,7 +159,9 @@ onmessage = function(e) {
 		pointsVenues = e.data.pointsVenues;
 		//console.log('windTime workers loaded', windTime);
 	} 
-
+	else if(e.data.arrayPop){
+		arrayPop = e.data.arrayPop
+	}
 	else if (e.data.maxDuration) {
 		maxDuration = e.data.maxDuration;
 		//console.log('zeroTime workers loaded', zeroTime);

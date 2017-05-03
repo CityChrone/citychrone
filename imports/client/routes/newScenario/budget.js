@@ -127,12 +127,15 @@ Template.budget.events({});
 
 Template.budget.onCreated(function(){
     Template.budget.data = {};
-
     Template.budget.data.city = Router.current().params.city;
 
     Template.budget.RV = {}
     Template.budget.RV.budget = new ReactiveVar({})
 
+    Template.budget.function = {}
+    Template.budget.function.cost = function(){
+        return Template.budget.RV.budget.get().budget - costLines(Template.metroLinesDraw.collection.metroLines);
+    }
 
     Meteor.call("budget", Template.budget.data.city, function(err, res){
         //console.log("Budget!!", res);

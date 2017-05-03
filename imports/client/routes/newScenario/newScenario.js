@@ -92,7 +92,7 @@ Template.newScenario.onRendered(function() {
 
   	//CREATE CONTROLS
 
-  	let controlTL = createControl([Template.newScenarioButtons,Template.quantitySelector,  Template.buttonsChangePage, Template.socialButtons], "topleft",  Template.map.data.map, 'leftBar', true);
+  	let controlTL = createControl([Template.newScenarioButtons,Template.quantitySelector, Template.scenarioSelector, Template.buttonsChangePage, Template.socialButtons], "topleft",  Template.map.data.map, 'leftBar', true);
   	let controlTR = createControl([Template.legendGeojson], "topright",  Template.map.data.map,'', true);
 
 	//console.log(Template.newScenario.data.geoJson);
@@ -103,7 +103,7 @@ Template.newScenario.onRendered(function() {
 });
 
 let loadScenarioData = function(city, RV){
-	let dataToLoad = 4;
+	let dataToLoad = 5;
 	Template.map.data.map.spin(true);
 	checkDataLoaded = function(num = -1) {
 		dataToLoad  += num
@@ -147,6 +147,7 @@ let loadScenarioData = function(city, RV){
 		let scenarioDef = scenarioDB.findOne({'default':true, 'city' : city}, {sort:{'creationDate':-1}});
 		//console.log('loaded', scenarioDef);
 	    Template.newScenario.data.scenarioDefaultId = scenarioDef._id; //scenario contenente i dati senza modifiche
+	    Template.newScenario.data.scenarioDefault = scenarioDef;
 	    if (!Template.newScenario.data.scenarioDefaultId)
 	      console.error("Default scenario non trovato!");
 	    else {

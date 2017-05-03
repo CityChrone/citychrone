@@ -2,13 +2,25 @@
 <div>
 	{{#if isSelected}}
 	<hr /> 
-	<div class="h3 text tex-center"> Scenario </div>
-	<div class="center marginBar">
-	<span class = "text-info"> selected </span>
-	<div class="label label-default scenarioButton" id="scenarioSelected">
-		{{title}}
+	<div class="text"> 
+	<span class ="h3">Scenario</span>  
+	<button class = "btn btn-primary scenarioButton"> change </button> 
 	</div>
-	</div>
+	
+		<table class="table">
+		  	<tr>
+				<th class = "text " style="width:50px" >title:</th>
+				<th class="text" id="scenarioTitle">
+					{{title}}
+				</th>
+			</tr>
+			<tr>
+				<th class = "text " style="width:50px" >author:</th>
+				<th class="text" id="scenarioAuthor">
+					{{author}}
+				</th>
+			</tr>
+		</table>
 	{{/if}}
 </div>
 
