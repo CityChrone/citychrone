@@ -38,6 +38,10 @@ html, body, #mapid  {
    margin-top: 0px;
    opacity: 0.7;
 }
+.modal{
+    z-index: 7000;
+  }
+
 
 /*
 .addStop {

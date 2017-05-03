@@ -2,6 +2,11 @@
   <button class="btn btn-default {{dataLoadedDisabled}}" type="button" id="ComputeNewMap" onclick="this.blur();" >
     <span class="glyphicon {{computeIcon}} " aria-hidden="true"></span>
 			Compute
+
+			{{#if toSave}}
+				{{> saveScenario}}
+			{{/if}}
+
 			{{#if dataLoadedGet}}
 				<span id="spinLoad"><i class="fa fa-refresh fa-spin fa-fw"></i></span>
 			{{/if}}

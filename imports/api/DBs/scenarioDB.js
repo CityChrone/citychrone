@@ -17,7 +17,7 @@ export const initScenario = function(city, name, author, time, metroLinesFetched
 			'efficency' : 0,
 			'newVels' : [],
 			'newAccess' : [],
-			'newPopPot' : [],
+			'newPotPop' : [],
 		}
 	
 

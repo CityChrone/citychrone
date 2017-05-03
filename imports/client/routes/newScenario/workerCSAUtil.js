@@ -8,7 +8,8 @@ let countLimit = 0
 let countStep = 1000
 
 const workerOnMessage = function(e) {
-	//console.log(Template.body.template.scenario.currentScenario)
+	
+	//console.log('work on message', e)
 	let scenario = Template.newScenario.RV.currentScenario.get();
 	if(e.data.tPoint) {
 		//console.log('isochrone!!', e.data);
@@ -34,15 +35,17 @@ const workerOnMessage = function(e) {
 		let moment = scenario['moments'][time]
 		for(let point_i = 0; point_i < e.data.length; point_i++){
 			let data = e.data[point_i];
-			moment['newVels'][data.point.pos] = data.vAvg
-			let accessNew = data.accessNew || {}
-			moment['newAccess'][data.point.pos] = accessNew
+			moment['newVels'][data.point.pos] = data.newVels
+			moment['newPotPop'][data.point.pos] = data.newPotPop
+			let newAccess = data.newAccess || {}
+			moment['newAccess'][data.point.pos] = newAccess
 
 		}
 		if(Template.computeScenario.worker.CSAPointsComputed > countLimit){
-			//console.log('loaded new!! 1000', countStep, countLimit, Template.body.data.countHex,moment )
+			//console.log('loaded new!! ', countStep, countLimit, Template.computeScenario.worker.CSAPointsComputed,moment )
 			//loadNewTime(Template.body.data.timeOfDay.get())
-			Template.newScenario.data.geoJson.showGeojson()
+			Template.newScenario.RV.currentScenario.set(scenario);
+			//Template.newScenario.data.geoJson.updateGeojson(scenario, Template.quantitySelector.quantitySelectedRV.get())
 			countLimit += countStep;
 		}
 
@@ -55,20 +58,14 @@ const workerOnMessage = function(e) {
 			//Template.body.template.rank.toInsert.set(true);
 			//if (Template.body.template.scenario)
 				//Template.body.template.scenario.toSave.set(true);
-
+			console.log("ended")
 			Template.map.data.map.spin(false);
-			Template.newScenario.data.geoJson.showGeojson()
+			//Template.newScenario.data.geoJson.showGeojson()
 			//$('#rankModal').modal('show');
+			Template.newScenario.RV.currentScenario.set(scenario);
+			Meteor.call('insertNewScenario', scenario);
 
 
-			/*if($('#buttonBuild').hasClass('active')){//WHY?!?!
-				Template.body.data.map.eachLayer(function (layer) {
-					if('lineName' in layer){
-						layer.bringToFront();
-					}
-				});
-			}
-		*/
 		}
 		//console.log('added ', Template.body.data.countHex, 1.*Math.floor(time.getTime()/ 100)/10. );
 	}

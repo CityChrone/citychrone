@@ -50,7 +50,7 @@ const computeNeigh = function(stop, stops, P2S2Add, S2S2Add, points, serverOSRM)
 
 	    urlStops = urlStops.slice(0,-1) + '?sources=0';
 	    urlPoints = urlPoints.slice(0,-1) + '?sources=0';
-
+	    //console.log("number of neigs", stop, pointsNList.length, stopsNList.length, MaxDistance);
       var getPoints = function() {
         if (pointsNList.length < 1) {
           resolve([stop,pointsNList,stopsNList]);
