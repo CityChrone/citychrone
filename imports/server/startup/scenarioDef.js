@@ -5,7 +5,8 @@ import turf from 'turf';
 import math from 'mathjs';
 import { EJSON } from 'meteor/ejson';
 
-import { scenarioDB, initScenario } from '/imports/api/DBs/scenarioDB.js';
+import { scenarioDB, initScenario, computeScoreNewScenario } from '/imports/api/DBs/scenarioDB.js';
+
 import {points, stops, initPoints, initArrayPop} from '/imports/api/DBs/stopsAndPointsDB.js';
 import { initVel } from '/imports/api/DBs/velocityDb.js';
 import { connections } from '/imports/api/DBs/connectionsDB.js';
@@ -104,7 +105,7 @@ export const computeScenarioDefault = function(city){
 			var point = listPoints[point_i];
 			var returned = worker.CSAPoint(point, arrayC, arrayN, startTime, areaHex, pointsVenues, arrayPop);
 			//console.log(point, returned);
-			if(point.pos % 2000 == 0) console.log(startTime/3600, returned.vAvg, returned.popMean, point.pos)
+			if(point.pos % 2000 == 0) console.log(startTime/3600, returned.newVels, returned.popMean, point.pos)
 			newVels.push(returned.newVels);
 			newAccess.push(returned.newAccess);
 			newPotPop.push(returned.newPotPop);
@@ -116,11 +117,14 @@ export const computeScenarioDefault = function(city){
 		moment.newVels = newVels;
 		moment.newAccess = newAccess;
 		moment.newPotPop = newPotPop;
+
 	}
 
 
 	scenarioDB.remove({'city':city, 'default':true});
 	console.log(Object.keys(scenario));
+	scenario['scores'] = computeScoreNewScenario(scenario, timesOfDay[0].toString());
+
 	scenarioDB.insert(scenario, (e)=>{
 		addCityToList(scenario);
 	});

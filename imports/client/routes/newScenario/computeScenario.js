@@ -2,6 +2,7 @@ import { Template }  from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
 import { Mongo } from 'meteor/mongo';
+import { Blaze } from 'meteor/blaze';
 import '/imports/client/routes/newScenario/computeScenario.html';
 import { makeWorkers } from '/imports/client/routes/newScenario/workerCSAUtil.js'
 import { scenarioDB, initScenario } from '/imports/api/DBs/scenarioDB.js'
@@ -12,8 +13,12 @@ import * as addNewConnections from '/imports/client/routes/newScenario/addNewCon
 import '/imports/client/routes/newScenario/saveScenario.js';
 Template.computeScenario.helpers({
 	'toSave'(){
-		console.log("toSave !!", Template.computeScenario.RV.toSave.get())
+		//console.log("toSave !!", Template.computeScenario.RV.toSave.get())
 		return Template.computeScenario.RV.toSave.get();
+	},
+	'saveTemplate'(){
+		//console.log('rendered', Template.body, $("body")[0]);
+		//Blaze.render(Template.saveScenario, $("body")[0]);
 	},
 	'dataLoadedGet'(){
 		console.log("dataLoadedGet !!", Template.computeScenario.RV.dataLoaded.get())
@@ -42,6 +47,8 @@ Template.computeScenario.events({
 				return;
 		//}*/
 
+
+
 		if(!$('#endMetro').hasClass('hidden')){
 			$('#endMetro').trigger('click'); //finisco di aggiungere la linea
 		}
@@ -69,13 +76,15 @@ Template.computeScenario.events({
 		let scenario = initScenario(city, name, author, time, lines, P2S2Add, S2S2Add);
 		
 		Template.computeScenario.RV.toSave.set(true);
-		console.log('compute!!',Template.computeScenario.RV.toSave.get())
+		console.log('compute!!',Template.computeScenario.RV.toSave.get());
 		//console.log("scenario created", scenario);
 		Template.newScenario.RV.currentScenario.set(scenario);
 		Template.newScenario.RV.currentScenarioId.set(scenario._id);
+		Blaze.render(Template.saveScenario, $("body")[0]);
+
 		//Template.body.data.dataLoaded.set(false); //verrà settato a true alla fine del calcolo
 		//Meteor.setTimeout(
-			computeNewScenario()
+		computeNewScenario()
 			//	, 100);
 		$('#ComputeNewMap').removeClass('active');
 	}
@@ -169,6 +178,15 @@ let loadComputeScenarioData = function(city, RV){
 	    console.log('data pointsVenues loaded');
 	    Template.body.function.checkDataLoaded(-1);
 	  });*/
+
+    Meteor.call('giveDataBuildScenario', city,'arrayPop', function(err, risp){
+	    Template.computeScenario.worker.CSA.forEach((worker)=>{
+	          worker.postMessage({'arrayPop' : risp});
+	    });
+	    console.log('data arrayPop loaded');
+	    checkDataLoaded(-1);
+	  });
+
 
 	Meteor.call('giveDataBuildScenario', city,'stops', function(err, risp){
 	    risp.forEach(function(stop){
@@ -264,3 +282,9 @@ const computeNewScenario = function(){
 		 });
 	});
 };
+
+
+
+
+
+
