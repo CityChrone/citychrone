@@ -15,7 +15,7 @@ Template.saveScenario.events({
 Template.saveScenario.onCreated(function(){});
 
 Template.saveScenario.onRendered(function(){
-	console.log("rendered new scenario!!", this, this.view, this.view.template);
+	//console.log("rendered new scenario!!", this, this.view, this.view.template);
 	let currentView = this.view;
 	$('.modal').modal('show');
 	$('.modal').on('hide.bs.modal', function(e){

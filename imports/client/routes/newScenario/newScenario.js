@@ -160,47 +160,6 @@ let loadScenarioData = function(city, RV){
  	});
 
 
-//FOR NEW SCENARIO ONLY VERY LARGE
-/*
- 	Meteor.call('giveDataBuildScenario', city,'arrayC', function(err, res){
-	    console.log(res)
-	      Template.body.data.allWorker.forEach((worker)=>{
-	                  worker.postMessage({'arrayCDef' : res});
-	      });
-	      console.log('data ArrayC loaded');
-	      Template.body.function.checkDataLoaded(-1);
-	  });
-
-	  Meteor.call('giveDataBuildScenario', city,'arrayN', function(err, risp){
-	      let P2PDef = {pos : risp.P2PPos, time : risp.P2PTime};
-	      let P2SDef = {pos : risp.P2SPos, time : risp.P2STime};
-	      let S2SDef = {pos : risp.S2SPos, time : risp.S2STime};
-	      Template.body.data.allWorker.forEach((worker)=>{
-	            worker.postMessage({'P2PDef' : P2PDef});
-	            worker.postMessage({'P2SDef' : P2SDef});
-	            worker.postMessage({'S2SDef' : S2SDef});
-	      });      
-	      console.log('data arrayN loaded');
-	      Template.body.function.checkDataLoaded(-1);
-	  });
-
-	  Meteor.call('giveDataBuildScenario', city,'pointsVenues', function(err, risp){
-	    Template.body.data.allWorker.forEach((worker)=>{
-	          worker.postMessage({'pointsVenues' : risp});
-	    });
-	    console.log('data pointsVenues loaded');
-	    Template.body.function.checkDataLoaded(-1);
-	  });
-
-	Meteor.call('giveDataBuildScenario', city,'stops', function(err, risp){
-	    risp.forEach(function(stop){
-	      stop.temp = false;
-	      Template.body.collection.stops.insert(stop);
-	    });
-	    console.log('data stops loaded', dataToLoad);
-	    Template.body.function.checkDataLoaded(-1);
-	  });
-*/
 
 }
 

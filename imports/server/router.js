@@ -16,13 +16,6 @@ Router.route('/computeScenarioDef/:city', function () {
 	console.log('COMPUTE SCENARIO default of', city);
  	this.response.end('computing default scenario of ' + city);
 	let scenarioDef = computeScenarioDefault(city);
-
-	//console.log('computedScenario def', city);
-	//addCityToList(scenarioDef);
-	//console.log('added to list city def', city);
- 	//this.response.end('default scenarion computed of ' + city);
-	//this.response.end('Zip per ' + this.params.city + ' esportati!');
-
 }, {where: 'server'});
 
 Router.route('/reloadCities', function () {

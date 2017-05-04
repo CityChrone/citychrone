@@ -63,14 +63,14 @@ const workerOnMessage = function(e) {
 			Template.map.data.map.spin(false);
 			//Template.newScenario.data.geoJson.showGeojson()
 			//$('#rankModal').modal('show');
+			scenario['arrayPop'] = Template.newScenario.data.arrayPop
 			scenario['scores'] = computeScoreNewScenario(scenario, time);
 			scenario['budget'] = Template.budget.function.cost();
 			console.log('scenario after scores',scenario)
 
 			Template.newScenario.RV.currentScenario.set(scenario);
 			Meteor.call('insertNewScenario', scenario);
-
-
+			$(".scenarioButton").trigger('click');
 		}
 		//console.log('added ', Template.body.data.countHex, 1.*Math.floor(time.getTime()/ 100)/10. );
 	}

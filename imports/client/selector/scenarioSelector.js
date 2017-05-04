@@ -11,11 +11,12 @@ import '/imports/client/otherTemplate/scenarioList.js';
 Template.scenarioSelector.onCreated(function(){
 	let city = Router.current().params.city;
 	Meteor.subscribe('scenario', city, function(){});
+
 });
 
 Template.scenarioSelector.events({
 	'click .scenarioButton'(e){
-		console.log(e);
+		//console.log(e);
 		Blaze.render(Template.scenarioList, $("body")[0]);
 
 	}

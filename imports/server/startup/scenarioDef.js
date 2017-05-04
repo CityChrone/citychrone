@@ -123,6 +123,7 @@ export const computeScenarioDefault = function(city){
 
 	scenarioDB.remove({'city':city, 'default':true});
 	console.log(Object.keys(scenario));
+	scenario['arrayPop'] = arrayPop;
 	scenario['scores'] = computeScoreNewScenario(scenario, timesOfDay[0].toString());
 
 	scenarioDB.insert(scenario, (e)=>{

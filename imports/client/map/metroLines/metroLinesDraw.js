@@ -61,17 +61,14 @@ Template.metroLinesDraw.onRendered(function(){
 	   		//console.log(line);
 	   		
 
-	      line.stops = _.values(line.stops).map(function(stop){
-	        return {'latlng':stop};
-	      });
-	      line.temp = false;
-	      line.name = line.name || line.lineName;
+	      //line.name = line.name || line.lineName;
 	      if (line.type == 'metro') {
-	              //console.log(line)
-	        line.indexLine = _.indexOf(Template.metroLinesDraw.data.listNumLines, 0);
-	        Template.metroLinesDraw.data.listNumLines[line.indexLine]++;
+	            console.log(line)
+	            line.indexLine = _.indexOf(Template.metroLinesDraw.data.listNumLines, 0);
+	        	addLine2DB(line.lineName, line.indexLine, line.stops, line.subline, line.color, line.temp);
+	        //Template.metroLinesDraw.data.listNumLines[line.indexLine]++;
 	      }
-	      Template.metroLinesDraw.collection.metroLines.insert(line);
+	      //Template.metroLinesDraw.collection.metroLines.insert(line);
 	    
 	    });
 	   	//console.log('metrolines Added',res, Template.metroLinesDraw.collection.metroLines.find().fetch());
@@ -132,9 +129,9 @@ export const addNewLine = function(){
 }
 
 
-export const addLine2DB = function(lineName, indexLine, stopsList = [], subline = false){
+export const addLine2DB = function(lineName, indexLine, stops = [], subline = false, color = null, temp = true){
 	Template.metroLinesDraw.data.listNumLines[indexLine]++;
-	let colorMetro = Template.metroLinesDraw.function.colorNewMetro(indexLine);
+	let colorMetro = color || Template.metroLinesDraw.function.colorNewMetro(indexLine);
 	let poly = polyMetro([],colorMetro).addTo(Template.map.data.map);
 	let city = Template.metroLinesDraw.data.city;
  	Template.metroLinesDraw.data.polylineMetro[poly._leaflet_id] = poly;
@@ -144,11 +141,10 @@ export const addLine2DB = function(lineName, indexLine, stopsList = [], subline 
 		lineName : lineName ,
 		name : lineName,
 		color : colorMetro,
-		stops : stopsList,
-		listStops : [],
+		stops : stops,
 		shape : [],
 		type : 'metro',
-		temp : true,
+		temp : temp,
 		indexLine : indexLine,
 		subline : subline,
 		'bezier_id': poly._leaflet_id,
@@ -224,22 +220,33 @@ export const removeStop = function(marker){
 export const observeNewLineChanges = function(){
 	return Template.metroLinesDraw.collection.metroLines.find().observe({
 		added : function(newDoc) {
-			//console.log("ADDED!!!")
 			newL = newDoc.stops.length;
 
 			let line = newDoc
 			let layer = {};
-			let listStopsInv = line['listStops'].map((val)=>{return [val[1],val[0]]});
+			let lineStop = newDoc.stops.map(function(stop){return stop.latlng;});
+			console.log("ADDED!!!", newDoc, lineStop)
+
 	 		if(line.type == 'metro'){
 	 			//create of polyline for the metro (only style)
-	 			layer = polyMetro(listStopsInv,line['color']).addTo(Template.map.data.map);
-				listStopsInv.forEach((stopLatLon, index) => {
+	 			//layer = polyMetro(lineStop,line['color']).addTo(Template.map.data.map);
+	 			let StopsMarker = Template.metroLinesDraw.data.StopsMarker;
+				newDoc.stops.forEach((stop, index) => {
 	 				if( !('_leaflet_id' in stop)){
-	 					//console.log(stop)
-		 				let marker = stopMarker(stopLatLon,line['color']).addTo(Template.map.data.map);
+		 				let marker = stopMarker(stop.latlng,line['color'],line.temp ).addTo(Template.map.data.map);
 		 				marker['indexLine'] = line.indexLine;// || _.indexOf(Template.body.data.listNameLines, line.lineName.slice(0,3));
 						marker['lineName'] = line.lineName;
-						marker['temp'] = false;
+						marker['temp'] = line.temp;
+						marker.addTo(Template.map.data.map);
+		 				line.stops[index]['_leaflet_id'] = marker['_leaflet_id']
+		 				Template.metroLinesDraw.data.StopsMarker[marker['_leaflet_id']] = marker;
+		 				marker.bringToFront()
+		 			}else if(!(stop['_leaflet_id'] in StopsMarker)){
+		 				console.log(stop)
+		 				let marker = stopMarker(stop.latlng,line['color'],line.temp).addTo(Template.map.data.map);
+		 				marker['indexLine'] = line.indexLine;// || _.indexOf(Template.body.data.listNameLines, line.lineName.slice(0,3));
+						marker['lineName'] = line.lineName;
+						marker['temp'] = line.temp;
 						marker.addTo(Template.map.data.map);
 		 				line.stops[index]['_leaflet_id'] = marker['_leaflet_id']
 		 				Template.metroLinesDraw.data.StopsMarker[marker['_leaflet_id']] = marker;
@@ -258,37 +265,39 @@ export const observeNewLineChanges = function(){
 	 			layer = polyMetro(listStopsInv,line['color']).addTo(Template.map.data.map);
 
 	 		}
-	 		if(!$('#buttonBuild').hasClass('active')){
-	 			//bring to back in already clicked on build;
-	 			layer.bringToBack();
-	 		}
-			//}
 		},
 		changed : function(newDoc, oldDoc) {
 			//Template.body.data.mapEdited.set(true);
 			let lineStop = newDoc.stops.map(function(stop){return stop.latlng;});
-			// console.log('changed',newDoc)
-			if(newDoc.temp){
-				if(lineStop.length > 2){
-						let smoothPolyLine = turf.bezier(turf.lineString(lineStop),10000, 0.4);
-						Template.metroLinesDraw.data.polylineMetro[newDoc.bezier_id].setLatLngs(smoothPolyLine.geometry.coordinates);
-					}
-				else if(lineStop.length == 2){
-						Template.metroLinesDraw.data.polylineMetro[newDoc.bezier_id].setLatLngs(lineStop);
-				}else if(lineStop.length == 1){
-					if(newDoc.bezier_id in Template.metroLinesDraw.data.polylineMetro){
-						Template.metroLinesDraw.data.polylineMetro[newDoc.bezier_id].setLatLngs(lineStop);
-					}
+			console.log('changed',newDoc)
+			if(lineStop.length > 2){
+				let smoothPolyLine = turf.bezier(turf.lineString(lineStop),10000, 0.4);
+				Template.metroLinesDraw.data.polylineMetro[newDoc.bezier_id].setLatLngs(smoothPolyLine.geometry.coordinates);
+			}
+			else if(lineStop.length == 2){
+				Template.metroLinesDraw.data.polylineMetro[newDoc.bezier_id].setLatLngs(lineStop);
+			}else if(lineStop.length == 1){
+				if(newDoc.bezier_id in Template.metroLinesDraw.data.polylineMetro){
+					Template.metroLinesDraw.data.polylineMetro[newDoc.bezier_id].setLatLngs(lineStop);
 				}
 			}
-
 		},
-		removed : function(doc) {
-			Template.metroLinesDraw.data.mapEdited.set(true);
-			if(doc.bezier_id in Template.metroLinesDraw.data.polylineMetro){
+		removed : function(line) {
+			//Template.metroLinesDraw.data.mapEdited.set(true);
+			console.log(line)
+			if(line.bezier_id in Template.metroLinesDraw.data.polylineMetro){
 				//console.log('removed',doc.bezier_id)
-				Template.metroLinesDraw.data.polylineMetro[doc.bezier_id].remove();
+				Template.metroLinesDraw.data.polylineMetro[line.bezier_id].remove();
+				delete Template.metroLinesDraw.data.polylineMetro[line.bezier_id];
+
 			}
+			line.stops.forEach((stop)=>{
+				if(stop['_leaflet_id'] in Template.metroLinesDraw.data.StopsMarker){
+					let marker = Template.metroLinesDraw.data.StopsMarker[stop['_leaflet_id']]
+					if(marker.temp) marker.remove();
+					delete Template.metroLinesDraw.data.StopsMarker[stop['_leaflet_id']];
+				}
+			})
 		}
 	});
 };

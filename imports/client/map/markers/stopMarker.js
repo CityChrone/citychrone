@@ -28,6 +28,7 @@ export const stopMarker =  function(latlng, color = null, drag = false, zoom = 1
 		styleMarker(color, drag)).setRadius(radiusCircle(zoom));
 	marker.colorLine = color;
 	marker.on('click dblclick', stopOnCLickPopUp);
+	marker.on('dragend', stopOnDragend);
 
 	return marker;
 };
@@ -36,7 +37,6 @@ export const giveDragMarkerStop = function(latlng, lineName, colorLine, indexLin
 	markerStop['temp'] = true;
 	markerStop['indexLine'] = indexLine;
 	markerStop['lineName'] = lineName;
-	markerStop.on('dragend', stopOnDragend);
 	//Template.body.data.mapEdited.set(true);
 	return markerStop;
 };
