@@ -54,7 +54,7 @@ const shellify = function(points, field, shell){
             //console.log(val, i, shell[i], val < shell[i])
             if (val < shell[i]) break;
         }
-        //console.log((shell[i-1] + shell[i])/2,val,  i, shell, shell[i-1])
+        //console.log((shell[i-1] + shell[i])/2, val,  i, shell, shell[i-1])
 
         return (shell[i-1] + shell[i])/2;
     }

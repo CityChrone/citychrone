@@ -28,7 +28,9 @@ Template.newScenarioButtons.events({
 			$('#buttonAddCompute').removeClass('active');
 			$('#buttonAddCompute').removeClass('btn-default');
 			$('#buttonAddCompute').addClass('btn-danger');
-
+			if(!Template.metroLinesDraw.RV.mapEdited.get()){
+				Template.metroLinesDraw.RV.mapEdited.set(true);
+			}
 			addNewLine()
 
 			$('.computeDone').toggleClass('hidden');
@@ -45,7 +47,14 @@ Template.newScenarioButtons.events({
 		}
 	},
 	'click #reload'(){
-		 location.reload();
+		let scenarioDef = Template.newScenario.data.scenarioDefault;
+		let templateRV = Template.city.RV || Template.newScenario.RV;
+		Template.metroLinesDraw.RV.mapEdited.set(false);
+		templateRV.currentScenario.set(scenarioDef);
+		templateRV.currentScenarioId.set(scenarioDef._id);
+		Template.metroLinesDraw.collection.metroLines.remove({'temp':true});
+
+		 //location.reload();
 	}
 });
 Template.newScenarioButtons.helpers({

@@ -2,16 +2,14 @@ import {Template} from 'meteor/templating';
 //import d3 from 'd3';
 import * as d3Inter from 'd3-scale-chromatic';
 import d3 from 'd3'
+
 //const shell = [0.,5., 7.,8.,9.,10.,12.,14,16, 20.];
 //const shell = [0, 5, 7, 9, 11, 13, 15, 17, 20 ];
 //const shell = [0.,3., 5.,7.,9.,11.,13.,15,17, 20.];
-export const maxValueDiff = 2.;
-export const maxValueAccessDiff = 1.;
 export const maxValueIso = 2. * 3600.
 export const maxValuePotPop = 1000000;
 
 export const numBinAccess = 15;
-export const numBinDiff = 10;
 export const numBinIso = 8.;
 export const numBinPop = 20;
 
@@ -28,15 +26,6 @@ export const colorVel = function(val) {
 };
 
 
-/*
-let minPop = 4
-let maxPop = 8
-
-var logBase = d3.scaleLog()
-    .domain([10000, Math.pow(10,5), Math.pow(10,6), Math.pow(10,7)])
-    .range(["red", "orange", "green", "blue"])
-    //.interpolate(d3Inter.interpolateSpectral)
-*/
 let colorV = ['#fde0dd','#fcc5c0','#fa9fb5','#f768a1','#dd3497','#ae017e','#7a0177','#49006a']
 let red = d3Inter.interpolateReds
 let grey = d3Inter.interpolateGreys
@@ -71,9 +60,33 @@ export const colorPotPop = function(val) {
 
 
 //export const colorPotPop = logBase
+export const maxValueVelDiff = 2.;
+export const numBinDiff = 10;
+export const maxValuePotPopDiff = 200000;
 
-export const shellDiffPotPop = _.range(0, maxValueDiff,  maxValueDiff/numBinDiff)
-export const colorDiffPotPop = d3.scaleSequential(d3Inter.interpolateBlues).domain([0, maxValueDiff]).clamp(true)
+export const shellVelDiff = _.range(0, maxValueVelDiff,  maxValueVelDiff/numBinDiff);
+shellVelDiff.unshift(-1);
+//console.log(shellVelDiff)
+export const colorVelDiff = function(val) {
+	if(val < 0) return null;
+	else{
+		return d3.scaleSequential(d3Inter.interpolateBlues).domain([0, maxValueVelDiff]).clamp(true)(val);
+	}
+};
+
+
+export const shellPotPopDiff = _.range(0, maxValuePotPopDiff,  maxValuePotPopDiff/numBinDiff)
+shellPotPopDiff.unshift(-1);
+export const colorPotPopDiff = function(val) {
+	console.log(val, val < 0)
+	if(val <= 0){
+		console.log('returning null');
+	 return null;
+	}
+	else {
+		return  d3.scaleSequential(d3Inter.interpolateBlues).domain([0, maxValuePotPopDiff]).clamp(true)(val);
+	}
+};
 
 
 export const shellIsochrone =  _.range(maxValueIso/numBinIso, maxValueIso+1,  maxValueIso/numBinIso)
@@ -84,96 +97,66 @@ export const colorIsochrone = function(val){
 	else return d3.scaleSequential(d3Inter.interpolateSpectral).domain([maxValueIso, 0]).clamp(true)(val);
 }
 
-export const shellDiffVel = _.range(0, maxValueDiff,  maxValueDiff/numBinDiff)
-export const colorDiffVel = d3.scaleSequential(d3Inter.interpolateBlues).domain([0, maxValueDiff]).clamp(true)
+//export const shellDiffAccess = _.range(0, maxValueAccessDiff,  maxValueAccessDiff/numBinDiff)
+//export const colorDiffAccess = d3.scaleSequential(d3Inter.interpolateBlues).domain([0, maxValueAccessDiff]).clamp(true)
 
-export const shellDiffAccess = _.range(0, maxValueAccessDiff,  maxValueAccessDiff/numBinDiff)
-export const colorDiffAccess = d3.scaleSequential(d3Inter.interpolateBlues).domain([0, maxValueAccessDiff]).clamp(true)
-
-export const shellAccess = _.range(0, 1.001, 1./8)
-export const colorAccess = d3.scaleSequential(d3Inter.interpolateRdBu).domain([0, 1]).clamp(true)
+//export const shellAccess = _.range(0, 1.001, 1./8)
+//export const colorAccess = d3.scaleSequential(d3Inter.interpolateRdBu).domain([0, 1]).clamp(true)
 
 export const returnShell = function(feature, diff){
 	//console.log('return shell', mode, feature)
-	if(!diff){
-		switch(feature) {
-				case 'newVels':
-					return shellVel;
-				case 'newAccess':
-					return shellAccess;
-				case 't':
-					return shellIsochrone;
-				case 'newPotPop':
-					return shellPotPop
-			}
-		}else{
-			switch(feature) {
-				case 'newVels':
-					return shellDiffVel;
-				case 'newAccess':
-					return shellDiffAccess;
-				case 't':
-					return shellDiffIsochrone;
-				case 'newPotPop':
-					return shellDiffPotPop
+	switch(feature) {
+		case 'newVels':
+			return shellVel;
+		case 'newAccess':
+			return shellAccess;
+		case 't':
+			return shellIsochrone;
+		case 'newPotPop':
+			return shellPotPop;
+		case 'newVelsDiff':
+			return shellVelDiff;
+		case 'newPotPopDiff':
+			return shellPotPopDiff;
 
-			}
-		}
+	}
 };
 
-export const color = function(feature, diff){
+export const color = function(feature){
 	//console.log(feature, mode, 'styleHex!!')
-		if (!diff){
-			switch(feature) {
-				case 'newVels':
-					return colorVel;
-				case 'newAccess':
-					return colorAccessibility;
-				case 't':
-					return colorIsochrone;
-				case 'newPotPop':
-					return colorPotPop;
-			}
-		}else{
-			switch(feature) {
-				case 'newVels':
-					return colorDiffVel;
-				case 'newAccess':
-					return colorDiffAccessibility;
-				case 't':
-					return colorDiffIsochrone;
-				case 'newPotPop':
-					return colorDiffPotPop;
-
-			}
-		}
+	switch(feature) {
+		case 'newVels':
+			return colorVel;
+		case 'newAccess':
+			return colorAccessibility;
+		case 't':
+			return colorIsochrone;
+		case 'newPotPop':
+			return colorPotPop;
+		case 'newVelsDiff':
+			return colorVelDiff;
+		case 'newPotPopDiff':
+			return colorPotPopDiff;
+	}
 };
 
-export const styleHex = function(feature, diff){
-	//console.log(feature, mode, 'styleHex!!')
-	if(!diff){			
-		switch(feature) {
-				case 'newVels':
-					return styleVel;
-				case 'newAccess':
-					return styleAccessibility;
-				case 't':
-					return styleIsochrone;
-				case 'newPotPop':
-					return stylePotPop;
-			}
-		}else{
-			switch(feature) {
-				case 'newVels':
-					return styleDiffVel;
-				case 'newAccess':
-					return styleDiffAccessibility;
-				case 't':
-					return styleDiffIsochrone;
-				case 'newPotPop':
-					return styleDiffPotPop;
-
-			}
+export const styleHex = function(feature){
+	//console.log(feature, 'styleHex!!')
+	switch(feature) {
+			case 'newVels':
+				return styleVel;
+			case 'newAccess':
+				return styleAccessibility;
+			case 't':
+				return styleIsochrone;
+			case 'newPotPop':
+				return stylePotPop;
+			case 'newVelsDiff':
+				//console.log('newVelsDiff', newVelsDiff)
+				return styleVelDiff;
+			case 'newPotPopDiff':
+				//console.log('stylePotPopDiff', stylePotPopDiff)
+				return stylePotPopDiff;
 		}
 };
 
@@ -187,12 +170,14 @@ const isochrone_style = {
 };
 
 export const styleGeojson = function(color) {
- 
+	let opacity = 0.6;
+ 	if (color ==null) opacity = 0;
 	let style = {
 		fillColor: color,
 		color: color,
 		fill: true,
-		fillOpacity: 0.6,
+		fillOpacity: opacity,
+		opacity : opacity,
 		weight: 0.3
 		//clickable : false
 	};
@@ -212,12 +197,25 @@ export const styleVel = function(feature) {
 	let color = colorVel(feature.geometry.properties.newVels);
 	return styleGeojson(color);
 };
+export const styleVelDiff = function(feature) {
+		console.log(feature.geometry.properties, parseFloat(feature.geometry.properties.newVelsDiff),colorVelDiff(parseFloat(feature.geometry.properties.newVelsDiff)))
+	let color = colorVelDiff(parseFloat(feature.geometry.properties.newVelsDiff));
+	return styleGeojson(color);
+};
+
 
 export const stylePotPop = function(feature) {
 	//console.log(feature.geometry.properties, 'stylePotPop')
-	let color = colorPotPop(feature.geometry.properties.newPotPop);
+	let color = colorPotPop(parseFloat(feature.geometry.properties.newPotPop));
 	return styleGeojson(color);
 };
+
+export const stylePotPopDiff = function(feature) {
+	let color = colorPotPopDiff(parseFloat(feature.geometry.properties.newPotPopDiff));
+	console.log(feature.geometry.properties, 'stylePotPopDiff returnin!!', color)
+	return styleGeojson(color);
+};
+
 
 export const styleAccessibility = function(feature) {
 	let color = colorAccess(feature.geometry.properties.newAccess)

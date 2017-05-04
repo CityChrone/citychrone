@@ -30,21 +30,18 @@ Template.newScenario.helpers({
 			//console.log('loadGeojsonToMap!!', Template.newScenario.RV.currentScenario.get())
 			let scenario = Template.newScenario.RV.currentScenario.get();
 			let time = Template.timeSelector.timeSelectedRV.get();
-			let quantitySel = Template.quantitySelector.quantitySelectedRV.get()
-			if( !Template.quantitySelector.quantityDiffSelectedRV.get() ){
-				let geoJson = Template.newScenario.data.geoJson
-				geoJson.updateGeojson(scenario, quantitySel, false, time, null, true);
-			}
-			else{
-				let scenarioDefaultId =  Template.scenario.data.scenarioDefaultId.get()
-				let scenarioDefault =  scenarioDB.findOne({'_id':scenarioDefaultId});
-				let mode = Template.quantitySelector.modeSelectedRV.get();
-				let geoJson = Template.newScenario.data.geoJson
-				geoJson.updateGeoDiff( scenario, scenarioNew,quantitySel,mode ,time)
-				}
-			
+			let quantitySel = Template.quantitySelector.quantitySelectedRV.get();
+			let geoJson = Template.newScenario.data.geoJson;
+			geoJson.updateGeojson(scenario, quantitySel, false, time, null, true);
 			}
 		return true;
+	},
+	'mapEditedTrue'(){
+		console.log('seted to true',Template.metroLinesDraw.RV.mapEdited.get(), Template.newScenario.data.scenarioDefault); 
+		if(Template.metroLinesDraw.RV.mapEdited.get()){
+			Template.newScenario.RV.currentScenarioId.set(Template.newScenario.data.scenarioDefaultId);
+  			Template.newScenario.RV.currentScenario.set(Template.newScenario.data.scenarioDefault); 
+		}
 	}
 });
 
@@ -71,6 +68,8 @@ Template.newScenario.onCreated(function(){
   Template.newScenario.data.city = '';
   Template.newScenario.data.hexClass = {}
   Template.newScenario.data.geoJson = new geoJsonClass('newVels', false, false);
+	Template.newScenario.data.scenarioDefaultId = {}; //scenario contenente i dati senza modifiche
+	Template.newScenario.data.scenarioDefault = {};
 
   //********. Reactive Var ************ 
   Template.newScenario.RV = {};

@@ -8,11 +8,18 @@ Template.popUpMarker.events({
 		let marker = this.marker;
 		addNewSubLine(marker);
 		L.DomEvent.stopPropagation(e);
+		if(!Template.metroLinesDraw.RV.mapEdited.get()){
+			Template.metroLinesDraw.RV.mapEdited.set(true);
+		}
+
 	},
 	'click #remMetro'(e) {
 		let marker = this.marker;
 		removeStop(marker);
 		L.DomEvent.stopPropagation(e);
+		if(!Template.metroLinesDraw.RV.mapEdited.get()){
+			Template.metroLinesDraw.RV.mapEdited.set(true);
+		}
 	},
 });
 

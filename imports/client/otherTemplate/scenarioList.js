@@ -10,12 +10,13 @@ Template.scenarioList.events({
 	'click .showScenario'(e){
 		let id = $(e.target).attr("id")
 		console.log(id);
+
 		Meteor.call("giveScenario", id, function(err, risp){
 			console.log(risp);
 			let templateRV = Template.city.RV || Template.newScenario.RV;
+			Template.metroLinesDraw.RV.mapEdited.set(false);
 			templateRV.currentScenario.set(risp);
 			templateRV.currentScenarioId.set(risp._id);
-
 			Template.metroLinesDraw.collection.metroLines.remove({'temp':true},()=>{
 				let lines = risp.lines;
 				console.log(lines)
