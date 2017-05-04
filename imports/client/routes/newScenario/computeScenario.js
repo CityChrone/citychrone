@@ -22,6 +22,9 @@ Template.computeScenario.helpers({
 	},
 	'dataLoadedGet'(){
 		return !Template.computeScenario.RV.dataLoaded.get();
+	},
+	'toCompute'(){
+		return Template.metroLinesDraw.RV.mapEdited.get();
 	}
 });
 

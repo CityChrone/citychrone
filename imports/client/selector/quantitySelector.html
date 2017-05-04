@@ -4,15 +4,23 @@
 	<div class='marginBar'>
 		<span class="h4 text-muted text-left"> quantity: </span>
 		 <select class="selectpicker" data-width="fit" id="quantityPicker" data-style="btn-primary">
-		<option class="" id="newVels"  onclick="this.blur();">
+		<option class="" id="newVels">
 			{{nameQuantity "newVels"}}
 		</option>
-		<option class="" id="newPotPop" onclick="this.blur();">
+		<option class="" id="newPotPop">
 			{{nameQuantity "newPotPop"}}
 		</option>
-			<option class="" id="t" onclick="this.blur();">
+		<option class="" id="t">
 			{{nameQuantity "t"}}
 		</option>
+	  	<option data-divider="true"></option>
+		<option class="" id="newVelsDiff">
+			{{nameQuantity "newVelsDiff"}}
+		</option>
+		<option class="" id="newPotPopDiff">
+			{{nameQuantity "newPotPopDiff"}}
+		</option>
+
 		<!--
 			<button class="btn btn-primary quantityButton" id="newAccess" onclick="this.blur();">
 				Accessibility

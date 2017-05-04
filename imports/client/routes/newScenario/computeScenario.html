@@ -1,8 +1,9 @@
  <template name="computeScenario">
-  <button class="btn btn-default {{dataLoadedDisabled}}" type="button" id="ComputeNewMap" onclick="this.blur();" >
+   {{#if toCompute}}
+   <div style="margin-top:10px;">
+  <button class="btn btn-danger btn-lg btn-block" type="button" id="ComputeNewMap" onclick="this.blur();" >
     <span class="glyphicon {{computeIcon}} " aria-hidden="true"></span>
 			Compute
-
 			{{#if toSave}}
 				{{saveTemplate}}
 			{{/if}}
@@ -11,4 +12,7 @@
 				<span id="spinLoad"><i class="fa fa-refresh fa-spin fa-fw"></i></span>
 			{{/if}}
  </button>
+  	</div>
+
+ 	{{/if}}
 </template> 

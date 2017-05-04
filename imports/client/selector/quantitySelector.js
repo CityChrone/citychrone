@@ -18,7 +18,9 @@ Template.quantitySelector.onCreated(function(){
 export let text2field = {
 	'Velocity' : 'newVels',
 	'Daily Pop' : 'newPotPop',
-	'Isochrones': 't'
+	'Isochrones': 't',
+	'Velocity - Diff' : 'newVelsDiff',
+	'Daily Pop - Diff' : 'newPotPopDiff',
 };
 let invertKeys2Value = function(myObj){
 	let newObj = {}
@@ -35,25 +37,6 @@ let eventQuantitySelected = function(e){
 	if(target == 't'){
 		let point = Template.map.data.centerCity || Template.city.collection.points.findOne({}, {sort : {'dTerm':1}})
 		clickGeojson(point)
-		/*let scenario = {};
-		let startTime = Template.timeSelector.timeSelectedRV.get();
-		let scenarioID = Template.city.RV.currentScenarioId.get();
-		Meteor.call('isochrone', [point, scenarioID, startTime], (error, result) => {
-			let modifier = 'moments.'+ startTime.toString() + '.t'
-			let toSet = {}
-			toSet[modifier] = result
-			scenarioDB.update({'_id':scenarioID}, {'$set':toSet}, (err)=>{
-				if(err){ console.log(err)
-				}
-				else{
-					let scenarioUpdated = scenarioDB.findOne({'_id':scenarioID})
-					//console.log('return isochrone server side', result, scenarioID, scenarioUpdated, err);
-					Template.quantitySelector.quantitySelectedRV.set(target);
-				}
-				return true;
-			});
-		});*/
-		//computeIsochrone(point, scenario)
 	}else{
 		Template.quantitySelector.quantitySelectedRV.set(target);
 	}
@@ -66,6 +49,20 @@ Template.quantitySelector.helpers({
 	'nameQuantity'(field){
 		//console.log(field, field2text[field])
 		return field2text[field]
+	},
+	'disabled'(quantity){
+    	let templateRV = Template.city.RV || Template.newScenario.RV;
+    	console.log(quantity, templateRV, Template.timeSelector.timeSelectedRV)
+    	if(templateRV && Template.timeSelector.timeSelectedRV){
+
+    		let scenario = templateRV.currentScenario.get();
+			let time = Template.timeSelector.timeSelectedRV.get()
+			if((quantity in currentScenario.moments[time])) return "";
+		}
+		return "disabled";
+	},
+	'listQuantities'(){
+		let listQuantities = [];
 	}
 });
 

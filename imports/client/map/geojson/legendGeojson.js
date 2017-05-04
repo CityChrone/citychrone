@@ -6,7 +6,6 @@ import { field2text } from '/imports/client//selector/quantitySelector.js';
 import '/imports/client/map/geojson/legendGeojson.html';
 
 const makeColorLegend = function(shell, color, functionToShell){
-	//console.log(shell, color)
 	functionToShell = functionToShell || function(val){return val.toString()}
 	objColor = [];
 	
@@ -31,6 +30,17 @@ let dataQuantity = function(quantity){
 					'unity': '[km/h]',
 					'functionToShell' : undefined
 				};
+			case 'newVelsDiff':
+				return {
+					title: field2text['newVelsDiff'],
+					'unity': '[km/h]',
+					'functionToShell' : (val) => { 
+						if(val < 0) return "no diff"
+						if(val == 0) return 0
+						return Math.round(val*10)/10;
+					}
+
+				};
 			case 'btnAccessibility':
 				return {
 					title: 'accessibility',
@@ -41,6 +51,16 @@ let dataQuantity = function(quantity){
 					title: field2text['newPotPop'],
 					'unity': '[individuals]',
 					'functionToShell' : (val) => { return (val/1000.).toString() + 'K';}
+				};
+			case 'newPotPopDiff':
+				return {
+					title: field2text['newPotPopDiff'],
+					'unity': '[individuals]',
+					'functionToShell' : (val) => { 
+						if(val < 0) return "no diff"
+						if(val == 0) return 0
+						return (val/1000.).toString() + 'K';
+					}
 				};
 			case 't':
 				return {

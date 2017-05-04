@@ -12,6 +12,8 @@ const workerOnMessage = function(e) {
 	
 	//console.log('work on message', e)
 	let scenario = Template.newScenario.RV.currentScenario.get();
+	let scenarioDef = Template.newScenario.data.scenarioDefault;
+
 	if(e.data.tPoint) {
 		//console.log('isochrone!!', e.data);
 		let field = 't'
@@ -34,6 +36,7 @@ const workerOnMessage = function(e) {
 	}else{
 		let time = Template.timeSelector.timeSelectedRV.get()
 		let moment = scenario['moments'][time]
+		let momentDef = scenarioDef['moments'][time]
 		for(let point_i = 0; point_i < e.data.length; point_i++){
 			let data = e.data[point_i];
 			moment['newVels'][data.point.pos] = data.newVels
@@ -41,6 +44,9 @@ const workerOnMessage = function(e) {
 			let newAccess = data.newAccess || {}
 			moment['newAccess'][data.point.pos] = newAccess
 
+			moment['newVelsDiff'][data.point.pos] = data.newVels - momentDef['newVels'][data.point.pos]
+			moment['newPotPopDiff'][data.point.pos] = data.newPotPop - momentDef['newPotPop'][data.point.pos]
+			moment['newAccessDiff'][data.point.pos] = moment['newAccess'][data.point.pos]  - momentDef['newAccess'][data.point.pos]
 		}
 		if(Template.computeScenario.worker.CSAPointsComputed > countLimit){
 			//console.log('loaded new!! ', countStep, countLimit, Template.computeScenario.worker.CSAPointsComputed,moment )
@@ -54,15 +60,8 @@ const workerOnMessage = function(e) {
 
 		//console.log(Template.body.data.countHex, Template.body.collection.newVel.find().count());
 		if(Template.computeScenario.worker.CSAPointsComputed == Template.newScenario.collection.points.find().count()){
-			//Template.body.data.dataLoaded.set(true);
-			//Template.body.data.newHexsComputed = true;
-			//Template.body.template.rank.toInsert.set(true);
-			//if (Template.body.template.scenario)
-				//Template.body.template.scenario.toSave.set(true);
 			console.log("ended")
 			Template.map.data.map.spin(false);
-			//Template.newScenario.data.geoJson.showGeojson()
-			//$('#rankModal').modal('show');
 			scenario['arrayPop'] = Template.newScenario.data.arrayPop
 			scenario['scores'] = computeScoreNewScenario(scenario, time);
 			scenario['budget'] = Template.budget.function.cost();
@@ -71,6 +70,8 @@ const workerOnMessage = function(e) {
 			Template.newScenario.RV.currentScenario.set(scenario);
 			Meteor.call('insertNewScenario', scenario);
 			$(".scenarioButton").trigger('click');
+			Template.metroLinesDraw.RV.mapEdited.set(false);
+
 		}
 		//console.log('added ', Template.body.data.countHex, 1.*Math.floor(time.getTime()/ 100)/10. );
 	}

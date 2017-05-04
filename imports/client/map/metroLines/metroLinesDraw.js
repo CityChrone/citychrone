@@ -23,12 +23,18 @@ Template.metroLinesDraw.onCreated(function(){
 	Template.metroLinesDraw.collection.stops = new Mongo.Collection(null);
 	Template.metroLinesDraw.collection.lines = new Mongo.Collection(null);
 
+	//RV
+	Template.metroLinesDraw.RV = {}
+	//Template.metroLinesDraw.RV.scenarioComputed = new ReactiveVar(true);
+	Template.metroLinesDraw.RV.mapEdited = new ReactiveVar(false); //se è stata modificata dall'utente dall'ultimo salvataggio
+
+
 	//DATA
 	Template.metroLinesDraw.data = {}
 	Template.metroLinesDraw.data.polylineMetro = {}
 
-	Template.metroLinesDraw.data.scenarioComputed = new ReactiveVar(true);
-	Template.metroLinesDraw.data.mapEdited = new ReactiveVar(false); //se è stata modificata dall'utente dall'ultimo salvataggio
+
+
 	Template.metroLinesDraw.data.numMaxMetro = 1000;
 	Template.metroLinesDraw.data.listNameLines = _.range(1, Template.metroLinesDraw.data.numMaxMetro+1).map((val)=>{return val.toString()})
 	Template.metroLinesDraw.data.listNumLines = Array(Template.metroLinesDraw.data.numMaxMetro).fill(0); //number of metros.. (to reset when ranking?)
@@ -56,22 +62,13 @@ Template.metroLinesDraw.onRendered(function(){
 
 	Meteor.call('metroLinesDefault', city, function(err, res){
 		observeNewLineChanges(); //observe add new lines when new lines added
-		//console.log(res);
 	   	res['metroLines'].forEach(function(line, index){
-	   		//console.log(line);
-	   		
-
-	      //line.name = line.name || line.lineName;
 	      if (line.type == 'metro') {
-	            console.log(line)
 	            line.indexLine = _.indexOf(Template.metroLinesDraw.data.listNumLines, 0);
 	        	addLine2DB(line.lineName, line.indexLine, line.stops, line.subline, line.color, line.temp);
-	        //Template.metroLinesDraw.data.listNumLines[line.indexLine]++;
 	      }
-	      //Template.metroLinesDraw.collection.metroLines.insert(line);
 	    
 	    });
-	   	//console.log('metrolines Added',res, Template.metroLinesDraw.collection.metroLines.find().fetch());
   	});
 
   	Template.map.data.map.on('zoomend',function(e){
@@ -83,10 +80,6 @@ Template.metroLinesDraw.onRendered(function(){
 			layer.setRadius(radius);
 			layer.bringToFront()
 		}
-		/*for(let _id in Template.body.data.StopsMarkerInfo){
-			let layer = Template.body.data.StopsMarkerInfo[_id];
-			layer.setRadius(radius);
-		}*/
 	});
 });
 
@@ -184,7 +177,6 @@ export const addSubLine = function(latlng, _leaflet_id, indexLine){
 
 export const removeStop = function(marker){
 	marker.remove();
-	Template.metroLinesDraw.data.mapEdited.set(true);
 	let lines = Template.metroLinesDraw.collection.metroLines.find({'stops._leaflet_id'  : marker._leaflet_id});
 	lines.forEach(function(line){
 		let positionToChange = 0;
@@ -225,7 +217,7 @@ export const observeNewLineChanges = function(){
 			let line = newDoc
 			let layer = {};
 			let lineStop = newDoc.stops.map(function(stop){return stop.latlng;});
-			console.log("ADDED!!!", newDoc, lineStop)
+			//console.log("ADDED!!!", newDoc, lineStop)
 
 	 		if(line.type == 'metro'){
 	 			//create of polyline for the metro (only style)
@@ -242,7 +234,7 @@ export const observeNewLineChanges = function(){
 		 				Template.metroLinesDraw.data.StopsMarker[marker['_leaflet_id']] = marker;
 		 				marker.bringToFront()
 		 			}else if(!(stop['_leaflet_id'] in StopsMarker)){
-		 				console.log(stop)
+		 				//console.log(stop)
 		 				let marker = stopMarker(stop.latlng,line['color'],line.temp).addTo(Template.map.data.map);
 		 				marker['indexLine'] = line.indexLine;// || _.indexOf(Template.body.data.listNameLines, line.lineName.slice(0,3));
 						marker['lineName'] = line.lineName;
@@ -269,7 +261,7 @@ export const observeNewLineChanges = function(){
 		changed : function(newDoc, oldDoc) {
 			//Template.body.data.mapEdited.set(true);
 			let lineStop = newDoc.stops.map(function(stop){return stop.latlng;});
-			console.log('changed',newDoc)
+			//console.log('changed',newDoc)
 			if(lineStop.length > 2){
 				let smoothPolyLine = turf.bezier(turf.lineString(lineStop),10000, 0.4);
 				Template.metroLinesDraw.data.polylineMetro[newDoc.bezier_id].setLatLngs(smoothPolyLine.geometry.coordinates);
@@ -284,7 +276,7 @@ export const observeNewLineChanges = function(){
 		},
 		removed : function(line) {
 			//Template.metroLinesDraw.data.mapEdited.set(true);
-			console.log(line)
+			//console.log(line)
 			if(line.bezier_id in Template.metroLinesDraw.data.polylineMetro){
 				//console.log('removed',doc.bezier_id)
 				Template.metroLinesDraw.data.polylineMetro[line.bezier_id].remove();

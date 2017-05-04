@@ -70,7 +70,6 @@ export const stopOnCLickPopUp = function(e){
 export const addMarkerStop = function(latlng, lineName){
 	let line = Template.metroLinesDraw.collection.metroLines.findOne({'lineName': lineName});
 	//console.log(line, lineName);
-	Template.metroLinesDraw.data.mapEdited.set(true);
   let marker = giveDragMarkerStop(latlng, lineName, line['color'], line['indexLine'],Template.map.data.map.getZoom() );
 	marker.addTo(Template.map.data.map);
 	Template.metroLinesDraw.data.StopsMarker[marker['_leaflet_id']] = marker;
@@ -100,15 +99,18 @@ export const mapClickAddStop = function(e){
 		let marker = addMarkerStop(latlng, lineName);
 		Template.metroLinesDraw.data.markerClicked = marker;
 		marker.setStyle(styleMarkerClicked);
-		Template.metroLinesDraw.data.mapEdited.set(true);
 	}else{
 		allertNoBadget();
 	}
 };
 
 export const stopOnDragend = function(e){
+
 	L.DomEvent.stopPropagation(e);
-	Template.metroLinesDraw.data.mapEdited.set(true);
+	if(!Template.metroLinesDraw.RV.mapEdited.get()){
+		Template.metroLinesDraw.RV.mapEdited.set(true);
+	}
+
 	let markerTarget = e.target;
 	let lines = Template.metroLinesDraw.collection.metroLines.find({'stops._leaflet_id' : markerTarget._leaflet_id});
 	let stopTemp = {'latlng':[markerTarget._latlng.lat, markerTarget._latlng.lng]};
