@@ -1,37 +1,65 @@
 import { Template } from 'meteor/templating';
 import { scenarioDB } from '/imports/api/DBs/scenarioDB.js';
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { Meteor } from 'meteor/meteor';
+import * as metroLinesDraw from  '/imports/client/map/metroLines/metroLinesDraw.js';
 import '/imports/client/otherTemplate/scenarioList.html';
 
 
+Template.scenarioList.events({
+	'click .showScenario'(e){
+		let id = $(e.target).attr("id")
+		console.log(id);
+		Meteor.call("giveScenario", id, function(err, risp){
+			console.log(risp);
+			let templateRV = Template.city.RV || Template.newScenario.RV;
+			templateRV.currentScenario.set(risp);
+			templateRV.currentScenarioId.set(risp._id);
 
+			Template.metroLinesDraw.collection.metroLines.remove({'temp':true},()=>{
+				let lines = risp.lines;
+				console.log(lines)
+				lines.forEach((line)=>{
+					metroLinesDraw.addLine2DB(line.lineName, line.indexLine, line.stops, line.subline )
+				});
+				let templateRV = Template.city.RV || Template.newScenario.RV;
+				$('#scenarioModal').modal('hide');
 
-Template.scenarioList.events({});
+			});
+		});
+	}
+});
 
 
 Template.scenarioList.helpers({
 	'getScenarioList'(){
 		let city = Router.current().params.city;
-		console.log( scenarioDB.find({'city':city}, {sort:{'scores.scoreVelocity':-1, creationDate: -1}}).fetch());
 		return scenarioDB.find({'city':city, default:false}, {sort:{'scores.scoreVelocity':-1, creationDate: -1}});
 	},
+	'scenarioDef'(){
+		let city = Router.current().params.city;
+		return scenarioDB.findOne({'city':city, default:true}, {sort:{creationDate: -1}});
+	}
 });
 
 Template.scenarioList.onCreated(()=>{
 	Template.scenarioList.RV = {};
+	Template.scenarioList.data = {};
+	Template.scenarioList.data.pos = 0;
 });
 
 Template.scenarioList.onRendered(function(){	
 	let currentView = this.view;
 	$('#scenarioModal').modal('show');
 	$('#scenarioModal').on('hide.bs.modal', function(e){
-		console.log(currentView)
 		Blaze.remove(currentView);
 
 
 	});
 
 });
+
+//********* scenarioListRow *********++
 
 Template.scenarioListRow.helpers({
 	'niceDate'(date){
@@ -72,10 +100,10 @@ Template.scenarioListRow.helpers({
 		//console.log(id, eval(id), id.toString(), eval(id).valueOf());
 		return eval(id).valueOf();
 	},
-	'budget'(quantity){
+	'score'(quantity){
 		let scenarioDef = scenarioDB.findOne({'default':true});
-		console.log(quantity, this, scenarioDef);
-		return this.scores[quantity] - scenarioDef.scores[quantity]
+		//console.log(quantity, this, scenarioDef);
+		return (this.scores[quantity] - scenarioDef.scores[quantity]).toFixed(0);
 	},
 	'checkID'(_id){
 		// if(Template.body.template.scenario.nameInserted.get()){
@@ -88,6 +116,20 @@ Template.scenarioListRow.helpers({
 		if (score === undefined || cost === undefined || fixed === undefined)
 			return '---';
 		return  (score/cost).toFixed(fixed);
+	},
+	'isScenarioDef'(def){
+		if(def) return 'success';
+	},
+	'isCurrent'(_id){
+		let templateRV = Template.city.RV || Template.newScenario.RV;
+		//console.log(_id, templateRV.currentScenario.get()._id)
+		if(_id._str == templateRV.currentScenario.get()._id._str) return "success";
+
+	},
+	'pos'(){
+		Template.scenarioList.data.pos += 1
+		return Template.scenarioList.data.pos;
 	}
+
 });
 

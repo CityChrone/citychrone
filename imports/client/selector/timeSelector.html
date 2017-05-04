@@ -1,13 +1,14 @@
 <template name="timeSelector">
 <div>
-	 {{#if isScenario}}
 	 <span class="h4 text-muted text-left"> time: </span>
-	 <select class="selectpicker" data-width="fit" data-style="btn-default btn-sm">
+	 <select class="timepicker" data-width="fit" data-style="btn-default btn-sm">
+	 {{#if isScenario}}
 	{{#each getTimes}}
       <option>{{time}}</option>
 	{{/each}}
 	{{render}}
-	</select>
 	{{/if}}
+	</select>
+
 </div>
 </template>

@@ -11,6 +11,7 @@
       <table class="table table-hover">
         <thead>
           <tr>
+            <th>#</th>
             <th>title</th>
             <th>author</th>
             <th>Velocity<br>score</th>
@@ -36,14 +37,16 @@
 </template>
 
 <template name='scenarioListRow'>
-<tr class="a score" id = "{{giveID _id}}">
+<tr class="a score {{isCurrent _id}}" id = "{{giveID _id}}">
+  <td>{{pos}}</td>
+
   <td>{{name}}</td>
   <td>{{author}}</td>
-  <td>{{budget "scoreVelocity"}}</td>
-  <td>{{budget "scorePotPop"}}</td>
+  <td>{{score "scoreVelocity"}}</td>
+  <td>{{score "scorePotPop"}}</td>
   <td>{{toFixed budget 0}}M€</td>
   <td>{{niceDate creationDate}}</td>
-  <td><buttom class="btn btn-default seeResultScenario">see result</buttom></td>
+  <td><buttom class="btn btn-default showScenario" id = "{{giveID _id}}">see result</buttom></td>
 </tr>
 
 </template>

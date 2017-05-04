@@ -40,8 +40,9 @@ export const initScenario = function(city, name, author, time, metroLinesFetched
 export const computeScoreNewScenario = function(scenario, time){
 	let scores = {};
 	let moment = scenario['moments'][time]
+	let totPop = scenario.arrayPop.reduce((a, b)=>{ return a + b; }, 0);
 	scores['scoreVelocity'] = moment['newVels'].reduce((a, b) => a + b, 0);
-	scores['scorePotPop'] = moment['newPotPop'].reduce((a, b) => a + b, 0);
+	scores['scorePotPop'] = moment['newPotPop'].reduce((a, b) => (a + b), 0) / totPop;
 	return scores;
 
 };
@@ -74,6 +75,10 @@ Meteor.methods({
 	 	let res = scenarioDB.findOne({'default':true, 'city' : city}, {sort:{'creationDate':-1}, reactive: false} );
 	 	//console.log('return scenario def', res);
     	return res
+  },
+  'giveScenario': function(_id){
+  	//console.log(_id, scenarioDB.findOne({'_id':new Mongo.ObjectID(_id)}))
+  	return scenarioDB.findOne({'_id':new Mongo.ObjectID(_id)});
   }
 
 });

@@ -36,9 +36,10 @@ Template.timeSelector.helpers({
 		return timesRet;
 	},
 	'render'(){
-		//console.log('render')
+		console.log('render', )
+		//Template.instance().$('.selectpicker').selectpicker('refresh');
 		let func = function(){
-			$('.selectpicker').selectpicker('refresh');
+			 $('.timepicker').selectpicker('refresh');
 		//console.log('called render func')
 			return true
 		}
@@ -55,6 +56,6 @@ Template.timeSelector.helpers({
 });
 
 Template.timeSelector.onRendered(function() {
-	this.$('.selectpicker').selectpicker('render');
+	//this.$('.timepicker').selectpicker('render');
 
 });

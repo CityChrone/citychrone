@@ -21,8 +21,6 @@ Template.computeScenario.helpers({
 		//Blaze.render(Template.saveScenario, $("body")[0]);
 	},
 	'dataLoadedGet'(){
-		console.log("dataLoadedGet !!", Template.computeScenario.RV.dataLoaded.get())
-
 		return !Template.computeScenario.RV.dataLoaded.get();
 	}
 });
@@ -36,35 +34,13 @@ Template.computeScenario.events({
 
 		let newName;
 
-		//if (Template.body.data.mapEdited.get() && Template.body.template.scenario) {
 		Template.newScenario.RV.currentScenarioId.set(false);
 		Template.newScenario.RV.currentScenario.set(false);
-		/*var defName = "Scenario " + moment().format("DD/MM/YYYY HH:mm:ss");
-			newName = window.prompt("Give a name to this scenario", defName);
-			if (newName === "") {
-				newName = defName;
-			} else if (!newName)
-				return;
-		//}*/
-
-
 
 		if(!$('#endMetro').hasClass('hidden')){
 			$('#endMetro').trigger('click'); //finisco di aggiungere la linea
 		}
 
-		/*for(let hexId in Template.body.data.listHex){
-			let hexagons = Template.body.data.listHex[hexId];
-			hexagons.hex.properties.vAvgNew = -1;
-			hexagons.hex.properties.accessNew = {};
-		}*/
-
-		/*$('#buttonInfo').trigger('click');
-		if($('#velNewHex').hasClass('active')){
-			Template.body.data.geoJson.setStyle(styleHex);
-		}else{
-			$('#velNewHex').trigger('click');
-		}*/
 
 		let city = Template.computeScenario.data.city
 		let name = "";
@@ -76,16 +52,12 @@ Template.computeScenario.events({
 		let scenario = initScenario(city, name, author, time, lines, P2S2Add, S2S2Add);
 		
 		Template.computeScenario.RV.toSave.set(true);
-		console.log('compute!!',Template.computeScenario.RV.toSave.get());
-		//console.log("scenario created", scenario);
+		//console.log('compute!!',Template.computeScenario.RV.toSave.get());
 		Template.newScenario.RV.currentScenario.set(scenario);
 		Template.newScenario.RV.currentScenarioId.set(scenario._id);
 		Blaze.render(Template.saveScenario, $("body")[0]);
 
-		//Template.body.data.dataLoaded.set(false); //verrà settato a true alla fine del calcolo
-		//Meteor.setTimeout(
 		computeNewScenario()
-			//	, 100);
 		$('#ComputeNewMap').removeClass('active');
 	}
 });
@@ -108,6 +80,7 @@ Template.computeScenario.collection.stops = new Mongo.Collection(null)
   Template.computeScenario.data = {};
   Template.newScenario.data.dataToLoad = 3;
   Template.newScenario.data.serverOSRM = "http://localhost:3000";
+  Template.newScenario.data.arrayPop = [];
 
 
   //********. Reactive Var ************ 
@@ -127,6 +100,7 @@ Template.computeScenario.onRendered(function(){
 
 	let city = Router.current().params.city;
 	Template.computeScenario.data.city = city;
+
 	loadComputeScenarioData(city);
 });
 
@@ -182,6 +156,8 @@ let loadComputeScenarioData = function(city, RV){
     Meteor.call('giveDataBuildScenario', city,'arrayPop', function(err, risp){
 	    Template.computeScenario.worker.CSA.forEach((worker)=>{
 	          worker.postMessage({'arrayPop' : risp});
+	          Template.newScenario.data.arrayPop = risp;
+
 	    });
 	    console.log('data arrayPop loaded');
 	    checkDataLoaded(-1);
@@ -223,17 +199,18 @@ const computeNewScenario = function(){
 	let pointsCollection = Template.newScenario.collection.points;
 	let scenario = Template.newScenario.RV.currentScenario.get();
 	let serverOSRM = Template.computeScenario.data.serverOSRM;
-	console.log("start update Arrays")
+	//console.log("start update Arrays")
+	Template.computeScenario.worker.CSAPointsComputed = 0;
 	let promiseAddStop = addNewStops.updateArrays(city, stopsCollection, pointsCollection, scenario, serverOSRM);
 
 
 	Promise.all(promiseAddStop).then(values => {
-		console.log("end update Arrays")
+		//console.log("end update Arrays")
 
-		console.log('BEFORE', _.size(scenario.P2S2Add), _.size(scenario.S2S2Add))
+		//console.log('BEFORE', _.size(scenario.P2S2Add), _.size(scenario.S2S2Add))
 		addNewStops.deleteEmptyItem(scenario.P2S2Add);
 		addNewStops.deleteEmptyItem(scenario.S2S2Add);
-		console.log('AFTER', _.size(scenario.P2S2Add), _.size(scenario.S2S2Add))
+		//console.log('AFTER', _.size(scenario.P2S2Add), _.size(scenario.S2S2Add))
 
 		let startTime = parseFloat(Template.timeSelector.timeSelectedRV.get())
 		let wTime = [startTime , startTime + parameters.maxDuration];
@@ -282,9 +259,6 @@ const computeNewScenario = function(){
 		 });
 	});
 };
-
-
-
 
 
 

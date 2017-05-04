@@ -30,6 +30,7 @@ let areaHex = 1;
 let maxDuration = 0;
 let pointsVenues = [];
 let arrayPop = [];
+let totPop = 1;
 
 onmessage = function(e) {
 	if (e.data.arrayCDef) {
@@ -160,7 +161,8 @@ onmessage = function(e) {
 		//console.log('windTime workers loaded', windTime);
 	} 
 	else if(e.data.arrayPop){
-		arrayPop = e.data.arrayPop
+		arrayPop = e.data.arrayPop;
+		totPop = arrayPop.reduce((a, b)=>{ return a + b; }, 0);
 	}
 	else if (e.data.maxDuration) {
 		maxDuration = e.data.maxDuration;

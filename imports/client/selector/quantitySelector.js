@@ -71,7 +71,8 @@ Template.quantitySelector.helpers({
 
 
 Template.quantitySelector.onRendered(function() {
-		
+	this.$('#quantityPicker').selectpicker('render');
+
 	$('#quantityPicker').on('changed.bs.select', function (e) {
 		console.log('evemnd picker', e)	
 		eventQuantitySelected(e);

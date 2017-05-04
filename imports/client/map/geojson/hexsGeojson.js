@@ -8,6 +8,49 @@ import '/imports/client/map/popUps/popUpGeojson.js';
 
 //If in section INFO click on Hex open PopUp Isochrone, in section Build  click on map.
 
+export const clickGeojsonIso = function(latlng){
+    let NearestPos = findClosestPoint([latlng[1], latlng[0]])[0].pos
+    let time = Template.timeSelector.timeSelectedRV.get();
+    let templateRV = Template.city.RV || Template.newScenario.RV;
+    let scenarioID = templateRV.currentScenario.get()._id;
+    let scenario = scenarioDB.findOne({'_id':scenarioID});
+    let moment = _.get(scenario, ["moments", time], []);
+    let point = {};
+    point['newVels'] = moment['newVels'][NearestPos];
+    point['newAccess'] = moment['newAccess'][NearestPos];
+    point['newPotPop'] = moment['newPotPop'][NearestPos];
+    
+    if($('#quantityPicker').val() == 'Isochrones'){
+        let templateCollection = Template.city.collection || Template.newScenario.collection;
+        let point = templateCollection.points.findOne({'_id':NearestPos.toString()})
+        let startTime = time;
+        Meteor.apply('isochrone', [point, scenarioID, startTime], noRetry = false, onResultReceived = (error, result) => {
+            console.log(result, error)
+            let modifier = 'moments.'+ startTime.toString() + '.t'
+            let toSet = {}
+            toSet[modifier] = result
+            console.log('called method isochrone');
+            scenario.moments[startTime.toString()].t = result;
+            templateRV.currentScenario.set(scenario)
+            Template.quantitySelector.quantitySelectedRV.set('t');     
+            /*scenarioDB.update({'_id':scenarioID}, {'$set':toSet}, (err)=>{
+                if(err){ console.log(err)
+                }
+                else{
+                    let scenarioUpdated = scenarioDB.findOne({'_id':scenarioID})
+                    //console.log('return isochrone server side', result, scenarioID, scenarioUpdated, err);
+                    Template.quantitySelector.quantitySelectedRV.set('t');
+                }
+                return true;
+            });*/
+            return true;
+        });
+
+    }
+
+}
+
+
 export const clickGeojson = function(latlng){
     let NearestPos = findClosestPoint([latlng[1], latlng[0]])[0].pos
     let time = Template.timeSelector.timeSelectedRV.get();
