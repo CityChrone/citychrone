@@ -59,7 +59,7 @@ let dataQuantity = function(quantity){
 					'functionToShell' : (val) => { 
 						if(val < 0) return "no diff"
 						if(val == 0) return 0
-						return (val/1000.).toString() + 'K';
+						return Math.round((val/1000.)).toString() + 'K';
 					}
 				};
 			case 't':
