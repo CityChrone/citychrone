@@ -12,7 +12,9 @@ Template.scenarioList.events({
 		console.log(id);
 
 		Meteor.call("giveScenario", id, function(err, risp){
-			console.log(risp);
+			//console.log(risp, Template.computeScenario.collection.stops.find({temp:true}).count());
+			Template.computeScenario.collection.stops.remove({temp:true});
+			//console.log(risp, Template.computeScenario.collection.stops.find({temp:true}).count());
 			let templateRV = Template.city.RV || Template.newScenario.RV;
 			Template.metroLinesDraw.RV.mapEdited.set(false);
 			templateRV.currentScenario.set(risp);

@@ -61,7 +61,7 @@ export const colorPotPop = function(val) {
 
 //export const colorPotPop = logBase
 export const maxValueVelDiff = 2.;
-export const numBinDiff = 10;
+export const numBinDiff = 15;
 export const maxValuePotPopDiff = 200000;
 
 export const shellVelDiff = _.range(0, maxValueVelDiff,  maxValueVelDiff/numBinDiff);
@@ -70,7 +70,7 @@ shellVelDiff.unshift(-1);
 export const colorVelDiff = function(val) {
 	if(val < 0) return null;
 	else{
-		return d3.scaleSequential(d3Inter.interpolateBlues).domain([0, maxValueVelDiff]).clamp(true)(val);
+		return d3.scaleSequential(purple).domain([0, maxValueVelDiff]).clamp(true)(val);
 	}
 };
 
@@ -78,9 +78,9 @@ export const colorVelDiff = function(val) {
 export const shellPotPopDiff = _.range(0, maxValuePotPopDiff,  maxValuePotPopDiff/numBinDiff)
 shellPotPopDiff.unshift(-1);
 export const colorPotPopDiff = function(val) {
-	console.log(val, val < 0)
+	//console.log(val, val < 0)
 	if(val <= 0){
-		console.log('returning null');
+		//console.log('returning null');
 	 return null;
 	}
 	else {
@@ -198,7 +198,7 @@ export const styleVel = function(feature) {
 	return styleGeojson(color);
 };
 export const styleVelDiff = function(feature) {
-		console.log(feature.geometry.properties, parseFloat(feature.geometry.properties.newVelsDiff),colorVelDiff(parseFloat(feature.geometry.properties.newVelsDiff)))
+		//console.log(feature.geometry.properties, parseFloat(feature.geometry.properties.newVelsDiff),colorVelDiff(parseFloat(feature.geometry.properties.newVelsDiff)))
 	let color = colorVelDiff(parseFloat(feature.geometry.properties.newVelsDiff));
 	return styleGeojson(color);
 };
@@ -212,7 +212,7 @@ export const stylePotPop = function(feature) {
 
 export const stylePotPopDiff = function(feature) {
 	let color = colorPotPopDiff(parseFloat(feature.geometry.properties.newPotPopDiff));
-	console.log(feature.geometry.properties, 'stylePotPopDiff returnin!!', color)
+	//console.log(feature.geometry.properties, 'stylePotPopDiff returnin!!', color)
 	return styleGeojson(color);
 };
 

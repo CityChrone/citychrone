@@ -44,7 +44,6 @@ Template.computeScenario.events({
 			$('#endMetro').trigger('click'); //finisco di aggiungere la linea
 		}
 
-
 		let city = Template.computeScenario.data.city
 		let name = "";
 		let author = "";
@@ -53,7 +52,7 @@ Template.computeScenario.events({
 		let S2S2Add = addNewStops.fill2AddArray(Template.computeScenario.collection.stops.find().count())
 		let lines = Template.metroLinesDraw.collection.metroLines.find({'temp':true}).fetch();
 		let scenario = initScenario(city, name, author, time, lines, P2S2Add, S2S2Add);
-		
+		console.log('created scenario', P2S2Add, S2S2Add);
 		Template.computeScenario.RV.toSave.set(true);
 		//console.log('compute!!',Template.computeScenario.RV.toSave.get());
 		Template.newScenario.RV.currentScenario.set(scenario);
@@ -202,23 +201,24 @@ const computeNewScenario = function(){
 	let pointsCollection = Template.newScenario.collection.points;
 	let scenario = Template.newScenario.RV.currentScenario.get();
 	let serverOSRM = Template.computeScenario.data.serverOSRM;
-	//console.log("start update Arrays")
+	console.log("start update Arrays", scenario)
 	Template.computeScenario.worker.CSAPointsComputed = 0;
 	let promiseAddStop = addNewStops.updateArrays(city, stopsCollection, pointsCollection, scenario, serverOSRM);
 
 
 	Promise.all(promiseAddStop).then(values => {
-		//console.log("end update Arrays")
+		console.log("end update Arrays", scenario)
 
-		//console.log('BEFORE', _.size(scenario.P2S2Add), _.size(scenario.S2S2Add))
+		console.log('BEFORE', _.size(scenario.P2S2Add), _.size(scenario.S2S2Add))
 		addNewStops.deleteEmptyItem(scenario.P2S2Add);
 		addNewStops.deleteEmptyItem(scenario.S2S2Add);
-		//console.log('AFTER', _.size(scenario.P2S2Add), _.size(scenario.S2S2Add))
+		console.log('AFTER', _.size(scenario.P2S2Add), _.size(scenario.S2S2Add))
 
 		let startTime = parseFloat(Template.timeSelector.timeSelectedRV.get())
 		let wTime = [startTime , startTime + parameters.maxDuration];
  		let arrayC2Add = addNewConnections.addNewLines(scenario.lines, wTime);
 
+ 		//console.log('arrayC to add', arrayC2Add)
 
 		for(let w_i = 0; w_i < Template.computeScenario.worker.numCSAWorker; w_i++){
 			let worker = Template.computeScenario.worker.CSA[w_i];
