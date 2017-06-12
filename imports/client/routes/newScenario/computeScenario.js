@@ -236,8 +236,8 @@ const computeNewScenario = function(){
 			let temp = [];
 			points.push(temp);
 		}
-
-		let workerCount = 0;
+		Meteor.setTimeout(function(){
+					let workerCount = 0;
 		let totPoint = Template.newScenario.collection.points.find({}).count(); //NB: dTerm = distanza dal centro
 		Template.newScenario.collection.points.find({}, {sort : {'dTerm':1}}).forEach(function(point, index){
 		 	let cluster = Template.computeScenario.worker.CSAClusterPoints;
@@ -260,6 +260,8 @@ const computeNewScenario = function(){
 				}
 		 	}
 		 });
+
+		}, 500)
 	});
 };
 
