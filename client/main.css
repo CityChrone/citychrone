@@ -43,6 +43,17 @@ html, body, #mapid  {
     z-index: 7000;
   }
 
+.progress {
+    background: rgba(0, 0, 0, .7);
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 6999;
+}
+
 
 /*
 .addStop {

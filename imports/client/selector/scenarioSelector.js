@@ -5,6 +5,7 @@ import { Router } from 'meteor/iron:router';
 import {Blaze} from 'meteor/blaze';
 import '/imports/client/selector/scenarioSelector.html';
 import '/imports/client/otherTemplate/scenarioList.js';
+import '/imports/client/selector/createNewScenarioButton.js';
 
 
 

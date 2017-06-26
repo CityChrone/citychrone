@@ -11,6 +11,8 @@ Template.popUpMarker.events({
 		if(!Template.metroLinesDraw.RV.mapEdited.get()){
 			Template.metroLinesDraw.RV.mapEdited.set(true);
 		}
+		marker.closePopup()
+		marker.unbindPopup()
 
 	},
 	'click #remMetro'(e) {
@@ -20,10 +22,13 @@ Template.popUpMarker.events({
 		if(!Template.metroLinesDraw.RV.mapEdited.get()){
 			Template.metroLinesDraw.RV.mapEdited.set(true);
 		}
+		marker.closePopup()
+		marker.unbindPopup()
 	},
 });
 
 Template.popUpMarker.onCreated(()=>{
+	console.log("created marker", this)
 });
 
 

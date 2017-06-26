@@ -11,18 +11,19 @@ import {points, stops, initPoints, initArrayPop} from '/imports/api/DBs/stopsAnd
 import { initVel } from '/imports/api/DBs/velocityDb.js';
 import { connections } from '/imports/api/DBs/connectionsDB.js';
 import { metroLines } from '/imports/api/DBs/metroLinesDB.js';
-import { fileDB } from '/imports/api/DBs/fileDB.js';
 
 import { timesOfDay } from '/imports/api/parameters.js'
 //import '/public/workers/CSACore.js';
 
 import { initArrayC} from '/imports/server/startup/InitArrayConnections.js';
 import { initNeighStopAndPoint } from '/imports/server/startup/neighStopsPoints.js';
-import  { dataCitiesDB } from '/imports/api/DBs/dataCitiesDB.js';
+
+import {createZipCity, loadCity, citiesData} from '/imports/server/saveScenarioData.js';
+
+process.on('unhandledRejection', console.log.bind(console))
 
 var worker = require("/public/workers/CSACore.js");
 
-export let citiesData = {}
 
 const findCities = function(){
 	let field = 'city'
@@ -34,7 +35,7 @@ const findCities = function(){
 	return [citiesP,citiesS, citiesC, citiesML]
 
 };
-
+ 
 const findCitiesDef = function(){
 	let field = 'city'
 	let citiesDef = scenarioDB.rawCollection().distinct(field, {'default':true})
@@ -77,22 +78,21 @@ const computeDataCity = function(city, computeArrayC = true){
 	 };
 };
 
-export const computeScenarioDefault = function(city){
-	let startTime = timesOfDay[0];
-	let results = [];
-	let scenario = initScenario(city, 'default', 'citychrone', startTime);
-	scenario.default = true;
+export const computeScenario = function(city, dataCity){
 	
-	let dataCity = computeDataCity(city, false)
-
 	let listPoints = dataCity.listPoints;
 	let arrayN = dataCity.arrayN;
-	let arrayC = initArrayC(city, 0, 27.*3600.);
+	let arrayC = dataCity.arrayC;
  	let pointsVenues = dataCity.pointsVenues;
  	let areaHex = dataCity.areaHex;
  	let stopsList = dataCity.stopsList;
  	let arrayPop = dataCity.arrayPop;
 
+	let startTime = timesOfDay[0];
+	let results = [];
+	let scenario = initScenario(city, 'default', 'citychrone', startTime);
+	scenario.default = true;
+	
  	console.log(areaHex, points.findOne({'city':city}).hex);
 
  	//console.log(arrayC, arrayN)
@@ -105,7 +105,7 @@ export const computeScenarioDefault = function(city){
 			var point = listPoints[point_i];
 			var returned = worker.CSAPoint(point, arrayC, arrayN, startTime, areaHex, pointsVenues, arrayPop);
 			//console.log(point, returned);
-			if(point.pos % 2000 == 0) console.log(startTime/3600, returned.newVels, returned.popMean, point.pos)
+			if(point.pos % 2000 == 0) console.log(startTime/3600, returned.newVels, returned.newPotPop, point.pos)
 			newVels.push(returned.newVels);
 			newAccess.push(returned.newAccess);
 			newPotPop.push(returned.newPotPop);
@@ -127,21 +127,29 @@ export const computeScenarioDefault = function(city){
 	scenario['scores'] = computeScoreNewScenario(scenario, timesOfDay[0].toString());
 
 	scenarioDB.insert(scenario, (e)=>{
-		addCityToList(scenario);
+		addCityToList(scenario, dataCity);
 	});
 	
+	return scenario;
+}
 
+export const computeScenarioDefault = function(city){
+	
+	let dataCity = computeDataCity(city, false)
+	dataCity.arrayC = initArrayC(city, 0, 27.*3600.);
+
+	let scenario = computeScenario(city, dataCity);
 	return scenario;
 
 } 
 
-export const addCityToList = function(scenarioDef) {
+export const addCityToList = function(scenarioDef, dataCity) {
 return new Promise( function(resolve, reject ){
 		resolve(true);
 		console.log("inside PROMISE");
 		let city = scenarioDef.city
 
-		citiesData[city] = computeDataCity(city);
+		citiesData[city] = dataCity;
 		let startTime = Object.keys(scenarioDef.moments)[0];
 		let moment = scenarioDef.moments[startTime.toString()];
 		let maxVelPoint = {'pos':0, 'newVel':0}
@@ -151,7 +159,11 @@ return new Promise( function(resolve, reject ){
 		citiesData[city]['centerCity'] = points.findOne({'city':city,'pos':maxVelPoint.pos}).hex.coordinates[0][0];
 		citiesData[city]['centerCity'].reverse();
 		citiesData[city]['city'] = city;
+
+		createZipCity(citiesData[city], city);
+
 		console.log('finding', dataCitiesDB.find({'city':city}).count())
+
 		//console.log(city, citiesData[city]['centerCity']);
 	});
 }
@@ -159,16 +171,20 @@ return new Promise( function(resolve, reject ){
 const checkCities = function(){
 	let promiseCities = findCitiesDef()
 
+	loadCity(citiesData)
   	console.log('check Cities', promiseCities);
 
-  	scenarioDB.find({'default':true}).forEach(function(scenarioDef, index){
+  	/*scenarioDB.find({'default':true}).forEach(function(scenarioDef, index){
   		let city = scenarioDef.city
   		if(! (city in citiesData)){
 			let res = addCityToList(scenarioDef);
 			console.log("promise returned", res);
+
 		}
+		console.log("CITY__", city);
+		createZipCity(citiesData[city], city);
 	});
-	console.log('citiesData crearted', Object.keys(citiesData))
+	*/
 };
  
 Meteor.methods({

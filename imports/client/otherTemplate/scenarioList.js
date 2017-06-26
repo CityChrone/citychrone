@@ -13,22 +13,15 @@ Template.scenarioList.events({
 
 		Meteor.call("giveScenario", id, function(err, risp){
 			//console.log(risp, Template.computeScenario.collection.stops.find({temp:true}).count());
-			Template.computeScenario.collection.stops.remove({temp:true});
+			//Template.computeScenario.collection.stops.remove({temp:true});
 			//console.log(risp, Template.computeScenario.collection.stops.find({temp:true}).count());
 			let templateRV = Template.city.RV || Template.newScenario.RV;
-			Template.metroLinesDraw.RV.mapEdited.set(false);
 			templateRV.currentScenario.set(risp);
 			templateRV.currentScenarioId.set(risp._id);
-			Template.metroLinesDraw.collection.metroLines.remove({'temp':true},()=>{
-				let lines = risp.lines;
-				console.log(lines)
-				lines.forEach((line)=>{
-					metroLinesDraw.addLine2DB(line.lineName, line.indexLine, line.stops, line.subline )
-				});
-				let templateRV = Template.city.RV || Template.newScenario.RV;
-				$('#scenarioModal').modal('hide');
+			console.log(Template.metroLinesDraw)
+			Template.metroLinesDraw.function.addLines(risp.lines)
+			$('#scenarioModal').modal('hide');
 
-			});
 		});
 	}
 });

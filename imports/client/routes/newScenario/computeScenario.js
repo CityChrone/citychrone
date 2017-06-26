@@ -10,6 +10,8 @@ import { maxTimeWalk, maxDistanceWalk, maxDuration} from '/imports/api/parameter
 import * as addNewStops from '/imports/client/routes/newScenario/addNewStops.js'
 import * as parameters from '/imports/api/parameters.js'
 import * as addNewConnections from '/imports/client/routes/newScenario/addNewConnections.js'
+import {markerEvent} from '/imports/client/map/events.js';
+
 import '/imports/client/routes/newScenario/saveScenario.js';
 Template.computeScenario.helpers({
 	'toSave'(){
@@ -30,6 +32,10 @@ Template.computeScenario.helpers({
 
 Template.computeScenario.events({
 	'click #ComputeNewMap'() {
+		Template.computeScenario.function.loading(true)
+		Template.map.data.map.spin(true);
+		Template.quantitySelector.quantitySelectedRV.set('newVels');
+
 		if(!Template.computeScenario.RV.dataLoaded.get()) //se non ho caricato i dati (o non ho finito il nuovo calcolo) non faccio nulla
 			return;
 		if(Template.computeScenario.data.newHexsComputed && !Template.computeScenario.data.mapEdited.get()) //se ho iniziato il calcolo o l'ho già finito
@@ -52,15 +58,23 @@ Template.computeScenario.events({
 		let S2S2Add = addNewStops.fill2AddArray(Template.computeScenario.collection.stops.find().count())
 		let lines = Template.metroLinesDraw.collection.metroLines.find({'temp':true}).fetch();
 		let scenario = initScenario(city, name, author, time, lines, P2S2Add, S2S2Add);
-		console.log('created scenario', P2S2Add, S2S2Add);
+		//console.log('created scenario', P2S2Add, S2S2Add);
 		Template.computeScenario.RV.toSave.set(true);
 		//console.log('compute!!',Template.computeScenario.RV.toSave.get());
 		Template.newScenario.RV.currentScenario.set(scenario);
 		Template.newScenario.RV.currentScenarioId.set(scenario._id);
+
+		Template.newScenario.RV.ScenarioGeojson.set(scenario);
+		Template.newScenario.RV.ScenarioGeojsonId.set(scenario._id);
+
 		Blaze.render(Template.saveScenario, $("body")[0]);
 
 		computeNewScenario()
 		$('#ComputeNewMap').removeClass('active');
+	},
+	'click #done'(){
+		let scenario = Template.newScenario.RV.currentScenario.get();
+		Router.go('/city/' + scenario.city + '?id=' + scenario._id);
 	}
 });
 
@@ -68,6 +82,15 @@ Template.computeScenario.events({
 Template.computeScenario.onCreated(function(){
 	// *******  FUNCTION  ***********
  Template.computeScenario.function = {};
+ Template.computeScenario.function.loading = function(load = true){
+ 	if(load){
+ 		$("#block").addClass("progress");	
+ 		markerEvent(Template.metroLinesDraw.data.StopsMarker,'off');
+ 	}else{
+ 		 $("#block").removeClass("progress");	
+ 		markerEvent(Template.metroLinesDraw.data.StopsMarker,'on');
+ 	}
+ };
 
 
 // *******  COLLECTION  ***********
@@ -92,7 +115,7 @@ Template.computeScenario.collection.stops = new Mongo.Collection(null)
 
   //******** webWorker *************
   Template.computeScenario.worker = {}
-  Template.computeScenario.worker.numCSAWorker = 2
+  Template.computeScenario.worker.numCSAWorker = 4
   Template.computeScenario.worker.CSA = makeWorkers(Template.computeScenario.worker.numCSAWorker)
   Template.computeScenario.worker.CSAClusterPoints = 50;
   Template.computeScenario.worker.CSAPointsComputed = 0;
@@ -107,13 +130,17 @@ Template.computeScenario.onRendered(function(){
 });
 
 let loadComputeScenarioData = function(city, RV){
-	let dataToLoad = 5;
-	Template.map.data.map.spin(true);
+	let dataToLoad = 7;
+	Template.computeScenario.function.loading(true);
+	 	Template.map.data.map.spin(true);
 	checkDataLoaded = function(num = -1) {
 		dataToLoad  += num
-		if(num < 1){
-			Template.map.data.map.spin(false);
+		console.log(dataToLoad)
+		Template.computeScenario.function.loading(true);
+		if(dataToLoad < 1){
+			Template.computeScenario.function.loading(false);
 			Template.computeScenario.RV.dataLoaded.set(true);
+			Template.map.data.map.spin(false);
 
 		}
 		return true;
@@ -169,6 +196,7 @@ let loadComputeScenarioData = function(city, RV){
 	Meteor.call('giveDataBuildScenario', city,'stops', function(err, risp){
 	    risp.forEach(function(stop){
 	      stop.temp = false;
+	      stop._id = stop.pos.toString();
 	      Template.computeScenario.collection.stops.insert(stop);
 	    });
 	    console.log('data stops loaded');
@@ -201,18 +229,18 @@ const computeNewScenario = function(){
 	let pointsCollection = Template.newScenario.collection.points;
 	let scenario = Template.newScenario.RV.currentScenario.get();
 	let serverOSRM = Template.computeScenario.data.serverOSRM;
-	console.log("start update Arrays", scenario)
+
 	Template.computeScenario.worker.CSAPointsComputed = 0;
 	let promiseAddStop = addNewStops.updateArrays(city, stopsCollection, pointsCollection, scenario, serverOSRM);
 
 
 	Promise.all(promiseAddStop).then(values => {
-		console.log("end update Arrays", scenario)
+		//console.log("end update Arrays", scenario)
 
-		console.log('BEFORE', _.size(scenario.P2S2Add), _.size(scenario.S2S2Add))
+		//console.log('BEFORE', _.size(scenario.P2S2Add), _.size(scenario.S2S2Add))
 		addNewStops.deleteEmptyItem(scenario.P2S2Add);
 		addNewStops.deleteEmptyItem(scenario.S2S2Add);
-		console.log('AFTER', _.size(scenario.P2S2Add), _.size(scenario.S2S2Add))
+		//console.log('AFTER', _.size(scenario.P2S2Add), _.size(scenario.S2S2Add))
 
 		let startTime = parseFloat(Template.timeSelector.timeSelectedRV.get())
 		let wTime = [startTime , startTime + parameters.maxDuration];
@@ -237,29 +265,29 @@ const computeNewScenario = function(){
 			points.push(temp);
 		}
 		Meteor.setTimeout(function(){
-					let workerCount = 0;
-		let totPoint = Template.newScenario.collection.points.find({}).count(); //NB: dTerm = distanza dal centro
-		Template.newScenario.collection.points.find({}, {sort : {'dTerm':1}}).forEach(function(point, index){
-		 	let cluster = Template.computeScenario.worker.CSAClusterPoints;
-		 	if(index % cluster !== 0){ //mollo 50 punti alla volta a ogni worker
-		 		points[workerCount].push(point);
-		 		workerCount =  (workerCount+1) % totWorkers;
-		 		if(totPoint - 1 == index ){ //se è l'ultimo punto da inserire
+			let workerCount = 0;
+			let totPoint = Template.newScenario.collection.points.find({}).count(); //NB: dTerm = distanza dal centro
+			Template.newScenario.collection.points.find({}, {sort : {'dTerm':1}}).forEach(function(point, index){
+		 		let cluster = Template.computeScenario.worker.CSAClusterPoints;
+		 		if(index % cluster !== 0){ //mollo 50 punti alla volta a ogni worker
+		 			points[workerCount].push(point);
+		 			workerCount =  (workerCount+1) % totWorkers;
+		 			if(totPoint - 1 == index ){ //se è l'ultimo punto da inserire
+						for(let w_i = 0; w_i < totWorkers; w_i++)	{
+							Template.computeScenario.worker.CSA[w_i].postMessage({points:points[w_i]});
+						}
+		 			}
+		 		}else{
+		 			points[workerCount].push(point);
 					for(let w_i = 0; w_i < totWorkers; w_i++)	{
 						Template.computeScenario.worker.CSA[w_i].postMessage({points:points[w_i]});
 					}
+		 			points = [];
+					for(let w_i = 0; w_i < totWorkers; w_i++)	{
+						points.push([]);
+					}
 		 		}
-		 	}else{
-		 		points[workerCount].push(point);
-				for(let w_i = 0; w_i < totWorkers; w_i++)	{
-					Template.computeScenario.worker.CSA[w_i].postMessage({points:points[w_i]});
-				}
-		 		points = [];
-				for(let w_i = 0; w_i < totWorkers; w_i++)	{
-					points.push([]);
-				}
-		 	}
-		 });
+		 	});
 
 		}, 500)
 	});

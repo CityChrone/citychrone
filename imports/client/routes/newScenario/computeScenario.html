@@ -14,5 +14,14 @@
  </button>
   	</div>
 
+ 	{{else}}
+ 	   	<div style="margin-top:10px;">
+  		<button class="btn btn-danger btn-lg btn-block" type="button" id="done" onclick="this.blur();" >
+    	<span class="glyphicon {{computeIcon}} " aria-hidden="true"></span>
+			Done
+ 		</button>
+  		</div>
  	{{/if}}
+   <span class="" id="block"></span>
+
 </template> 

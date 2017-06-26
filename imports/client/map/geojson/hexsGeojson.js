@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 import { Blaze } from 'meteor/blaze';
+import { Router } from 'meteor/iron:router';
 import { styleHex, returnShell, computeAvgAccessibility } from '/imports/client/map/geojson/colorHex.js';
 import { findClosestPoint } from '/imports/client/map/geojson/findClosestPoint.js'
 import { shellify, unionPoints, findFieldtoUpdate} from '/imports/client/map/geojson/unionHexs.js';
@@ -26,13 +27,14 @@ export const clickGeojsonIso = function(latlng){
 
 
     Meteor.apply('isochrone', [point, scenario._id, startTime], noRetry = false, onResultReceived = (error, result) => {
-        console.log(result, error)
+        //console.log(result, scenario)
         let modifier = 'moments.'+ startTime.toString() + '.t'
         let toSet = {}
         toSet[modifier] = result
-        console.log('called method isochrone');
+        //console.log('called method isochrone');
         scenario.moments[startTime.toString()].t = result;
         templateRV.currentScenario.set(scenario);
+        if(Router.current().route.getName() == "newScenario.:city") templateRV.ScenarioGeojson.set(scenario)
         Template.quantitySelector.quantitySelectedRV.set('t');     
         return true;
     });
@@ -47,9 +49,11 @@ export const onlyIso = function(e){
 
 export const clickGeojson = function(latlng){
     if(Template.metroLinesDraw){
-        if (Template.metroLinesDraw.RV.mapEdited.get()){
-            return;
-        }
+            if(Template.metroLinesDraw.RV){
+                if (Template.metroLinesDraw.RV.mapEdited.get()){
+                return;
+            }
+     }
     }
 
     let NearestPos = findClosestPoint([latlng[1], latlng[0]])[0].pos
@@ -150,7 +154,10 @@ class geoJsonClass{
             let pos = p.pos
             if(quantity == 'newAccess'){
                 p[quantity] = parseFloat(computeAvgAccessibility(values[pos]))
-            }else{
+            }if(quantity == 'noLayer'){
+                p[quantity] = 0
+            }
+            else{
                 p[quantity] = parseFloat(values[pos])
             }   
             points[p.pos] = p

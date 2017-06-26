@@ -7,7 +7,7 @@ import {unionHexs} from '/imports/api/CSA-algorithm/isochrone.js';
 import {addNewLines} from '/imports/api/CSA-algorithm/addNewLines.js';
 import {initArrayC} from '/imports/server/startup/InitArrayConnections.js';
 import { scenarioDB } from '/imports/api/DBs/scenarioDB.js';
-import { citiesData } from '/imports/server/startup/scenarioDef.js';
+import { citiesData } from '/imports/server/saveScenarioData.js';
 import { maxDuration
 } from '/imports/api/parameters.js';
   
@@ -23,6 +23,10 @@ Meteor.methods({
   },
   'serverOSRM'(city){
     return metroLines.findOne({'city' : city}, {fields:{'serverOSRM':1}});
+  },
+  'isCreateScenario'(city){
+    console.log('isCreateScenario', metroLines.find({'city' : city}).count() )
+    return metroLines.find({'city' : city}).count() != 0;
   },
   'isochrone'(point, scenarioID, startTime){
       var scenario = scenarioDB.findOne({'_id':scenarioID});
