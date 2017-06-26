@@ -51,7 +51,8 @@ const workerOnMessage = function(e) {
 		if(Template.computeScenario.worker.CSAPointsComputed > countLimit){
 			//console.log('loaded new!! ', countStep, countLimit, Template.computeScenario.worker.CSAPointsComputed,moment )
 			//loadNewTime(Template.body.data.timeOfDay.get());
-			Template.newScenario.RV.currentScenario.set(scenario);
+			Template.newScenario.RV.ScenarioGeojson.set(scenario);
+			
 			//Template.newScenario.data.geoJson.updateGeojson(scenario, Template.quantitySelector.quantitySelectedRV.get())
 			countLimit += countStep;
 		}
@@ -62,6 +63,7 @@ const workerOnMessage = function(e) {
 		if(Template.computeScenario.worker.CSAPointsComputed == Template.newScenario.collection.points.find().count()){
 			console.log("ended")
 			Template.map.data.map.spin(false);
+			Template.computeScenario.function.loading(true)
 			scenario['arrayPop'] = Template.newScenario.data.arrayPop
 			scenario['scores'] = computeScoreNewScenario(scenario, time);
 			scenario['budget'] = Template.budget.function.cost();
@@ -69,8 +71,9 @@ const workerOnMessage = function(e) {
 
 			Template.newScenario.RV.currentScenario.set(scenario);
 			Meteor.call('insertNewScenario', scenario);
-			$(".scenarioButton").trigger('click');
+			//$(".scenarioButton").trigger('click');
 			Template.metroLinesDraw.RV.mapEdited.set(false);
+			Router.go('/city/' + scenario.city + '?id=' + scenario._id);
 
 		}
 		//console.log('added ', Template.body.data.countHex, 1.*Math.floor(time.getTime()/ 100)/10. );

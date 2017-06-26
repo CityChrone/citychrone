@@ -1,8 +1,12 @@
 <template name="quantitySelector">
 	
-	<div class="h3 text tex-center"> Layers </div>
+	<div class="h3 text tex-center">Layer:
+		{{#if isNewScenario}}
+		 <span class="text-muted small text-left">scenario default</span>
+		{{/if}}
+		
+	 </div>
 	<div class='marginBar'>
-		<span class="h4 text-muted text-left"> quantity: </span>
 		 <select class="selectpicker" data-width="fit" id="quantityPicker" data-style="btn-primary">
 		<option class="" id="newVels">
 			{{nameQuantity "newVels"}}
@@ -20,6 +24,10 @@
 		<option class="" id="newPotPopDiff">
 			{{nameQuantity "newPotPopDiff"}}
 		</option>
+		<option data-divider="true"></option>
+		<option class="" id="noLayer">
+			{{nameQuantity "noLayer"}}
+		</option>
 
 		<!--
 			<button class="btn btn-primary quantityButton" id="newAccess" onclick="this.blur();">
@@ -29,12 +37,14 @@
 
 		</select>
 	</div>
+	
 	<div class='marginBar text-left'>
 	{{> quantityDescription}}
 	</div>
-	
+		
 	<div class='marginBar text-left'>
 	{{> timeSelector}}
 	</div>
+
 
 </template>

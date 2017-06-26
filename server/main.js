@@ -1,17 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
-// import { Session } from 'meteor/session'
 
-//import { ranking } from '/imports/api/DBs/rankDB.js';
 import { scenarioDB } from '/imports/api/DBs/scenarioDB.js';
 import {points, stops} from '/imports/api/DBs/stopsAndPointsDB.js';
 import { initVel } from '/imports/api/DBs/velocityDb.js';
 import { connections } from '/imports/api/DBs/connectionsDB.js';
 import { metroLines } from '/imports/api/DBs/metroLinesDB.js';
-import { fileDB } from '/imports/api/DBs/fileDB.js';
-
 import '/imports/server/methods.js';
-// import { runCSA, runCSA2 } from '/imports/api/CSA-algorithm/CSA-loop.js';
 import {timesOfDay, maxDuration} from '/imports/api/parameters.js';
 import JSZip from 'jszip';
 import fs from 'fs';
@@ -21,7 +16,7 @@ import { initNeighStopAndPoint } from '/imports/server/startup/neighStopsPoints.
 
 import { checkCities } from '/imports/server/startup/scenarioDef.js';
 import '/imports/server/router.js';
-import  { dataCitiesDB } from '/imports/api/DBs/dataCitiesDB.js';
+import {loadCity} from '/imports/server/saveScenarioData.js';
 
 var _;
  
@@ -39,7 +34,7 @@ Meteor.startup(() => {
     return scenarioDB.find({'city':city}, {field:{'moments':0, 'P2S2Add': 0, 'S2S2Add':0, 'lines':0}});
   });
 
-  Meteor.publish('scenarioDef', function scenarioList(city) {
+  Meteor.publish('scenarioDef', function scenarioList(city, listOfId) {
 
     //console.log('scenario published ' + city);
 
@@ -48,9 +43,9 @@ Meteor.startup(() => {
 
   Meteor.publish('scenarioID', function scenarioList(city, _id) {
 
-    //console.log('scenario published ' + city);
+    //console.log('scenario id ', _id, scenarioDB.findOne({'_id':_id, 'city' : city}, {sort:{'creationDate':-1}}));
 
-    return scenarioDB.find({'_id':id, 'city' : city}, {sort:{'creationDate':-1}});
+    return scenarioDB.find({'_id':_id, 'city' : city}, {sort:{'creationDate':-1}});
   });
 
 
@@ -74,9 +69,8 @@ Meteor.startup(() => {
   });
 
   console.log('finish publish!!');
-  return new Promise(function(resolve, reject ){
-    checkCities();
-    resolve(true);
-  });
+
+  loadCity()
+  return true;
 });
 

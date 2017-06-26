@@ -36,7 +36,7 @@ Template.timeSelector.helpers({
 		return timesRet;
 	},
 	'render'(){
-		console.log('render', )
+		//console.log('render', )
 		//Template.instance().$('.selectpicker').selectpicker('refresh');
 		let func = function(){
 			 $('.timepicker').selectpicker('refresh');

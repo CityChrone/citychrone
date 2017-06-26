@@ -4,6 +4,7 @@ import {
 import {
 	Meteor
 } from 'meteor/meteor';
+import { Router } from 'meteor/iron:router';
 import '/imports/client/selector/quantitySelector.html'
 import { scenarioDB } from '/imports/api/DBs/scenarioDB.js';
 import '/imports/client/explanation/quantityDescription.js';
@@ -16,11 +17,12 @@ Template.quantitySelector.onCreated(function(){
 });
 
 export let text2field = {
-	'Velocity' : 'newVels',
-	'Daily Pop' : 'newPotPop',
+	'Velocity Score' : 'newVels',
+	'Sociality Score' : 'newPotPop',
 	'Isochrones': 't',
-	'Velocity - Diff' : 'newVelsDiff',
-	'Daily Pop - Diff' : 'newPotPopDiff',
+	'Velocity Score - Diff' : 'newVelsDiff',
+	'Sociality Score - Diff' : 'newPotPopDiff',
+	'No Layer' : 'noLayer'
 };
 let invertKeys2Value = function(myObj){
 	let newObj = {}
@@ -63,6 +65,15 @@ Template.quantitySelector.helpers({
 	},
 	'listQuantities'(){
 		let listQuantities = [];
+	},
+	'title'(){
+		//let returned = scenarioDB.findOne({'_id':Template.city.RV.currentScenario.get()})
+		//console.log(returned, Template.city.RV.currentScenarioId.get())
+		let templateRV = Template.city.RV || Template.newScenario.RV;
+		return templateRV.currentScenario.get().name;
+	},
+	'isNewScenario'(){
+		return Router.current().route.getName() == "newScenario.:city"
 	}
 });
 
@@ -71,7 +82,7 @@ Template.quantitySelector.onRendered(function() {
 	this.$('#quantityPicker').selectpicker('render');
 
 	$('#quantityPicker').on('changed.bs.select', function (e) {
-		console.log('evemnd picker', e)	
+		//console.log('evemnd picker', e)	
 		eventQuantitySelected(e);
 	});
 });

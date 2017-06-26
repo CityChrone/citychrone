@@ -49,9 +49,20 @@ Template.metroLinesDraw.onCreated(function(){
 	//FUNCTION
 	Template.metroLinesDraw.function = {}
     Template.metroLinesDraw.function.colorNewMetro = function(num){
+
  		let color = ['#CD3C00','#0A09FC','#5CBA4B','#984ea3','#ffff33','#a65628','#f781bf','#999999', '#e41a1c'];
  		return color[num % color.length];
  	};
+
+ 	Template.metroLinesDraw.function.addLines = function(lines){
+ 		Template.metroLinesDraw.RV.mapEdited.set(false);
+		Template.metroLinesDraw.collection.metroLines.remove({'temp':true},()=>{
+			//console.log(lines)
+			lines.forEach((line)=>{
+				addLine2DB(line.lineName, line.indexLine, line.stops, line.subline )
+			});
+		});
+ 	}
 
 
 });
@@ -148,7 +159,8 @@ export const addLine2DB = function(lineName, indexLine, stops = [], subline = fa
 export const addNewSubLine = function(marker){
 	let indexLine = marker.indexLine;
 	let latlng = [marker._latlng.lat, marker._latlng.lng]
-	addSubLine(latlng, marker._leaflet_id, indexLine);
+	let color = marker.colorLine
+	addSubLine(latlng, marker._leaflet_id, indexLine, color);
 	//console.log(Template.body.data.nameLine);
 	//event map add stop on click
 	//markerEvent('off', [Template.body.data.clickE, 'dblclick']);
@@ -163,7 +175,8 @@ export const addNewSubLine = function(marker){
 };
 
 
-export const addSubLine = function(latlng, _leaflet_id, indexLine){
+export const addSubLine = function(latlng, _leaflet_id, indexLine, color){
+
 	let subIndex = Template.metroLinesDraw.data.listNumLines[indexLine];
 	Template.metroLinesDraw.data.nameLine = Template.metroLinesDraw.data.listNameLines[indexLine]+(subIndex).toString();
 	let stopsList = [
@@ -171,7 +184,7 @@ export const addSubLine = function(latlng, _leaflet_id, indexLine){
 			'latlng':latlng,
 			'_leaflet_id' : _leaflet_id
 		}];
-	addLine2DB(Template.metroLinesDraw.data.nameLine, indexLine, stopsList, true);
+	addLine2DB(Template.metroLinesDraw.data.nameLine, indexLine, stopsList, true, color);
 	return Template.metroLinesDraw.data.nameLine;
 };
 
@@ -225,7 +238,7 @@ export const observeNewLineChanges = function(){
 	 			let StopsMarker = Template.metroLinesDraw.data.StopsMarker;
 				newDoc.stops.forEach((stop, index) => {
 	 				if( !('_leaflet_id' in stop)){
-		 				let marker = stopMarker(stop.latlng,line['color'],line.temp ).addTo(Template.map.data.map);
+		 				let marker = stopMarker(stop.latlng, line['color'],line.temp ).addTo(Template.map.data.map);
 		 				marker['indexLine'] = line.indexLine;// || _.indexOf(Template.body.data.listNameLines, line.lineName.slice(0,3));
 						marker['lineName'] = line.lineName;
 						marker['temp'] = line.temp;
@@ -286,8 +299,10 @@ export const observeNewLineChanges = function(){
 			line.stops.forEach((stop)=>{
 				if(stop['_leaflet_id'] in Template.metroLinesDraw.data.StopsMarker){
 					let marker = Template.metroLinesDraw.data.StopsMarker[stop['_leaflet_id']]
-					if(marker.temp) marker.remove();
-					delete Template.metroLinesDraw.data.StopsMarker[stop['_leaflet_id']];
+					if(marker.temp) {
+						marker.remove();
+						delete Template.metroLinesDraw.data.StopsMarker[stop['_leaflet_id']];
+					}
 				}
 			})
 		}

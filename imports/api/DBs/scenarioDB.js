@@ -6,7 +6,7 @@ export const scenarioDB = new Mongo.Collection('scenario');
 
 export const initScenario = function(city, name, author, time, metroLinesFetched, P2S2Add, S2S2Add){
 		time  = time || 7*3600;
-		metroLinesFetched = metroLinesFetched || {};
+		metroLinesFetched = metroLinesFetched || [];
 		P2S2Add = P2S2Add || {};
 		S2S2Add = S2S2Add || {};
 		let moments = { }

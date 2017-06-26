@@ -92,7 +92,7 @@ const initArrayPop = function(city) {
 
 	var arrayPop = [];
 
-	points.find({'city':city}, {
+	points.find({'city':city, 'inCityBorder':true}, {
 		fields: {
 			'pop': 1,
 			'_id': 1,

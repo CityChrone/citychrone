@@ -1,4 +1,5 @@
 import {leaflet} from 'leaflet';
+import { Router } from 'meteor/iron:router';
 import { CheckCostAddStop, CheckCostDragStop, allertNoBadget } from '/imports/client/routes/newScenario/budget.js';
 import '/imports/client/map/popUps/popUpMarker.js';
 import 'leaflet-path-drag';
@@ -24,12 +25,16 @@ export const styleMarker = function(color, drag){
 
 
 export const stopMarker =  function(latlng, color = null, drag = false, zoom = 12){
+	
+	let isNewScenario = Router.current().route.getName() == "newScenario.:city"
+
+	if(!isNewScenario) drag = false;
+
 	let marker = L.circleMarker(latlng,
 		styleMarker(color, drag)).setRadius(radiusCircle(zoom));
 	marker.colorLine = color;
 	marker.on('click dblclick', stopOnCLickPopUp);
 	marker.on('dragend', stopOnDragend);
-
 	return marker;
 };
 export const giveDragMarkerStop = function(latlng, lineName, colorLine, indexLine, zoom){
@@ -44,10 +49,10 @@ export const giveDragMarkerStop = function(latlng, lineName, colorLine, indexLin
 export const radiusCircle = function(zoom=10){
 
  	let radius = 10;
- 	let limit1 = 12
+ 	let limit1 = 13
  	if(zoom>limit1){
 		radius = radius + 3*(zoom - limit1);			//layer.redraw();
-	}else if(zoom > 11){
+	}else if(zoom > 12){
 		radius = 6;
 	}else if(zoom > 10){
 		radius = 4;
@@ -59,13 +64,25 @@ export const radiusCircle = function(zoom=10){
 }
 
 export const stopOnCLickPopUp = function(e){
-	let marker = e.target;
-	const container = L.DomUtil.create('div', 'markerPopup');
-	L.DomEvent.disableClickPropagation(container);
-	Blaze.renderWithData(Template.popUpMarker, {'marker':marker}, container);
-	marker.bindPopup(container);
+	//console.log("stopOnCLickPopUp")
+	if($('#endMetro').hasClass("hidden")){
+		let marker = e.target;
+		const container = L.DomUtil.create('div', 'markerPopup');
+		L.DomEvent.disableClickPropagation(container);
+		Blaze.renderWithData(Template.popUpMarker, {'marker':marker}, container);
+		let popUp = marker.bindPopup(container)._popup;
+		console.log(popUp)
+		marker.on('popupclose', function(e){
+			console.log('popupclose')
+			marker.unbindPopup()
+		})
 
-	marker.openPopup();
+		//var popup = L.popup().setLatLng(latlng).setContent('<p>Hello world!<br />This is a nice popup.</p>')
+    //.openOn(map);
+
+		marker.openPopup();
+		//console.log("stopOnCLickPopUp")
+	}
 };
 export const addMarkerStop = function(latlng, lineName){
 	let line = Template.metroLinesDraw.collection.metroLines.findOne({'lineName': lineName});

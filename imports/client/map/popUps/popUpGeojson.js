@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import '/imports/client/map/popUps/popUpGeojson.html';
 import { color } from '/imports/client/map/geojson/colorHex.js';
+import { field2text } from '/imports/client/selector/quantitySelector.js';
 Template.popUpGeojson.events({
 });
 
@@ -26,5 +27,10 @@ Template.popUpGeojson.helpers({
 				break;
 
 		}
-	}
+	},
+	'nameQuantity'(field){
+		//console.log(field, field2text[field])
+		return field2text[field]
+	},
+
 });

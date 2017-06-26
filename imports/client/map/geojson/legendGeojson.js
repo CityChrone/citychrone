@@ -8,17 +8,19 @@ import '/imports/client/map/geojson/legendGeojson.html';
 const makeColorLegend = function(shell, color, functionToShell){
 	functionToShell = functionToShell || function(val){return val.toString()}
 	objColor = [];
-	
+	//console.log(functionToShell, functionToShell(shell[0]), color((shell[0])))
 	for (let i = 0; i < shell.length - 1; i++) {
 		objColor.push({
 			'color': color((shell[i] + shell[i + 1])/2),
 			'html': functionToShell(shell[i]) + '-' + functionToShell(shell[i + 1])
 		});
 	}
-	objColor.push({
-		'color': color(shell[shell.length - 1]),
-		'html': '>' + functionToShell(shell[shell.length - 1])
-	});
+	if(shell.length >1){
+		objColor.push({
+			'color': color(shell[shell.length - 1]),
+			'html': '>' + functionToShell(shell[shell.length - 1])
+		});
+	}
 	return objColor;
 }
 
@@ -71,6 +73,12 @@ let dataQuantity = function(quantity){
 						if (val / 60 < 1) return 0;
 						return (val/60.).toString();
 					}
+				};
+			case 'noLayer':
+				return{
+					title: '',
+					'unity': '',
+					'functionToShell' : undefined
 				};
 		}
 }

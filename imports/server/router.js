@@ -17,6 +17,15 @@ Router.route('/computeScenarioDef/:city', function () {
  	this.response.end('computing default scenario of ' + city);
 	let scenarioDef = computeScenarioDefault(city);
 }, {where: 'server'});
+
+Router.route('/addCity/:city', function () {
+	let city = this.params.city
+	console.log('Adding ... ', city);
+ 	this.response.end('Adding ... ' + city);
+	let scenarioDef = computeScenarioDefault(city);
+}, {where: 'server'});
+ 
+
  
 Router.route('/reloadCities', function () {
   checkCities();

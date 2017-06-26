@@ -118,6 +118,9 @@ export const returnShell = function(feature, diff){
 			return shellVelDiff;
 		case 'newPotPopDiff':
 			return shellPotPopDiff;
+		case 'noLayer':
+			return [0];
+
 
 	}
 };
@@ -137,6 +140,9 @@ export const color = function(feature){
 			return colorVelDiff;
 		case 'newPotPopDiff':
 			return colorPotPopDiff;
+		case 'noLayer':
+			return ()=>{return null};
+
 	}
 };
 
@@ -157,6 +163,10 @@ export const styleHex = function(feature){
 			case 'newPotPopDiff':
 				//console.log('stylePotPopDiff', stylePotPopDiff)
 				return stylePotPopDiff;
+			case 'noLayer':
+				//console.log('stylePotPopDiff', stylePotPopDiff)
+				return styleGeojson(null);
+
 		}
 };
 
