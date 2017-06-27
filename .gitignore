@@ -2,3 +2,5 @@ run.sh
 *.sh
 .deploy
 .DS_Store
+setting.json
+settings.json

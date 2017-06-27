@@ -3,8 +3,13 @@ import JSZip from "jszip";
 import { scenarioDB} from '/imports/api/DBs/scenarioDB.js';
 import {computeScenario} from '/imports/server/startup/scenarioDef.js'
 
-let path = process.env['METEOR_SHELL_DIR'] + '/../../../public/cities/';
+//let path = process.env['METEOR_SHELL_DIR'] + '/../../../public/cities/';
+//let path = Assets.absoluteFilePath('cities/')
+var meteorRoot = fs.realpathSync( process.cwd() + '/../' );
+var publicPath = meteorRoot + '/web.browser/app/';
+let path = publicPath + '/cities/';
 
+console.log(path, meteorRoot, publicPath)
 export let citiesData = {}
 
 export let createZipCity= function(data, city){
