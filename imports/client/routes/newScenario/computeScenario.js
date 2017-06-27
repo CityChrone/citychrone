@@ -11,7 +11,7 @@ import * as addNewStops from '/imports/client/routes/newScenario/addNewStops.js'
 import * as parameters from '/imports/api/parameters.js'
 import * as addNewConnections from '/imports/client/routes/newScenario/addNewConnections.js'
 import {markerEvent} from '/imports/client/map/events.js';
-import JSZip from "JSZip";
+import JSZip from "jszip";
 import JSZipUtils from 'jszip-utils';
 
 import '/imports/client/routes/newScenario/saveScenario.js';
