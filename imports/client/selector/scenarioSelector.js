@@ -27,19 +27,34 @@ Template.scenarioSelector.events({
 
 Template.scenarioSelector.helpers({
 	'isSelected'(){
-		let templateRV = Template.city.RV || Template.newScenario.RV;
+	    let templateRV = {}
+	    if(Router.current().route.getName() == "newScenario.:city"){
+	        templateRV = Template.newScenario.RV;
+	    }else{
+	        templateRV = Template.city.RV
+	    }
 		return templateRV.currentScenario.get()
 	},
 	'title'(){
 		//let returned = scenarioDB.findOne({'_id':Template.city.RV.currentScenario.get()})
 		//console.log(returned, Template.city.RV.currentScenarioId.get())
-		let templateRV = Template.city.RV || Template.newScenario.RV;
+	    let templateRV = {}
+	    if(Router.current().route.getName() == "newScenario.:city"){
+	        templateRV = Template.newScenario.RV;
+	    }else{
+	        templateRV = Template.city.RV
+	    }
 		return templateRV.currentScenario.get().name;
 	},
 	'author'(){
 		//let returned = scenarioDB.findOne({'_id':Template.city.RV.currentScenario.get()})
 		//console.log(returned, Template.city.RV.currentScenarioId.get())
-		let templateRV = Template.city.RV || Template.newScenario.RV;
+	    let templateRV = {}
+	    if(Router.current().route.getName() == "newScenario.:city"){
+	        templateRV = Template.newScenario.RV;
+	    }else{
+	        templateRV = Template.city.RV
+	    }
 		return templateRV.currentScenario.get().author;
 	}
 

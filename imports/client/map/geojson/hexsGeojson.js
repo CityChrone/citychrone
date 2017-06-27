@@ -12,7 +12,12 @@ import '/imports/client/map/popUps/popUpGeojson.js';
 export const clickGeojsonIso = function(latlng){
     let NearestPos = findClosestPoint([latlng[1], latlng[0]])[0].pos
     let startTime = Template.timeSelector.timeSelectedRV.get();
-    let templateRV = Template.city.RV || Template.newScenario.RV;
+    let templateRV = {}
+    if(Router.current().route.getName() == "newScenario.:city"){
+        templateRV = Template.newScenario.RV;
+    }else{
+        templateRV = Template.city.RV
+    }
     let scenario = templateRV.currentScenario.get();
     let templateCollection = Template.city.collection || Template.newScenario.collection;
     let point = templateCollection.points.findOne({'_id':NearestPos.toString()})
@@ -58,7 +63,12 @@ export const clickGeojson = function(latlng){
 
     let NearestPos = findClosestPoint([latlng[1], latlng[0]])[0].pos
     let time = Template.timeSelector.timeSelectedRV.get();
-    let templateRV = Template.city.RV || Template.newScenario.RV;
+    let templateRV = {}
+    if(Router.current().route.getName() == "newScenario.:city"){
+        templateRV = Template.newScenario.RV;
+    }else{
+        templateRV = Template.city.RV
+    }
     let scenario = templateRV.currentScenario.get();
     let moment = _.get(scenario, ["moments", time], []);
     let point = {};

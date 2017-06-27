@@ -11,6 +11,8 @@ import * as addNewStops from '/imports/client/routes/newScenario/addNewStops.js'
 import * as parameters from '/imports/api/parameters.js'
 import * as addNewConnections from '/imports/client/routes/newScenario/addNewConnections.js'
 import {markerEvent} from '/imports/client/map/events.js';
+import JSZip from "JSZip";
+import JSZipUtils from 'jszip-utils';
 
 import '/imports/client/routes/newScenario/saveScenario.js';
 Template.computeScenario.helpers({
@@ -130,10 +132,13 @@ Template.computeScenario.onRendered(function(){
 });
 
 let loadComputeScenarioData = function(city, RV){
-	let dataToLoad = 7;
+	//console.log(Template.body, Template.body.citiesData)
+	
+	let dataToLoad = 6;
 	Template.computeScenario.function.loading(true);
-	 	Template.map.data.map.spin(true);
-	checkDataLoaded = function(num = -1) {
+	Template.map.data.map.spin(true);
+	
+	let checkDataLoaded = function(num = -1) {
 		dataToLoad  += num
 		console.log(dataToLoad)
 		Template.computeScenario.function.loading(true);
@@ -150,18 +155,40 @@ let loadComputeScenarioData = function(city, RV){
 
     Meteor.call("serverOSRM", Template.computeScenario.data.city, function(err, res){
         Template.computeScenario.data.serverOSRM = res['serverOSRM'];
+        checkDataLoaded(-1);
     })
 
- 	Meteor.call('giveDataBuildScenario', city,'arrayC', function(err, res){
+    let loadArrayC = function(risp){
+      Template.computeScenario.worker.CSA.forEach((worker)=>{
+                  worker.postMessage({'arrayCDef' : risp});
+      });
+      //console.log('data ArrayC loaded');
+      checkDataLoaded(-1);
+    }
+
+ 	/*Meteor.call('giveDataBuildScenario', city,'arrayC', function(err, res){
 	    //console.log(res)
 	      Template.computeScenario.worker.CSA.forEach((worker)=>{
 	                  worker.postMessage({'arrayCDef' : res});
 	      });
 	      console.log('data ArrayC loaded');
 	      checkDataLoaded(-1);
-	  });
+	  });*/
 
-	  Meteor.call('giveDataBuildScenario', city,'arrayN', function(err, risp){
+	let loadArrayN = function(risp){
+		let P2PDef = {pos : risp.P2PPos, time : risp.P2PTime};
+		let P2SDef = {pos : risp.P2SPos, time : risp.P2STime};
+		let S2SDef = {pos : risp.S2SPos, time : risp.S2STime};
+		Template.computeScenario.worker.CSA.forEach((worker)=>{
+		    worker.postMessage({'P2PDef' : P2PDef});
+		    worker.postMessage({'P2SDef' : P2SDef});
+		    worker.postMessage({'S2SDef' : S2SDef});
+		});      
+		//console.log('data arrayN loaded');
+		checkDataLoaded(-1);
+    }
+
+	/*  Meteor.call('giveDataBuildScenario', city,'arrayN', function(err, risp){
 	      let P2PDef = {pos : risp.P2PPos, time : risp.P2PTime};
 	      let P2SDef = {pos : risp.P2SPos, time : risp.P2STime};
 	      let S2SDef = {pos : risp.S2SPos, time : risp.S2STime};
@@ -172,7 +199,7 @@ let loadComputeScenarioData = function(city, RV){
 	      });      
 	      console.log('data arrayN loaded');
 	      checkDataLoaded(-1);
-	  });
+	  });*/
 
 	  /*Meteor.call('giveDataBuildScenario', city,'pointsVenues', function(err, risp){
 	    Template.body.data.allWorker.forEach((worker)=>{
@@ -182,7 +209,16 @@ let loadComputeScenarioData = function(city, RV){
 	    Template.body.function.checkDataLoaded(-1);
 	  });*/
 
-    Meteor.call('giveDataBuildScenario', city,'arrayPop', function(err, risp){
+	let loadArrayPop = function(risp){
+		Template.computeScenario.worker.CSA.forEach((worker)=>{
+			worker.postMessage({'arrayPop' : risp});
+			Template.newScenario.data.arrayPop = risp;
+		});
+		//console.log('data arrayPop loaded');
+		checkDataLoaded(-1);
+	}
+
+    /*Meteor.call('giveDataBuildScenario', city,'arrayPop', function(err, risp){
 	    Template.computeScenario.worker.CSA.forEach((worker)=>{
 	          worker.postMessage({'arrayPop' : risp});
 	          Template.newScenario.data.arrayPop = risp;
@@ -191,9 +227,19 @@ let loadComputeScenarioData = function(city, RV){
 	    console.log('data arrayPop loaded');
 	    checkDataLoaded(-1);
 	  });
+	*/
 
+	let loadArrayStops = function(risp){
+		risp.forEach(function(stop){
+	    stop.temp = false;
+	    stop._id = stop.pos.toString();
+	      Template.computeScenario.collection.stops.insert(stop);
+	    });
+	    //console.log('data stops loaded');
+	    checkDataLoaded(-1);
+	}
 
-	Meteor.call('giveDataBuildScenario', city,'stops', function(err, risp){
+	/*Meteor.call('giveDataBuildScenario', city,'stops', function(err, risp){
 	    risp.forEach(function(stop){
 	      stop.temp = false;
 	      stop._id = stop.pos.toString();
@@ -201,8 +247,17 @@ let loadComputeScenarioData = function(city, RV){
 	    });
 	    console.log('data stops loaded');
 	    checkDataLoaded(-1);
-	  });
+	  });*/
+	
+	let loadAreaHex = function(risp){
+		Template.computeScenario.worker.CSA.forEach((worker)=>{
+			worker.postMessage({'areaHex' : risp});
+		});
+		//console.log('data areaHex loaded');
+		checkDataLoaded(-1);
+	}
 
+/*
  	Meteor.call('giveDataBuildScenario', city,'areaHex', function(err, res){
 	    //console.log(res)
 	      Template.computeScenario.worker.CSA.forEach((worker)=>{
@@ -211,7 +266,7 @@ let loadComputeScenarioData = function(city, RV){
 	      console.log('data areaHex loaded');
 	      checkDataLoaded(-1);
 	  });
- 	
+*/ 	
  	/*Meteor.call('giveDataBuildScenario', city,'maxDuration', function(err, res){
 	    //console.log(res)
 	      Template.computeScenario.worker.CSA.forEach((worker)=>{
@@ -220,6 +275,35 @@ let loadComputeScenarioData = function(city, RV){
 	      console.log('data areaHex loaded');
 	      checkDataLoaded(-1);
 	  });*/
+	let loadDatacity = function(dataCity){
+    	loadArrayC(dataCity.arrayC);
+    	loadArrayN(dataCity.arrayN)
+    	loadArrayPop(dataCity.arrayPop)
+    	loadArrayStops(dataCity.stops)
+    	loadAreaHex(dataCity.areaHex);
+	}
+
+	if( !('citiesData' in Template.body)) Template.body.citiesData = {};
+
+	if( !(city in Template.body.citiesData)){
+
+		JSZipUtils.getBinaryContent('/cities/' + city + ".zip", function(err, data) {
+			console.log(err, data)
+		    if (err) throw err;
+		    JSZip.loadAsync(data).then(function (zip) {
+
+		        zip.file(city+".txt").async("string").then(function (data){
+		        	let dataCity = JSON.parse(data);
+		        	Template.body.citiesData[city] = dataCity;
+		        	loadDatacity(dataCity);
+		        })
+		    });
+		});
+	}else{
+		loadDatacity(Template.body.citiesData[city]);
+	}
+
+
 };
 
 const computeNewScenario = function(){

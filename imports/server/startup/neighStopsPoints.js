@@ -37,10 +37,11 @@ const initNeighStopAndPoint = function(city) {
 	var P2SPos = [];
 	var P2STime = [];
 
-	console.log('initNStopANdpoint : ', points.find({'city':city}).count());
+	console.log('initNStopANdpoint : ', points.find({'city':city, 'inCityBorder':true}).count());
+	let cond = {'city':city, 'inCityBorder':true};
 
 	let oldPos = -1;
-	stops.find({'city':city}, {sort:{'pos':1}}).forEach(function(stop, index){
+	stops.find(cond, {sort:{'pos':1}}).forEach(function(stop, index){
 		if (isNaN(stop.pos)) {
 			console.log("Stop pos non numerica: " + stop.pos);
 			return;
@@ -48,7 +49,7 @@ const initNeighStopAndPoint = function(city) {
 
 		var pos = lodash.toInteger(stop.pos);
 		if (oldPos + 1 != pos) {
-			console.log("Stop pos non contigua: " + pos);
+			console.log("Stop pos non contigua: " + pos, oldPos);
 		}
 		oldPos = pos;
 
@@ -69,7 +70,6 @@ const initNeighStopAndPoint = function(city) {
 	});
 
 	oldPos = -1;
-	let cond = {'city':city};
 	// if (city == 'roma')
 	// 	cond.inCity = true;
 
@@ -81,7 +81,7 @@ const initNeighStopAndPoint = function(city) {
 
 		var pos = lodash.toInteger(point.pos);
 		if (oldPos + 1 != pos) {
-			console.log("Point pos non contigua: " + pos);
+			console.log("Point pos non contigua: " + pos, oldPos);
 		}
 		oldPos = pos;
 

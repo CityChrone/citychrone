@@ -1,4 +1,5 @@
 import { Template }  from 'meteor/templating';
+import { Router } from 'meteor/iron:router';
 import '/imports/client/routes/newScenario/computeScenario.js'
 import '/imports/client/routes/newScenario/newScenarioButtons.html';
 
@@ -48,7 +49,12 @@ Template.newScenarioButtons.events({
 	},
 	'click #reload'(){
 		let scenarioDef = Template.newScenario.data.scenarioDefault;
-		let templateRV = Template.city.RV || Template.newScenario.RV;
+	    let templateRV = {}
+	    if(Router.current().route.getName() == "newScenario.:city"){
+	        templateRV = Template.newScenario.RV;
+	    }else{
+	        templateRV = Template.city.RV
+    	}	
 		Template.metroLinesDraw.RV.mapEdited.set(false);
 		templateRV.currentScenario.set(scenarioDef);
 		templateRV.currentScenarioId.set(scenarioDef._id);
