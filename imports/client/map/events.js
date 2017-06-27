@@ -10,7 +10,7 @@ export const markerEvent = function(idListLayer, mode='on',events = ['click dblc
 			if(_.includes(events,'click dblclick')) layer.on('click dblclick', stopOnCLickPopUp);
 			if(_.includes(events, 'bring')) layer.bringToFront();
 			if(layer.dragging)
-				console.log(layer, layer.dragging.enable())
+				layer.dragging.enable();
 		}
 	}else{
 		for(let _id in idListLayer){
@@ -18,7 +18,7 @@ export const markerEvent = function(idListLayer, mode='on',events = ['click dblc
 			if(_.includes(events,'click dblclick')) layer.off('click dblclick', stopOnCLickPopUp);
 			if(_.includes(events, 'bring')) layer.bringToBack();
 			if(layer.dragging)
-				console.log(layer, layer.dragging.disable())
+				layer.dragging.disable()
 
 		}
 	}

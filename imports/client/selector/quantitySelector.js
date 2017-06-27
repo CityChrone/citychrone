@@ -53,7 +53,12 @@ Template.quantitySelector.helpers({
 		return field2text[field]
 	},
 	'disabled'(quantity){
-    	let templateRV = Template.city.RV || Template.newScenario.RV;
+	    let templateRV = {}
+	    if(Router.current().route.getName() == "newScenario.:city"){
+	        templateRV = Template.newScenario.RV;
+	    }else{
+	        templateRV = Template.city.RV
+	    }
     	console.log(quantity, templateRV, Template.timeSelector.timeSelectedRV)
     	if(templateRV && Template.timeSelector.timeSelectedRV){
 
@@ -69,7 +74,12 @@ Template.quantitySelector.helpers({
 	'title'(){
 		//let returned = scenarioDB.findOne({'_id':Template.city.RV.currentScenario.get()})
 		//console.log(returned, Template.city.RV.currentScenarioId.get())
-		let templateRV = Template.city.RV || Template.newScenario.RV;
+	    let templateRV = {}
+	    if(Router.current().route.getName() == "newScenario.:city"){
+	        templateRV = Template.newScenario.RV;
+	    }else{
+	        templateRV = Template.city.RV
+	    }
 		return templateRV.currentScenario.get().name;
 	},
 	'isNewScenario'(){

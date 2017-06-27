@@ -12,7 +12,12 @@ Template.createNewScenarioButton.helpers({
 
 Template.createNewScenarioButton.events({
 	'click #createNewScenarioButton'(e){
-		let templateRV = Template.city.RV || Template.newScenario.RV;
+	    let templateRV = {}
+	    if(Router.current().route.getName() == "newScenario.:city"){
+	        templateRV = Template.newScenario.RV;
+	    }else{
+	        templateRV = Template.city.RV
+	    }
 		let idScenario = templateRV.currentScenario.get()._id;
 		Router.go('/newScenario/'+ Template.createNewScenarioButton.data.city + '?id=' +  idScenario);
 	}

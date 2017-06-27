@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
 import { scenarioDB } from '/imports/api/DBs/scenarioDB.js';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Meteor } from 'meteor/meteor';
+import { Router } from 'meteor/iron:router';
 import * as metroLinesDraw from  '/imports/client/map/metroLines/metroLinesDraw.js';
 import '/imports/client/otherTemplate/scenarioList.html';
 
@@ -15,7 +16,12 @@ Template.scenarioList.events({
 			//console.log(risp, Template.computeScenario.collection.stops.find({temp:true}).count());
 			//Template.computeScenario.collection.stops.remove({temp:true});
 			//console.log(risp, Template.computeScenario.collection.stops.find({temp:true}).count());
-			let templateRV = Template.city.RV || Template.newScenario.RV;
+		    let templateRV = {}
+		    if(Router.current().route.getName() == "newScenario.:city"){
+		        templateRV = Template.newScenario.RV;
+		    }else{
+		        templateRV = Template.city.RV
+		    }
 			templateRV.currentScenario.set(risp);
 			templateRV.currentScenarioId.set(risp._id);
 			console.log(Template.metroLinesDraw)
@@ -49,8 +55,6 @@ Template.scenarioList.onRendered(function(){
 	$('#scenarioModal').modal('show');
 	$('#scenarioModal').on('hide.bs.modal', function(e){
 		Blaze.remove(currentView);
-
-
 	});
 
 });
@@ -97,7 +101,8 @@ Template.scenarioListRow.helpers({
 		return eval(id).valueOf();
 	},
 	'score'(quantity){
-		let scenarioDef = scenarioDB.findOne({'default':true});
+		let city = Router.current().params.city;
+		let scenarioDef = scenarioDB.findOne({'default':true, 'city':city});
 		//console.log(quantity, this, scenarioDef);
 		return (this.scores[quantity] - scenarioDef.scores[quantity]).toFixed(0);
 	},
@@ -117,7 +122,12 @@ Template.scenarioListRow.helpers({
 		if(def) return 'success';
 	},
 	'isCurrent'(_id){
-		let templateRV = Template.city.RV || Template.newScenario.RV;
+	    let templateRV = {}
+	    if(Router.current().route.getName() == "newScenario.:city"){
+	        templateRV = Template.newScenario.RV;
+	    }else{
+	        templateRV = Template.city.RV
+	    }
 		//console.log(_id, templateRV.currentScenario.get()._id)
 		if(_id._str == templateRV.currentScenario.get()._id._str) return "success";
 
