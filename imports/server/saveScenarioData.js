@@ -1,5 +1,5 @@
 import fs from "fs";
-import JSZip from "JSZip";
+import JSZip from "jszip";
 import { scenarioDB} from '/imports/api/DBs/scenarioDB.js';
 import {computeScenario} from '/imports/server/startup/scenarioDef.js'
 
