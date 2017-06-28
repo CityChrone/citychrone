@@ -24,6 +24,7 @@ process.on('unhandledRejection', console.log.bind(console))
 
 var worker = require("/public/workers/CSACore.js");
 
+let endTime = timesOfDay[0] + 3.*3600.;
 
 const findCities = function(){
 	let field = 'city'
@@ -59,7 +60,7 @@ const computeDataCity = function(city, computeArrayC = true){
 	let listPoints = initPoints(city);
 	let arrayN = initNeighStopAndPoint(city);
 	let arrayC = [];
-	if(computeArrayC) arrayC = initArrayC(city, startTime, startTime + 3.*3600.);
+	if(computeArrayC) arrayC = initArrayC(city, startTime, endTime);
  	let pointsVenues = initPointsVenues(listPoints);
  	console.log('computeData')
  	let areaHex = turf.area(points.findOne({'city':city}).hex)/ (math.pow(10, 6));
@@ -136,7 +137,7 @@ export const computeScenario = function(city, dataCity){
 export const computeScenarioDefault = function(city){
 	
 	let dataCity = computeDataCity(city, false)
-	dataCity.arrayC = initArrayC(city, 0, 27.*3600.);
+	dataCity.arrayC = initArrayC(city, 0, endTime);
 
 	let scenario = computeScenario(city, dataCity);
 	return scenario;
