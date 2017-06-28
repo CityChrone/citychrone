@@ -12,7 +12,7 @@ import { initVel } from '/imports/api/DBs/velocityDb.js';
 import { connections } from '/imports/api/DBs/connectionsDB.js';
 import { metroLines } from '/imports/api/DBs/metroLinesDB.js';
 
-import { timesOfDay } from '/imports/api/parameters.js'
+import { timesOfDay, maxDuration } from '/imports/api/parameters.js'
 //import '/public/workers/CSACore.js';
 
 import { initArrayC} from '/imports/server/startup/InitArrayConnections.js';
@@ -24,7 +24,6 @@ process.on('unhandledRejection', console.log.bind(console))
 
 var worker = require("/public/workers/CSACore.js");
 
-let endTime = timesOfDay[0] + 3.*3600.;
 
 const findCities = function(){
 	let field = 'city'
@@ -60,7 +59,7 @@ const computeDataCity = function(city, computeArrayC = true){
 	let listPoints = initPoints(city);
 	let arrayN = initNeighStopAndPoint(city);
 	let arrayC = [];
-	if(computeArrayC) arrayC = initArrayC(city, startTime, endTime);
+	if(computeArrayC) arrayC = initArrayC(city, startTime, startTime + maxDuration);
  	let pointsVenues = initPointsVenues(listPoints);
  	console.log('computeData')
  	let areaHex = turf.area(points.findOne({'city':city}).hex)/ (math.pow(10, 6));
@@ -135,9 +134,9 @@ export const computeScenario = function(city, dataCity){
 }
 
 export const computeScenarioDefault = function(city){
-	
+	let startTime = timesOfDay[0];
 	let dataCity = computeDataCity(city, false)
-	dataCity.arrayC = initArrayC(city, 0, endTime);
+	dataCity.arrayC = initArrayC(city, startTime, startTime + maxDuration);
 
 	let scenario = computeScenario(city, dataCity);
 	return scenario;
