@@ -25,8 +25,8 @@ Meteor.methods({
     return metroLines.findOne({'city' : city}, {fields:{'serverOSRM':1}});
   },
   'isCreateScenario'(city){
-    console.log('isCreateScenario', metroLines.find({'city' : city}).count() )
-    return metroLines.find({'city' : city}).count() != 0;
+    console.log('isCreateScenario', metroLines.findOne({'city' : city})['newScenario'] )
+    return metroLines.findOne({'city' : city})['newScenario'];
   },
   'isochrone'(point, scenarioID, startTime){
       var scenario = scenarioDB.findOne({'_id':scenarioID});
