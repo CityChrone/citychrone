@@ -33,7 +33,7 @@ Template.world.onRendered(function(){
 			marker.addTo(Template.map.data.map);
 		});
 		var group = L.featureGroup(markerArray); //add markers array to featureGroup
-        Template.map.data.map.fitBounds(group.getBounds(), {'padding' : [300,200]}); 
+        Template.map.data.map.fitBounds(group.getBounds(), {'padding' : [150,10]}); 
         Template.map.data.map.spin(false);
 	});
 

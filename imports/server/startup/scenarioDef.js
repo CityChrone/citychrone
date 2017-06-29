@@ -53,8 +53,8 @@ const initPointsVenues = function(listPoints){
 	}
 	return pointsVenues;
 };
-
-const computeDataCity = function(city, computeArrayC = true){
+ 
+export const computeDataCity = function(city, computeArrayC = true){
 	let startTime = timesOfDay[0];
 	let listPoints = initPoints(city);
 	let arrayN = initNeighStopAndPoint(city);
@@ -145,7 +145,6 @@ export const computeScenarioDefault = function(city){
 
 export const addCityToList = function(scenarioDef, dataCity) {
 return new Promise( function(resolve, reject ){
-		resolve(true);
 		console.log("inside PROMISE");
 		let city = scenarioDef.city
 
@@ -161,8 +160,6 @@ return new Promise( function(resolve, reject ){
 		citiesData[city]['city'] = city;
 
 		createZipCity(citiesData[city], city);
-
-		console.log('finding', dataCitiesDB.find({'city':city}).count())
 
 		//console.log(city, citiesData[city]['centerCity']);
 	});

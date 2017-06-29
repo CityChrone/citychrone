@@ -18,7 +18,7 @@ Template.map.onRendered(function() {
   //console.log(L)
 
     Template.map.data.OpenStreetMap_Mapnik = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      minZoom: 3,
+      minZoom: 0,
       maxZoom: 20,
       tileSize: 256,
      // attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -26,7 +26,7 @@ Template.map.onRendered(function() {
     Template.map.data.here = L.tileLayer.provider('HERE.normalDayTransit',{
         app_id : 'IbEW2PDzNwdzV4pFf35t',
         app_code : 'yIfUWrkTbLG_cdWMxlLK5g',
-        minZoom: 3,
+        minZoom: 0,
         maxZoom: 20,
         tileSize: 256,
         //detectRetina:true,
