@@ -9,24 +9,26 @@ var meteorRoot = fs.realpathSync( process.cwd() + '/../' );
 var publicPath = meteorRoot + '/web.browser/app/';
 let path = publicPath + '/cities/';
 
-console.log(path, meteorRoot, publicPath)
+//console.log(path, meteorRoot, publicPath)
 export let citiesData = {}
 
-export let createZipCity= function(data, city){
+
+export let createZipCity= function(data, city, resolve = false){
 	var zip = new JSZip();
 	// zip.file("file", content);
 	// ... and other manipulations
-	//console.log(data, name);
+	//console.log(data, name); 
 	let dataToIns = JSON.stringify(data)
 	zip.file(city + ".txt", dataToIns)
-
-	zip.generateNodeStream({type:'nodebuffer',streamFiles:true})
+	let path = process.env.PWD + '/public/cities/';
+	console.log(path)
+	zip.generateNodeStream({type:'nodebuffer',streamFiles:false})
 	.pipe(fs.createWriteStream(path + city+'.zip'))
 	.on('finish', function () {
 	    // JSZip generates a readable stream with a "end" event,
 	    // but is piped here in a writable stream which emits a "finish" event.
 	    console.log("out.zip written.", );
-
+	    if(resolve) resolve(true);
 	    console.log(__dirname, process.env.PWD);
 	});
 };
