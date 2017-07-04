@@ -92,10 +92,22 @@ export const colorPotPopDiff = function(val) {
 export const shellIsochrone =  _.range(maxValueIso/numBinIso, maxValueIso+1,  maxValueIso/numBinIso)
 shellIsochrone.unshift(1)
 shellIsochrone.unshift(0)
-export const colorIsochrone = function(val){
+export const colorListIso = ['#67001f','#b2182b','#d6604d','#f4a582','#fddbc7','#d1e5f0','#92c5de','#4393c3','#2166ac','#053061'].reverse()
+/*export const colorIsochrone = function(val){
 	if(val < 1) return '#08519c'
-	else return d3.scaleSequential(d3Inter.interpolateSpectral).domain([maxValueIso, 0]).clamp(true)(val);
-}
+	else return d3.scaleSequential(d3Inter.interpolateRdBu).domain([maxValueIso, 0]).clamp(true)(val);
+}*/
+export const colorIsochrone = function(val) {
+	let i = 0;
+	//let maxV = 16.;
+	for (i = 0; i < shellIsochrone.length; i++) {
+		if (val < shellIsochrone[i]) break;
+	}
+		//console.log(i, val, colorListIso[i], shellIsochrone)
+	let color = colorListIso[i-1];
+	return color
+};
+
 
 //export const shellDiffAccess = _.range(0, maxValueAccessDiff,  maxValueAccessDiff/numBinDiff)
 //export const colorDiffAccess = d3.scaleSequential(d3Inter.interpolateBlues).domain([0, maxValueAccessDiff]).clamp(true)
@@ -180,15 +192,15 @@ const isochrone_style = {
 };
 
 export const styleGeojson = function(color) {
-	let opacity = 0.6;
+	let opacity = 0.5;
  	if (color ==null) opacity = 0;
 	let style = {
 		fillColor: color,
-		color: color,
+		color: '#bababa',
 		fill: true,
 		fillOpacity: opacity,
-		opacity : opacity,
-		weight: 0.3
+		opacity : 0.4,
+		weight: 0.5
 		//clickable : false
 	};
 

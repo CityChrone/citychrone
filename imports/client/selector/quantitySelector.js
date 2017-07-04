@@ -84,6 +84,21 @@ Template.quantitySelector.helpers({
 	},
 	'isNewScenario'(){
 		return Router.current().route.getName() == "newScenario.:city"
+	},
+	'notDefault'(){
+		if(Router.current().route.getName() == "newScenario.:city"){
+	        templateRV = Template.newScenario.RV;
+	    }else{
+	        templateRV = Template.city.RV
+	    }
+	    //console.log(templateRV.currentScenario.get(), templateRV.currentScenario.get())
+
+	    //if('selectpicker' in $('#quantityPicker'))
+	    
+	    Meteor.setTimeout(function(){$('#quantityPicker').selectpicker('refresh')}, 500);
+	    let dis = templateRV.currentScenario.get().default ? 'disabled' : '';
+	    return dis;
+
 	}
 });
 

@@ -1,0 +1,113 @@
+#textdiv {
+   /*animation: swing 2s infinite alternate;*/
+    -webkit-animation-name: opacity;
+      -webkit-animation-duration: 2s;
+      -webkit-animation-iteration-count: infinite;
+      animation-name: opacity;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+
+}
+
+
+@-webkit-keyframes opacity {
+  0%, 100% {opacity:0;}
+  50% {opacity:1;}
+}
+
+@-o-keyframes opacity {
+  0%, 100% {opacity:0;}
+  50% {opacity:1;}
+}
+
+@-moz-keyframes opacity {
+  0%, 100% {opacity:0;}
+  50% {opacity:1;}
+}
+
+
+@keyframes opacity {
+  0%, 100% {opacity:0;}
+  50% {opacity:1;}
+}
+
+
+@keyframes textgrowth {
+    0% {
+    font-size: 25px;
+    color:"red";
+
+    }
+    100% {
+    font-size: 26px;
+    color:"red";
+    }
+}
+
+@-webkit-keyframes swing
+{
+
+	0%
+    {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+    65%
+    {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+    70%
+    {
+        -webkit-transform: translateX(3px);
+        transform: translateX(3px);
+    }
+    75%
+    {
+        -webkit-transform: translateX(-3px);
+        transform: translateX(-3px);
+    }
+    90%
+    {
+        -webkit-transform: translateX(2px);
+        transform: translateX(2px);
+    }
+    100%
+    {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+}
+@keyframes swing
+{
+	0%
+    {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    } 
+    65%
+    {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+    70%
+    {
+        -webkit-transform: translateX(3px);
+        transform: translateX(3px);
+    }
+    75%
+    {
+        -webkit-transform: translateX(-3px);
+        transform: translateX(-3px);
+    }
+    90%
+    {
+        -webkit-transform: translateX(2px);
+        transform: translateX(2px);
+    }
+    100%
+    {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+}

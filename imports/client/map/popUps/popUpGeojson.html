@@ -1,4 +1,6 @@
 <template name='popUpGeojson'>
+		<div class="text-center text">current scenario </div>
+
 		<div class=' text-muted text-center'>
 			{{nameQuantity "newVels"}} : 
 			<span class ='label' style='{{labelColor 'newVels' this.newVels}}'>  {{ toString 'newVels' this.newVels}} </span>
@@ -7,4 +9,15 @@
 			{{nameQuantity "newPotPop"}} : 
 			<span class ='label' style='{{labelColor 'newPotPop' this.newPotPop}}'>  {{ toString 'newPotPop' this.newPotPop}} </span>
 		</div>
+		{{#if isNotDefault}}
+		<div class="text-center text">default </div>
+		<div class=' text-muted text-center'>
+			{{nameQuantity "newVels"}} : 
+			<span class ='label' style='{{labelColorDef 'newVels'}}'>  {{ toStringDef 'newVels' this.newVels}} </span>
+		</div>
+		<div class=' text-muted text-center'>
+			{{nameQuantity "newPotPop"}} : 
+			<span class ='label' style='{{labelColorDef 'newPotPop'}}'>  {{ toStringDef 'newPotPop' this.newPotPop}} </span>
+		</div>
+		{{/if}}
 </template>

@@ -43,9 +43,9 @@ fs.readFile(path + city + ".zip", function(err, data) {
         zip.file(city+".txt").async("string").then(function (data){
         	console.log("loaded", city+".zip", 'scenario def',scenarioDB.find({'city':city, 'default':true}).count()==0)
         	citiesData[city] = JSON.parse(data);
-        	if(scenarioDB.find({'city':city, 'default':true}).count()==0){
+        	/*if(scenarioDB.find({'city':city, 'default':true}).count()==0){
         		computeScenario(city, citiesData[city])
-        	}
+        	}*/
         })
     });
 });};

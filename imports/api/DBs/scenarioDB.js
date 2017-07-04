@@ -4,6 +4,13 @@ import { Template } from 'meteor/templating';
 
 export const scenarioDB = new Mongo.Collection('scenario');
 
+if(Meteor.isServer){
+	scenarioDB._ensureIndex({ "scores.scoreVelocity": -1, "creationDate":-1});
+	scenarioDB._ensureIndex({ "city":1, "scores.scoreVelocity": 1, "creationDate":-1});
+	scenarioDB._ensureIndex({ "city":1});
+	scenarioDB._ensureIndex({ "city":1, "scores.scoreVelocity": 1});
+
+}
 export const initScenario = function(city, name, author, time, metroLinesFetched, P2S2Add, S2S2Add){
 		time  = time || 7*3600;
 		metroLinesFetched = metroLinesFetched || [];

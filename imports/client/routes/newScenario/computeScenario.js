@@ -29,7 +29,16 @@ Template.computeScenario.helpers({
 	},
 	'toCompute'(){
 		return Template.metroLinesDraw.RV.mapEdited.get();
+	},
+	'scenarioComputed'(){
+		let one = Template.computeScenario.data.ended.get();
+		let two = Template.computeScenario.data.nameScenarioSet.get();
+		let scenario = Template.newScenario.RV.currentScenario.get();
+		console.log('scenarioCOmputed', one, two);
+		if(one && two) 	Router.go('/city/' + scenario.city + '?id=' + scenario._id);
+
 	}
+
 });
 
 Template.computeScenario.events({
@@ -37,7 +46,10 @@ Template.computeScenario.events({
 		Template.computeScenario.function.loading(true)
 		Template.map.data.map.spin(true);
 		Template.quantitySelector.quantitySelectedRV.set('newVels');
-
+		Template.computeScenario.data.ended.set(false);
+ 		Template.computeScenario.data.nameScenarioSet.set(false);
+		Template.computeScenario.worker.CSAPointsComputed = 0;
+		
 		if(!Template.computeScenario.RV.dataLoaded.get()) //se non ho caricato i dati (o non ho finito il nuovo calcolo) non faccio nulla
 			return;
 		if(Template.computeScenario.data.newHexsComputed && !Template.computeScenario.data.mapEdited.get()) //se ho iniziato il calcolo o l'ho già finito
@@ -60,6 +72,7 @@ Template.computeScenario.events({
 		let S2S2Add = addNewStops.fill2AddArray(Template.computeScenario.collection.stops.find().count())
 		let lines = Template.metroLinesDraw.collection.metroLines.find({'temp':true}).fetch();
 		let scenario = initScenario(city, name, author, time, lines, P2S2Add, S2S2Add);
+		scenario.firstTime = true;
 		//console.log('created scenario', P2S2Add, S2S2Add);
 		Template.computeScenario.RV.toSave.set(true);
 		//console.log('compute!!',Template.computeScenario.RV.toSave.get());
@@ -94,7 +107,6 @@ Template.computeScenario.onCreated(function(){
  	}
  };
 
-
 // *******  COLLECTION  ***********
 Template.computeScenario.collection = {};
 Template.computeScenario.collection.stops = new Mongo.Collection(null)
@@ -105,15 +117,14 @@ Template.computeScenario.collection.stops = new Mongo.Collection(null)
 // *******  DATA  ***********
 
   Template.computeScenario.data = {};
-  Template.newScenario.data.dataToLoad = 3;
-  Template.newScenario.data.serverOSRM = "http://localhost:3000";
-  Template.newScenario.data.arrayPop = [];
-
-
+  Template.computeScenario.data.countLimit = 0;
+  Template.computeScenario.data.countStep = 1000;
   //********. Reactive Var ************ 
   Template.computeScenario.RV = {};
   Template.computeScenario.RV.dataLoaded = new ReactiveVar(false); //true when finished load data
   Template.computeScenario.RV.toSave = new ReactiveVar(false); //set true when the user have to insert the name and uthor of the scenario
+  Template.computeScenario.data.ended = new ReactiveVar(false);
+  Template.computeScenario.data.nameScenarioSet = new ReactiveVar(false);
 
   //******** webWorker *************
   Template.computeScenario.worker = {}
@@ -140,7 +151,7 @@ let loadComputeScenarioData = function(city, RV){
 	
 	let checkDataLoaded = function(num = -1) {
 		dataToLoad  += num
-		console.log(dataToLoad)
+		//console.log(dataToLoad)
 		Template.computeScenario.function.loading(true);
 		if(dataToLoad < 1){
 			Template.computeScenario.function.loading(false);
@@ -308,6 +319,8 @@ let loadComputeScenarioData = function(city, RV){
 
 const computeNewScenario = function(){
 
+	Template.computeScenario.data.countLimit = 0;
+	
 	let city = Template.computeScenario.data.city;
 	let stopsCollection = Template.computeScenario.collection.stops;
 	let pointsCollection = Template.newScenario.collection.points;
@@ -319,12 +332,12 @@ const computeNewScenario = function(){
 
 
 	Promise.all(promiseAddStop).then(values => {
-		//console.log("end update Arrays", scenario)
+		console.log("end update Arrays", scenario)
 
-		//console.log('BEFORE', _.size(scenario.P2S2Add), _.size(scenario.S2S2Add))
+		console.log('BEFORE', _.size(scenario.P2S2Add), _.size(scenario.S2S2Add))
 		addNewStops.deleteEmptyItem(scenario.P2S2Add);
 		addNewStops.deleteEmptyItem(scenario.S2S2Add);
-		//console.log('AFTER', _.size(scenario.P2S2Add), _.size(scenario.S2S2Add))
+		console.log('AFTER', _.size(scenario.P2S2Add), _.size(scenario.S2S2Add))
 
 		let startTime = parseFloat(Template.timeSelector.timeSelectedRV.get())
 		let wTime = [startTime , startTime + parameters.maxDuration];

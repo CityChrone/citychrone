@@ -50,9 +50,12 @@ const mergeArrayN = function(arrayNDef, arrayN2Add, field){
             let toAdd = []
             toAdd = arrayN2Add[pos][field]
             let newLength = originArray.length + toAdd.length;
-            let newArray = new Uint16Array(newLength);
+            let newArray = new Uint32Array(newLength);
             newArray.set(originArray);
             newArray.set(toAdd, originArray.length);
+            if(field == "pos" && pos==2550)
+                console.log(originArray,pos, arrayN2Add[pos][field], newArray, originArray.length)
+
             return newArray}
         else{
             return originArray;
@@ -62,7 +65,7 @@ const mergeArrayN = function(arrayNDef, arrayN2Add, field){
     for (let pos in arrayN2Add){
         let array2Add = arrayN2Add[pos];
         if(!(pos in  arrayNDef)){
-            arrayNResult[pos] = new Uint16Array(array2Add[field])
+            arrayNResult[pos] = new Uint32Array(array2Add[field])
         }
     }
     return arrayNResult;

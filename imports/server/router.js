@@ -8,8 +8,9 @@ import fs from 'fs';
 
 import { initArrayC} from '/imports/server/startup/InitArrayConnections.js';
 import { initNeighStopAndPoint } from '/imports/server/startup/neighStopsPoints.js';
-import { computeScenarioDefault, addCityToList, checkCities, computeDataCity } from '/imports/server/startup/scenarioDef.js';
+import { computeScenarioDefault, addCityToList, checkCities, computeDataCity, computeOnlyScenarioDefault } from '/imports/server/startup/scenarioDef.js';
 import { scenarioDB, initScenario } from '/imports/api/DBs/scenarioDB.js';
+import {createZipCity, loadCity, citiesData} from '/imports/server/saveScenarioData.js';
 
 Router.route('/computeScenarioDef/:city', function () {
 	let city = this.params.city
@@ -17,6 +18,14 @@ Router.route('/computeScenarioDef/:city', function () {
  	this.response.end('computing default scenario of ' + city);
 	let scenarioDef = computeScenarioDefault(city);
 }, {where: 'server'});
+
+Router.route('/computeOnlyScenarioDef/:city', function () {
+	let city = this.params.city
+	console.log('COMPUTE SCENARIO default of', city);
+ 	this.response.end('computing default scenario of ' + city);
+	let scenarioDef = computeOnlyScenarioDefault(city);
+}, {where: 'server'});
+
 
 Router.route('/addCity/:city', function () {
 	let city = this.params.city
@@ -27,12 +36,21 @@ Router.route('/addCity/:city', function () {
  
 Router.route('/createZip/:city', function () {
 	let city = this.params.city
+	this.response.end('Adding Zip... ' + city);
 	let cityData = computeDataCity(city);
 	let scenarioDef = scenarioDB.findOne({'city':city, 'default':true});
 	console.log('Adding Zip... ', city);
- 	this.response.end('Adding Zip... ' + city);
 	addCityToList(scenarioDef, cityData);
 }, {where: 'server'});
+
+Router.route('/createFirstZip/:city', function () {
+	let city = this.params.city
+	this.response.end('Adding Zip... ' + city);
+	let cityData = computeDataCity(city);
+	console.log('Adding Zip... ', city);
+	createZipCity(cityData, city);
+}, {where: 'server'});
+
 
  
 Router.route('/reloadCities', function () {

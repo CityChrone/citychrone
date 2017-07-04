@@ -36,6 +36,6 @@ Template.createNewScenarioButton.onRendered(function(){
 	Template.createNewScenarioButton.data.city = Router.current().params.city;
 	Meteor.call('isCreateScenario', Template.createNewScenarioButton.data.city, function(err, risp){
 		Template.createNewScenarioButton.RV.isCreateScenario.set(risp)
-	})	
+	});	
 });
 

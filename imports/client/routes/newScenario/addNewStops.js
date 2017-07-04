@@ -1,5 +1,5 @@
 import * as parameters from '/imports/api/parameters.js'
-
+import math from 'mathjs';
 const deleteEmptyItem = function(array2Add){
 	for(let key in array2Add){
 		if(array2Add[key].pos.length == 0)
@@ -20,26 +20,28 @@ const fill2AddArray = function(num){
 
 const computeNeigh = function(stop, stops, P2S2Add, S2S2Add, points, serverOSRM){
 	return new Promise( function(resolve, reject ){
+		let serverUrl = serverOSRM;
+		let urlBase =  serverUrl+"table/v1/foot/" + stop.coor[0] + ',' + stop.coor[1] + ';';
+		let urlPoints = urlBase.slice(0);
+		let urlStops = urlBase.slice(0);
+		let posStop = stop.pos;
+		let MaxDistance = parameters.maxDistanceWalk;
+		let NearSphere = {
+							$near: {
+						    $geometry: {'type': 'Point', 'coordinates' : stop.coor},
+						    $maxDistance: MaxDistance
+						  	},
+						};
 
-	let serverUrl = serverOSRM;
-	let urlBase =  serverUrl+"table/v1/foot/" + stop.coor[0] + ',' + stop.coor[1] + ';';
-	let urlPoints = urlBase.slice(0);
-	let urlStops = urlBase.slice(0);
-	let posStop = stop.pos;
-	let MaxDistance = parameters.maxDistanceWalk;
-	let NearSphere = {$near: {
-					     $geometry: {'type': 'Point', 'coordinates' : stop.coor},
-					     $maxDistance: MaxDistance
-					  },
-					};
-	let stopsNList = [];
+		let stopsNList = [];
 		let stopsFind = stops.find({'point':NearSphere}, {fields:{'point':1, 'pos':1}, sort:{'pos':1}});
+		
 		stopsFind.forEach(function(stopN){
 	      	stopsNList.push(stopN);
 	       	urlStops += stopN.point.coordinates[0] + ',' + stopN.point.coordinates[1] + ';';
 	    });
 
-	  let pointsNList = [];
+	  	let pointsNList = [];
 		let pointsFind = points.find({'point':NearSphere}, {fields:{'point':1, 'pos':1}, sort:{'pos':1}});
 
 		pointsFind
@@ -51,44 +53,45 @@ const computeNeigh = function(stop, stops, P2S2Add, S2S2Add, points, serverOSRM)
 	    urlStops = urlStops.slice(0,-1) + '?sources=0';
 	    urlPoints = urlPoints.slice(0,-1) + '?sources=0';
 	    //console.log("number of neigs", stop, pointsNList.length, stopsNList.length, MaxDistance);
-      var getPoints = function() {
-        if (pointsNList.length < 1) {
-          resolve([stop,pointsNList,stopsNList]);
-          return;
-        }
-        HTTP.get(urlPoints, function (error2, result2){
-  				if(error2) {
-  					//console.log('error httm call fro dist point');
-  					reject('error http request');
-  				}else{
+      	var getPoints = function() {
+	        if (pointsNList.length < 1) {
+	          resolve([stop,pointsNList,stopsNList]);
+	          return;
+	        }
 
-  					let resultPoints = result2.data;
-  				   	if('durations' in resultPoints){
-  						for(let i = 1; i < resultPoints.durations[0].length; i++){
-  							let time = resultPoints.durations[0][i];
-  							pointsNList[i-1].time = time;
-  						}
-  					}
-  					let countPointAdded = 0;
-  					for(let pointN_i = 0; pointN_i < pointsNList.length; pointN_i++){
-  						if(pointsNList[pointN_i].time < parameters.maxTimeWalk){
-                let posStopN = pointsNList[pointN_i].pos
-                let timeStopN = pointsNList[pointN_i].time;
+	        HTTP.get(urlPoints, function (error2, result2){
+	  				if(error2) {
+	  					console.log('error httm call from dist point');
+	  					reject('error http request');
+	  				}else{
 
-                  P2S2Add[posStopN].pos.push(stop.pos)
-                  P2S2Add[posStopN].time.push(timeStopN)
-                  countPointAdded+=1;
-  						}
-  					}
-  				}
-  				resolve([stop,pointsNList,stopsNList]);
-        });
-      };
+	  					let resultPoints = result2.data;
+	  				   	if('durations' in resultPoints){
+	  						for(let i = 1; i < resultPoints.durations[0].length; i++){
+	  							let time = math.round(resultPoints.durations[0][i]);
+	  							pointsNList[i-1].time = time;
+	  						}
+	  					}
+	  					let countPointAdded = 0;
+	  					for(let pointN_i = 0; pointN_i < pointsNList.length; pointN_i++){
+	  						if(pointsNList[pointN_i].time < parameters.maxTimeWalk){
+				                let posPointN = pointsNList[pointN_i].pos
+				                let timePointN = pointsNList[pointN_i].time;
+			                  	P2S2Add[posPointN].pos.push(stop.pos)
+			                  	P2S2Add[posPointN].time.push(timePointN)
+	                  			countPointAdded+=1;
+	  						}
+	  					}
+	  				}
+	  				resolve([stop,pointsNList,stopsNList]);
+	        });
+	    };
 
-      if (stopsNList.length < 1) {
-        getPoints();
-        return;
-      }
+		if (stopsNList.length < 1) {
+		getPoints();
+		return;
+		}
+
 	    HTTP.get(urlStops, function (error, result){
 	    	if(error) {
 					console.log('error httm call for dist stop',error, result);
@@ -102,14 +105,23 @@ const computeNeigh = function(stop, stops, P2S2Add, S2S2Add, points, serverOSRM)
   					}
   				}
   				for(let stopN_i = 0; stopN_i < stopsNList.length; stopN_i++){
-  					if(stopsNList[stopN_i].time < parameters.maxTimeWalk){
-		            	let posStopN = stopsNList[stopN_i].pos
-		            	let timeStopN = stopsNList[stopN_i].time;
+  					let posStopN = stopsNList[stopN_i].pos
+		            let timeStopN = stopsNList[stopN_i].time;
+  					if(stopsNList[stopN_i].time < parameters.maxTimeWalk && posStop != posStopN){
 		              //console.log(posStopN, posStop)
-		            	S2S2Add[posStopN].pos.push(stop.pos)
-		            	S2S2Add[posStopN].time.push(timeStopN)
 		            	S2S2Add[posStop].pos.push(posStopN)
 		            	S2S2Add[posStop].time.push(timeStopN)
+		            	if(S2S2Add[posStopN].pos.includes(posStop)){
+		            		console.log('ce sta!!!!')
+		            		let posTemp = S2S2Add[posStopN].pos.indexOf(posStop)
+		            		if(S2S2Add[posStopN].time[posTemp] > timeStopN){
+		            			S2S2Add[posStopN].time[posTemp] = timeStopN
+		            		}
+		            	}else{
+		            		S2S2Add[posStopN].pos.push(stop.pos)
+		            		S2S2Add[posStopN].time.push(timeStopN)
+
+		            	}
             		}
 
   				}
@@ -127,6 +139,8 @@ const updateArrays = function(city, stopsCollection, pointsCollections, scenario
 	stopsCollection.remove({temp:true});
 	
 	let metroLinesFetched = scenario.lines;
+
+	console.log(metroLinesFetched)
 
 	metroLinesFetched.forEach(function(line, indexLine){
 		line.stops.forEach(function(stop, indexStop){

@@ -78,7 +78,7 @@ export const computeDataCity = function(city, computeArrayC = true){
 	 };
 };
 
-export const computeScenario = function(city, dataCity){
+export const computeScenario = function(city, dataCity, insertData = true){
 	
 	let listPoints = dataCity.listPoints;
 	let arrayN = dataCity.arrayN;
@@ -105,7 +105,7 @@ export const computeScenario = function(city, dataCity){
 			var point = listPoints[point_i];
 			var returned = worker.CSAPoint(point, arrayC, arrayN, startTime, areaHex, pointsVenues, arrayPop);
 			//console.log(point, returned);
-			if(point.pos % 2000 == 0) console.log(startTime/3600, returned.newVels, returned.newPotPop, point.pos)
+			if(point.pos % 10 == 0) console.log(startTime/3600, returned.newVels, returned.newPotPop, point.pos)
 			newVels.push(returned.newVels);
 			newAccess.push(returned.newAccess);
 			newPotPop.push(returned.newPotPop);
@@ -127,7 +127,7 @@ export const computeScenario = function(city, dataCity){
 	scenario['scores'] = computeScoreNewScenario(scenario, timesOfDay[0].toString());
 
 	scenarioDB.insert(scenario, (e)=>{
-		addCityToList(scenario, dataCity);
+		if(insertData) addCityToList(scenario, dataCity);
 	});
 	
 	return scenario;
@@ -142,6 +142,14 @@ export const computeScenarioDefault = function(city){
 	return scenario;
 
 } 
+
+export const computeOnlyScenarioDefault = function(city){
+	let dataCity = citiesData[city];
+	let scenario = computeScenario(city, dataCity, false);
+	return scenario;
+
+} 
+
 
 export const addCityToList = function(scenarioDef, dataCity) {
 return new Promise( function(resolve, reject ){
@@ -194,8 +202,10 @@ Meteor.methods({
 		let cities = [];
 		for(city in citiesData){
 			let latlng = citiesData[city]['centerCity'];
-			console.log(city, latlng)
-			cities.push({'city':city, 'latlng':latlng})
+			console.log(city, latlng);
+			let newScenario = metroLines.findOne({'city' : city}, {fields :{'newScenario':1}})['newScenario']
+			cities.push({'city':city, 'latlng':latlng, 'newScenario':newScenario});
+			
 		}
 		console.log(cities)
 		return cities;
