@@ -28,7 +28,7 @@ function computeTfor2Stops(dist, Vf, a){//dist in meters
 	const DISTa = 0.5 * a * Ta * Ta; //dist to reach the maximun velocity
 
 	if(dist / 2.0 <= DISTa){
-		return 2 * math.sqrt(dist);
+		return math.round(2 * math.sqrt(dist));
 	}else{
 		//console.log('TimeDist ', DISTa, math.sqrt(DISTa), (dist - 2. * DISTa) / Vf);
 		return math.round(2 * math.sqrt(DISTa) + (dist - 2.0 * DISTa) / Vf);
@@ -137,6 +137,8 @@ function addNewLines(metroLinesFetched, limT){
 		var totStop = line.points.length-1;
 		startStopPoint = line.points[totStop];
 		startStopPos = line.pos[totStop];
+		startingStopTime = limT[0];//5*3600; //line starts at 5am
+
 		for(let stop_i = totStop -1 ; stop_i >= 0; stop_i--){
 			let endStopPoint = line.points[stop_i];
 			let endStopPos = line.pos[stop_i];
@@ -157,7 +159,12 @@ function addNewLines(metroLinesFetched, limT){
 
 
 	});
-	console.log(cArrayTemp.length)
+
+	let countErr = 0
+	for (let i = 0; i < cArrayTemp.length-4;i+=4){
+		if(cArrayTemp[i+2]> cArrayTemp[i+6]) countErr+=1
+	}
+	console.log('CREATED NEW ARRAY len and err', cArrayTemp.length, countErr)
 	return cArrayTemp;
 	//console.log(stopsLines);
 }

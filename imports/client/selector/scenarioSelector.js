@@ -18,7 +18,9 @@ Template.scenarioSelector.onCreated(function(){
 Template.scenarioSelector.events({
 	'click .scenarioButton'(e){
 		//console.log(e);
-		Blaze.render(Template.scenarioList, $("body")[0]);
+		//Blaze.render(Template.scenarioList, $("body")[0]);
+
+		$('#scenarioModal').modal('show');
 
 	}
 

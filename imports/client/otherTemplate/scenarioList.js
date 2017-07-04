@@ -10,7 +10,6 @@ import '/imports/client/otherTemplate/scenarioList.html';
 Template.scenarioList.events({
 	'click .showScenario'(e){
 		let id = $(e.target).attr("id")
-		console.log(id);
 
 		Meteor.call("giveScenario", id, function(err, risp){
 			//console.log(risp, Template.computeScenario.collection.stops.find({temp:true}).count());
@@ -22,9 +21,10 @@ Template.scenarioList.events({
 		    }else{
 		        templateRV = Template.city.RV
 		    }
+		    console.log(e, id, risp, templateRV.scenarioDef);
 			templateRV.currentScenario.set(risp);
 			templateRV.currentScenarioId.set(risp._id);
-			console.log(Template.metroLinesDraw)
+			//console.log(Template.metroLinesDraw)
 			Template.metroLinesDraw.function.addLines(risp.lines)
 			$('#scenarioModal').modal('hide');
 
@@ -41,7 +41,18 @@ Template.scenarioList.helpers({
 	'scenarioDef'(){
 		let city = Router.current().params.city;
 		return scenarioDB.findOne({'city':city, default:true}, {sort:{creationDate: -1}});
-	}
+	},
+	'GiveCurrentScenario'(){
+		let templateRV = {}
+		    if(Router.current().route.getName() == "newScenario.:city"){
+		        templateRV = Template.newScenario.RV;
+		    }else{
+		        templateRV = Template.city.RV
+		    }
+
+		return templateRV.currentScenario.get()
+	},
+
 });
 
 Template.scenarioList.onCreated(()=>{
@@ -52,10 +63,10 @@ Template.scenarioList.onCreated(()=>{
 
 Template.scenarioList.onRendered(function(){	
 	let currentView = this.view;
-	$('#scenarioModal').modal('show');
-	$('#scenarioModal').on('hide.bs.modal', function(e){
+
+	/*$('#scenarioModal').on('hide.bs.modal', function(e){
 		Blaze.remove(currentView);
-	});
+	});*/
 
 });
 
@@ -129,13 +140,37 @@ Template.scenarioListRow.helpers({
 	        templateRV = Template.city.RV
 	    }
 		//console.log(_id, templateRV.currentScenario.get()._id)
+		if(templateRV.currentScenario.get()){
+			if(_id._str == templateRV.currentScenario.get()._id._str) return "success";
+		}
+	},
+	'pos'(id){
+		//console.log(this)
+		let scenario = this;
+		let sort = {'scores.scoreVelocity':-1, creationDate: -1};
+		let pos = scenarioDB.find({'scores.scoreVelocity':{'$gte':scenario.scores.scoreVelocity}}, {sort:sort}).count();
+		return pos;
+	}
+});
+
+Template.scenarioDefButton.helpers({
+	'giveID'(id){
+		if (id === undefined)
+			return '---';
+		//console.log(id, eval(id), id.toString(), eval(id).valueOf());
+		return eval(id).valueOf();
+	},
+	'isCurrent'(_id){
+	    let templateRV = {}
+	    if(Router.current().route.getName() == "newScenario.:city"){
+	        templateRV = Template.newScenario.RV;
+	    }else{
+	        templateRV = Template.city.RV
+	    }
+		//console.log(_id, templateRV.currentScenario.get()._id)
 		if(_id._str == templateRV.currentScenario.get()._id._str) return "success";
 
 	},
-	'pos'(){
-		Template.scenarioList.data.pos += 1
-		return Template.scenarioList.data.pos;
-	}
-
 });
+
 

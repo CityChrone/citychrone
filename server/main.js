@@ -29,9 +29,11 @@ Meteor.startup(() => {
   Meteor.publish('scenario', function scenarioList(city) {
 
     //console.log('scenario published ' + city);
-    let res = scenarioDB.findOne({'default':true, 'city' : city}, {sort:{'creationDate':-1}, field:{'moments':0}} );
+    let sort = {'scores.scoreVelocity':-1, 'creationDate':-1};
+    let field = {'moments':0, 'P2S2Add': 0, 'S2S2Add':0, 'lines':0};
 
-    return scenarioDB.find({'city':city}, {field:{'moments':0, 'P2S2Add': 0, 'S2S2Add':0, 'lines':0}});
+
+    return scenarioDB.find({'city':city}, {sort:sort, 'fields':field});
   });
 
   Meteor.publish('scenarioDef', function scenarioList(city, listOfId) {

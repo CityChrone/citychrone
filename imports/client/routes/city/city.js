@@ -21,8 +21,9 @@ import '/imports/client/selector/scenarioSelector.js';
 import '/imports/client/map/geojson/legendGeojson.js';
 import '/imports/client/selector/buttonsChangePage.js';
 import '/imports/client/selector/socialButtons.js';
-
+import '/imports/client/otherTemplate/modalEnd.js';
 import '/imports/client/routes/city/city.html';
+import '/imports/client/explanation/titleBar.js';
 
 Template.city.helpers({
 	'loadGeojsonToMap'(){
@@ -53,6 +54,8 @@ Template.city.helpers({
 			
 			}
 		return true;
+	},
+	'currentScenario'(){
 	}
 });
 
@@ -80,6 +83,8 @@ Template.city.onCreated(function(){
   Template.city.data.city = '';
 	Template.city.data.hexClass = {}
 	Template.city.data.geoJson = new geoJsonClass;
+	Template.city.data.scenarioDefault = {};
+
 
   //********. Reactive Var ************ 
   Template.city.RV = {};
@@ -102,6 +107,9 @@ Template.city.onRendered(function() {
 		Template.city.RV.currentScenario.set(currentScenario);
 	    let times = Object.keys(currentScenario.moments);
 	    Template.timeSelector.timeSelectedRV.set(times[0]);
+	    if(!currentScenario.shared){
+
+	    }
 
 	}
 	let loadScenario = function(){
@@ -110,7 +118,7 @@ Template.city.onRendered(function() {
 			let MongoID = new Mongo.ObjectID(_id)
 			let currentScenario = scenarioDB.findOne({'_id':MongoID, 'city':Template.city.data.city});
 			//console.log(currentScenario)
-			if(currentScenario != undefined){
+			if(currentScenario){
 				Template.city.RV.currentScenario.set(currentScenario);
 			    let times = Object.keys(currentScenario.moments);
 			    Template.timeSelector.timeSelectedRV.set(times[0]);
@@ -167,6 +175,7 @@ Template.city.onRendered(function() {
 		let scenarioDef = scenarioDB.findOne({'default':true, 'city' : city}, {sort:{'creationDate':-1}});
 		//console.log('loaded', scenarioDef);
 	    Template.city.data.scenarioDefaultId = scenarioDef._id; //scenario contenente i dati senza modifiche
+	    Template.city.data.scenarioDefault = scenarioDef;
 	    if (!Template.city.data.scenarioDefaultId)
 	      console.error("Default scenario non trovato!");
 	    else {
@@ -174,7 +183,6 @@ Template.city.onRendered(function() {
 	    }
       Template.city.function.checkDataLoaded(-1);
       //console.log("Default scenario caricato ", scenarioDef);
-      	Template.city.function.checkDataLoaded();
  	});
 
  	if(Router.current().params.query.id){
@@ -184,35 +192,15 @@ Template.city.onRendered(function() {
 	 	Meteor.subscribe('scenarioID', city, MongoID, function() {
 			loadScenario()
 	      	Template.city.function.checkDataLoaded(-1);
-	      	Template.city.function.checkDataLoaded();
 	 	});
 	 }
 
 
 
-	/*
-	Meteor.call('metroLines', city, function(err, res){
-	    console.log('metrolines',res, err);
-	    observeNewLineChanges(); //observe add new lines when new lines added
-	    res.forEach(function(line, index){
-	      line.stops = _.values(line.stops).map(function(stop){
-	        return {'latlng':stop};
-	      });
-	      line.temp = false;
-	      line.name = line.name || line.lineName;
-	      line.speedName = line.speedName || "Med";
-	      line.frequencyName = line.frequencyName || "Med";
-	      if (line.type == 'metro') {
-	              console.log(line)
-	        line.indexLine = line.indexLine || _.indexOf(Template.body.data.listNumLinesDef, 0);
-	      }
-	      Template.body.collection.metroLines.insert(line);
-	    });
-  	});*/
 
   	//CREATE CONTROLS
 
-  	let controlTL = createControl([Template.quantitySelector, Template.scenarioSelector, Template.buttonsChangePage, Template.socialButtons], "topleft",  Template.map.data.map, 'leftBar', true);
+  	let controlTL = createControl([Template.titleBar, Template.quantitySelector, Template.scenarioSelector, Template.buttonsChangePage, Template.socialButtons], "topleft",  Template.map.data.map, 'leftBar', true);
   	let controlTR = createControl([Template.legendGeojson], "topright",  Template.map.data.map,'', true);
 
 	Template.city.data.geoJson = new geoJsonClass;

@@ -17,18 +17,18 @@ Template.saveScenario.onCreated(function(){});
 Template.saveScenario.onRendered(function(){
 	//console.log("rendered new scenario!!", this, this.view, this.view.template);
 	let currentView = this.view;
-	$('.modal').modal('show');
-	$('.modal').on('hide.bs.modal', function(e){
+	$('#nameScenario').modal('show');
+	$('#nameScenario').on('hide.bs.modal', function(e){
 		//console.log('hide modal', e);
 		//console.log("title", $("#titleScenario").val(), "author", $("#authorScenario").val());
 		let currentScenario = Template.newScenario.RV.currentScenario.get();
 		currentScenario.name = $("#titleScenario").val();
 		currentScenario.author = $("#authorScenario").val();
 		Template.newScenario.RV.currentScenario.set(currentScenario);
-		Meteor.call("updateNameAuthorScenario", currentScenario.name, currentScenario.author, currentScenario._id);
-		Blaze.remove(currentView);
-
-
+		Meteor.call("updateNameAuthorScenario", currentScenario.name, currentScenario.author, currentScenario._id,function(){
+			Template.computeScenario.data.nameScenarioSet.set(true);
+			//Blaze.remove(currentView);
+		});
 	});
 });
 

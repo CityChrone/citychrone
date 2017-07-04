@@ -41,7 +41,7 @@ const initNeighStopAndPoint = function(city) {
 	let cond = {'city':city, 'inCityBorder':true};
 
 	let oldPos = -1;
-	stops.find(cond, {sort:{'pos':1}}).forEach(function(stop, index){
+	stops.find({'city':city}, {sort:{'pos':1}}).forEach(function(stop, index){
 		if (isNaN(stop.pos)) {
 			console.log("Stop pos non numerica: " + stop.pos);
 			return;

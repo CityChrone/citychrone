@@ -5,17 +5,18 @@ import '/imports/client/selector/socialButtons.html';
 
 Template.socialButtons.helpers({
 	shareData: function() {
+        let scenario = this;
+        let scenarioId = scenario._id;
 		let description = "\
-    	CityChrone is a project where knowledge about cities can be shared\
-    	and visualized. The starting point is the study of public transport systems,\
-    	 measuring its efficency, allowing easy comparison between different areas and even different cities.";
+    	CityChrone: science of city --> scientific urban public transport studies. \
+    	CityChrone: citizen for science --> collective solutions for new public transport scenario.";
     return { 
-    	title: 'CityChrone - visualizing city knowledge - @citychrone',
+    	title: 'CityChrone - science of city, citizen for science - @citychrone',
     	url: 'http://citychrone.org',
     	description : description,
     	 text : " @citychrone",
-    	thumbnail:'/images/citychroneSharing.png',
-    	image:'/images/citychroneSharing.png'
+    	thumbnail:'http://map.citychrone.org/images/citychroneSharing.png',
+    	image:'http://map.citychrone.org/images/citychroneSharing.png'
     	 }
   }
 

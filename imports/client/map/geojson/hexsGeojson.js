@@ -75,7 +75,9 @@ export const clickGeojson = function(latlng){
     point['newVels'] = moment['newVels'][NearestPos];
     point['newAccess'] = moment['newAccess'][NearestPos];
     point['newPotPop'] = moment['newPotPop'][NearestPos];
-    
+    point['pos'] = NearestPos;
+    point['default'] = scenario.default;
+
     analytics.track("Click Map", {
         'eventName': "click geojson",
         'city': scenario.city,

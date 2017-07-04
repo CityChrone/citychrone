@@ -110,7 +110,7 @@ Template.newScenario.onRendered(function() {
 let loadScenarioData = function(city, RV){
 	let dataToLoad = 5;
 	//Template.map.data.map.spin(true);
-	checkDataLoaded = function(num = -1) {
+	let checkDataLoaded = function(num = -1) {
 		dataToLoad  += num
 		if(dataToLoad < 1){
 			//Template.map.data.map.spin(false);
@@ -124,6 +124,7 @@ let loadScenarioData = function(city, RV){
 		Template.newScenario.RV.currentScenario.set(currentScenario);
 	    let times = Object.keys(currentScenario.moments);
 	    Template.timeSelector.timeSelectedRV.set(times[0]);
+	    checkDataLoaded()
 	}
 
 	let loadScenario = function(){
@@ -131,13 +132,14 @@ let loadScenarioData = function(city, RV){
 			let _id = Router.current().params.query.id;
 			let MongoID = new Mongo.ObjectID(_id)
 			let currentScenario = scenarioDB.findOne({'_id':MongoID, 'city':Template.newScenario.data.city});
-			//console.log(currentScenario)
-			if(currentScenario != undefined){
+			console.log(currentScenario)
+			if(currentScenario){
 				Template.newScenario.RV.currentScenario.set(currentScenario);
 			    let times = Object.keys(currentScenario.moments);
 			    Template.timeSelector.timeSelectedRV.set(times[0]);
 			    let lines = currentScenario.lines;
 			    Template.metroLinesDraw.function.addLines(lines);
+			    checkDataLoaded()
 			}else{
 				loadScenarioDef()
 			}
@@ -184,14 +186,20 @@ let loadScenarioData = function(city, RV){
 	    Template.newScenario.RV.ScenarioGeojson.set(scenarioDef);
 	    Template.newScenario.RV.ScenarioGeojsonId.set(scenarioDef._id);
 
-	    if (!Template.newScenario.data.scenarioDefaultId)
-	      console.error("Default scenario non trovato!");
-	    else {
-	    	loadScenario()
-	    }
      // console.log("Default scenario caricato ", Template.timeSelector.timeSelectedRV.get(),Template.newScenario.RV.currentScenario.get());
-      	checkDataLoaded();
  	});
+    if(Router.current().params.query.id){
+		let _id = Router.current().params.query.id;
+		let MongoID = new Mongo.ObjectID(_id)
+		//console.log(MongoID, _id, Mongo)
+	 	Meteor.subscribe('scenarioID', city, MongoID, function() {
+			loadScenario();
+			//console.log('scenarioID')
+	      	//Template.city.function.checkDataLoaded(-1);
+	 	});
+ 	}else{
+ 		loadScenario();
+ 	}
 
 
 

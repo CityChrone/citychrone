@@ -2,10 +2,12 @@ import {Template} from 'meteor/templating';
 
 export class cityMarker {
   
-  constructor(city, color = '#f28a40') {
-  	console.log(city)
+  constructor(city, color = '#d95f02') {
+  	//console.log(city)
   		this.latlng = city.latlng
-		this.style = styleMarker(color);
+  		this.newScenario = city.newScenario;
+  		this.color = this.newScenario ? '#b2182b' : color;
+		this.style = styleMarker(this.color);
 		this.marker = L.circleMarker(this.latlng, this.style).setRadius(radiusCircle())
 		this.marker.city = city;
 
@@ -18,7 +20,7 @@ export class cityMarker {
 		this.marker.on('mouseout', function(e){
 			//console.log(e);
 			let marker = e.target;
-			marker.setStyle({weight : 3,
+			marker.setStyle({weight : 1,
 				opacity : 1});
 			marker.closePopup();
 
@@ -35,7 +37,8 @@ export class cityMarker {
 			onCLickMarker(e);
 		});
 
-		this.marker.bindPopup('<div class="text-center" style="color:#f28a40;">' + city.city + '</div>',{'closeButton':false});
+		let newScenarioPopUp = this.newScenario ? '<div class="text-center" style="color:#b2182b;">Test new public tranport scenario</div>': "";
+		this.marker.bindPopup('<div class="text-center">' + city.city + '</div>' + newScenarioPopUp,{'closeButton':false});
 		return this.marker;
 	}
 	
@@ -58,16 +61,22 @@ export const radiusCircle = function(){
 		radius = radius + 5*(zoom - 9);			//layer.redraw();
 	}else if(zoom > 6){
 		radius = 13;
- 	}else{
+ 	}else if(zoom > 3){
 		radius = 10;
 	}
-		 	console.log(radius,zoom);
+ 	else{
+		radius = 7;
+	}
+		 	//console.log(radius,zoom);
  	return radius;
 }
 
 export const styleMarker = function(color){
-	return {'color': color, 
-	'fillColor' : color, 
+	colorIn = color
+	colorOut = 'white'
+	return {'color': colorOut, 
+	'weight':1,
+	'fillColor' : colorIn, 
 	'fillOpacity':1,			
 	'opacity' : 1
 	};
