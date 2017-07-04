@@ -48,7 +48,7 @@ function addNewLines(metroLinesFetched, limT){
 	const dockTime = 15; //time the trains is stopped at dock
 
 	var stopsLines = {};
-	console.log('metroLinesFetched', metroLinesFetched)
+	//console.log('metroLinesFetched', metroLinesFetched)
 
 	_.each(metroLinesFetched, function(line){
 		line.stops.forEach(function(stop, indexStop){
@@ -67,7 +67,7 @@ function addNewLines(metroLinesFetched, limT){
 		});
 	});
 
-	console.log(stopsLines);
+	//console.log(stopsLines);
 	/*
 	metro.find({temp:true}, {sort: {'timeCreation':1}}).forEach(function(stop){
 		if(stop.line in stopsLines) {
@@ -142,7 +142,7 @@ function addNewLines(metroLinesFetched, limT){
 
 
 	});
-	console.log(cArrayTemp.length)
+	//console.log(cArrayTemp.length)
 	return cArrayTemp;
 	//console.log(stopsLines);
 }
