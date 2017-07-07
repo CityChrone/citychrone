@@ -1,0 +1,64 @@
+/*
+Principale: Verde #76bf90
+Secondario: Arancione #f28a40
+Terziario: Blu #359bed
+Font Montserrata
+*/
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #2d6ed9;
+  border: 13px none #f8fcf7;
+  border-radius: 59px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2651d9;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #2651d9;
+}
+::-webkit-scrollbar-track {
+  background: #e6e6e6;
+  border: 0px none #f3fcf3;
+  border-radius: 45px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #cccccc;
+}
+::-webkit-scrollbar-track:active {
+  background: #c1c1c1;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.leaflet-left .panel-body {
+    opacity: 0.9;
+    background: #FFF url(http://citychrone.org/wp-content/uploads/2017/04/sfondo_5.png) no-repeat;
+    background-attachment: fixed;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    padding: 15px;
+}
+
+.leaflet-left .leaflet-control .panel-body {
+    height: 95vh !important;
+    overflow: scroll;
+}
+
+.leaflet-right .panel-body {
+   opacity: 0.9 !important;
+   background: #FFF url(http://citychrone.org/wp-content/uploads/2017/04/sfondo_5.png) no-repeat !important;
+   background-attachment: fixed;
+   border: 1px solid #ddd;
+   border-radius: 4px;
+   box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+   padding: 15px;
+}

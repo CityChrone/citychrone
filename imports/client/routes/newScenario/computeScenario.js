@@ -36,7 +36,7 @@ Template.computeScenario.helpers({
 		let scenario = Template.newScenario.RV.currentScenario.get();
 		console.log('scenarioCOmputed', one, two);
 		if(one && two) 	Router.go('/city/' + scenario.city + '?id=' + scenario._id);
-
+		return ""
 	}
 
 });
