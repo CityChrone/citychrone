@@ -33,25 +33,11 @@ Template.city.helpers({
 				let scenario = Template.city.RV.currentScenario.get();
 				let time = Template.timeSelector.timeSelectedRV.get();
 				//console.log('time',time)				
-				if( !Template.quantitySelector.quantityDiffSelectedRV.get() ){
-						Template.city.data.geoJson.updateGeojson(
+				Template.city.data.geoJson.updateGeojson(
 														 scenario, 
 														 Template.quantitySelector.quantitySelectedRV.get(),
 														 false, 
-														 time);
-				
-				}
-				else{
-						let scenarioDefaultId =  Template.scenario.data.scenarioDefaultId
-						let scenarioDefault =  scenarioDB.findOne({'_id':scenarioDefaultId});
-						Template.city.data.geoJson.updateGeojsonDiff(
-															 scenario, scenarioNew,
-															 Template.quantitySelector.quantitySelectedRV.get(), 
-															 Template.quantitySelector.modeSelectedRV.get(),
-															 time)
-
-				}
-			
+														 time);			
 			}
 		return true;
 	},

@@ -36,7 +36,7 @@ Template.newScenario.helpers({
 			let geoJson = Template.newScenario.data.geoJson;
 			geoJson.updateGeojson(scenario, quantitySel, false, time, null, true);
 			}
-		return true;
+		return '';
 	},
 	'mapEditedTrue'(){
 		//console.log('seted to true',Template.metroLinesDraw.RV.mapEdited.get(), Template.newScenario.data.scenarioDefault); 

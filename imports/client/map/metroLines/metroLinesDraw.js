@@ -171,7 +171,7 @@ export const addNewSubLine = function(marker){
 	$('#buttonAddCompute').addClass('btn-danger');
 	Template.metroLinesDraw.data.markerClicked = marker;
 	marker.setStyle(styleMarkerClicked);
-	return true;
+	//return true;
 };
 
 

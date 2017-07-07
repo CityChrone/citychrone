@@ -1,0 +1,21 @@
+.circleLegend {
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    display:inline-block;
+     border-color: white;
+     border: solid 0.1em;
+    /*color : white;*/
+}
+.orangeColor {
+    background: #d95f02;
+}
+.redColor {
+    background: #b2182b;
+}
+.rdotColor {
+    background: #b04040;
+}
+.textRed {
+	color:#b2182b;
+}

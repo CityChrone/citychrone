@@ -79,6 +79,7 @@ Template.modalEnd.onCreated(()=>{
 });
 
 Template.modalEnd.onRendered(function(){	
+	$('.tw-share').attr('target','_blank');
     //$('#scenarioModal').modal('show');
 	//$('#scenarioModal').on('hide.bs.modal', function(e){
 		//console.log("endModal")

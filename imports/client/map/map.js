@@ -89,7 +89,7 @@ Template.map.onRendered(function() {
     	inertia:false
   	});
 
-    L.Icon.Default.imagePath = '/pipo/images/';
+    //L.Icon.Default.imagePath = '/pipo/images/';
 
   Template.map.data.ControlbaseMap = L.control.layers(Template.map.data.baseMaps).addTo(Template.map.data.map);
 
