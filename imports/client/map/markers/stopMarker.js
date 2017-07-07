@@ -13,7 +13,7 @@ export const styleMarkerUnClicked = {
 			opacity : 1
 		};
 
-export const styleMarker = function(color, drag){
+export const styleMarker = function(color, drag, temp = false){
 	let fillColor = drag ? '#808080' : 'white';
 	return {'color': color, 
 	'fillColor' : fillColor, 

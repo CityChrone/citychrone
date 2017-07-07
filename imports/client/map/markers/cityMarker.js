@@ -37,7 +37,7 @@ export class cityMarker {
 			onCLickMarker(e);
 		});
 
-		let newScenarioPopUp = this.newScenario ? '<div class="text-center" style="color:#b2182b;">Test new public tranport scenario</div>': "";
+		let newScenarioPopUp = this.newScenario ? '<div class="text-center" style="color:#b2182b;">with new scenario section</div>': "";
 		this.marker.bindPopup('<div class="text-center">' + city.city + '</div>' + newScenarioPopUp,{'closeButton':false});
 		return this.marker;
 	}

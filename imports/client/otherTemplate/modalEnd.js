@@ -30,7 +30,7 @@ Template.modalEnd.helpers({
 		if(quantity == 'name' || quantity == 'author') return scenario[quantity];
 		if(quantity == 'pos'){
 			let pos = 0;
-			pos = scenarioDB.find({'scores.scoreVelocity': {$gt: scenario.scores.scoreVelocity}}, 
+			pos = scenarioDB.find({'city':scenario.city, 'scores.scoreVelocity': {$gt: scenario.scores.scoreVelocity}}, 
 				{ 
 					sort: {'scores.scoreVelocity': -1, creationDate: -1 }                                                                                                                   // 39
 			}).count()
