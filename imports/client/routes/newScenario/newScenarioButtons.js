@@ -48,6 +48,9 @@ Template.newScenarioButtons.events({
 		}
 	},
 	'click #reload'(){
+		if(!$('#endMetro').hasClass('hidden')){
+			$('#buttonAddCompute').trigger('click');
+		}	
 		let scenarioDef = Template.newScenario.data.scenarioDefault;
 	    let templateRV = {}
 	    if(Router.current().route.getName() == "newScenario.:city"){
@@ -80,6 +83,9 @@ Template.newScenarioButtons.helpers({
 		//} else {
 			//return ' glyphicon-cog	';
 		//}
+	},
+	'city'(){
+		return Router.current().params.city;
 	}
 
 });

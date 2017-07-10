@@ -31,12 +31,12 @@ Template.popUpGeojson.helpers({
 		$("#accessPopupChart").html('');
 		switch(feature){
 			case 'newVels':
-				let valFixed = parseFloat(val).toFixed(4);
+				let valFixed = parseFloat(val).toFixed(1);
 				if(val > 0){ return valFixed.toString() + ' km/h';}
 				else { return 'Not Av.';}
 				break;
 			case 'newPotPop':		
-				valFixed = parseFloat(val/1000).toFixed(4);
+				valFixed = parseFloat(val/1000).toFixed(0);
 				if(val > 0){ return valFixed.toString() + 'K';}
 				else { return 'Not Av.';}
 				break;
@@ -56,12 +56,12 @@ Template.popUpGeojson.helpers({
 				let val = scenarioDef['moments'][time][feature][this.pos];
 				switch(feature){
 					case 'newVels':
-						let valFixed = parseFloat(val).toFixed(4);
+						let valFixed = parseFloat(val).toFixed(1);
 						if(val > 0){ return valFixed.toString() + ' km/h';}
 						else { return 'Not Av.';}
 						break;
 					case 'newPotPop':		
-						valFixed = parseFloat(val/1000).toFixed(4	);
+						valFixed = parseFloat(val/1000).toFixed(0);
 						if(val > 0){ return valFixed.toString() + 'K';}
 						else { return 'Not Av.';}
 						break;
