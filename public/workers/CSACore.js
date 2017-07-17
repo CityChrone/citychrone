@@ -199,7 +199,7 @@ const tree = function(point, Tpoint, Tstop, arrayN, arrayC, startTime){
 
 const treeNew = function(point, Tpoint, Tstop, arrayN, arrayC, startTime){
 	"use strict"
-	const infTime = Math.round(Math.pow(10, 12));
+
 	let TstopN = Tstop.slice();
 
 	var P2PPos = arrayN.P2PPos;

@@ -36,7 +36,7 @@ Template.newScenario.helpers({
 			let geoJson = Template.newScenario.data.geoJson;
 			geoJson.updateGeojson(scenario, quantitySel, false, time, null, true);
 			}
-		return true;
+		return '';
 	},
 	'mapEditedTrue'(){
 		//console.log('seted to true',Template.metroLinesDraw.RV.mapEdited.get(), Template.newScenario.data.scenarioDefault); 
@@ -119,6 +119,7 @@ let loadScenarioData = function(city, RV){
 		return true;
 	};
 
+
 	let loadScenarioDef = function(){
 		let currentScenario = scenarioDB.findOne({'default':true, 'city':Template.newScenario.data.city});
 		Template.newScenario.RV.currentScenario.set(currentScenario);
@@ -148,6 +149,17 @@ let loadScenarioData = function(city, RV){
 		}
 	}
 
+
+	Meteor.call('giveDataBuildScenario', city,'centerCity', function(err, risp){
+		//console.log('centerCity', risp,);
+		//Template.city.data.hexClass = new hexagonCity(risp.coordinates[0])
+		Template.map.data.map.setView(risp, 12,{animate: true, duration: 5.0});
+		Template.map.data.centerCity = risp;
+		checkDataLoaded();
+ 	});
+
+
+
 	Meteor.call('giveDataBuildScenario', city,'listPoints', function(err, risp){
 
 		for(let doc_i = 0; doc_i < risp.length; doc_i++){
@@ -170,13 +182,6 @@ let loadScenarioData = function(city, RV){
 		checkDataLoaded();
  	});
 
- 	Meteor.call('giveDataBuildScenario', city,'centerCity', function(err, risp){
-		//console.log('centerCity', risp,);
-		//Template.city.data.hexClass = new hexagonCity(risp.coordinates[0])
-		Template.map.data.map.setView(risp, 12,{animate: true, duration: 5.0});
-		Template.map.data.centerCity = risp;
-		checkDataLoaded();
- 	});
 
  	Meteor.subscribe('scenarioDef', city, function() {
 		let scenarioDef = scenarioDB.findOne({'default':true, 'city' : city}, {sort:{'creationDate':-1}});

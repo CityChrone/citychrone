@@ -33,25 +33,11 @@ Template.city.helpers({
 				let scenario = Template.city.RV.currentScenario.get();
 				let time = Template.timeSelector.timeSelectedRV.get();
 				//console.log('time',time)				
-				if( !Template.quantitySelector.quantityDiffSelectedRV.get() ){
-						Template.city.data.geoJson.updateGeojson(
+				Template.city.data.geoJson.updateGeojson(
 														 scenario, 
 														 Template.quantitySelector.quantitySelectedRV.get(),
 														 false, 
-														 time);
-				
-				}
-				else{
-						let scenarioDefaultId =  Template.scenario.data.scenarioDefaultId
-						let scenarioDefault =  scenarioDB.findOne({'_id':scenarioDefaultId});
-						Template.city.data.geoJson.updateGeojsonDiff(
-															 scenario, scenarioNew,
-															 Template.quantitySelector.quantitySelectedRV.get(), 
-															 Template.quantitySelector.modeSelectedRV.get(),
-															 time)
-
-				}
-			
+														 time);			
 			}
 		return true;
 	},
@@ -101,6 +87,15 @@ Template.city.onRendered(function() {
 	let city = Router.current().params.city;
 	//console.log('params', Router.current().params.query.id)
 	Template.city.data.city = city;
+
+	Meteor.call('giveDataBuildScenario', city,'centerCity', function(err, risp){
+		//console.log('centerCity', risp,);
+		//Template.city.data.hexClass = new hexagonCity(risp.coordinates[0])
+		Template.map.data.map.setView(risp, 12,{animate: true, duration: 5.0});
+		Template.map.data.centerCity = risp;
+		Template.city.function.checkDataLoaded();
+ 	});
+
 	
 	let loadScenarioDef = function(){
 		let currentScenario = scenarioDB.findOne({'default':true, 'city':Template.city.data.city});
@@ -163,13 +158,6 @@ Template.city.onRendered(function() {
 		Template.city.function.checkDataLoaded();
  	});
 
- 	Meteor.call('giveDataBuildScenario', city,'centerCity', function(err, risp){
-		//console.log('centerCity', risp,);
-		//Template.city.data.hexClass = new hexagonCity(risp.coordinates[0])
-		Template.map.data.map.setView(risp, 12,{animate: true, duration: 5.0});
-		Template.map.data.centerCity = risp;
-		Template.city.function.checkDataLoaded();
- 	});
 
  	Meteor.subscribe('scenarioDef', city, function() {
 		let scenarioDef = scenarioDB.findOne({'default':true, 'city' : city}, {sort:{'creationDate':-1}});

@@ -27,5 +27,7 @@ Template.socialButtons.events({});
 
 Template.socialButtons.onCreated(function(){});
 
-Template.socialButtons.onRendered(function(){});
+Template.socialButtons.onRendered(function(){
+        $('a .tw-share').attr('target','_blank');
+});
 

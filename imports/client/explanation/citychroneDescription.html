@@ -1,8 +1,18 @@
 <template name="citychroneDescription">
-	<div id="textdiv" class="h2 text-center text-primary"> Select a city</div>
+	<div id="textdiv" class=" faa-horizontal animated h2 text-center text-primary"> Select a city</div>
 	<div class="text-muted"> 
-	[Click a <span style="color:#d95f02">circle</span>-<span style="color:#d95f02">marker</span> to select a city,
+	
+
+	<p>
+	<div class="circleLegend  orangeColor"></div> Public Quality Tranports Maps
+	</p>
+	<p>
+	<div class="circleLegend redColor"></div> <span class = "text-right">Public Quality Tranports Maps + <span class="textRed text-right">new scenario section</span>!</span>
+	</p>
+
+	<!--[Click a <span style="color:#d95f02">circle</span>-<span style="color:#d95f02">marker</span> to select a city,
 	in the <span style="color:#b2182b">red one</span> you can test new scenario]
+	!-->
 	</div>
 	<hr/>
 
@@ -15,22 +25,21 @@
 	</div>
 	</div>
 	<div class="text-justify">
-CityChrone project: mobility studies in urban systems. The CityChrone platform shows simple and meaningful quantity to measure the quality and the performance of public transport in cities.The CityChrone platform involves users to play creating new public transportation scenario (adding new metro lines) to explore and test new solutions.
+CityChrone project: mobility studies in urban systems. The CityChrone platform shows simple and meaningful quantities that measure the quality and the performance of public transport in cities.The CityChrone platform involves users to play creating new public transportation scenario (adding new metro lines) to explore and test new solutions.
 <!--	CityChrone is a project where knowledge about cities can be shared and visualized. We study the efficiency of public transport systems, allowing easy comparison between different areas and even different cities.
 	The project will continue, we will add new informations and will improve the user interactions, allowing him to test different scenarios [<a href="https://www.youtube.com/watch?v=l6sm8VOwJSA" target="_blank">video</a>].!-->
 	</div>
 	<hr/>
 	<div>
-	Made with <i class="fa fa-heart pulse" style="color : red;"></i> by <a href="http://ocadni.github.io">Indaco Biazzo</a> and <a href="http://www.socialdynamics.it" target="_blank"> SocialDynamics</a> group
+	Made with <i class="fa fa-heart pulse" style="color : red;"></i> by <a target="_blank" href="http://ocadni.github.io">Indaco Biazzo</a> and <a href="http://www.socialdynamics.it" target="_blank"> SocialDynamics</a> group
 	 at Rome and Turin. 
-	 <div>[<a href="http://uniroma1.it" target="_blank">Università La Sapienza</a> and <a href= "http://www.isi.it"  target="_blank">ISI Foundation</a>].</div>
-
-	 <hr/>
-
+	 {{>logos}}
 	</div>
 	<div class = "text-muted">
-	more informartions about the project can be found [<a href="http://citychrone.org" target="_blank">here</a>].
+	more informartions about the project [<a href="http://citychrone.org" target="_blank">here</a>],
+	about the scientific results shown [<a href="https://www.authorea.com/users/35958/articles/171347-citychrone-platforms-quantities-description-open-data-and-algorithms/_show_article" target="_blank">here</a>].
 	</div>
+
    {{>socialButtons}}
 
 </template>
