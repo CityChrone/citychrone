@@ -21,7 +21,7 @@ Template.scenarioList.events({
 		    }else{
 		        templateRV = Template.city.RV
 		    }
-		    console.log(e, id, risp, templateRV.scenarioDef);
+		    //console.log(e, id, risp, templateRV.scenarioDef);
 			templateRV.currentScenario.set(risp);
 			templateRV.currentScenarioId.set(risp._id);
 			//console.log(Template.metroLinesDraw)
@@ -148,7 +148,7 @@ Template.scenarioListRow.helpers({
 		//console.log(this)
 		let scenario = this;
 		let sort = {'scores.scoreVelocity':-1, creationDate: -1};
-		let pos = scenarioDB.find({'scores.scoreVelocity':{'$gte':scenario.scores.scoreVelocity}}, {sort:sort}).count();
+		let pos = scenarioDB.find({'city':scenario.city, 'scores.scoreVelocity':{'$gt':scenario.scores.scoreVelocity}}).count() + 1;
 		return pos;
 	}
 });

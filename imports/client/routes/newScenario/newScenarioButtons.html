@@ -1,8 +1,10 @@
 <template name="newScenarioButtons">
 
 
-<div class="h2 text-danger text-center">
-  Create New Scenario
+<div class="h3 text-danger text-center">
+  Create New Scenario of {{city}}
+  <br>
+  <small> beta version </small>
 </div>
 
 {{>budget}}
@@ -23,6 +25,15 @@
      Reset
  </button>
 </div>
+
+{{#if isCreateScenario}}
+<div>
+  <button href='#' class="btn btn-danger btn-lg btn-block" id="createNewScenarioButton">
+    Create New Scenario
+  </button>
+</div>
+{{/if}}
+
 {{>computeScenario}}
   <hr/>
 </template>

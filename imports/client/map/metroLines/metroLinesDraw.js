@@ -136,7 +136,7 @@ export const addNewLine = function(){
 export const addLine2DB = function(lineName, indexLine, stops = [], subline = false, color = null, temp = true){
 	Template.metroLinesDraw.data.listNumLines[indexLine]++;
 	let colorMetro = color || Template.metroLinesDraw.function.colorNewMetro(indexLine);
-	let poly = polyMetro([],colorMetro).addTo(Template.map.data.map);
+	let poly = polyMetro([],colorMetro, temp).addTo(Template.map.data.map);
 	let city = Template.metroLinesDraw.data.city;
  	Template.metroLinesDraw.data.polylineMetro[poly._leaflet_id] = poly;
 	//Template.body.data.mapEdited.set(true); 
@@ -171,7 +171,7 @@ export const addNewSubLine = function(marker){
 	$('#buttonAddCompute').addClass('btn-danger');
 	Template.metroLinesDraw.data.markerClicked = marker;
 	marker.setStyle(styleMarkerClicked);
-	return true;
+	//return true;
 };
 
 
@@ -267,7 +267,7 @@ export const observeNewLineChanges = function(){
 
 	 		}else{
 	 			//add non metro lines
-	 			layer = polyMetro(listStopsInv,line['color']).addTo(Template.map.data.map);
+	 			layer = polyMetro(listStopsInv,line['color'], line.temp).addTo(Template.map.data.map);
 
 	 		}
 		},

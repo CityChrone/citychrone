@@ -4,24 +4,44 @@
 	<hr /> 
 	<div class="text"> 
 	<span class ="h3">Scenario</span>  
-	<button class = "btn btn-primary scenarioButton"> change </button> 
 	</div>
 	
 		<table class="table">
 		  	<tr>
-				<th class = "text " style="width:50px" >title:</th>
+				<th class = "text " style="width:110px" >title:</th>
 				<th class="text" id="scenarioTitle">
 					{{title}}
 				</th>
 			</tr>
 			<tr>
-				<th class = "text " style="width:50px" >author:</th>
+				<th class = "text " style="width:110px" >author:</th>
 				<th class="text" id="scenarioAuthor">
 					{{author}}
 				</th>
 			</tr>
+			{{#if isCreateScenario}}
+			<tr>
+				<th class = "text " style="width:110px" >rank position:</th>
+				<th class="text" id="scenarioAuthor">
+					{{rankPosition}}
+				</th>
+			</tr>
+			{{/if}}
 		</table>
 	{{/if}}
 </div>
-     {{> createNewScenarioButton}}
+
+{{#if isCreateScenario}}
+<div>
+	<button class = "btn btn-primary btn-lg btn-block scenarioButton"> 
+			<i class="fa fa-trophy"></i>
+		Ranking
+	</button> 
+	<button href='#' class="btn btn-danger btn-lg btn-block" id="createNewScenarioButton">
+		<i class="glyphicon glyphicon-road" aria-hidden="true"></i>
+		New Scenario
+	</button>
+</div>
+{{/if}}
+
 </template>

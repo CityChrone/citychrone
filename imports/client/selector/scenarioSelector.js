@@ -5,15 +5,28 @@ import { Router } from 'meteor/iron:router';
 import {Blaze} from 'meteor/blaze';
 import '/imports/client/selector/scenarioSelector.html';
 import '/imports/client/otherTemplate/scenarioList.js';
-import '/imports/client/selector/createNewScenarioButton.js';
 
 
 
 Template.scenarioSelector.onCreated(function(){
 	let city = Router.current().params.city;
+	
 	Meteor.subscribe('scenario', city, function(){});
 
+	Template.scenarioSelector.data = {}
+	Template.scenarioSelector.data.city = Router.current().params.city;
+	
+	Template.scenarioSelector.RV = {}
+	Template.scenarioSelector.RV.isCreateScenario = new ReactiveVar(false);
+	Meteor.call('isCreateScenario', city, function(err, risp){
+		Template.scenarioSelector.RV.isCreateScenario.set(risp)
+	});	
+
 });
+
+Template.scenarioSelector.onRendered(function(){
+});
+
 
 Template.scenarioSelector.events({
 	'click .scenarioButton'(e){
@@ -22,6 +35,10 @@ Template.scenarioSelector.events({
 
 		$('#scenarioModal').modal('show');
 
+	},
+	'click #createNewScenarioButton'(e){
+		let idScenario = Template.city.RV.currentScenario.get()._id;
+		Router.go('/newScenario/'+ Template.scenarioSelector.data.city + '?id=' +  idScenario);
 	}
 
 })
@@ -58,6 +75,23 @@ Template.scenarioSelector.helpers({
 	        templateRV = Template.city.RV
 	    }
 		return templateRV.currentScenario.get().author;
+	},
+	'rankPosition'(){
+		let templateRV = {}
+	    if(Router.current().route.getName() == "newScenario.:city"){
+	        templateRV = Template.newScenario.RV; 
+	    }else{
+	        templateRV = Template.city.RV
+	    }
+		let scenario = templateRV.currentScenario.get();
+		let pos = scenarioDB.find({'city':scenario.city,'scores.scoreVelocity':{'$gt':scenario.scores.scoreVelocity}}).count() + 1;
+	    console.log(scenario, pos, scenarioDB.find({'scores.scoreVelocity':{'$gt':scenario.scores.scoreVelocity}}).fetch())
+
+		return pos;
+	},
+	'isCreateScenario'(){
+		return Template.scenarioSelector.RV.isCreateScenario.get();
 	}
+
 
 });
