@@ -51,7 +51,7 @@ Meteor.startup(() => {
   });
 
 
-
+/*
   Meteor.publish('points', function returnPoints(city) {
   	let findPoint = points.find({'city':city}, {fields : {'pos':1, 'point':1}, sort :{'pos':1}});
   	console.log('points published ' + city, findPoint.count());
@@ -63,7 +63,7 @@ Meteor.startup(() => {
     console.log('stops published ' + city, findStops.count());
     return findStops;
   });
-
+*/
   Meteor.publish('metroLines', function returnPoints(city) {
     let MetroLinesFetched = metroLines.find({city:city},{sort :{'indexLine' : 1, 'name' : 1, 'lineName':1}});
     console.log('metroLines published ' + city, MetroLinesFetched.count());

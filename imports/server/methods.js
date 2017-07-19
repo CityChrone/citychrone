@@ -42,14 +42,14 @@ Meteor.methods({
         let arrayC = mergeArrays.mergeSortedC(cityData.arrayC, arrayC2Add);
 
         let arrayN = {};
-        cityData.arrayN;
+        let arrayNDef = cityData.arrayN;
 
-        arrayN['P2SPos'] = mergeArrays.mergeArrayN(arrayN.P2SPos, scenario.P2S2Add, 'pos');
-        arrayN['P2STime'] = mergeArrays.mergeArrayN(arrayN.P2STime, scenario.P2S2Add, 'time');
-        arrayN['S2SPos'] = mergeArrays.mergeArrayN(arrayN.S2SPos, scenario.S2S2Add, 'pos');
-        arrayN['S2STime'] = mergeArrays.mergeArrayN(arrayN.S2STime, scenario.S2S2Add, 'time');
-        arrayN['P2PPos'] = arrayN.P2PPos.slice();
-        arrayN['P2PTime'] = arrayN.P2PTime.slice();
+        arrayN['P2SPos'] = mergeArrays.mergeArrayN(arrayNDef.P2SPos, scenario.P2S2Add, 'pos');
+        arrayN['P2STime'] = mergeArrays.mergeArrayN(arrayNDef.P2STime, scenario.P2S2Add, 'time');
+        arrayN['S2SPos'] = mergeArrays.mergeArrayN(arrayNDef.S2SPos, scenario.S2S2Add, 'pos');
+        arrayN['S2STime'] = mergeArrays.mergeArrayN(arrayNDef.S2STime, scenario.S2S2Add, 'time');
+        arrayN['P2PPos'] = arrayNDef.P2PPos.slice();
+        arrayN['P2PTime'] = arrayNDef.P2PTime.slice();
 
         let pointsVenues = cityData.pointsVenues;
         let areaHex = cityData.areaHex;
