@@ -124,9 +124,9 @@ onmessage = function(e) {
 			//arrayN.S2STime = arrayNDef.S2STime;
 			//arrayN.P2SPos = arrayNDefx.P2SPos;
 			//arrayN.P2STime = arrayNDef.P2STime;
-			var returnedDef = CSAPoint(point, arrayCDef, arrayNDef, startTime, areaHex, pointsVenues, arrayPop);
+			//var returnedDef = CSAPoint(point, arrayCDef, arrayNDef, startTime, areaHex, pointsVenues, arrayPop);
 			var returned = CSAPoint(point, arrayC, arrayN, startTime, areaHex, pointsVenues, arrayPop);
-			let countT = 0
+			/*let countT = 0
 			let countTDef = 0
 			let countTErr = 0
 			let countTLess = 0
@@ -178,7 +178,7 @@ onmessage = function(e) {
 			if(returned.newVels < returnedDef.newVels || returned.newPotPop < returnedDef.newPotPop ){
 				console.log(point, returned, returnedDef, countTErr, countTLess,returned.newVels - returnedDef.newVels,
 				 returned.newPotPop - returnedDef.newPotPop, countT, countTDef);
-			}
+			}*/
 
 			results.push({
 				'point': point,
