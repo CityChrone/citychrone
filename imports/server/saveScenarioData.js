@@ -2,6 +2,7 @@ import fs from "fs";
 import JSZip from "jszip";
 import { scenarioDB} from '/imports/api/DBs/scenarioDB.js';
 import {computeScenario} from '/imports/server/startup/scenarioDef.js'
+import { metroLines } from '/imports/api/DBs/metroLinesDB.js';
 
 //let path = process.env['METEOR_SHELL_DIR'] + '/../../../public/cities/';
 //let path = Assets.absoluteFilePath('cities/')
@@ -41,8 +42,10 @@ fs.readFile(path + city + ".zip", function(err, data) {
     JSZip.loadAsync(data).then(function (zip) {
 
         zip.file(city+".txt").async("string").then(function (data){
-        	console.log("loaded", city+".zip", 'scenario def',scenarioDB.find({'city':city, 'default':true}).count()==0)
         	citiesData[city] = JSON.parse(data);
+        	let newScenario = metroLines.findOne({'city' : city}, {fields :{'newScenario':1}})['newScenario'] || false;
+        	citiesData[city]['newScenario'] = newScenario;
+        	console.log("loaded", city+".zip", 'scenario def',scenarioDB.find({'city':city, 'default':true}).count(), ' newScenario', newScenario, citiesData[city]['centerCity'])
         	/*if(scenarioDB.find({'city':city, 'default':true}).count()==0){
         		computeScenario(city, citiesData[city])
         	}*/

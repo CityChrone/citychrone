@@ -203,7 +203,7 @@ Meteor.methods({
 		for(city in citiesData){
 			let latlng = citiesData[city]['centerCity'];
 			console.log(city, latlng);
-			let newScenario = metroLines.findOne({'city' : city}, {fields :{'newScenario':1}})['newScenario']
+			let newScenario = citiesData[city]['newScenario']
 			cities.push({'city':city, 'latlng':latlng, 'newScenario':newScenario});
 			
 		}
