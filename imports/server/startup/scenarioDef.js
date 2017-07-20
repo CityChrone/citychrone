@@ -202,12 +202,12 @@ Meteor.methods({
 		let cities = [];
 		for(city in citiesData){
 			let latlng = citiesData[city]['centerCity'];
-			console.log(city, latlng);
+			//console.log(city, latlng);
 			let newScenario = citiesData[city]['newScenario']
 			cities.push({'city':city, 'latlng':latlng, 'newScenario':newScenario});
 			
 		}
-		console.log(cities)
+		//console.log(cities)
 		return cities;
 	},
 

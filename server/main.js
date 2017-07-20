@@ -66,11 +66,11 @@ Meteor.startup(() => {
 */
   Meteor.publish('metroLines', function returnPoints(city) {
     let MetroLinesFetched = metroLines.find({city:city},{sort :{'indexLine' : 1, 'name' : 1, 'lineName':1}});
-    console.log('metroLines published ' + city, MetroLinesFetched.count());
+    //console.log('metroLines published ' + city, MetroLinesFetched.count());
     return MetroLinesFetched;
   });
 
-  console.log('finish publish!!');
+  //console.log('finish publish!!');
 
   loadCity()
   return true;
