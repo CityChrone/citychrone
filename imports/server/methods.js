@@ -32,7 +32,7 @@ Meteor.methods({
       var scenario = scenarioDB.findOne({'_id':scenarioID});
       let city = scenario.city;
       if(scenario == [] || !(city in citiesData) ){ 
-        console.log('Scenario not found')
+        //console.log('Scenario not found')
         return [];
       } else {
         let cityData = citiesData[city];
