@@ -45,7 +45,7 @@ fs.readFile(path + city + ".zip", function(err, data) {
         	citiesData[city] = JSON.parse(data);
         	let newScenario = metroLines.findOne({'city' : city}, {fields :{'newScenario':1}})['newScenario'] || false;
         	citiesData[city]['newScenario'] = newScenario;
-        	console.log("loaded", city+".zip", 'scenario def',scenarioDB.find({'city':city, 'default':true}).count(), ' newScenario', newScenario, citiesData[city]['centerCity'])
+        	//console.log("loaded", city+".zip", 'scenario def',scenarioDB.find({'city':city, 'default':true}).count(), ' newScenario', newScenario, citiesData[city]['centerCity'])
         	/*if(scenarioDB.find({'city':city, 'default':true}).count()==0){
         		computeScenario(city, citiesData[city])
         	}*/
@@ -58,7 +58,7 @@ export let loadCity = function(){
 	fs.readdirSync(path).forEach(file => {
 	  //console.log(file.slice(-3));
 		 if(file.slice(-3) =="zip"){
-		  console.log(file.slice(0,-4))
+		  //console.log(file.slice(0,-4))
 		  let city = file.slice(0,-4)
 		  addDataFromZip(city, citiesData);
 		}
