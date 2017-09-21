@@ -19,7 +19,8 @@ export const styleMarker = function(color, drag, temp = false){
 	'fillColor' : fillColor, 
 	'fillOpacity':1,			
 	'draggable' : drag,
-	'opacity' : 1
+	'opacity' : 1,
+	'bubblingMouseEvents':false
 	};
 };
 
@@ -35,6 +36,18 @@ export const stopMarker =  function(latlng, color = null, drag = false, zoom = 1
 	marker.colorLine = color;
 	marker.on('click dblclick', stopOnCLickPopUp);
 	marker.on('dragend', stopOnDragend);
+	marker.on('dragstart', (e)=>{
+		console.log(e)
+	});
+	marker.on('mousedown', (e)=>{
+		console.log('mousedown',e)
+	});
+		marker.on('touchstart', (e)=>{
+		console.log('touchstart',e)
+	});
+
+	
+
 	return marker;
 };
 export const giveDragMarkerStop = function(latlng, lineName, colorLine, indexLine, zoom){
@@ -64,7 +77,8 @@ export const radiusCircle = function(zoom=10){
 }
 
 export const stopOnCLickPopUp = function(e){
-	//console.log("stopOnCLickPopUp")
+	console.log("stopOnCLickPopUp")
+
 	if($('#endMetro').hasClass("hidden")){
 		let marker = e.target;
 		const container = L.DomUtil.create('div', 'markerPopup');

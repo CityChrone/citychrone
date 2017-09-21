@@ -82,11 +82,11 @@ Template.map.onRendered(function() {
     	dragging: true,
     	zoomControl : false,
     	layers: [Template.map.data.baseMaps['Default']],
-    	//doubleClickZoom:false,
-    	//attributionControl:false,
-    	//zoomDelta:0.2,
-    	//zoomSnap:0.2,
-    	inertia:false
+    	doubleClickZoom:false,
+    	attributionControl:false,
+    	zoomDelta:0.2,
+    	zoomSnap:0.2,
+    	//inertia:false
   	});
 
     //L.Icon.Default.imagePath = '/pipo/images/';
