@@ -42,6 +42,7 @@ let first = grey;
 export const shellPotPop =  [0, 50000, 100000, 200000, 300000, 400000, 500000, 600000,700000,800000, 900000, 1000000,1500000, 2000000,2500000, 3000000]
 //export const colorPotPop = d3.scaleSequential(d3Inter.interpolateSpectral).domain([0, maxValuePotPop]).clamp(true)
 export const colorPopList = ['#000000', first(0.7), first(0.4), second(1), second(0.85), second(0.7),second(0.5),second(0.3), third(0.3), third(0.4), third(0.5),third(0.6),third(0.7), fourth(0.5), fourth(0.6),fourth(0.8),fourth(1)];
+console.log(colorPopList)
 export const colorPotPop = function(val) {
 	let i = 0;
 	//let maxV = 16.;

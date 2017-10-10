@@ -25,7 +25,10 @@ Template.modalEnd.helpers({
 			let city = Router.current().params.city;
 			let scenarioDef = scenarioDB.findOne({'default':true, 'city':city});
 			//console.log(quantity, this, scenarioDef);
-			return (this.scores[quantity] - scenarioDef.scores[quantity]).toFixed(0);
+			if(scenarioDef)
+				return (this.scores[quantity] - scenarioDef.scores[quantity]).toFixed(0);
+			else
+				return 0;
 		}
 		if(quantity == 'name' || quantity == 'author') return scenario[quantity];
 		if(quantity == 'pos'){

@@ -70,10 +70,11 @@ const workerOnMessage = function(e) {
 			console.log('scenario after scores',scenario)
 
 			Template.newScenario.RV.currentScenario.set(scenario);
-			Meteor.call('insertNewScenario', scenario);
+			Meteor.call('insertNewScenario', scenario, (data)=>{
+				Template.metroLinesDraw.RV.mapEdited.set(false);
+				Template.computeScenario.data.ended.set(true);
+			});
 			//$(".scenarioButton").trigger('click');
-			Template.metroLinesDraw.RV.mapEdited.set(false);
-			Template.computeScenario.data.ended.set(true);
 		}
 		//console.log('added ', Template.body.data.countHex, 1.*Math.floor(time.getTime()/ 100)/10. );
 	}

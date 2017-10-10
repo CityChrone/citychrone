@@ -21,8 +21,8 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>title</th>
-            <th>author</th>
+            <th style="width: 200px;">title</th>
+            <th style="width: 100px;">author</th>
             <th>Velocity<br>score</th>
             <th>Daily Pop<br>score</th>
             <th>cost [M€]</th>
@@ -50,8 +50,8 @@
 <tr class="a score {{isCurrent _id}}" id = "{{giveID _id}}">
   <td>{{pos}}</td>
 
-  <td>{{name}}</td>
-  <td>{{author}}</td>
+  <td style="width: 200px;">{{name}}</td>
+  <td style="width: 100px;">{{author}}</td>
   <td>{{score "scoreVelocity"}}</td>
   <td>{{score "scorePotPop"}}</td>
   <td>{{toFixed budget 0}}M€</td>

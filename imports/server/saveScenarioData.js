@@ -11,7 +11,8 @@ var publicPath = meteorRoot + '/web.browser/app/';
 let path = publicPath + '/cities/';
 
 //console.log(path, meteorRoot, publicPath)
-export let citiesData = {}
+export let citiesData = {};
+export let listCities = [];
 
 
 export let createZipCity= function(data, city, resolve = false){
@@ -45,6 +46,8 @@ fs.readFile(path + city + ".zip", function(err, data) {
         	citiesData[city] = JSON.parse(data);
         	let newScenario = metroLines.findOne({'city' : city}, {fields :{'newScenario':1}})['newScenario'] || false;
         	citiesData[city]['newScenario'] = newScenario;
+      		let latlng = citiesData[city]['centerCity'];
+        	listCities.push({'city':city, 'latlng':latlng, 'newScenario':newScenario});
         	//console.log("loaded", city+".zip", 'scenario def',scenarioDB.find({'city':city, 'default':true}).count(), ' newScenario', newScenario, citiesData[city]['centerCity'])
         	/*if(scenarioDB.find({'city':city, 'default':true}).count()==0){
         		computeScenario(city, citiesData[city])

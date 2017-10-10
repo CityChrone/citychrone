@@ -16,6 +16,8 @@ Template.metroLinesDraw.events({});
 
 
 Template.metroLinesDraw.onCreated(function(){
+
+	console.log("metroLinesDraw created")
 	
 	//COLLECTION
 	Template.metroLinesDraw.collection = {}

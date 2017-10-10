@@ -14,7 +14,6 @@ import { fillPointTree } from '/imports/client/map/geojson/findClosestPoint.js'
 import { hexagonCity } from '/imports/client/map/geojson/hexagonCity.js'
 
 import { createControl } from '/imports/client/map/legends.js';
-
 import '/imports/client/selector/quantitySelector.js';
 import '/imports/client/selector/timeSelector.js';
 import '/imports/client/selector/scenarioSelector.js';
@@ -42,77 +41,52 @@ Template.city.helpers({
 		return true;
 	},
 	'currentScenario'(){
-	}
-});
+	},
+	'cityCenter'(){
+		return Template.city.RV.cityCenter.get();
+	},
+	'subscriveScenario'(){
+		let city = Template.city.data.city;
 
-Template.city.onCreated(function(){
+	 	if(Router.current().params.query.id){
+			let _id = Router.current().params.query.id;
+			let MongoID = new Mongo.ObjectID(_id)
+			//console.log(MongoID, _id, Mongo)
+		 	Meteor.subscribe('scenarioID', city, MongoID, function() {
+		      	Template.city.function.checkDataLoaded(-1);
+		 	});
+		}
 
+	 	Meteor.subscribe('scenarioDef', city, function() {
+			let scenarioDef = scenarioDB.findOne({'default':true, 'city' : city, 'moments':{'$exists':true}}, {sort:{'creationDate':-1}});
+			//console.log('loaded', scenarioDef);
+		    Template.city.data.scenarioDefaultId = scenarioDef._id; //scenario contenente i dati senza modifiche
+		    Template.city.data.scenarioDefault = scenarioDef;
+		    if (!Template.city.data.scenarioDefaultId)
+		      console.error("Default scenario non trovato!");
+	      Template.city.function.checkDataLoaded(-1);
+	      //console.log("Default scenario caricato ", scenarioDef);
+	 	});
 
-// *******  FUNCTION  ***********
- Template.city.function = {};
+	},
+	'loadScenario'(){
 
-
-// *******  COLLECTION  ***********
-	Template.city.collection = {};
-	Template.city.collection.points  = new Mongo.Collection(null); //Local DB for points
-	Template.city.collection.metroLines = new Mongo.Collection(null); //Local DB for metroLines
-	Template.city.collection.scenarioDB = new Mongo.Collection(null); //Local DB for metroLines
-
-
-//*********TEMPLATE***********
-  Template.city.template = {};
-
-// *******  DATA  ***********
-
-  Template.city.data = {};
-  Template.city.data.dataToLoad = 3;
-  Template.city.data.city = '';
-	Template.city.data.hexClass = {}
-	Template.city.data.geoJson = new geoJsonClass;
-	Template.city.data.scenarioDefault = {};
-
-
-  //********. Reactive Var ************ 
-  Template.city.RV = {};
-  Template.city.RV.dataLoaded = new ReactiveVar(false); //true when finished load data
-  Template.city.RV.currentScenarioId = new ReactiveVar(false); 
-  Template.city.RV.currentScenario = new ReactiveVar(false); 
-
-
-
-}); 
-
-Template.city.onRendered(function() {
-
-	let city = Router.current().params.city;
-	//console.log('params', Router.current().params.query.id)
-	Template.city.data.city = city;
-
-	Meteor.call('giveDataBuildScenario', city,'centerCity', function(err, risp){
-		//console.log('centerCity', risp,);
-		//Template.city.data.hexClass = new hexagonCity(risp.coordinates[0])
-		Template.map.data.map.setView(risp, 12,{animate: true, duration: 5.0});
-		Template.map.data.centerCity = risp;
-		Template.city.function.checkDataLoaded();
- 	});
-
+		let city = Template.city.data.city;
 	
-	let loadScenarioDef = function(){
-		let currentScenario = scenarioDB.findOne({'default':true, 'city':Template.city.data.city});
-		Template.city.RV.currentScenario.set(currentScenario);
-	    let times = Object.keys(currentScenario.moments);
-	    Template.timeSelector.timeSelectedRV.set(times[0]);
-	    if(!currentScenario.shared){
+		let loadScenarioDef = function(){
+			let currentScenario = scenarioDB.findOne({'default':true, 'city':Template.city.data.city, 'moments':{'$exists':true}});
+			if(currentScenario){
+				Template.city.RV.currentScenario.set(currentScenario);
+			    let times = Object.keys(currentScenario.moments);
+			    Template.timeSelector.timeSelectedRV.set(times[0]);
+			}
+		}
 
-	    }
-
-	}
-	let loadScenario = function(){
 		if(Router.current().params.query.id){
 			let _id = Router.current().params.query.id;
 			let MongoID = new Mongo.ObjectID(_id)
-			let currentScenario = scenarioDB.findOne({'_id':MongoID, 'city':Template.city.data.city});
-			//console.log(currentScenario)
+			let currentScenario = scenarioDB.findOne({'_id':MongoID, 'city':Template.city.data.city, 'moments':{'$exists':true}});
+			console.log("currentScenario", currentScenario)
 			if(currentScenario){
 				Template.city.RV.currentScenario.set(currentScenario);
 			    let times = Object.keys(currentScenario.moments);
@@ -125,78 +99,112 @@ Template.city.onRendered(function() {
 		}else{
 			loadScenarioDef();
 		}
+	},
+	'addDataToMap'(){
+		let city = Template.city.data.city;
+
+		//CREATE CONTROLS
+
+	  	let controlTL = createControl([Template.titleBar, Template.quantitySelector, Template.scenarioSelector, Template.buttonsChangePage, Template.socialButtons], "topleft",  Template.map.data.map, 'leftBar', true);
+	  	let controlTR = createControl([Template.legendGeojson], "topright",  Template.map.data.map,'', true);
+
+		Template.city.data.geoJson = new geoJsonClass;
+		//console.log(Template.city.data.geoJson);
+		Template.city.data.geoJson.geojson.addTo(Template.map.data.map);
+
+		Template.city.data.popup = L.popup();
+
+
+	},
+	'mapLoaded'(){
+		let mapLoaded = Template.map.RV.mapLoaded.get() || false;
+		return mapLoaded;
 	}
+});
+
+Template.city.onCreated(function(){
+
+
+	// *******  FUNCTION  ***********
+	Template.city.function = {};
+
+
+
+	// *******  COLLECTION  ***********
+	Template.city.collection = {};
+	Template.city.collection.points  = new Mongo.Collection(null); //Local DB for points
+	Template.city.collection.metroLines = new Mongo.Collection(null); //Local DB for metroLines
+	Template.city.collection.scenarioDB = new Mongo.Collection(null); //Local DB for metroLines
+
+
+	//*********TEMPLATE***********
+	Template.city.template = {};
+
+	// *******  DATA  ***********
+
+	Template.city.data = {};
+	Template.city.data.dataToLoad = 2;
+	Template.city.data.city = '';
+	Template.city.data.hexClass = {}
+	Template.city.data.geoJson = new geoJsonClass;
+	Template.city.data.scenarioDefault = {};
+
+
+	//********. Reactive Var ************ 
+	Template.city.RV = {};
+	Template.city.RV.dataLoaded = new ReactiveVar(false); //true when finished load data
+	Template.city.RV.currentScenarioId = new ReactiveVar(false); 
+	Template.city.RV.currentScenario = new ReactiveVar(false); 
+	Template.city.RV.cityCenter = new ReactiveVar(false); 
 
 	Template.city.function.checkDataLoaded = function(num = -1) {
-		Template.city.data.dataToLoad  += num
-		if (Template.city.data.dataToLoad  > 0){
-		Template.map.data.map.spin(true);
-			return;
+		Template.city.data.dataToLoad  += num;
+		if(Template.map.RV.mapLoaded.get()){
+			if (Template.city.data.dataToLoad  > 0){
+			Template.map.data.map.spin(true);
+				return;
+			}
+			Template.map.data.map.spin(false);
+			Template.city.RV.dataLoaded.set(true);
 		}
-		Template.map.data.map.spin(false);
-		Template.city.RV.dataLoaded.set(true);
 	};
 
-	Meteor.call('giveDataBuildScenario', city,'listPoints', function(err, risp){
+}); 
 
-		for(let doc_i = 0; doc_i < risp.length; doc_i++){
-		    doc = risp[doc_i]
-		    doc.point = {type:'Point', 'coordinates' : risp[doc_i].coor};
+Template.city.onRendered(function() {
+
+	let city = Router.current().params.city;
+	//console.log('params', Router.current().params.query.id)
+	Template.city.data.city = city;
+
+	Meteor.call('giveDataBuildScenario', city,['centerCity'], function(err, data){
+		//center City
+		Template.city.RV.cityCenter.set({'centerCity' : data['centerCity'], 'zoom': 12});
+		
+	});
+
+	Meteor.call('giveDataBuildScenario', city,['listPoints','oneHex'] , function(err, data){
+
+		//listPoints
+		let listPoints = data['listPoints']
+		for(let doc_i = 0; doc_i < listPoints.length; doc_i++){
+		    doc = listPoints[doc_i]
+		    doc.point = {type:'Point', 'coordinates' : listPoints[doc_i].coor};
 		    doc.city = city;
 		    doc._id = doc.pos.toString();
 		    Template.city.collection.points.insert(doc);
 		}           
 		fillPointTree(Template.city.collection.points); 
 		Template.city.data.geoJson.setPoints(Template.city.collection.points);
-		Template.city.function.checkDataLoaded();
- 	});
-
-	Meteor.call('giveDataBuildScenario', city,'oneHex', function(err, risp){
-		//console.log('oneHex', risp, risp.coordinates[0].reverse());
-		Template.city.data.hexClass = new hexagonCity(risp.coordinates[0]);
+		
+		//oneHex
+		let oneHex = data['oneHex']
+		Template.city.data.hexClass = new hexagonCity(oneHex.coordinates[0]);
 		Template.city.data.geoJson.setHexClass(Template.city.data.hexClass);
+		
 		Template.city.function.checkDataLoaded();
+
  	});
-
-
- 	Meteor.subscribe('scenarioDef', city, function() {
-		let scenarioDef = scenarioDB.findOne({'default':true, 'city' : city}, {sort:{'creationDate':-1}});
-		//console.log('loaded', scenarioDef);
-	    Template.city.data.scenarioDefaultId = scenarioDef._id; //scenario contenente i dati senza modifiche
-	    Template.city.data.scenarioDefault = scenarioDef;
-	    if (!Template.city.data.scenarioDefaultId)
-	      console.error("Default scenario non trovato!");
-	    else {
-	    	loadScenario()
-	    }
-      Template.city.function.checkDataLoaded(-1);
-      //console.log("Default scenario caricato ", scenarioDef);
- 	});
-
- 	if(Router.current().params.query.id){
-		let _id = Router.current().params.query.id;
-		let MongoID = new Mongo.ObjectID(_id)
-		//console.log(MongoID, _id, Mongo)
-	 	Meteor.subscribe('scenarioID', city, MongoID, function() {
-			loadScenario()
-	      	Template.city.function.checkDataLoaded(-1);
-	 	});
-	 }
-
-
-
-
-  	//CREATE CONTROLS
-
-  	let controlTL = createControl([Template.titleBar, Template.quantitySelector, Template.scenarioSelector, Template.buttonsChangePage, Template.socialButtons], "topleft",  Template.map.data.map, 'leftBar', true);
-  	let controlTR = createControl([Template.legendGeojson], "topright",  Template.map.data.map,'', true);
-
-	Template.city.data.geoJson = new geoJsonClass;
-	//console.log(Template.city.data.geoJson);
-	Template.city.data.geoJson.geojson.addTo(Template.map.data.map);
-
-	Template.city.data.popup = L.popup();
-
 
 });
 

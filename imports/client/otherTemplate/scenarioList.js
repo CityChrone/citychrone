@@ -115,7 +115,9 @@ Template.scenarioListRow.helpers({
 		let city = Router.current().params.city;
 		let scenarioDef = scenarioDB.findOne({'default':true, 'city':city});
 		//console.log(quantity, this, scenarioDef);
-		return (this.scores[quantity] - scenarioDef.scores[quantity]).toFixed(0);
+		if(scenarioDef)
+			return (this.scores[quantity] - scenarioDef.scores[quantity]).toFixed(0);
+		else return 0
 	},
 	'checkID'(_id){
 		// if(Template.body.template.scenario.nameInserted.get()){
