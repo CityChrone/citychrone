@@ -7,7 +7,7 @@ import {unionHexs} from '/imports/api/CSA-algorithm/isochrone.js';
 import {addNewLines} from '/imports/api/CSA-algorithm/addNewLines.js';
 import {initArrayC} from '/imports/server/startup/InitArrayConnections.js';
 import { scenarioDB } from '/imports/api/DBs/scenarioDB.js';
-import { citiesData } from '/imports/server/saveScenarioData.js';
+import { citiesData,  listCities} from '/imports/server/saveScenarioData.js';
 import { maxDuration
 } from '/imports/api/parameters.js';
   
@@ -64,5 +64,27 @@ Meteor.methods({
   },
   'connections'(city){
     return initArrayC(city, 7*3600, 10.*3600.);
+  },
+    'giveDataBuildScenario' : function(city,data){
+    console.log(city, data)
+    let dataToReturn = {}
+    data.forEach( (name)=>{
+      console.log(name)
+      dataToReturn[name] = citiesData[city][name] || [];
+    });
+
+    return dataToReturn;
+  },
+  'giveListCitiesScenario' : function(){
+    /*let cities = [];
+    for(city in citiesData){
+      let latlng = citiesData[city]['centerCity'];
+      //console.log(city, latlng);
+      let newScenario = citiesData[city]['newScenario']
+      cities.push({'city':city, 'latlng':latlng, 'newScenario':newScenario});
+      
+    }*/
+    //console.log(cities)
+    return listCities;
   }
 });

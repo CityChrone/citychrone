@@ -1,6 +1,14 @@
 <template name="city">
-{{>map}}
-{{loadGeojsonToMap}}
-{{> metroLinesDraw}}
-{{> scenarioList}}
+{{#if cityCenter}}
+	{{>map cityCenter}}
+	{{#if mapLoaded}}
+		{{> metroLinesDraw}}
+		{{subscriveScenario}}
+		{{loadScenario}}
+		{{addDataToMap}}
+		{{loadGeojsonToMap}}
+		{{> scenarioList}}
+	{{/if}}
+{{/if}}
+
 </template>

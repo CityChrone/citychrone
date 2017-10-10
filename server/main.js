@@ -47,7 +47,7 @@ Meteor.startup(() => {
 
     //console.log('scenario id ', _id, scenarioDB.findOne({'_id':_id, 'city' : city}, {sort:{'creationDate':-1}}));
 
-    return scenarioDB.find({'_id':_id, 'city' : city}, {sort:{'creationDate':-1}});
+    return scenarioDB.find({'_id':_id, 'city' : city, 'moments':{'$exists':true}}, {sort:{'creationDate':-1}});
   });
 
 
