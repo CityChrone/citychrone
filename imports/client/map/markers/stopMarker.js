@@ -37,13 +37,13 @@ export const stopMarker =  function(latlng, color = null, drag = false, zoom = 1
 	marker.on('click dblclick', stopOnCLickPopUp);
 	marker.on('dragend', stopOnDragend);
 	marker.on('dragstart', (e)=>{
-		console.log(e)
+		//console.log(e)
 	});
 	marker.on('mousedown', (e)=>{
-		console.log('mousedown',e)
+		//console.log('mousedown',e)
 	});
 		marker.on('touchstart', (e)=>{
-		console.log('touchstart',e)
+		//console.log('touchstart',e)
 	});
 
 	
@@ -77,7 +77,7 @@ export const radiusCircle = function(zoom=10){
 }
 
 export const stopOnCLickPopUp = function(e){
-	console.log("stopOnCLickPopUp")
+	//console.log("stopOnCLickPopUp")
 
 	if($('#endMetro').hasClass("hidden")){
 		let marker = e.target;
@@ -85,9 +85,9 @@ export const stopOnCLickPopUp = function(e){
 		L.DomEvent.disableClickPropagation(container);
 		Blaze.renderWithData(Template.popUpMarker, {'marker':marker}, container);
 		let popUp = marker.bindPopup(container)._popup;
-		console.log(popUp)
+		//console.log(popUp)
 		marker.on('popupclose', function(e){
-			console.log('popupclose')
+			//console.log('popupclose')
 			marker.unbindPopup()
 		})
 

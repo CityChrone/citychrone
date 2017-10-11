@@ -6,8 +6,8 @@ import { Meteor } from 'meteor/meteor';
 
 import turf from 'turf';
 
-const points = new Mongo.Collection('points');
-const stops = new Mongo.Collection('stops');
+//const points = new Mongo.Collection('points');
+//const stops = new Mongo.Collection('stops');
 
 
 // const vel = new Mongo.Collection('vel');

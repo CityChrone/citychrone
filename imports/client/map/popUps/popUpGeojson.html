@@ -2,22 +2,22 @@
 		<div class="text-center text">current scenario </div>
 
 		<div class=' text-muted text-center'>
-			{{nameQuantity "newVels"}} : 
-			<span class ='label' style='{{labelColor 'newVels' this.newVels}}'>  {{ toString 'newVels' this.newVels}} </span>
+			{{nameQuantity "velocityScore"}} : 
+			<span class ='label' style='{{labelColor 'velocityScore' this.velocityScore}}'>  {{ toString 'velocityScore' this.velocityScore}} </span>
 		</div>
 		<div class=' text-muted text-center'>
-			{{nameQuantity "newPotPop"}} : 
-			<span class ='label' style='{{labelColor 'newPotPop' this.newPotPop}}'>  {{ toString 'newPotPop' this.newPotPop}} </span>
+			{{nameQuantity "socialityScore"}} : 
+			<span class ='label' style='{{labelColor 'socialityScore' this.socialityScore}}'>  {{ toString 'socialityScore' this.socialityScore}} </span>
 		</div>
 		{{#if isNotDefault}}
 		<div class="text-center text">default </div>
 		<div class=' text-muted text-center'>
-			{{nameQuantity "newVels"}} : 
-			<span class ='label' style='{{labelColorDef 'newVels'}}'>  {{ toStringDef 'newVels' this.newVels}} </span>
+			{{nameQuantity "velocityScore"}} : 
+			<span class ='label' style='{{labelColorDef 'velocityScore'}}'>  {{ toStringDef 'velocityScore' this.velocityScore}} </span>
 		</div>
 		<div class=' text-muted text-center'>
-			{{nameQuantity "newPotPop"}} : 
-			<span class ='label' style='{{labelColorDef 'newPotPop'}}'>  {{ toStringDef 'newPotPop' this.newPotPop}} </span>
+			{{nameQuantity "socialityScore"}} : 
+			<span class ='label' style='{{labelColorDef 'socialityScore'}}'>  {{ toStringDef 'socialityScore' this.socialityScore}} </span>
 		</div>
 		{{/if}}
 </template>

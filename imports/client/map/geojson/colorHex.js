@@ -42,7 +42,6 @@ let first = grey;
 export const shellPotPop =  [0, 50000, 100000, 200000, 300000, 400000, 500000, 600000,700000,800000, 900000, 1000000,1500000, 2000000,2500000, 3000000]
 //export const colorPotPop = d3.scaleSequential(d3Inter.interpolateSpectral).domain([0, maxValuePotPop]).clamp(true)
 export const colorPopList = ['#000000', first(0.7), first(0.4), second(1), second(0.85), second(0.7),second(0.5),second(0.3), third(0.3), third(0.4), third(0.5),third(0.6),third(0.7), fourth(0.5), fourth(0.6),fourth(0.8),fourth(1)];
-console.log(colorPopList)
 export const colorPotPop = function(val) {
 	let i = 0;
 	//let maxV = 16.;
@@ -78,6 +77,7 @@ export const colorVelDiff = function(val) {
 
 export const shellPotPopDiff = _.range(0, maxValuePotPopDiff,  maxValuePotPopDiff/numBinDiff)
 shellPotPopDiff.unshift(-1);
+
 export const colorPotPopDiff = function(val) {
 	//console.log(val, val < 0)
 	if(val <= 0){
@@ -110,26 +110,19 @@ export const colorIsochrone = function(val) {
 };
 
 
-//export const shellDiffAccess = _.range(0, maxValueAccessDiff,  maxValueAccessDiff/numBinDiff)
-//export const colorDiffAccess = d3.scaleSequential(d3Inter.interpolateBlues).domain([0, maxValueAccessDiff]).clamp(true)
-
-//export const shellAccess = _.range(0, 1.001, 1./8)
-//export const colorAccess = d3.scaleSequential(d3Inter.interpolateRdBu).domain([0, 1]).clamp(true)
 
 export const returnShell = function(feature, diff){
 	//console.log('return shell', mode, feature)
 	switch(feature) {
-		case 'newVels':
+		case 'velocityScore':
 			return shellVel;
-		case 'newAccess':
-			return shellAccess;
 		case 't':
 			return shellIsochrone;
-		case 'newPotPop':
+		case 'socialityScore':
 			return shellPotPop;
-		case 'newVelsDiff':
+		case 'velocityScoreDiff':
 			return shellVelDiff;
-		case 'newPotPopDiff':
+		case 'socialityScoreDiff':
 			return shellPotPopDiff;
 		case 'noLayer':
 			return [0];
@@ -141,17 +134,15 @@ export const returnShell = function(feature, diff){
 export const color = function(feature){
 	//console.log(feature, mode, 'styleHex!!')
 	switch(feature) {
-		case 'newVels':
+		case 'velocityScore':
 			return colorVel;
-		case 'newAccess':
-			return colorAccessibility;
 		case 't':
 			return colorIsochrone;
-		case 'newPotPop':
+		case 'socialityScore':
 			return colorPotPop;
-		case 'newVelsDiff':
+		case 'velocityScoreDiff':
 			return colorVelDiff;
-		case 'newPotPopDiff':
+		case 'socialityScoreDiff':
 			return colorPotPopDiff;
 		case 'noLayer':
 			return ()=>{return null};
@@ -160,24 +151,18 @@ export const color = function(feature){
 };
 
 export const styleHex = function(feature){
-	//console.log(feature, 'styleHex!!')
 	switch(feature) {
-			case 'newVels':
+			case 'velocityScore':
 				return styleVel;
-			case 'newAccess':
-				return styleAccessibility;
 			case 't':
 				return styleIsochrone;
-			case 'newPotPop':
+			case 'socialityScore':
 				return stylePotPop;
-			case 'newVelsDiff':
-				//console.log('newVelsDiff', newVelsDiff)
+			case 'velocityScoreDiff':
 				return styleVelDiff;
-			case 'newPotPopDiff':
-				//console.log('stylePotPopDiff', stylePotPopDiff)
+			case 'socialityScoreDiff':
 				return stylePotPopDiff;
 			case 'noLayer':
-				//console.log('stylePotPopDiff', stylePotPopDiff)
 				return styleGeojson(null);
 
 		}
@@ -216,65 +201,25 @@ const styleIsochrone = function(feature) {
 
 
 export const styleVel = function(feature) {
-		//console.log(feature.geometry.properties, 'styleVel')
-	let color = colorVel(feature.geometry.properties.newVels);
+	let color = colorVel(feature.geometry.properties.velocityScore);
 	return styleGeojson(color);
 };
 export const styleVelDiff = function(feature) {
-		//console.log(feature.geometry.properties, parseFloat(feature.geometry.properties.newVelsDiff),colorVelDiff(parseFloat(feature.geometry.properties.newVelsDiff)))
-	let color = colorVelDiff(parseFloat(feature.geometry.properties.newVelsDiff));
+	let color = colorVelDiff(parseFloat(feature.geometry.properties.velocityScoreDiff));
 	return styleGeojson(color);
 };
 
 
 export const stylePotPop = function(feature) {
-	//console.log(feature.geometry.properties, 'stylePotPop')
-	let color = colorPotPop(parseFloat(feature.geometry.properties.newPotPop));
+	let color = colorPotPop(parseFloat(feature.geometry.properties.socialityScore));
 	return styleGeojson(color);
 };
 
 export const stylePotPopDiff = function(feature) {
-	let color = colorPotPopDiff(parseFloat(feature.geometry.properties.newPotPopDiff));
-	//console.log(feature.geometry.properties, 'stylePotPopDiff returnin!!', color)
-	return styleGeojson(color);
-};
-
-
-export const styleAccessibility = function(feature) {
-	let color = colorAccess(feature.geometry.properties.newAccess)
-	return styleGeojson(color);
-};
-
-export const styleDiffAccessibility = function(feature) {
-	let color = colorAccessDiff(parseFloat(feature.geometry.properties.accessDiff))
+	let color = colorPotPopDiff(parseFloat(feature.geometry.properties.socialityScoreDiff));
 	return styleGeojson(color);
 };
 
 export const styleDiffVel = function(feature, maxValue) {
 	return styleGeojson(colorDiff(parseFloat(feature.geometry.properties.vAvgDiff)));
 };
-
-export const styleDiffPotPop = function(feature, maxValue) {
-	return styleGeojson(colorDiff(parseFloat(feature.geometry.properties.potPopDiff)));
-};
-
-
-export const computeAvgAccessibility = function(access) {
-	var maxAccess = _.get(Template, "body.data.defaultScenario.newAccessMax");
-	if (!maxAccess || !access)
-		return -1;
-
-	var avg = 0.0,
-		count = 0;
-	for (var n in maxAccess) {
-		if (maxAccess[n]) {
-			avg += (access[n] || 0) / maxAccess[n];
-			count++;
-		}
-	}
-
-	//console.log('com access', avg, count);
-
-	return count ? (avg / count) : -1;
-};
-

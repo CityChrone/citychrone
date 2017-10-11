@@ -29,7 +29,7 @@ Template.world.onRendered(function(){
 	Template.map.data.map.addLayer(Template.map.data.baseMaps['B&WLite'])
 	
 	Meteor.call('giveListCitiesScenario', function(err, risp){
-		//console.log(risp)
+		console.log(risp)
 		let markerArray = []
 		risp.forEach((city)=>{
 			//console.log(city)

@@ -22,12 +22,10 @@ export const initScenario = function(city, name, author, time, metroLinesFetched
 			'score' : 0,
 			'budget' : 0,
 			'efficency' : 0,
-			'newVels' : [],
-			'newAccess' : [],
-			'newPotPop' : [],
-			'newVelsDiff' : [],
-			'newAccessDiff' : [],
-			'newPotPopDiff' : [],
+			'velocityScore' : [],
+			'socialityScore' : [],
+			'velocityScoreDiff' : [],
+			'socialityScoreDiff' : [],
 
 		}
 	
@@ -52,8 +50,8 @@ export const computeScoreNewScenario = function(scenario, time){
 	let scores = {};
 	let moment = scenario['moments'][time]
 	let totPop = scenario.arrayPop.reduce((a, b)=>{ return a + b; }, 0);
-	scores['scoreVelocity'] = moment['newVels'].reduce((a, b) => a + b, 0);
-	scores['scorePotPop'] = moment['newPotPop'].reduce((a, b) => (a + b), 0) / totPop;
+	scores['sumVelocityScore'] = moment['velocityScore'].reduce((a, b) => a + b, 0);
+	scores['avgSocialityScore'] = moment['socialityScore'].reduce((a, b) => (a + b), 0) / moment['socialityScore'].length;
 	return scores;
 
 };

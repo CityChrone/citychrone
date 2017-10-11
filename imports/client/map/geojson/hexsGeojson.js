@@ -72,9 +72,8 @@ export const clickGeojson = function(latlng){
     let scenario = templateRV.currentScenario.get();
     let moment = _.get(scenario, ["moments", time], []);
     let point = {};
-    point['newVels'] = moment['newVels'][NearestPos];
-    point['newAccess'] = moment['newAccess'][NearestPos];
-    point['newPotPop'] = moment['newPotPop'][NearestPos];
+    point['velocityScore'] = moment['velocityScore'][NearestPos];
+    point['socialityScore'] = moment['socialityScore'][NearestPos];
     point['pos'] = NearestPos;
     point['default'] = scenario.default;
 
@@ -116,7 +115,7 @@ const hexOnClick = function(e){
 };
 
 class geoJsonClass{
-    constructor(quantity = 'newVels', diff = false, click = true) {
+    constructor(quantity = 'velocityScore', diff = false, click = true) {
         this.quantity = quantity;
         this.diff = diff;
         this.geojson = L.geoJson(null, {
@@ -151,6 +150,7 @@ class geoJsonClass{
         this.time = time;
         this.back = back;
         this.shell = shell || returnShell(this.quantity, this.diff);
+        //console.log(quantity, this.shell, shell)
         this.showGeojson()
     }
     showGeojson(){
@@ -207,7 +207,7 @@ class geoJsonClass{
 
 
 
-
+/*
 const updateGeojsonDiff = function(scenario,scenarioNew, buttonsFeature,buttonsHex , time,  color = null, shell=null){
     let feature = quantitySelected;
     
@@ -251,5 +251,5 @@ const updateGeojsonDiff = function(scenario,scenarioNew, buttonsFeature,buttonsH
 
     return geoJson
 
-};
-export {hexOnClick, makeGeoJsonHexs, updateGeojson, updateGeojsonDiff, geoJsonClass}
+};*/
+export {hexOnClick, makeGeoJsonHexs, geoJsonClass}

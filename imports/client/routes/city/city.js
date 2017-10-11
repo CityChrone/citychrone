@@ -86,7 +86,7 @@ Template.city.helpers({
 			let _id = Router.current().params.query.id;
 			let MongoID = new Mongo.ObjectID(_id)
 			let currentScenario = scenarioDB.findOne({'_id':MongoID, 'city':Template.city.data.city, 'moments':{'$exists':true}});
-			console.log("currentScenario", currentScenario)
+			//console.log("currentScenario", currentScenario)
 			if(currentScenario){
 				Template.city.RV.currentScenario.set(currentScenario);
 			    let times = Object.keys(currentScenario.moments);

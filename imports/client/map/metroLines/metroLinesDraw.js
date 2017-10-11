@@ -17,7 +17,7 @@ Template.metroLinesDraw.events({});
 
 Template.metroLinesDraw.onCreated(function(){
 
-	console.log("metroLinesDraw created")
+	//console.log("metroLinesDraw created")
 	
 	//COLLECTION
 	Template.metroLinesDraw.collection = {}
@@ -73,8 +73,9 @@ Template.metroLinesDraw.onRendered(function(){
 	let city = Router.current().params.city;
 	Template.metroLinesDraw.data.city = city;
 
-	Meteor.call('metroLinesDefault', city, function(err, res){
+	Meteor.call('giveDataBuildScenario',  city, ['metroLines'], function(err, res){
 		observeNewLineChanges(); //observe add new lines when new lines added
+		//console.log(res)
 	   	res['metroLines'].forEach(function(line, index){
 	      if (line.type == 'metro') {
 	            line.indexLine = _.indexOf(Template.metroLinesDraw.data.listNumLines, 0);
@@ -166,6 +167,7 @@ export const addNewSubLine = function(marker){
 	//console.log(Template.body.data.nameLine);
 	//event map add stop on click
 	//markerEvent('off', [Template.body.data.clickE, 'dblclick']);
+	markerEvent(Template.metroLinesDraw.data.StopsMarker,'off');
 	mapClickAddStopEvent(Template.map.data.map, 'on');
 
 	$('.computeDone').toggleClass('hidden');

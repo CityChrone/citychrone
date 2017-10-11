@@ -94,7 +94,7 @@ Template.newScenario.onCreated(function(){
 	Template.newScenario.data = {};
 	Template.newScenario.data.city = '';
 	Template.newScenario.data.hexClass = {}
-	Template.newScenario.data.geoJson = new geoJsonClass('newVels', false, false);
+	Template.newScenario.data.geoJson = new geoJsonClass('velocityScore', false, false);
 	Template.newScenario.data.scenarioDefaultId = null; //scenario contenente i dati senza modifiche
 	Template.newScenario.data.scenarioDefault = null;
 
@@ -152,7 +152,7 @@ let loadScenarioData = function(city, RV){
 			let _id = Router.current().params.query.id;
 			let MongoID = new Mongo.ObjectID(_id)
 			let currentScenario = scenarioDB.findOne({'_id':MongoID, 'city':Template.newScenario.data.city});
-			console.log(currentScenario)
+			//console.log(currentScenario)
 			if(currentScenario){
 				Template.newScenario.RV.currentScenario.set(currentScenario);
 			    let times = Object.keys(currentScenario.moments);

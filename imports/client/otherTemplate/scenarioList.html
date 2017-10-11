@@ -23,11 +23,11 @@
             <th>#</th>
             <th style="width: 200px;">title</th>
             <th style="width: 100px;">author</th>
-            <th>Velocity<br>score</th>
-            <th>Daily Pop<br>score</th>
+            <th>Velocity Score<br> (difference)</th>
+            <th>Sociality Score<br>(difference)</th>
             <th>cost [M€]</th>
             <th>date</th>
-            <th>see map</th>
+            <!--<th>see map</th>!-->
           </tr>
         </thead>
         <tbody>
@@ -47,16 +47,16 @@
 </template>
 
 <template name='scenarioListRow'>
-<tr class="a score {{isCurrent _id}}" id = "{{giveID _id}}">
+<tr class="a score {{isCurrent _id}} showScenario" id = "{{giveID _id}}" style="cursor: pointer">
   <td>{{pos}}</td>
 
   <td style="width: 200px;">{{name}}</td>
   <td style="width: 100px;">{{author}}</td>
-  <td>{{score "scoreVelocity"}}</td>
-  <td>{{score "scorePotPop"}}</td>
+  <td>{{score "sumVelocityScore"}}</td>
+  <td>{{score "avgSocialityScore"}}</td>
   <td>{{toFixed budget 0}}M€</td>
   <td>{{niceDate creationDate}}</td>
-  <td><buttom class="btn btn-default showScenario" id = "{{giveID _id}}">see result</buttom></td>
+  <!--<td><buttom class="btn btn-default showScenario" id = "{{giveID _id}}">see result</buttom></td>!-->
 </tr>
 
 </template>

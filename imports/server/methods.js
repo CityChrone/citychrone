@@ -1,33 +1,17 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
-//import { initArrayC} from '/imports/server/startup/InitArrayConnections.js';
-import { metroLines } from '/imports/api/DBs/metroLinesDB.js';
-import {points} from '/imports/api/DBs/stopsAndPointsDB.js';
 import {unionHexs} from '/imports/api/CSA-algorithm/isochrone.js';
 import {addNewLines} from '/imports/api/CSA-algorithm/addNewLines.js';
-import {initArrayC} from '/imports/server/startup/InitArrayConnections.js';
+//import {initArrayC} from '/imports/server/startup/InitArrayConnections.js';
 import { scenarioDB } from '/imports/api/DBs/scenarioDB.js';
-import { citiesData,  listCities} from '/imports/server/saveScenarioData.js';
+import { citiesData,  listCities} from '/imports/server/loadCitiesData.js';
 import { maxDuration
 } from '/imports/api/parameters.js';
   
-let worker = require("/public/workers/CSACore.js");
+let worker = require("/public/workers/ICSACore.js");
 let mergeArrays = require("/public/workers/mergeArrays.js");
 
 Meteor.methods({
-  'metroLinesDefault'(city){
-    return metroLines.findOne({'city' : city});
-  },
-    'budget'(city){
-    return metroLines.findOne({'city' : city}, {fields:{'budget':1}});
-  },
-  'serverOSRM'(city){
-    return metroLines.findOne({'city' : city}, {fields:{'serverOSRM':1}});
-  },
-  'isCreateScenario'(city){
-    //console.log('isCreateScenario', metroLines.findOne({'city' : city})['newScenario'] )
-    return metroLines.findOne({'city' : city}, {fields :{'newScenario':1}})['newScenario'];
-  },
   'isochrone'(point, scenarioID, startTime){
       var scenario = scenarioDB.findOne({'_id':scenarioID});
       let city = scenario.city;
@@ -56,14 +40,11 @@ Meteor.methods({
         let arrayPop = cityData.arrayPop;
         //console.log('arrayC, arrayN', arrayC.length, Object.keys(arrayN))
         //let startTime = timesOfDay[time_i];
-        let returned = worker.CSAPoint(point, arrayC, arrayN, startTime, areaHex, pointsVenues, arrayPop);
+        let returned = worker.ICSAPoint(point, arrayC, arrayN, startTime, areaHex, pointsVenues, arrayPop);
 
 
       return returned.tPoint;
     }
-  },
-  'connections'(city){
-    return initArrayC(city, 7*3600, 10.*3600.);
   },
     'giveDataBuildScenario' : function(city,data){
     console.log(city, data)
@@ -76,15 +57,6 @@ Meteor.methods({
     return dataToReturn;
   },
   'giveListCitiesScenario' : function(){
-    /*let cities = [];
-    for(city in citiesData){
-      let latlng = citiesData[city]['centerCity'];
-      //console.log(city, latlng);
-      let newScenario = citiesData[city]['newScenario']
-      cities.push({'city':city, 'latlng':latlng, 'newScenario':newScenario});
-      
-    }*/
-    //console.log(cities)
     return listCities;
   }
 });

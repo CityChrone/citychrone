@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 import turf from 'turf';
 
 import {returnShell, color} from '/imports/client/map/geojson/colorHex.js';
-import { field2text } from '/imports/client//selector/quantitySelector.js';
+import { field2text } from '/imports/client/selector/quantitySelector.js';
 import '/imports/client/map/geojson/legendGeojson.html';
 
 const makeColorLegend = function(shell, color, functionToShell){
@@ -26,15 +26,15 @@ const makeColorLegend = function(shell, color, functionToShell){
 
 let dataQuantity = function(quantity){
 	switch (quantity) {
-			case 'newVels':
+			case 'velocityScore':
 				return {
-					title: field2text['newVels'],
+					title: field2text['velocityScore'],
 					'unity': '[km/h]',
 					'functionToShell' : undefined
 				};
-			case 'newVelsDiff':
+			case 'velocityScoreDiff':
 				return {
-					title: field2text['newVelsDiff'],
+					title: field2text['velocityScoreDiff'],
 					'unity': '[km/h]',
 					'functionToShell' : (val) => { 
 						if(val < 0) return "no diff"
@@ -43,20 +43,15 @@ let dataQuantity = function(quantity){
 					}
 
 				};
-			case 'btnAccessibility':
+			case 'socialityScore':
 				return {
-					title: 'accessibility',
-					'unity': ''
-				};
-			case 'newPotPop':
-				return {
-					title: field2text['newPotPop'],
+					title: field2text['socialityScore'],
 					'unity': '[individuals]',
 					'functionToShell' : (val) => { return (val/1000.).toString() + 'K';}
 				};
-			case 'newPotPopDiff':
+			case 'socialityScoreDiff':
 				return {
-					title: field2text['newPotPopDiff'],
+					title: field2text['socialityScoreDiff'],
 					'unity': '[individuals]',
 					'functionToShell' : (val) => { 
 						if(val < 0) return "no diff"

@@ -11,17 +11,17 @@ import '/imports/client/explanation/quantityDescription.js';
 import { clickGeojson } from '/imports/client/map/geojson/hexsGeojson.js';
 
 Template.quantitySelector.onCreated(function(){
-	Template.quantitySelector.quantitySelectedRV = new ReactiveVar('newVels')
+	Template.quantitySelector.quantitySelectedRV = new ReactiveVar('velocityScore')
 	Template.quantitySelector.quantityDiffSelectedRV = new ReactiveVar(false)
 
 });
 
 export let text2field = {
-	'Velocity Score' : 'newVels',
-	'Sociality Score' : 'newPotPop',
+	'Velocity Score' : 'velocityScore',
+	'Sociality Score' : 'socialityScore',
 	'Isochrones': 't',
-	'Velocity Score - Diff' : 'newVelsDiff',
-	'Sociality Score - Diff' : 'newPotPopDiff',
+	'Velocity Score - Diff' : 'velocityScoreDiff',
+	'Sociality Score - Diff' : 'socialityScoreDiff',
 	'No Layer' : 'noLayer'
 };
 let invertKeys2Value = function(myObj){

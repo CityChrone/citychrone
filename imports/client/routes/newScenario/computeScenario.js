@@ -35,7 +35,7 @@ Template.computeScenario.helpers({
 		let one = Template.computeScenario.data.ended.get();
 		let two = Template.computeScenario.data.nameScenarioSet.get();
 		let scenario = Template.newScenario.RV.currentScenario.get();
-		console.log('scenarioComputed', one, two);
+		//console.log('scenarioComputed', one, two);
 		if(one && two) 	Router.go('/city/' + scenario.city + '?id=' + scenario._id);
 		return ""
 	}
@@ -46,7 +46,7 @@ Template.computeScenario.events({
 	'click #ComputeNewMap'() {
 		Template.computeScenario.function.loading(true)
 		Template.map.data.map.spin(true);
-		Template.quantitySelector.quantitySelectedRV.set('newVels');
+		Template.quantitySelector.quantitySelectedRV.set('velocityScore');
 		Template.computeScenario.data.ended.set(false);
  		Template.computeScenario.data.nameScenarioSet.set(false);
 		Template.computeScenario.worker.CSAPointsComputed = 0;
@@ -120,6 +120,8 @@ Template.computeScenario.collection.stops = new Mongo.Collection(null)
   Template.computeScenario.data = {};
   Template.computeScenario.data.countLimit = 0;
   Template.computeScenario.data.countStep = 1000;
+  Template.computeScenario.data.dataToLoad = 6;
+
   //********. Reactive Var ************ 
   Template.computeScenario.RV = {};
   Template.computeScenario.RV.dataLoaded = new ReactiveVar(false); //true when finished load data
@@ -143,34 +145,54 @@ Template.computeScenario.onRendered(function(){
 	loadComputeScenarioData(city);
 });
 
+	
+let checkDataLoaded = function(num = -1) {
+	Template.computeScenario.data.dataToLoad  += num
+	console.log(Template.computeScenario.data.dataToLoad)
+	Template.computeScenario.function.loading(true);
+	if(Template.computeScenario.data.dataToLoad < 1){
+		Template.computeScenario.function.loading(false);
+		Template.computeScenario.RV.dataLoaded.set(true);
+		Template.map.data.map.spin(false);
+
+	}
+	return true;
+};
+
+
 let loadComputeScenarioData = function(city, RV){
 	//console.log(Template.body, Template.body.citiesData)
-	
-	let dataToLoad = 6;
 	Template.computeScenario.function.loading(true);
 	Template.map.data.map.spin(true);
-	
-	let checkDataLoaded = function(num = -1) {
-		dataToLoad  += num
-		console.log(dataToLoad)
-		Template.computeScenario.function.loading(true);
-		if(dataToLoad < 1){
-			Template.computeScenario.function.loading(false);
-			Template.computeScenario.RV.dataLoaded.set(true);
-			Template.map.data.map.spin(false);
 
-		}
-		return true;
-	};
 
 //FOR NEW SCENARIO ONLY -- VERY LARGE
 
-    Meteor.call("serverOSRM", Template.computeScenario.data.city, function(err, res){
+    Meteor.call("giveDataBuildScenario", city, ["serverOSRM"], Template.computeScenario.data.city, function(err, res){
         Template.computeScenario.data.serverOSRM = res['serverOSRM'];
         checkDataLoaded(-1);
     })
 
-    let loadArrayC = function(risp){
+    
+	if( !('citiesData' in Template.body)) Template.body.citiesData = {};
+
+	if( !(city in Template.body.citiesData)){
+		Meteor.call('giveDataBuildScenario', city, ['nameFile'], (err, nameFileRisp)=>{
+			let nameFile = nameFileRisp.nameFile
+			//console.log("nameFile", err, nameFile)
+			JSZipUtils.getBinaryContent('/cities/' + nameFile, function(err, data) {
+			    if (err) throw err;
+			    JSZip.loadAsync(data).then(function (zip) {
+			    	loadDatacity(zip);
+			    });
+			});
+		});
+	}else{
+		loadDatacity(Template.body.citiesData[city]);
+	}
+};
+
+let loadArrayC = function(risp){
       Template.computeScenario.worker.CSA.forEach((worker)=>{
                   worker.postMessage({'arrayCDef' : risp});
       });
@@ -178,78 +200,91 @@ let loadComputeScenarioData = function(city, RV){
       checkDataLoaded(-1);
     }
 
-	let loadArrayN = function(risp){
-		let P2PDef = {pos : risp.P2PPos, time : risp.P2PTime};
-		let P2SDef = {pos : risp.P2SPos, time : risp.P2STime};
-		let S2SDef = {pos : risp.S2SPos, time : risp.S2STime};
-		Template.computeScenario.worker.CSA.forEach((worker)=>{
-		    worker.postMessage({'P2PDef' : P2PDef});
-		    worker.postMessage({'P2SDef' : P2SDef});
-		    worker.postMessage({'S2SDef' : S2SDef});
-		});      
-		//console.log('data arrayN loaded');
-		checkDataLoaded(-1);
-    }
+let loadArrayN = function(risp){
+	let P2PDef = {pos : risp.P2PPos, time : risp.P2PTime};
+	let P2SDef = {pos : risp.P2SPos, time : risp.P2STime};
+	let S2SDef = {pos : risp.S2SPos, time : risp.S2STime};
+	Template.computeScenario.worker.CSA.forEach((worker)=>{
+	    worker.postMessage({'P2PDef' : P2PDef});
+	    worker.postMessage({'P2SDef' : P2SDef});
+	    worker.postMessage({'S2SDef' : S2SDef});
+	});      
+	//console.log('data arrayN loaded');
+	checkDataLoaded(-1);
+}
 
-	let loadArrayPop = function(risp){
-		Template.computeScenario.worker.CSA.forEach((worker)=>{
-			worker.postMessage({'arrayPop' : risp});
-			Template.newScenario.data.arrayPop = risp;
+let loadArrayPop = function(risp){
+	//console.log("arrayPop", risp)
+	Template.computeScenario.worker.CSA.forEach((worker)=>{
+		worker.postMessage({'arrayPop' : risp});
+		Template.newScenario.data.arrayPop = risp;
+	});
+	//console.log('data arrayPop loaded');
+	checkDataLoaded(-1);
+}
+
+
+let loadArrayStops = function(risp){
+	risp.forEach(function(stop){
+    stop.temp = false;
+    stop._id = stop.pos.toString();
+      Template.computeScenario.collection.stops.insert(stop);
+    });
+    //console.log('data stops loaded');
+    checkDataLoaded(-1);
+}
+
+
+let loadAreaHex = function(risp){
+	Template.computeScenario.worker.CSA.forEach((worker)=>{
+		worker.postMessage({'areaHex' : risp});
+	});
+	//console.log('data areaHex loaded');
+	checkDataLoaded(-1);
+}
+
+let loadDatacity = function(zip){
+	zip.file("connections.txt").async("string").then(function (data3){
+		let connections = JSON.parse(data3);
+		loadArrayC(connections)
+	});
+	zip.file("P2PPos.txt").async("string").then(function (data3){
+		let arrayN = {}
+	    arrayN['P2PPos'] = JSON.parse(data3);
+    	zip.file("P2PTime.txt").async("string").then(function (data3){
+    		arrayN['P2PTime'] = JSON.parse(data3);
+    		zip.file("P2SPos.txt").async("string").then(function (data3){
+    			arrayN['P2SPos'] = JSON.parse(data3);
+    		    zip.file("P2STime.txt").async("string").then(function (data3){
+    				arrayN['P2STime'] = JSON.parse(data3);
+    				zip.file("S2SPos.txt").async("string").then(function (data3){
+    					arrayN['S2SPos'] = JSON.parse(data3);
+    					zip.file("S2STime.txt").async("string").then(function (data3){
+    						arrayN['S2STime'] = JSON.parse(data3);
+    						loadArrayN(arrayN)
+						});
+					});
+				});
+			});
 		});
-		//console.log('data arrayPop loaded');
-		checkDataLoaded(-1);
-	}
+    });
+    zip.file("listPoints.txt").async("string").then(function (data3){
+    	let listPoints = JSON.parse(data3);
+    	let arrayPop = []
+    	listPoints.forEach((p)=>{
+    		arrayPop.push(p.pop)
+    	});
+    	loadArrayPop(arrayPop)
+    });
 
-
-	let loadArrayStops = function(risp){
-		risp.forEach(function(stop){
-	    stop.temp = false;
-	    stop._id = stop.pos.toString();
-	      Template.computeScenario.collection.stops.insert(stop);
-	    });
-	    //console.log('data stops loaded');
-	    checkDataLoaded(-1);
-	}
-
-	
-	let loadAreaHex = function(risp){
-		Template.computeScenario.worker.CSA.forEach((worker)=>{
-			worker.postMessage({'areaHex' : risp});
-		});
-		//console.log('data areaHex loaded');
-		checkDataLoaded(-1);
-	}
-
-	let loadDatacity = function(dataCity){
-    	loadArrayC(dataCity.arrayC);
-    	loadArrayN(dataCity.arrayN)
-    	loadArrayPop(dataCity.arrayPop)
-    	loadArrayStops(dataCity.stops)
-    	loadAreaHex(dataCity.areaHex);
-	}
-
-	if( !('citiesData' in Template.body)) Template.body.citiesData = {};
-
-	if( !(city in Template.body.citiesData)){
-
-		JSZipUtils.getBinaryContent('/cities/' + city + ".zip", function(err, data) {
-			console.log(err, data)
-		    if (err) throw err;
-		    JSZip.loadAsync(data).then(function (zip) {
-
-		        zip.file(city+".txt").async("string").then(function (data){
-		        	let dataCity = JSON.parse(data);
-		        	Template.body.citiesData[city] = dataCity;
-		        	console.log(dataCity)
-		        	loadDatacity(dataCity);
-		        })
-		    });
-		});
-	}else{
-		loadDatacity(Template.body.citiesData[city]);
-	}
-
-
+    zip.file("listStops.txt").async("string").then(function (data3){
+		let listStops = JSON.parse(data3);
+		loadArrayStops(listStops)
+	});
+	zip.file("cityData.txt").async("string").then(function (data2){
+		let cityData = JSON.parse(data2)
+		loadAreaHex(cityData['areaHex']);
+	});    		
 };
 
 const computeNewScenario = function(){

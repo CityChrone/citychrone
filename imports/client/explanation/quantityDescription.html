@@ -1,9 +1,9 @@
 <template name="quantityDescription">
-{{#if quantity 'newVels'}}
+{{#if quantity 'velocityScore'}}
 	<div class = "text-muted">The <i>Velocity Score</i> describe how fast you move out from an hexagon to all the others in the city by public transport. It measures the efficency of public transport systems to explore the space in the city. Larger is the <i>Velocity Score</i> better and faster you move. <!-- , for more info see.!-->
 	</div>
 {{/if}}
-{{#if quantity 'newPotPop'}}
+{{#if quantity 'socialityScore'}}
 	<div class = "text-muted">The <i>Sociality Score</i> is the maximun number of people that you could meet in a typical daily trip starting from a point on the map.<!-- More information [].!-->
 	</div>
 {{/if}}
@@ -12,11 +12,11 @@
 	<div class = "text-muted">The <a href="https://en.wikipedia.org/wiki/Isochrone_map" target="_blank">Isochrone</a> layer shows the area reachable in a given time from a starting point by public transport. 
 	</div>
 {{/if}}
-{{#if quantity 'newVelsDiff'}}
+{{#if quantity 'velocityScoreDiff'}}
 	<div class = "text-muted"><i>Velocity Score</i> improvements. The layer shows the differences between the current scenario and the default scenario. <!-- , for more info see.!-->
 	</div>
 {{/if}}
-{{#if quantity 'newPotPopDiff'}}
+{{#if quantity 'socialityScoreDiff'}}
 	<div class = "text-muted"><i>Sociality Score</i> improvements. The layer shows the differences between the current scenario and the default scenario. <!-- , for more info see.!-->
 	</div>
 {{/if}}

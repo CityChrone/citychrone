@@ -5,6 +5,7 @@ import { addNewSubLine, removeStop } from '/imports/client/map/metroLines/metroL
 
 Template.popUpMarker.events({
 	'click #expMetro'(e) {
+		//console.log("clickked on expMetro")
 		let marker = this.marker;
 		addNewSubLine(marker);
 		L.DomEvent.stopPropagation(e);
@@ -28,7 +29,7 @@ Template.popUpMarker.events({
 });
 
 Template.popUpMarker.onCreated(()=>{
-	console.log("created marker", this)
+	//console.log("created marker", this)
 });
 
 

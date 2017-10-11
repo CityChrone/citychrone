@@ -21,7 +21,7 @@ Template.modalEnd.helpers({
 		    }
 
 		let scenario = templateRV.currentScenario.get();
-		if(quantity == 'scoreVelocity' || quantity == 'scorePotPop'){ 
+		if(quantity == 'sumVelocityScore' || quantity == 'avgSocialityScore'){ 
 			let city = Router.current().params.city;
 			let scenarioDef = scenarioDB.findOne({'default':true, 'city':city});
 			//console.log(quantity, this, scenarioDef);

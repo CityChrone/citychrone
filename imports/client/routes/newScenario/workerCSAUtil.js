@@ -37,23 +37,19 @@ const workerOnMessage = function(e) {
 		let time = Template.timeSelector.timeSelectedRV.get()
 		let moment = scenario['moments'][time]
 		let momentDef = scenarioDef['moments'][time]
+		//console.log(moment, momentDef)
 		for(let point_i = 0; point_i < e.data.length; point_i++){
 			let data = e.data[point_i];
-			moment['newVels'][data.point.pos] = data.newVels
-			moment['newPotPop'][data.point.pos] = data.newPotPop
-			let newAccess = data.newAccess || {}
-			moment['newAccess'][data.point.pos] = newAccess
+			moment['velocityScore'][data.point.pos] = data.velocityScore
+			moment['socialityScore'][data.point.pos] = data.socialityScore
 
-			moment['newVelsDiff'][data.point.pos] = data.newVels - momentDef['newVels'][data.point.pos]
-			moment['newPotPopDiff'][data.point.pos] = data.newPotPop - momentDef['newPotPop'][data.point.pos]
-			moment['newAccessDiff'][data.point.pos] = moment['newAccess'][data.point.pos]  - momentDef['newAccess'][data.point.pos]
+			moment['velocityScoreDiff'][data.point.pos] = data.velocityScore - momentDef['velocityScore'][data.point.pos]
+			moment['socialityScoreDiff'][data.point.pos] = data.socialityScore - momentDef['socialityScore'][data.point.pos]
 		}
 		if(Template.computeScenario.worker.CSAPointsComputed > countLimit){
-			console.log('loaded new!! ', countStep, countLimit, Template.newScenario.RV.ScenarioGeojson.get())
+			//console.log('loaded new!! ', countStep, countLimit, Template.newScenario.RV.ScenarioGeojson.get())
 			//loadNewTime(Template.body.data.timeOfDay.get());
 			Template.newScenario.RV.ScenarioGeojson.set(scenario);
-			
-			//Template.newScenario.data.geoJson.updateGeojson(scenario, Template.quantitySelector.quantitySelectedRV.get())
 			Template.computeScenario.data.countLimit += Template.computeScenario.data.countStep;
 		}
 
@@ -61,13 +57,13 @@ const workerOnMessage = function(e) {
 
 		//console.log(Template.body.data.countHex, Template.body.collection.newVel.find().count());
 		if(Template.computeScenario.worker.CSAPointsComputed == Template.newScenario.collection.points.find().count()){
-			console.log("ended")
+			//console.log("ended")
 			Template.map.data.map.spin(false);
 			Template.computeScenario.function.loading(false)
 			scenario['arrayPop'] = Template.newScenario.data.arrayPop
 			scenario['scores'] = computeScoreNewScenario(scenario, time);
 			scenario['budget'] = Template.budget.function.cost();
-			console.log('scenario after scores',scenario)
+			//console.log('scenario after scores',scenario)
 
 			Template.newScenario.RV.currentScenario.set(scenario);
 			Meteor.call('insertNewScenario', scenario, (data)=>{

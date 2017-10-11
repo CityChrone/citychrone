@@ -18,7 +18,7 @@ Template.scenarioSelector.onCreated(function(){
 	
 	Template.scenarioSelector.RV = {}
 	Template.scenarioSelector.RV.isCreateScenario = new ReactiveVar(false);
-	Meteor.call('isCreateScenario', city, function(err, risp){
+	Meteor.call('giveDataBuildScenario', city,['newScenario'], function(err, risp){
 		Template.scenarioSelector.RV.isCreateScenario.set(risp)
 	});	
 
@@ -84,8 +84,7 @@ Template.scenarioSelector.helpers({
 	        templateRV = Template.city.RV
 	    }
 		let scenario = templateRV.currentScenario.get();
-		let pos = scenarioDB.find({'city':scenario.city,'scores.scoreVelocity':{'$gt':scenario.scores.scoreVelocity}}).count() + 1;
-	    console.log(scenario, pos, scenarioDB.find({'scores.scoreVelocity':{'$gt':scenario.scores.scoreVelocity}}).fetch())
+		let pos = scenarioDB.find({'city':scenario.city,'scores.sumVelocityScore':{'$gt':scenario.scores.sumVelocityScore}}).count() + 1;
 
 		return pos;
 	},

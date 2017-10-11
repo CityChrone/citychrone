@@ -137,7 +137,7 @@ Template.budget.onCreated(function(){
         return Template.budget.RV.budget.get().budget - costLines(Template.metroLinesDraw.collection.metroLines);
     }
 
-    Meteor.call("budget", Template.budget.data.city, function(err, res){
+    Meteor.call("giveDataBuildScenario", Template.budget.data.city,["budget"],function(err, res){
         //console.log("Budget!!", res);
         Template.budget.RV.budget.set(res['budget']);
     })

@@ -30,12 +30,12 @@ Template.popUpGeojson.helpers({
 		//console.log(val)
 		$("#accessPopupChart").html('');
 		switch(feature){
-			case 'newVels':
+			case 'velocityScore':
 				let valFixed = parseFloat(val).toFixed(1);
 				if(val > 0){ return valFixed.toString() + ' km/h';}
 				else { return 'Not Av.';}
 				break;
-			case 'newPotPop':		
+			case 'socialityScore':		
 				valFixed = parseFloat(val/1000).toFixed(0);
 				if(val > 0){ return valFixed.toString() + 'K';}
 				else { return 'Not Av.';}

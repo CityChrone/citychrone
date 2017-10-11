@@ -4,6 +4,9 @@ import {stopOnCLickPopUp, mapClickAddStop} from '/imports/client/map/markers/sto
 
 
 export const markerEvent = function(idListLayer, mode='on',events = ['click dblclick','bring']){
+	
+	//console.log("disabling event marker mode", mode)
+
 	if(mode == 'on'){
 		for(let _id in idListLayer){
 			let layer = idListLayer[_id];
@@ -14,6 +17,7 @@ export const markerEvent = function(idListLayer, mode='on',events = ['click dblc
 		}
 	}else{
 		for(let _id in idListLayer){
+			//console.log("disabling event marker", _id)
 			let layer = idListLayer[_id];
 			if(_.includes(events,'click dblclick')) layer.off('click dblclick', stopOnCLickPopUp);
 			if(_.includes(events, 'bring')) layer.bringToBack();
