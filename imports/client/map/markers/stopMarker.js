@@ -42,7 +42,7 @@ export const stopMarker =  function(latlng, color = null, drag = false, zoom = 1
 	marker.on('mousedown', (e)=>{
 		//console.log('mousedown',e)
 	});
-		marker.on('touchstart', (e)=>{
+	marker.on('touchstart', (e)=>{
 		//console.log('touchstart',e)
 	});
 

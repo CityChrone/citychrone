@@ -1,6 +1,6 @@
 import fs from "fs";
 import JSZip from "jszip";
-import { scenarioDB} from '/imports/api/DBs/scenarioDB.js';
+import { scenarioDB} from '/imports/DBs/scenarioDB.js';
 import {computeScenario} from '/imports/server/startup/scenarioDef.js'
 
 //let path = process.env['METEOR_SHELL_DIR'] + '/../../../public/cities/';
@@ -14,9 +14,9 @@ export let listCities = [];
 
 
 export let addDataFromZip = function(nameFile){
+	console.log("reading", nameFile)
 
 	fs.readFile(nameFile, function(err, data) {
-		//console.log(data)
 	    if (err) throw err;
 	    JSZip.loadAsync(data).then(function (zip) {
 	    	zip.file("cityData.txt").async("string").then(function (data2){
@@ -34,11 +34,12 @@ export let addDataFromZip = function(nameFile){
 				citiesData[city]['centerCity'] = cityData['centerCity'];
 				citiesData[city]['arrayN'] = {};
 				citiesData[city]['arrayPop'] = [];
-	    		console.log(citiesData[city], nameFile, nameFile.split("/").pop())
+	    		//console.log(citiesData[city], nameFile, nameFile.split("/").pop())
 
 	        	zip.file("connections.txt").async("string").then(function (data3){
+	        		console.log(city, 'parsing, arrayC')
 		        	citiesData[city]['arrayC'] = JSON.parse(data3);
-		        	//console.log(citiesData[city]['arrayC'])
+		        	console.log(city, 'arrayC')
 			        zip.file("listPoints.txt").async("string").then(function (data3){
 			        	citiesData[city]['listPoints'] = JSON.parse(data3);
 			        	citiesData[city]['listPoints'].forEach((p)=>{
@@ -61,10 +62,11 @@ export let addDataFromZip = function(nameFile){
 											      	let latlng = citiesData[city]['centerCity'];
 											      	let newScenario = citiesData[city]['newScenario']
 											        listCities.push({'city':city, 'latlng': latlng.reverse(), 'newScenario':newScenario});
-											        console.log(listCities)
+											        console.log('readed', nameFile)
 										        	//console.log("loaded", city+".zip", 'scenario def',scenarioDB.find({'city':city, 'default':true}).count(), ' newScenario', newScenario, citiesData[city]['centerCity'])
 										        	if(scenarioDB.find({'city':city, 'default':true}).count()==0){
 										        		computeScenario(city, citiesData[city])
+										        		console.log("computeScenario", city)
 										        	}
 				        						});
         									});

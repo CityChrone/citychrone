@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating';
-import { computeScoreNewScenario } from '/imports/api/DBs/scenarioDB.js';
-//import { zeroTime,timesOfDay, maxDuration , HexArea, getCity } from '/imports/api/parameters.js';
+import { computeScoreNewScenario } from '/imports/DBs/scenarioDB.js';
+//import { zeroTime,timesOfDay, maxDuration , HexArea, getCity } from '/imports/parameters.js';
 //import { loadNewTime } from '/imports/client/scenario/scenario.js';
 //import { unionPoints,  shellify} from '/imports/client/info/hexagons/unionHexs.js'
 //import {returnShell, styleHex} from '/imports/client/info/hexagons/colorHex.js';

@@ -92,7 +92,9 @@ Template.metroLinesDraw.onRendered(function(){
 		for(let _id in Template.metroLinesDraw.data.StopsMarker){
 			let layer = Template.metroLinesDraw.data.StopsMarker[_id];
 			layer.setRadius(radius);
-			layer.bringToFront()
+			if(Router.current().route.getName() == "newScenario.:city"){
+				layer.bringToFront();
+			}
 		}
 	});
 });

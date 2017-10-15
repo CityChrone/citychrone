@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
 import '/imports/client/routes/newScenario/budget.html';
 import turf from 'turf';
-//import { budget,costMetroStop,costTubeKm } from '../../api/parameters.js';
+//import { budget,costMetroStop,costTubeKm } from '../../parameters.js';
 
 export const computeBadget =  function(numStop, totLength){
     let budget = Template.budget.RV.budget.get()

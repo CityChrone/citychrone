@@ -1,12 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
-import {unionHexs} from '/imports/api/CSA-algorithm/isochrone.js';
-import {addNewLines} from '/imports/api/CSA-algorithm/addNewLines.js';
+import { addNewLines } from '/imports/lib/newScenarioLib/addNewLines.js';
 //import {initArrayC} from '/imports/server/startup/InitArrayConnections.js';
-import { scenarioDB } from '/imports/api/DBs/scenarioDB.js';
-import { citiesData,  listCities} from '/imports/server/loadCitiesData.js';
+import { scenarioDB } from '/imports/DBs/scenarioDB.js';
+import { citiesData,  listCities} from '/imports/server/startup/loadCitiesData.js';
 import { maxDuration
-} from '/imports/api/parameters.js';
+} from '/imports/parameters.js';
   
 let worker = require("/public/workers/ICSACore.js");
 let mergeArrays = require("/public/workers/mergeArrays.js");
@@ -47,12 +46,15 @@ Meteor.methods({
     }
   },
     'giveDataBuildScenario' : function(city,data){
-    console.log(city, data)
     let dataToReturn = {}
     data.forEach( (name)=>{
-      console.log(name)
-      dataToReturn[name] = citiesData[city][name] || [];
+      if(citiesData[city][name] != undefined){
+        dataToReturn[name] = citiesData[city][name];}
+      else{
+        dataToReturn[name] = [];
+      }
     });
+    //console.log(city, data)
 
     return dataToReturn;
   },

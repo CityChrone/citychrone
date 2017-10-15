@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 import '/imports/client/map/popUps/popUpGeojson.html';
 import { color } from '/imports/client/map/geojson/colorHex.js';
 import { field2text } from '/imports/client/selector/quantitySelector.js';
-import { scenarioDB } from '/imports/api/DBs/scenarioDB.js';
+import { scenarioDB } from '/imports/DBs/scenarioDB.js';
 
 Template.popUpGeojson.events({
 });
@@ -55,12 +55,12 @@ Template.popUpGeojson.helpers({
 				time = Object.keys(scenarioDef['moments'])[0]
 				let val = scenarioDef['moments'][time][feature][this.pos];
 				switch(feature){
-					case 'newVels':
+					case 'velocityScore':
 						let valFixed = parseFloat(val).toFixed(1);
 						if(val > 0){ return valFixed.toString() + ' km/h';}
 						else { return 'Not Av.';}
 						break;
-					case 'newPotPop':		
+					case 'socialityScore':		
 						valFixed = parseFloat(val/1000).toFixed(0);
 						if(val > 0){ return valFixed.toString() + 'K';}
 						else { return 'Not Av.';}

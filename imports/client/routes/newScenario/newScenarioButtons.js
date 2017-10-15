@@ -5,7 +5,7 @@ import '/imports/client/routes/newScenario/newScenarioButtons.html';
 
 /*
 import { computeNewHex } from '/imports/client/modify/updateArrays.js';
-import { getCity } from '/imports/api/parameters.js';
+import { getCity } from '/imports/parameters.js';
 import { newDragStop, mapOnClickLine ,stopOnClick,stopOnDragend,stopOnDblclick, addLine2DB} from '/imports/client/modify/addStop.js';
 import { styleHex } from '/imports/client/info/hexagons/colorHex.js';
 import { markerEvent,mapClickAddStopEvent } from '/imports/client/modify/events.js';

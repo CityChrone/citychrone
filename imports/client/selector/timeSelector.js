@@ -4,11 +4,8 @@ import {
 import {
 	Meteor
 } from 'meteor/meteor';
-import { scenarioDB } from '/imports/api/DBs/scenarioDB.js';
+import { scenarioDB } from '/imports/DBs/scenarioDB.js';
 import '/imports/client/selector/timeSelector.html';
-// import { runCSA, CSAPoint } from '/imports/api/CSA-algorithm/CSA-loop.js';
-//import { vel } from '../../api/velocityDb.js';
-
 
 Template.timeSelector.onCreated(function(){
 	Template.timeSelector.timeSelectedRV = new ReactiveVar(false);

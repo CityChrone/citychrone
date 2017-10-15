@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
-import { scenarioDB } from '/imports/api/DBs/scenarioDB.js';
+import { scenarioDB } from '/imports/DBs/scenarioDB.js';
 
 import { geoJsonClass } from '/imports/client/map/geojson/hexsGeojson.js';
 import { fillPointTree } from '/imports/client/map/geojson/findClosestPoint.js'

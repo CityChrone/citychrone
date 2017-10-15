@@ -1,25 +1,7 @@
-import turf from 'turf';
-import {metroSpeeds, metroFrequencies} from '/imports/api/parameters.js'
+import { mergeSortedC } from '/imports/lib/utils.js';
+import { timesOfDay, maxDuration, metroSpeeds, metroFrequencies  } from '/imports/parameters.js';
 import math from 'mathjs';
-
-const mergeSortedC = function(left, right){
-    var result  = [],
-        il      = 0,
-        ir      = 0;
-
-    while (il < left.length && ir < right.length){
-        if (left[il+2] < right[ir+2]){
-            result.push(left[il],left[il+1],left[il+2],left[il+3]);
-            il+=4;
-        } else {
-            result.push(right[ir],right[ir+1],right[ir+2],right[ir+3]);
-            ir+=4;
-        }
-    }
-
-    return result.concat(left.slice(il)).concat(right.slice(ir));
-};
-
+import turf from 'turf';
 
 function computeTfor2Stops(dist, Vf, a){//dist in meters
 	// const Vf = 30; // max speed 100km/h
@@ -28,7 +10,7 @@ function computeTfor2Stops(dist, Vf, a){//dist in meters
 	const DISTa = 0.5 * a * Ta * Ta; //dist to reach the maximun velocity
 
 	if(dist / 2.0 <= DISTa){
-		return math.round(2 * math.sqrt(dist));
+		return 2 * math.sqrt(dist);
 	}else{
 		//console.log('TimeDist ', DISTa, math.sqrt(DISTa), (dist - 2. * DISTa) / Vf);
 		return math.round(2 * math.sqrt(DISTa) + (dist - 2.0 * DISTa) / Vf);
@@ -64,7 +46,7 @@ function addNewLines(metroLinesFetched, limT){
 	const dockTime = 15; //time the trains is stopped at dock
 
 	var stopsLines = {};
-	console.log('metroLinesFetched', metroLinesFetched)
+	//console.log('metroLinesFetched', metroLinesFetched)
 
 	_.each(metroLinesFetched, function(line){
 		line.stops.forEach(function(stop, indexStop){
@@ -106,9 +88,9 @@ function addNewLines(metroLinesFetched, limT){
 		if (!freqTime)
 			return; //knock out linea
 
-		let startingStopTime = limT[0];//5*3600; //line starts at 5am
-		let endTime = limT[1]; //24*3600; //line ends at 12pm
-		console.log("time limiti C", limT)
+		let startingStopTime = 5*3600; //line starts at 5am
+		let endTime = 24*3600; //line ends at 12pm
+
 		let startStopPoint = line.points[0];
 		let startStopPos = line.pos[0];
 		//console.log(startStopPoint);
@@ -125,7 +107,7 @@ function addNewLines(metroLinesFetched, limT){
 			for(let StartingTimeTemp = startingStopTime; StartingTimeTemp + timeDist <= endTime; StartingTimeTemp += freqTime){
 				if(StartingTimeTemp >=  limT[0] && StartingTimeTemp + timeDist <= limT[1]){
 					cArray2Add.push(startStopPos, endStopPos, StartingTimeTemp , StartingTimeTemp + timeDist);
-				} 
+				}
 			}
 			cArrayTemp = mergeSortedC(cArrayTemp, cArray2Add);
 			startingStopTime = endingTime + dockTime;
@@ -133,12 +115,11 @@ function addNewLines(metroLinesFetched, limT){
 			startStopPos = line.pos[stop_i];
 		}
 		// *** Opposite direction
-
+		startingStopTime = 5*3600; //line starts at 5am
+		endTime = 24*3600; //line ends at 12pm
 		var totStop = line.points.length-1;
 		startStopPoint = line.points[totStop];
 		startStopPos = line.pos[totStop];
-		startingStopTime = limT[0];//5*3600; //line starts at 5am
-
 		for(let stop_i = totStop -1 ; stop_i >= 0; stop_i--){
 			let endStopPoint = line.points[stop_i];
 			let endStopPos = line.pos[stop_i];
@@ -159,14 +140,9 @@ function addNewLines(metroLinesFetched, limT){
 
 
 	});
-
-	let countErr = 0
-	for (let i = 0; i < cArrayTemp.length-4;i+=4){
-		if(cArrayTemp[i+2]> cArrayTemp[i+6]) countErr+=1
-	}
-	console.log('CREATED NEW ARRAY len and err', cArrayTemp.length, countErr)
+	//console.log(cArrayTemp.length)
 	return cArrayTemp;
 	//console.log(stopsLines);
 }
 
-export {addNewLines}
+export {addNewLines};

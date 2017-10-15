@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating';
-import { scenarioDB } from '/imports/api/DBs/scenarioDB.js';
+import { scenarioDB } from '/imports/DBs/scenarioDB.js';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';
 import {Blaze} from 'meteor/blaze';
@@ -19,7 +19,8 @@ Template.scenarioSelector.onCreated(function(){
 	Template.scenarioSelector.RV = {}
 	Template.scenarioSelector.RV.isCreateScenario = new ReactiveVar(false);
 	Meteor.call('giveDataBuildScenario', city,['newScenario'], function(err, risp){
-		Template.scenarioSelector.RV.isCreateScenario.set(risp)
+		//console.log("newScenario", city, risp)
+		Template.scenarioSelector.RV.isCreateScenario.set(risp.newScenario)
 	});	
 
 });

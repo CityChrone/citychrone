@@ -5,11 +5,11 @@ import turf from 'turf';
 import math from 'mathjs';
 import { EJSON } from 'meteor/ejson';
 
-import { scenarioDB, initScenario, computeScoreNewScenario } from '/imports/api/DBs/scenarioDB.js';
+import { scenarioDB, initScenario, computeScoreNewScenario } from '/imports/DBs/scenarioDB.js';
 
-import { timesOfDay, maxDuration } from '/imports/api/parameters.js'
+import { timesOfDay, maxDuration } from '/imports/parameters.js'
 
-import {loadCity, citiesData} from '/imports/server/loadCitiesData.js';
+import {loadCity, citiesData} from '/imports/server/startup/loadCitiesData.js';
 
 process.on('unhandledRejection', console.log.bind(console))
 

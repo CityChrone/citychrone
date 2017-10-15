@@ -4,12 +4,13 @@ import { Router } from 'meteor/iron:router';
 import { styleHex, returnShell, computeAvgAccessibility } from '/imports/client/map/geojson/colorHex.js';
 import { findClosestPoint } from '/imports/client/map/geojson/findClosestPoint.js'
 import { shellify, unionPoints, findFieldtoUpdate} from '/imports/client/map/geojson/unionHexs.js';
-import { scenarioDB } from '/imports/api/DBs/scenarioDB.js';
+import { scenarioDB } from '/imports/DBs/scenarioDB.js';
 import '/imports/client/map/popUps/popUpGeojson.js';
 
 //If in section INFO click on Hex open PopUp Isochrone, in section Build  click on map.
 
 export const clickGeojsonIso = function(latlng){
+    Template.map.data.map.spin(true);
     let NearestPos = findClosestPoint([latlng[1], latlng[0]])[0].pos
     let startTime = Template.timeSelector.timeSelectedRV.get();
     let templateRV = {}
@@ -40,7 +41,7 @@ export const clickGeojsonIso = function(latlng){
         scenario.moments[startTime.toString()].t = result;
         templateRV.currentScenario.set(scenario);
         if(Router.current().route.getName() == "newScenario.:city") templateRV.ScenarioGeojson.set(scenario)
-        Template.quantitySelector.quantitySelectedRV.set('t');     
+        Template.quantitySelector.quantitySelectedRV.set('t');    
         return true;
     });
 };
@@ -187,6 +188,7 @@ class geoJsonClass{
         this.geojson.setStyle(styleHex(this.quantity));
         
         if(this.back) this.geojson.bringToBack()
+        if(quantity == "t") Template.map.data.map.spin(false); 
 
         return this.geojson
 

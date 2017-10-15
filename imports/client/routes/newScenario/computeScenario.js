@@ -5,11 +5,11 @@ import { Mongo } from 'meteor/mongo';
 import { Blaze } from 'meteor/blaze';
 import '/imports/client/routes/newScenario/computeScenario.html';
 import { makeWorkers } from '/imports/client/routes/newScenario/workerCSAUtil.js'
-import { scenarioDB, initScenario } from '/imports/api/DBs/scenarioDB.js'
-import { maxTimeWalk, maxDistanceWalk, maxDuration} from '/imports/api/parameters.js';
-import * as addNewStops from '/imports/client/routes/newScenario/addNewStops.js'
-import * as parameters from '/imports/api/parameters.js'
-import * as addNewConnections from '/imports/client/routes/newScenario/addNewConnections.js'
+import { scenarioDB, initScenario } from '/imports/DBs/scenarioDB.js'
+import { maxTimeWalk, maxDistanceWalk, maxDuration} from '/imports/parameters.js';
+import * as addNewStops from '/imports/lib/newScenarioLib/addNewStops.js'
+import * as parameters from '/imports/parameters.js';
+import * as addNewConnections from '/imports/lib/newScenarioLib/addNewLines.js';
 import {markerEvent} from '/imports/client/map/events.js';
 import JSZip from "jszip";
 import JSZipUtils from 'jszip-utils';
@@ -302,12 +302,12 @@ const computeNewScenario = function(){
 
 
 	Promise.all(promiseAddStop).then(values => {
-		console.log("end update Arrays", scenario)
+		//console.log("end update Arrays", scenario)
 
-		console.log('BEFORE', _.size(scenario.P2S2Add), _.size(scenario.S2S2Add))
+		//console.log('BEFORE', _.size(scenario.P2S2Add), _.size(scenario.S2S2Add))
 		addNewStops.deleteEmptyItem(scenario.P2S2Add);
 		addNewStops.deleteEmptyItem(scenario.S2S2Add);
-		console.log('AFTER', _.size(scenario.P2S2Add), _.size(scenario.S2S2Add))
+		//console.log('AFTER', _.size(scenario.P2S2Add), _.size(scenario.S2S2Add))
 
 		let startTime = parseFloat(Template.timeSelector.timeSelectedRV.get())
 		let wTime = [startTime , startTime + parameters.maxDuration];

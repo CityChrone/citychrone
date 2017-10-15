@@ -1,37 +1,38 @@
 import { Template } from 'meteor/templating';
-import { scenarioDB } from '/imports/api/DBs/scenarioDB.js';
+import { scenarioDB } from '/imports/DBs/scenarioDB.js';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
 import * as metroLinesDraw from  '/imports/client/map/metroLines/metroLinesDraw.js';
 import '/imports/client/otherTemplate/scenarioList.html';
 
+const showScenario = function(id){
+	Meteor.call("giveScenario", id, function(err, risp){
+		//console.log(risp)
+	    let templateRV = {}
+	    if(Router.current().route.getName() == "newScenario.:city"){
+	        templateRV = Template.newScenario.RV;
+	    }else{
+	        templateRV = Template.city.RV
+	    }
+	    if(risp._id.toString() != templateRV.currentScenario.get()._id.toString()){
+			templateRV.currentScenario.set(risp);
+			templateRV.currentScenarioId.set(risp._id);
+			//console.log(Template.metroLinesDraw)
+			Template.metroLinesDraw.function.addLines(risp.lines)
+		}
+		$('#scenarioModal').modal('hide');
+	});
+};
 
 Template.scenarioList.events({
 	'click .showScenario'(e){
 		let id = $(e.target).parent().attr("id")
-		//console.log(e, $(e.target))
-		Meteor.call("giveScenario", id, function(err, risp){
-			//console.log(risp, id);
-			//Template.computeScenario.collection.stops.remove({temp:true});
-			//console.log(risp, Template.computeScenario.collection.stops.find({temp:true}).count());
-		    let templateRV = {}
-		    if(Router.current().route.getName() == "newScenario.:city"){
-		        templateRV = Template.newScenario.RV;
-		    }else{
-		        templateRV = Template.city.RV
-		    }
-		    //console.log(risp._id, templateRV.currentScenario.get()._id.toString());
-		    if(risp._id.toString() != templateRV.currentScenario.get()._id.toString()){
-				templateRV.currentScenario.set(risp);
-				templateRV.currentScenarioId.set(risp._id);
-				//console.log(Template.metroLinesDraw)
-				Template.metroLinesDraw.function.addLines(risp.lines)
-			}
-			$('#scenarioModal').modal('hide');
-
-
-		});
+		showScenario(id)
+	},
+	'click .showScenarioDef'(e){
+		let id = $(e.target).attr("id")
+		showScenario(id);
 	}
 });
 
@@ -43,6 +44,7 @@ Template.scenarioList.helpers({
 	},
 	'scenarioDef'(){
 		let city = Router.current().params.city;
+		console.log()
 		return scenarioDB.findOne({'city':city, default:true}, {sort:{creationDate: -1}});
 	},
 	'GiveCurrentScenario'(){
@@ -162,7 +164,7 @@ Template.scenarioDefButton.helpers({
 	'giveID'(id){
 		if (id === undefined)
 			return '---';
-		//console.log(id, eval(id), id.toString(), eval(id).valueOf());
+		console.log(eval(id).valueOf());
 		return eval(id).valueOf();
 	},
 	'isCurrent'(_id){

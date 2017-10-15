@@ -1,5 +1,6 @@
-import * as parameters from '/imports/api/parameters.js'
+import * as parameters from '/imports/parameters.js'
 import math from 'mathjs';
+
 const deleteEmptyItem = function(array2Add){
 	for(let key in array2Add){
 		if(array2Add[key].pos.length == 0)
@@ -61,7 +62,7 @@ const computeNeigh = function(stop, stops, P2S2Add, S2S2Add, points, serverOSRM)
 
 	        HTTP.get(urlPoints, function (error2, result2){
 	  				if(error2) {
-	  					console.log('error httm call from dist point');
+	  					console.log('error HTTP call Point', serverUrl, error);
 	  					reject('error http request');
 	  				}else{
 
@@ -83,6 +84,7 @@ const computeNeigh = function(stop, stops, P2S2Add, S2S2Add, points, serverOSRM)
 	  						}
 	  					}
 	  				}
+	  				console.log("called resolved point", serverUrl)
 	  				resolve([stop,pointsNList,stopsNList]);
 	        });
 	    };
@@ -94,7 +96,7 @@ const computeNeigh = function(stop, stops, P2S2Add, S2S2Add, points, serverOSRM)
 
 	    HTTP.get(urlStops, function (error, result){
 	    	if(error) {
-					console.log('error httm call for dist stop',error, result);
+	    			console.log('error HTTP call Stop', serverUrl, error);
 					reject('error http request');
   			}else{
   		    	let resultStops = result.data;
@@ -112,7 +114,7 @@ const computeNeigh = function(stop, stops, P2S2Add, S2S2Add, points, serverOSRM)
 		            	S2S2Add[posStop].pos.push(posStopN)
 		            	S2S2Add[posStop].time.push(timeStopN)
 		            	if(S2S2Add[posStopN].pos.includes(posStop)){
-		            		console.log('ce sta!!!!')
+		            		//console.log('ce sta!!!!')
 		            		let posTemp = S2S2Add[posStopN].pos.indexOf(posStop)
 		            		if(S2S2Add[posStopN].time[posTemp] > timeStopN){
 		            			S2S2Add[posStopN].time[posTemp] = timeStopN
@@ -125,7 +127,7 @@ const computeNeigh = function(stop, stops, P2S2Add, S2S2Add, points, serverOSRM)
             		}
 
   				}
-
+  			console.log("called resolved stop", serverUrl)
   			}
     	getPoints();
 		});
@@ -140,7 +142,7 @@ const updateArrays = function(city, stopsCollection, pointsCollections, scenario
 	
 	let metroLinesFetched = scenario.lines;
 
-	console.log(metroLinesFetched)
+	//console.log(metroLinesFetched)
 
 	metroLinesFetched.forEach(function(line, indexLine){
 		line.stops.forEach(function(stop, indexStop){

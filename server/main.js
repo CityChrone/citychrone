@@ -1,9 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
 
-import { scenarioDB } from '/imports/api/DBs/scenarioDB.js';
+import { scenarioDB } from '/imports/DBs/scenarioDB.js';
 import '/imports/server/methods.js';
-import {timesOfDay, maxDuration} from '/imports/api/parameters.js';
 import JSZip from 'jszip';
 import fs from 'fs';
 
@@ -12,7 +11,7 @@ import fs from 'fs';
 
 //import { checkCities } from '/imports/server/startup/scenarioDef.js';
 import '/imports/server/router.js';
-import {loadCity} from '/imports/server/loadCitiesData.js';
+import {loadCity} from '/imports/server/startup/loadCitiesData.js';
 
 var _;
  

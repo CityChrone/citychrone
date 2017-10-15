@@ -6,7 +6,7 @@ import {
 } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
 import '/imports/client/selector/quantitySelector.html'
-import { scenarioDB } from '/imports/api/DBs/scenarioDB.js';
+import { scenarioDB } from '/imports/DBs/scenarioDB.js';
 import '/imports/client/explanation/quantityDescription.js';
 import { clickGeojson } from '/imports/client/map/geojson/hexsGeojson.js';
 

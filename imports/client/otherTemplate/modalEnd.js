@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating';
-import { scenarioDB } from '/imports/api/DBs/scenarioDB.js';
+import { scenarioDB } from '/imports/DBs/scenarioDB.js';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
@@ -33,9 +33,9 @@ Template.modalEnd.helpers({
 		if(quantity == 'name' || quantity == 'author') return scenario[quantity];
 		if(quantity == 'pos'){
 			let pos = 0;
-			pos = scenarioDB.find({'city':scenario.city, 'scores.scoreVelocity': {$gt: scenario.scores.scoreVelocity}}, 
+			pos = scenarioDB.find({'city':scenario.city, 'scores.sumVelocityScore': {$gt: scenario.scores.sumVelocityScore}}, 
 				{ 
-					sort: {'scores.scoreVelocity': -1, creationDate: -1 }                                                                                                                   // 39
+					sort: {'scores.sumVelocityScore': -1, creationDate: -1 }                                                                                                                   // 39
 			}).count()
 			return pos + 1;
 		} 

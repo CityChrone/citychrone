@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
 import { Blaze } from 'meteor/blaze';
-import { scenarioDB } from '/imports/api/DBs/scenarioDB.js'
+import { scenarioDB } from '/imports/DBs/scenarioDB.js'
 import '/imports/client/routes/newScenario/saveScenario.html';
 
 Template.saveScenario.helpers({

@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
-import { scenarioDB } from '/imports/api/DBs/scenarioDB.js';
+import { scenarioDB } from '/imports/DBs/scenarioDB.js';
 import {cityMarker, radiusCircle} from '/imports/client/map/markers/cityMarker.js'
 
 import { createControl } from '/imports/client/map/legends.js';
