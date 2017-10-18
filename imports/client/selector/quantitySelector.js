@@ -33,7 +33,7 @@ let invertKeys2Value = function(myObj){
 }
 export let field2text = invertKeys2Value(text2field)
 
-let eventQuantitySelected = function(e){
+export let eventQuantitySelected = function(e){
 	let target = text2field[e.target.value];
 	//console.log('quantity Selòecotr', target)
 	if(target == 't'){

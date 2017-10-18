@@ -11,12 +11,12 @@ if(Meteor.isServer){
 	scenarioDB._ensureIndex({ "city":1, "scores.scoreVelocity": 1});
 
 }
-export const initScenario = function(city, name, author, time, metroLinesFetched, P2S2Add, S2S2Add){
-		time  = time || 7*3600;
-		metroLinesFetched = metroLinesFetched || [];
-		P2S2Add = P2S2Add || {};
-		S2S2Add = S2S2Add || {};
-		let moments = { }
+export const initScenario = function(city, name, author, times, metroLinesFetched, P2S2Add, S2S2Add){
+	metroLinesFetched = metroLinesFetched || [];
+	P2S2Add = P2S2Add || {};
+	S2S2Add = S2S2Add || {};
+	let moments = { }
+	times.forEach((time)=>{
 		moments[time] = {
 			'velocity' : 0,
 			'score' : 0,
@@ -28,8 +28,7 @@ export const initScenario = function(city, name, author, time, metroLinesFetched
 			'socialityScoreDiff' : [],
 
 		}
-	
-
+	})
 	let scenario = {
 		'author' : author,
 		'name' : name,

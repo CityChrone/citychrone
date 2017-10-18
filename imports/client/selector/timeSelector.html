@@ -4,7 +4,7 @@
 	 <select class="timepicker" data-width="fit" data-style="btn-default btn-sm">
 	 {{#if isScenario}}
 	{{#each getTimes}}
-      <option>{{time}}</option>
+      <option {{isochroneAvg}}>{{time}}</option>
 	{{/each}}
 	{{render}}
 	{{/if}}

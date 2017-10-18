@@ -10,9 +10,6 @@ import '/imports/client/map/popUps/popUpGeojson.js';
 //If in section INFO click on Hex open PopUp Isochrone, in section Build  click on map.
 
 export const clickGeojsonIso = function(latlng){
-    Template.map.data.map.spin(true);
-    let NearestPos = findClosestPoint([latlng[1], latlng[0]])[0].pos
-    let startTime = Template.timeSelector.timeSelectedRV.get();
     let templateRV = {}
     if(Router.current().route.getName() == "newScenario.:city"){
         templateRV = Template.newScenario.RV;
@@ -20,6 +17,18 @@ export const clickGeojsonIso = function(latlng){
         templateRV = Template.city.RV
     }
     let scenario = templateRV.currentScenario.get();
+
+    if(Template.timeSelector.timeSelectedRV.get() == "avg"){
+        let firstTime = Object.keys(scenario.moments)[0]
+        let timeFormat = moment("1900-01-01 00:00:00").add(firstTime, 'seconds').format("HH:mm")
+        Template.timeSelector.timeSelectedRV.set(firstTime)
+        console.log(firstTime, timeFormat.toString())
+        $('.timepicker').selectpicker('val', timeFormat);
+    }
+    Template.timeSelector.pointIsochrone = latlng
+    Template.map.data.map.spin(true);
+    let NearestPos = findClosestPoint([latlng[1], latlng[0]])[0].pos
+    let startTime = Template.timeSelector.timeSelectedRV.get();
     let templateCollection = Template.city.collection || Template.newScenario.collection;
     let point = templateCollection.points.findOne({'_id':NearestPos.toString()})
 
@@ -44,6 +53,7 @@ export const clickGeojsonIso = function(latlng){
         Template.quantitySelector.quantitySelectedRV.set('t');    
         return true;
     });
+    
 };
 
 export const onlyIso = function(e){
@@ -160,7 +170,7 @@ class geoJsonClass{
         let values = _.get(this.scenario, ["moments", this.time, this.quantity],  new Array(this.points.find({}).count()).fill(-1));
         let points = {}
         let quantity = this.quantity;
-        //console.log(this.scenario,this.time, this.quantity, 'class!!')
+        // console.log(this.scenario,this.time, this.quantity, 'class!!')
 
         this.points.find({}).forEach(function(p, index){
             //console.log(p, values)
@@ -175,6 +185,7 @@ class geoJsonClass{
             }   
             points[p.pos] = p
         });
+        //console.log(points)
         let pointShellify = shellify(points, this.quantity, this.shell)
 
         //console.log('shellify',this.shell, pointShellify, points)

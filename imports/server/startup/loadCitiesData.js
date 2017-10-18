@@ -1,7 +1,7 @@
 import fs from "fs";
 import JSZip from "jszip";
 import { scenarioDB} from '/imports/DBs/scenarioDB.js';
-import {computeScenario} from '/imports/server/startup/scenarioDef.js'
+import { computeScenario } from '/imports/server/startup/scenarioDef.js'
 
 //let path = process.env['METEOR_SHELL_DIR'] + '/../../../public/cities/';
 //let path = Assets.absoluteFilePath('cities/')
@@ -30,7 +30,8 @@ export let addDataFromZip = function(nameFile){
 				citiesData[city]['newScenario'] = cityData['newScenario'];
 				citiesData[city]['budget'] = cityData['budget'];
 				citiesData[city]['metroLines'] = cityData['metroLines'];
-				citiesData[city]['serverOSRM'] = cityData['serverOSRM'];
+				citiesData[city]['serverOSRM'] = "http://" + cityData['serverOSRM'] + "/";
+				console.log(citiesData[city]['serverOSRM'])
 				citiesData[city]['centerCity'] = cityData['centerCity'];
 				citiesData[city]['arrayN'] = {};
 				citiesData[city]['arrayPop'] = [];
@@ -38,7 +39,7 @@ export let addDataFromZip = function(nameFile){
 
 	        	zip.file("connections.txt").async("string").then(function (data3){
 	        		console.log(city, 'parsing, arrayC')
-		        	citiesData[city]['arrayC'] = JSON.parse(data3);
+		        	citiesData[city]['arrayC'] = JSON.parse(data3);//data3.split(",").map(Number); //JSON.parse(data3);
 		        	console.log(city, 'arrayC')
 			        zip.file("listPoints.txt").async("string").then(function (data3){
 			        	citiesData[city]['listPoints'] = JSON.parse(data3);
@@ -65,7 +66,8 @@ export let addDataFromZip = function(nameFile){
 											        console.log('readed', nameFile)
 										        	//console.log("loaded", city+".zip", 'scenario def',scenarioDB.find({'city':city, 'default':true}).count(), ' newScenario', newScenario, citiesData[city]['centerCity'])
 										        	if(scenarioDB.find({'city':city, 'default':true}).count()==0){
-										        		computeScenario(city, citiesData[city])
+														computeScenario(city, citiesData[city]);
+										  
 										        		console.log("computeScenario", city)
 										        	}
 				        						});

@@ -72,7 +72,7 @@ Template.computeScenario.events({
 		let P2S2Add = addNewStops.fill2AddArray(Template.newScenario.collection.points.find().count());
 		let S2S2Add = addNewStops.fill2AddArray(Template.computeScenario.collection.stops.find().count())
 		let lines = Template.metroLinesDraw.collection.metroLines.find({'temp':true}).fetch();
-		let scenario = initScenario(city, name, author, time, lines, P2S2Add, S2S2Add);
+		let scenario = initScenario(city, name, author, [time], lines, P2S2Add, S2S2Add);
 		scenario.firstTime = true;
 		//console.log('created scenario', P2S2Add, S2S2Add);
 		Template.computeScenario.RV.toSave.set(true);

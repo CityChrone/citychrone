@@ -164,7 +164,7 @@ Template.scenarioDefButton.helpers({
 	'giveID'(id){
 		if (id === undefined)
 			return '---';
-		console.log(eval(id).valueOf());
+		//console.log(eval(id).valueOf());
 		return eval(id).valueOf();
 	},
 	'isCurrent'(_id){
