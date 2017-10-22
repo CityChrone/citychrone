@@ -6,6 +6,7 @@ import { scenarioDB } from '/imports/DBs/scenarioDB.js';
 import { citiesData,  listCities} from '/imports/server/startup/loadCitiesData.js';
 import { maxDuration
 } from '/imports/parameters.js';
+import '/imports/lib/newScenarioLib/addNewStops.js';
   
 let worker = require("/public/workers/ICSACore.js");
 let mergeArrays = require("/public/workers/mergeArrays.js");

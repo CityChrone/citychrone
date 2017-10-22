@@ -180,4 +180,9 @@ const updateArrays = function(city, stopsCollection, pointsCollections, scenario
 
 };
 
+export const updateArraysWait = function(city, stopsCollection, pointsCollections, scenario, serverOSRM){
+	promiseAddStop = updateArrays(city, stopsCollection, pointsCollections, scenario, serverOSRM);
+	Promise.all(promiseAddStop).then(values => {return values});
+}
+
 export {updateArrays, fill2AddArray, deleteEmptyItem}

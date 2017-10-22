@@ -93,7 +93,7 @@ Template.map.onRendered(function() {
     	layers: [Template.map.data.baseMaps['Default']],
     	doubleClickZoom:false,
     	attributionControl:true,
-      zoomSnap:0,
+      zoomSnap:0.3,
     	//zoomDelta:0.2,
     	//zoomSnap:0.2,
     	//inertia:false

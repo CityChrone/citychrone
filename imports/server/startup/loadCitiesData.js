@@ -14,7 +14,7 @@ export let listCities = [];
 
 
 export let addDataFromZip = function(nameFile){
-	console.log("reading", nameFile)
+	console.log("reading", nameFile, Meteor.settings.public)
 
 	fs.readFile(nameFile, function(err, data) {
 	    if (err) throw err;
@@ -30,7 +30,7 @@ export let addDataFromZip = function(nameFile){
 				citiesData[city]['newScenario'] = cityData['newScenario'];
 				citiesData[city]['budget'] = cityData['budget'];
 				citiesData[city]['metroLines'] = cityData['metroLines'];
-				citiesData[city]['serverOSRM'] = "http://" + cityData['serverOSRM'] + "/";
+				citiesData[city]['serverOSRM'] = Meteor.settings.public.OSRM_SERVER || cityData['serverOSRM'] + "/" ;
 				console.log(citiesData[city]['serverOSRM'])
 				citiesData[city]['centerCity'] = cityData['centerCity'];
 				citiesData[city]['arrayN'] = {};
