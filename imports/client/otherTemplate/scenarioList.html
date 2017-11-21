@@ -11,32 +11,36 @@
         {{/with}}
         </h4>
       </div>
-      <div class="modal-body" id="scenarioModalBody">
+      <div class="modal-body container col-md-12" id="scenarioModalBody">
       
       {{#with GiveCurrentScenario}}
               {{>modalEnd}}
       {{/with}}
       <hr/>
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th style="width: 200px;">title</th>
-            <th style="width: 100px;">author</th>
-            <th>Velocity Score<br> (difference)</th>
-            <th>Sociality Score<br>(difference)</th>
-            <th>cost [M€]</th>
-            <th>date</th>
-            <!--<th>see map</th>!-->
-          </tr>
-        </thead>
-        <tbody>
+      <div class="table-responsive col-md-12">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th class = "col-xs-1">#</th>
+              <th class = "col-xs-1">title</th>
+              <th class = "col-xs-2">author</th>
+              <th class = "col-xs-1">Velocity Score<br> (difference)</th>
+              <th class = "col-xs-1">Sociality Score<br>(difference)</th>
+              <th class = "col-xs-1">cost [M€]</th>
+              <th class = "col-xs-1">date</th>
+              <!--<th>see map</th>!-->
+            </tr>
+          </thead>
+          <tbody>
+           {{#if scenarioLoaded}}
 
-        {{#each getScenarioList}}
-          {{>scenarioListRow}}
-        {{/each}}
-        </tbody>
-      </table>
+            {{#each getScenarioList}}
+              {{>scenarioListRow}}
+            {{/each}}
+          {{/if}}
+          </tbody>
+        </table>
+      </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -48,14 +52,14 @@
 
 <template name='scenarioListRow'>
 <tr class="a score {{isCurrent _id}} showScenario" id = "{{giveID _id}}" style="cursor: pointer">
-  <td>{{pos}}</td>
+  <td class = "col-xs-1">{{pos}}</td>
 
-  <td style="width: 200px;">{{name}}</td>
-  <td style="width: 100px;">{{author}}</td>
-  <td>{{score "sumVelocityScore"}}</td>
-  <td>{{score "avgSocialityScore"}}</td>
-  <td>{{toFixed budget 0}}M€</td>
-  <td>{{niceDate creationDate}}</td>
+  <td class = "col-xs-3">{{name}}</td>
+  <td class = "col-xs-2">{{author}}</td>
+  <td class = "col-xs-1">{{score "avgVelocityScore"}}</td>
+  <td class = "col-xs-1">{{score "avgSocialityScore"}}</td>
+  <td class = "col-xs-1">{{toFixed budget 0}}M€</td>
+  <td class = "col-xs-1">{{niceDate creationDate}}</td>
   <!--<td><buttom class="btn btn-default showScenario" id = "{{giveID _id}}">see result</buttom></td>!-->
 </tr>
 

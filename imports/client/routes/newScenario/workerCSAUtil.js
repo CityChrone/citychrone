@@ -37,6 +37,7 @@ const workerOnMessage = function(e) {
 		let time = Template.timeSelector.timeSelectedRV.get()
 		let moment = scenario['moments'][time]
 		let momentDef = scenarioDef['moments'][time]
+		let numpoints = Template.newScenario.collection.points.find().count()
 		//console.log(moment, momentDef)
 		for(let point_i = 0; point_i < e.data.length; point_i++){
 			let data = e.data[point_i];
@@ -47,7 +48,7 @@ const workerOnMessage = function(e) {
 			moment['socialityScoreDiff'][data.point.pos] = data.socialityScore - momentDef['socialityScore'][data.point.pos]
 		}
 		if(Template.computeScenario.worker.CSAPointsComputed > countLimit){
-			//console.log('loaded new!! ', countStep, countLimit, Template.newScenario.RV.ScenarioGeojson.get())
+			console.log(100 * Template.computeScenario.worker.CSAPointsComputed / numpoints,'%')
 			//loadNewTime(Template.body.data.timeOfDay.get());
 			Template.newScenario.RV.ScenarioGeojson.set(scenario);
 			Template.computeScenario.data.countLimit += Template.computeScenario.data.countStep;
@@ -56,7 +57,7 @@ const workerOnMessage = function(e) {
 		Template.computeScenario.worker.CSAPointsComputed += e.data.length;
 
 		//console.log(Template.body.data.countHex, Template.body.collection.newVel.find().count());
-		if(Template.computeScenario.worker.CSAPointsComputed == Template.newScenario.collection.points.find().count()){
+		if(Template.computeScenario.worker.CSAPointsComputed == numpoints){
 			//console.log("ended")
 			Template.map.data.map.spin(false);
 			Template.computeScenario.function.loading(false)

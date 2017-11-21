@@ -12,7 +12,6 @@ Template.modalEnd.events({
 
 Template.modalEnd.helpers({
 	'scenarioInfo'(quantity){
-		//console.log('modal end', quantity)
 		let templateRV = {}
 		    if(Router.current().route.getName() == "newScenario.:city"){
 		        templateRV = Template.newScenario.RV;
@@ -21,21 +20,24 @@ Template.modalEnd.helpers({
 		    }
 
 		let scenario = templateRV.currentScenario.get();
-		if(quantity == 'sumVelocityScore' || quantity == 'avgSocialityScore'){ 
-			let city = Router.current().params.city;
-			let scenarioDef = scenarioDB.findOne({'default':true, 'city':city});
+		//console.log('modal end', quantity, scenario)
+		if(quantity == 'avgVelocityScore'){ 
+			//let city = Router.current().params.city;
+			//let scenarioDef = scenarioDB.findOne({'default':true, 'city':city});
 			//console.log(quantity, this, scenarioDef);
-			if(scenarioDef)
-				return (this.scores[quantity] - scenarioDef.scores[quantity]).toFixed(0);
-			else
-				return 0;
+			//if(scenarioDef)
+			return this.scores[quantity].toFixed(3);
+			//else
+			//	return 0;
 		}
+		if(quantity == 'avgSocialityScore') return this.scores[quantity].toFixed(0);
 		if(quantity == 'name' || quantity == 'author') return scenario[quantity];
 		if(quantity == 'pos'){
+			//Template.scenarioList.data.pos += 1;
 			let pos = 0;
-			pos = scenarioDB.find({'city':scenario.city, 'scores.sumVelocityScore': {$gt: scenario.scores.sumVelocityScore}}, 
+			pos = scenarioDB.find({'city':scenario.city, 'scores.avgVelocityScore': {$gt: scenario.scores.sumVelocityScore}}, 
 				{ 
-					sort: {'scores.sumVelocityScore': -1, creationDate: -1 }                                                                                                                   // 39
+					sort: {'scores.avgVelocityScore': -1, creationDate: -1 }                                                                                                                   // 39
 			}).count()
 			return pos + 1;
 		} 

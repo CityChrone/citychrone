@@ -51,7 +51,7 @@ export const cutArrayC = function(startTime, arrayC){
 	arrayCCut = _.slice(arrayC, indexStart - 2, indexEnd+2);
 	console.log("cutted array!!",startTime,  indexStart, indexEnd, arrayC.length, arrayCCut.length)
 	return arrayCCut;
-}; 
+};  
 
 export const computeScenario = function(city, dataCity,startTimes = timesOfDay){
 	Meteor.setTimeout(()=>{

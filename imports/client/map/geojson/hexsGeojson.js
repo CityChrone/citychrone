@@ -87,6 +87,7 @@ export const clickGeojson = function(latlng){
     point['socialityScore'] = moment['socialityScore'][NearestPos];
     point['pos'] = NearestPos;
     point['default'] = scenario.default;
+    point['population'] = scenario.arrayPop[NearestPos];
 
     analytics.track("Click Map", {
         'eventName': "click geojson",
@@ -170,15 +171,16 @@ class geoJsonClass{
         let values = _.get(this.scenario, ["moments", this.time, this.quantity],  new Array(this.points.find({}).count()).fill(-1));
         let points = {}
         let quantity = this.quantity;
-        // console.log(this.scenario,this.time, this.quantity, 'class!!')
+        let scenario = this.scenario;
+        //console.log(this.scenario,this.time, this.quantity, 'class!!')
 
         this.points.find({}).forEach(function(p, index){
             //console.log(p, values)
             let pos = p.pos
-            if(quantity == 'newAccess'){
-                p[quantity] = parseFloat(computeAvgAccessibility(values[pos]))
-            }if(quantity == 'noLayer'){
+            if(quantity == 'noLayer'){
                 p[quantity] = 0
+            }else if(quantity == 'population'){
+                p[quantity] = parseInt(scenario['arrayPop'][pos])
             }
             else{
                 p[quantity] = parseFloat(values[pos])

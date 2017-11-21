@@ -10,6 +10,7 @@
       </div>
       <div class="modal-body" id="endModalBody">
 !-->
+  <div class="text-center">
   {{#if firstTime}}
       <div class="lead text-success"> congratulation! computation ended.</div>
   {{/if}}
@@ -20,13 +21,13 @@
        </h4>
        <ul class="list-inline">
          <li class="text"> <b>Ranking Position {{scenarioInfo "pos"}} </b></li>
-         <li class="text"> Velocity Score {{scenarioInfo "sumVelocityScore"}}</li>
+         <li class="text"> Velocity Score {{scenarioInfo "avgVelocityScore"}}</li>
          <li class="text"> Sociality Score {{scenarioInfo "avgSocialityScore"}}</li>
        </ul>
     <span class = "text" id="shareButtonScenario" style="{float:center;}">
       {{>shareit shareData}}
     </span>
-
+  </div>
        <!--
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

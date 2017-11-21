@@ -9,6 +9,11 @@
 			{{nameQuantity "socialityScore"}} : 
 			<span class ='label' style='{{labelColor 'socialityScore' this.socialityScore}}'>  {{ toString 'socialityScore' this.socialityScore}} </span>
 		</div>
+		<div class=' text-muted text-center'>
+			{{nameQuantity "population"}} : 
+			<span class ='label' style='{{labelColor 'population' this.population}}'>  {{ toString 'population' this.population}} <i class="fa fa-male" aria-hidden="true"></i></span>
+		</div>
+
 		{{#if isNotDefault}}
 		<div class="text-center text">default </div>
 		<div class=' text-muted text-center'>

@@ -8,7 +8,6 @@ import '/imports/client/map/geojson/legendGeojson.html';
 const makeColorLegend = function(shell, color, functionToShell){
 	functionToShell = functionToShell || function(val){return val.toString()}
 	objColor = [];
-	//console.log(functionToShell, functionToShell(shell[0]), color((shell[0])))
 	for (let i = 0; i < shell.length - 1; i++) {
 		objColor.push({
 			'color': color((shell[i] + shell[i + 1])/2),
@@ -21,6 +20,8 @@ const makeColorLegend = function(shell, color, functionToShell){
 			'html': '>' + functionToShell(shell[shell.length - 1])
 		});
 	}
+
+	//console.log(objColor)
 	return objColor;
 }
 
@@ -48,6 +49,12 @@ let dataQuantity = function(quantity){
 					title: field2text['socialityScore'],
 					'unity': '[individuals]',
 					'functionToShell' : (val) => { return (val/1000.).toString() + 'K';}
+				};
+			case 'population':
+				return {
+					title: field2text['population'],
+					'unity': '[individuals]',
+					'functionToShell' : (val) => { return val.toString();}
 				};
 			case 'socialityScoreDiff':
 				return {

@@ -84,7 +84,7 @@ const computeNeigh = function(stop, stops, P2S2Add, S2S2Add, points, serverOSRM)
 	  						}
 	  					}
 	  				}
-	  				console.log("called resolved point", serverUrl)
+	  				console.log("called resolved point", serverUrl, urlPoints)
 	  				resolve([stop,pointsNList,stopsNList]);
 	        });
 	    };

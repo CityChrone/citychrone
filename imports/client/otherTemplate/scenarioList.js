@@ -38,9 +38,14 @@ Template.scenarioList.events({
 
 
 Template.scenarioList.helpers({
+	'scenarioLoaded'(){
+		
+		return Template.scenarioList.RV.scenarioLoaded.get();
+	},
 	'getScenarioList'(){
 		let city = Router.current().params.city;
-		return scenarioDB.find({'city':city, default:false}, {sort:{'scores.sumVelocityScore':-1, creationDate: -1}});
+		Template.scenarioList.data.pos = 0;
+		return scenarioDB.find({'city':city, default:false}, {sort:{'scores.avgVelocityScore':-1, creationDate: -1}});
 	},
 	'scenarioDef'(){
 		let city = Router.current().params.city;
@@ -61,9 +66,19 @@ Template.scenarioList.helpers({
 });
 
 Template.scenarioList.onCreated(()=>{
-	Template.scenarioList.RV = {};
+	let city = Router.current().params.city;
+
 	Template.scenarioList.data = {};
 	Template.scenarioList.data.pos = 0;
+
+	Template.scenarioList.RV = {};
+	Template.scenarioList.RV.scenarioLoaded = new ReactiveVar(false);
+
+	Meteor.subscribe('scenario', city, function(){
+		Template.scenarioList.RV.scenarioLoaded.set(true);
+		console.log('settet true load scenario', Template.scenarioList.RV.scenarioLoaded.get())
+	});
+
 });
 
 Template.scenarioList.onRendered(function(){	
@@ -117,12 +132,9 @@ Template.scenarioListRow.helpers({
 		return eval(id).valueOf();
 	},
 	'score'(quantity){
-		let city = Router.current().params.city;
-		let scenarioDef = scenarioDB.findOne({'default':true, 'city':city});
-		//console.log(quantity, this, scenarioDef);
-		if(scenarioDef)
-			return (this.scores[quantity] - scenarioDef.scores[quantity]).toFixed(0);
-		else return 0
+		//console.log(quantity)
+		if(quantity == 'avgVelocityScore') return this.scores[quantity].toFixed(3);
+		if(quantity == 'avgSocialityScore') return this.scores[quantity].toFixed(0);
 	},
 	'checkID'(_id){
 		// if(Template.body.template.scenario.nameInserted.get()){
@@ -152,12 +164,12 @@ Template.scenarioListRow.helpers({
 		}
 	},
 	'pos'(id){
-		//console.log(this)
 		let scenario = this;
-		let sort = {'scores.sumVelocityScore':-1, creationDate: -1};
-		let pos = scenarioDB.find({'city':scenario.city, 'scores.sumVelocityScore':{'$gt':scenario.scores.sumVelocityScore}}).count() + 1;
+		let sort = {'scores.avgVelocityScore':-1, creationDate: -1};
+		let pos = scenarioDB.find({'city':scenario.city, 'scores.avgVelocityScore':{'$gt':scenario.scores.avgVelocityScore}}).count() + 1;
+		//console.log(this, pos, )
 		return pos;
-	}
+	},
 });
 
 Template.scenarioDefButton.helpers({

@@ -27,7 +27,7 @@ Template.popUpGeojson.helpers({
 		return "background-color:"+ selColor(val)+';';
 	},
 	'toString'(feature, val){
-		//console.log(val)
+		console.log(val, feature)
 		$("#accessPopupChart").html('');
 		switch(feature){
 			case 'velocityScore':
@@ -40,7 +40,11 @@ Template.popUpGeojson.helpers({
 				if(val > 0){ return valFixed.toString() + 'K';}
 				else { return 'Not Av.';}
 				break;
-
+			case 'population':
+				valFixed = parseFloat(val).toFixed(0);
+				if(val >= 0){ return valFixed.toString();}
+				else { return 'Not Av.';}
+				break;
 		}
 	},
 	'toStringDef'(feature){

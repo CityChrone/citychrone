@@ -22,8 +22,9 @@ Meteor.startup(() => {
 
 
   Meteor.publish('scenario', function scenarioList(city) {
-    let sort = {'scores.sumVelocityScore':-1, 'creationDate':-1};
+    let sort = {'scores.avgVelocityScore':-1, 'creationDate':-1};
     let field = {'moments':0, 'P2S2Add': 0, 'S2S2Add':0, 'lines':0};
+    console.log(sort, field);
     return scenarioDB.find({'city':city}, {sort:sort, 'fields':field});
   });
 

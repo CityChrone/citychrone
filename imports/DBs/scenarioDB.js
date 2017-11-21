@@ -6,9 +6,9 @@ export const scenarioDB = new Mongo.Collection('scenario');
 
 if(Meteor.isServer){
 	scenarioDB._ensureIndex({ "scores.scoreVelocity": -1, "creationDate":-1});
-	scenarioDB._ensureIndex({ "city":1, "scores.scoreVelocity": 1, "creationDate":-1});
+	scenarioDB._ensureIndex({ "city":1, "scores.avgVelocityScore": 1, "creationDate":-1});
 	scenarioDB._ensureIndex({ "city":1});
-	scenarioDB._ensureIndex({ "city":1, "scores.scoreVelocity": 1});
+	scenarioDB._ensureIndex({ "city":1, "scores.avgSocialityScore": 1});
 
 }
 export const initScenario = function(city, name, author, times, metroLinesFetched, P2S2Add, S2S2Add){
@@ -47,10 +47,21 @@ export const initScenario = function(city, name, author, times, metroLinesFetche
 
 export const computeScoreNewScenario = function(scenario, time){
 	let scores = {};
-	let moment = scenario['moments'][time]
+	let moment = scenario['moments'][time];
+	let popArray = scenario['arrayPop'];
 	let totPop = scenario.arrayPop.reduce((a, b)=>{ return a + b; }, 0);
-	scores['sumVelocityScore'] = moment['velocityScore'].reduce((a, b) => a + b, 0);
-	scores['avgSocialityScore'] = moment['socialityScore'].reduce((a, b) => (a + b), 0) / moment['socialityScore'].length;
+	scores['avgVelocityScore'] = 0;
+	moment['velocityScore'].forEach((vel, i)=>{
+		scores['avgVelocityScore'] += popArray[i] * vel
+	});
+	scores['avgVelocityScore'] /= totPop;
+	
+	scores['avgSocialityScore'] = 0;
+	moment['socialityScore'].forEach((soc, i)=>{
+		scores['avgSocialityScore'] += popArray[i] * soc
+	});
+	scores['avgSocialityScore'] /= totPop;
+
 	return scores;
 
 };
@@ -58,15 +69,30 @@ export const computeScoreNewScenario = function(scenario, time){
 Meteor.methods({
 	'insertNewScenario' : function(obj){
 		//console.log('insert scenario', obj);
-		scenarioDB.insert(obj, function(err, id) {
+		if('_id' in obj){
+					console.log('updating scenario', obj.city);
+
+			scenarioDB.update({'_id':obj['_id']}, obj,{'upsert':true}, function(err, id) {
+					if (err) {
+						console.log(err);
+						return;
+					}
+					//console.log('insert scenario new id', id);
+					//if (Meteor.isClient)
+						//Template.body.template.scenario.currentScenarioId = id;
+			});
+		}else{
+			scenarioDB.insert(obj, function(err, id) {
 				if (err) {
-					console.log(err);
-					return;
-				}
-				//console.log('insert scenario new id', id);
-				//if (Meteor.isClient)
-					//Template.body.template.scenario.currentScenarioId = id;
-		});
+						console.log(err);
+						return;
+					}
+					//console.log('insert scenario new id', id);
+					//if (Meteor.isClient)
+						//Template.body.template.scenario.currentScenarioId = id;
+			});
+
+		}
 	},
 	'updateScenario' : function(obj, _id){
 		//console.log("update scenario", _id);
@@ -87,6 +113,9 @@ Meteor.methods({
   'giveScenario': function(_id){
   	//console.log(_id, scenarioDB.findOne({'_id':new Mongo.ObjectID(_id)}))
   	return scenarioDB.findOne({'_id':new Mongo.ObjectID(_id)});
+  },
+  'findOne':function(search){
+  	return scenarioDB.findOne(search);
   }
 
 });

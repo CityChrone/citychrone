@@ -1,10 +1,10 @@
 <template name="quantityDescription">
 {{#if quantity 'velocityScore'}}
-	<div class = "text-muted">The <i>Velocity Score</i> describe how fast you move out from an hexagon to all the others in the city by public transport. It measures the efficency of public transport systems to explore the space in the city. Larger is the <i>Velocity Score</i> better and faster you move. <!-- , for more info see.!-->
+	<div class = "text-muted">The <strong>Velocity Score</strong> describe how fast you move out from an hexagon to all the others in the city by public transport. It measures the efficency of public transport systems to explore the space in the city. Larger is the <i>Velocity Score</i> better and faster you move. <!-- , for more info see.!-->
 	</div>
 {{/if}}
 {{#if quantity 'socialityScore'}}
-	<div class = "text-muted">The <i>Sociality Score</i> is the maximun number of people that you could meet in a typical daily trip starting from a point on the map.<!-- More information [].!-->
+	<div class = "text-muted">The <strong>Sociality Score</strong> is the maximun number of people that you could meet in a typical daily trip starting from a point on the map.<!-- More information [].!-->
 	</div>
 {{/if}}
 {{#if quantity 't'}}
@@ -12,6 +12,11 @@
 	<div class = "text-muted">The <a href="https://en.wikipedia.org/wiki/Isochrone_map" target="_blank">Isochrone</a> layer shows the area reachable in a given time from a starting point by public transport. 
 	</div>
 {{/if}}
+{{#if quantity 'population'}}
+	<div class = "text-muted">The <strong>Population</strong> layer shows estimated resident population in the city. The data are taken from grids of 1km square and projected on the overlapping hexagons. Source of data: <a href="http://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/population-distribution-demography/geostat" target="_blank"> eurostat </a> for europe, <a href="http://sedac.ciesin.columbia.edu/data/set/gpw-v4-population-count" target="_blank"> SEDAC</a> for the rest of the world.
+	</div>
+{{/if}}
+
 {{#if quantity 'velocityScoreDiff'}}
 	<div class = "text-muted"><i>Velocity Score</i> improvements. The layer shows the differences between the current scenario and the default scenario. <!-- , for more info see.!-->
 	</div>

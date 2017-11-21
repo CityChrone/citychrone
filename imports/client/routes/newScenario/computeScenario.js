@@ -15,6 +15,68 @@ import JSZip from "jszip";
 import JSZipUtils from 'jszip-utils';
 
 import '/imports/client/routes/newScenario/saveScenario.js';
+
+const recompute = function(){
+	Template.computeScenario.function.loading(true)
+	Template.map.data.map.spin(true);
+	Template.quantitySelector.quantitySelectedRV.set('velocityScore');
+	Template.computeScenario.data.ended.set(false);
+		Template.computeScenario.data.nameScenarioSet.set(true);
+	Template.computeScenario.worker.CSAPointsComputed = 0;
+	
+	if(!Template.computeScenario.RV.dataLoaded.get()) //se non ho caricato i dati (o non ho finito il nuovo calcolo) non faccio nulla
+		return;
+	if(Template.computeScenario.data.newHexsComputed && !Template.computeScenario.data.mapEdited.get()) //se ho iniziato il calcolo o l'ho già finito
+		return;
+
+	let newName;
+
+	//Template.newScenario.RV.currentScenarioId.set(false);
+	//Template.newScenario.RV.currentScenario.set(false);
+
+	if(!$('#endMetro').hasClass('hidden')){
+		$('#endMetro').trigger('click'); //finisco di aggiungere la linea
+	}
+	
+	let scenario = Template.newScenario.RV.currentScenario.get()
+
+	let city = Template.computeScenario.data.city
+	//let name = "";
+	//let author = "";
+	let time = Template.timeSelector.timeSelectedRV.get();
+	scenario.P2S2Add = addNewStops.fill2AddArray(Template.newScenario.collection.points.find().count());
+	scenario.S2S2Add = addNewStops.fill2AddArray(Template.computeScenario.collection.stops.find().count());
+	scenario['recomputed'] = true;
+	console.log(scenario);
+
+	for(time in scenario.moments){
+		scenario.moments[time] = {
+			'velocity' : 0,
+			'score' : 0,
+			'budget' : 0,
+			'efficency' : 0,
+			'velocityScore' : [],
+			'socialityScore' : [],
+			'velocityScoreDiff' : [],
+			'socialityScoreDiff' : [],
+
+		}
+	}
+	//console.log('created scenario', P2S2Add, S2S2Add);
+	Template.computeScenario.RV.toSave.set(true);
+	//console.log('compute!!',Template.computeScenario.RV.toSave.get());
+	Template.newScenario.RV.currentScenario.set(scenario);
+	Template.newScenario.RV.currentScenarioId.set(scenario._id);
+
+	Template.newScenario.RV.ScenarioGeojson.set(scenario);
+	Template.newScenario.RV.ScenarioGeojsonId.set(scenario._id);
+
+	//Blaze.render(Template.saveScenario, $("body")[0]);
+
+	computeNewScenario()
+	$('#ComputeNewMap').removeClass('active');
+}
+
 Template.computeScenario.helpers({
 	'toSave'(){
 		//console.log("toSave !!", Template.computeScenario.RV.toSave.get())
@@ -34,13 +96,33 @@ Template.computeScenario.helpers({
 	'scenarioComputed'(){
 		let one = Template.computeScenario.data.ended.get();
 		let two = Template.computeScenario.data.nameScenarioSet.get();
+		let three = Template.computeScenario.data.recomputeAll;
 		let scenario = Template.newScenario.RV.currentScenario.get();
-		//console.log('scenarioComputed', one, two);
-		if(one && two) 	Router.go('/city/' + scenario.city + '?id=' + scenario._id);
+		console.log('scenarioComputed', one, two, three);
+		if(one && two){
+			if(!three) Router.go('/city/' + scenario.city + '?id=' + scenario._id);
+			else{
+				Meteor.call('updateScenario', {'$set':{'recomputed':true}},()=>{
+					let city = Template.computeScenario.data.city
+					Meteor.call('findOne', {'recomputed':false, 'city': city, '_id':{'$ne':scenario._id}},(err,newScenario)=>{
+						//console.log("goooo", err, newScenario);
+						Router.go('/newScenario/' + newScenario.city + '?id=' + newScenario._id + '&recompute=true&all=true');
+						//console.log("goooo2");
+					});
+				});
+			}
+		}
 		return ""
+	},
+	'recomputed'(){
+		let scenario =  Template.newScenario.RV.currentScenario.get();
+		console.log(scenario, scenario.recomputed)
+		return !scenario.recomputed;
 	}
 
 });
+
+
 
 Template.computeScenario.events({
 	'click #ComputeNewMap'() {
@@ -119,8 +201,9 @@ Template.computeScenario.collection.stops = new Mongo.Collection(null)
 
   Template.computeScenario.data = {};
   Template.computeScenario.data.countLimit = 0;
-  Template.computeScenario.data.countStep = 1000;
+  Template.computeScenario.data.countStep = 500;
   Template.computeScenario.data.dataToLoad = 6;
+  Template.computeScenario.data.recomputeAll = false;
 
   //********. Reactive Var ************ 
   Template.computeScenario.RV = {};
@@ -131,7 +214,7 @@ Template.computeScenario.collection.stops = new Mongo.Collection(null)
 
   //******** webWorker *************
   Template.computeScenario.worker = {}
-  Template.computeScenario.worker.numCSAWorker = 4
+  Template.computeScenario.worker.numCSAWorker = 6
   Template.computeScenario.worker.CSA = makeWorkers(Template.computeScenario.worker.numCSAWorker)
   Template.computeScenario.worker.CSAClusterPoints = 50;
   Template.computeScenario.worker.CSAPointsComputed = 0;
@@ -143,6 +226,7 @@ Template.computeScenario.onRendered(function(){
 	Template.computeScenario.data.city = city;
 
 	loadComputeScenarioData(city);
+
 });
 
 	
@@ -154,6 +238,18 @@ let checkDataLoaded = function(num = -1) {
 		Template.computeScenario.function.loading(false);
 		Template.computeScenario.RV.dataLoaded.set(true);
 		Template.map.data.map.spin(false);
+
+
+	//TO REMOVE!!
+		if(Router.current().params.query.recompute){
+			let recomputeParam = Router.current().params.query.recompute;
+			if(recomputeParam){
+				Meteor.setTimeout(recompute, 500);
+			}
+			if(Router.current().params.query.all){
+				Template.computeScenario.data.recomputeAll = Router.current().params.query.all == 'true';
+			}
+		}
 
 	}
 	return true;

@@ -9,7 +9,6 @@ import d3 from 'd3'
 export const maxValueIso = 2. * 3600.
 export const maxValuePotPop = 1000000;
 
-export const numBinAccess = 15;
 export const numBinIso = 8.;
 export const numBinPop = 20;
 
@@ -90,14 +89,23 @@ export const colorPotPopDiff = function(val) {
 };
 
 
-export const shellIsochrone =  _.range(maxValueIso/numBinIso, maxValueIso+1,  maxValueIso/numBinIso)
+export const shellPopulation =  [0,50,100, 200, 400, 700, 1000, 2000, 4000]
+export const colorListPopulation = ['#a50026','#d73027','#f46d43','#fdae61','#fee090','#abd9e9','#74add1','#4575b4', '#878787'].reverse()
+export const colorPopulation = function(val) {
+	let i = 0;
+	//let maxV = 16.;
+	for (i = 0; i < shellPopulation.length; i++) {
+		if (val < shellPopulation[i]) break;
+	}
+		//console.log(i, val, colorListIso[i], shellIsochrone)
+	let color = colorListPopulation[i-1];
+	return color
+};
+
+export const shellIsochrone  =  _.range(maxValueIso/numBinIso, maxValueIso+1,  maxValueIso/numBinIso)
 shellIsochrone.unshift(1)
 shellIsochrone.unshift(0)
 export const colorListIso = ['#67001f','#b2182b','#d6604d','#f4a582','#fddbc7','#d1e5f0','#92c5de','#4393c3','#2166ac','#053061'].reverse()
-/*export const colorIsochrone = function(val){
-	if(val < 1) return '#08519c'
-	else return d3.scaleSequential(d3Inter.interpolateRdBu).domain([maxValueIso, 0]).clamp(true)(val);
-}*/
 export const colorIsochrone = function(val) {
 	let i = 0;
 	//let maxV = 16.;
@@ -108,6 +116,7 @@ export const colorIsochrone = function(val) {
 	let color = colorListIso[i-1];
 	return color
 };
+
 
 
 
@@ -126,6 +135,9 @@ export const returnShell = function(feature, diff){
 			return shellPotPopDiff;
 		case 'noLayer':
 			return [0];
+		case 'population':
+			return shellPopulation;
+
 
 
 	}
@@ -146,6 +158,9 @@ export const color = function(feature){
 			return colorPotPopDiff;
 		case 'noLayer':
 			return ()=>{return null};
+		case 'population':
+			return colorPopulation;
+
 
 	}
 };
@@ -164,7 +179,8 @@ export const styleHex = function(feature){
 				return stylePotPopDiff;
 			case 'noLayer':
 				return styleGeojson(null);
-
+			case 'population':
+				return stylePopulation;
 		}
 };
 
@@ -223,3 +239,9 @@ export const stylePotPopDiff = function(feature) {
 export const styleDiffVel = function(feature, maxValue) {
 	return styleGeojson(colorDiff(parseFloat(feature.geometry.properties.vAvgDiff)));
 };
+
+export const stylePopulation = function(feature) {
+	let color = colorPopulation(feature.geometry.properties.population);
+	return styleGeojson(color);
+};
+

@@ -9,7 +9,7 @@ import '/imports/client/selector/timeSelector.html';
 import { clickGeojsonIso } from '/imports/client/map/geojson/hexsGeojson.js'
 
 Template.timeSelector.onCreated(function(){
-	Template.timeSelector.timeSelectedRV = new ReactiveVar(false);
+	Template.timeSelector.timeSelectedRV = new ReactiveVar((7*3600).toString());
 	Template.timeSelector.pointIsochrone = [0,0];
 	/*$(function() {
 
@@ -44,7 +44,11 @@ Template.timeSelector.events({
 			//console.log("tt isochrone")
 		}
 
-	} 
+	},
+	'click #helpTimeButton'(e){
+		console.log(e)
+		$("#helpTime").toggle('slow');
+	}
 });
 
 Template.timeSelector.helpers({
@@ -124,6 +128,7 @@ Template.timeSelector.helpers({
 });
 
 Template.timeSelector.onRendered(function() {
+	$("#helpTime").hide();
 	//this.$('.timepicker').selectpicker('render');
 
 });

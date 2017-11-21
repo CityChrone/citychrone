@@ -1,4 +1,5 @@
 <template name="city">
+{{> scenarioList}}
 {{#if cityCenter}}
 	{{>map cityCenter}}
 	{{#if mapLoaded}}
@@ -7,7 +8,6 @@
 		{{loadScenario}}
 		{{addDataToMap}}
 		{{loadGeojsonToMap}}
-		{{> scenarioList}}
 	{{/if}}
 {{/if}}
 

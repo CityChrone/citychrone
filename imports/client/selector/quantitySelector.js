@@ -22,7 +22,8 @@ export let text2field = {
 	'Isochrones': 't',
 	'Velocity Score - Diff' : 'velocityScoreDiff',
 	'Sociality Score - Diff' : 'socialityScoreDiff',
-	'No Layer' : 'noLayer'
+	'No Layer' : 'noLayer',
+	'Population' : 'population'
 };
 let invertKeys2Value = function(myObj){
 	let newObj = {}
@@ -45,6 +46,10 @@ export let eventQuantitySelected = function(e){
 }
 
 Template.quantitySelector.events({
+	'click #helpQuantityButton'(e){
+		console.log(e)
+		$("#helpQuantity").toggle('slow');
+	}
 });
 
 Template.quantitySelector.helpers({
@@ -99,12 +104,19 @@ Template.quantitySelector.helpers({
 	    let dis = templateRV.currentScenario.get().default ? 'disabled' : '';
 	    return dis;
 
+	},
+	'showTime'(){
+		console.log('showTime', Template.quantitySelector.quantitySelectedRV.get())
+		if(Template.quantitySelector.quantitySelectedRV.get() != 'population')	return true;
+		return false;
 	}
 });
 
 
 Template.quantitySelector.onRendered(function() {
 	this.$('#quantityPicker').selectpicker('render');
+
+	$("#helpQuantity").hide();
 
 	$('#quantityPicker').on('changed.bs.select', function (e) {
 		//console.log('evemnd picker', e)	

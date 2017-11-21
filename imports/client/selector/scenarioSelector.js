@@ -10,14 +10,14 @@ import '/imports/client/otherTemplate/scenarioList.js';
 
 Template.scenarioSelector.onCreated(function(){
 	let city = Router.current().params.city;
-	
-	Meteor.subscribe('scenario', city, function(){});
-
 	Template.scenarioSelector.data = {}
 	Template.scenarioSelector.data.city = Router.current().params.city;
 	
 	Template.scenarioSelector.RV = {}
 	Template.scenarioSelector.RV.isCreateScenario = new ReactiveVar(false);
+	Template.scenarioSelector.RV.scenarioLoaded = new ReactiveVar(false);
+
+	
 	Meteor.call('giveDataBuildScenario', city,['newScenario'], function(err, risp){
 		//console.log("newScenario", city, risp)
 		Template.scenarioSelector.RV.isCreateScenario.set(risp.newScenario)
@@ -30,13 +30,6 @@ Template.scenarioSelector.onRendered(function(){
 
 
 Template.scenarioSelector.events({
-	'click .scenarioButton'(e){
-		//console.log(e);
-		//Blaze.render(Template.scenarioList, $("body")[0]);
-
-		$('#scenarioModal').modal('show');
-
-	},
 	'click #createNewScenarioButton'(e){
 		let idScenario = Template.city.RV.currentScenario.get()._id;
 		Router.go('/newScenario/'+ Template.scenarioSelector.data.city + '?id=' +  idScenario);
@@ -85,12 +78,15 @@ Template.scenarioSelector.helpers({
 	        templateRV = Template.city.RV
 	    }
 		let scenario = templateRV.currentScenario.get();
-		let pos = scenarioDB.find({'city':scenario.city,'scores.sumVelocityScore':{'$gt':scenario.scores.sumVelocityScore}}).count() + 1;
+		let pos = scenarioDB.find({'city':scenario.city,'scores.avgVelocityScore':{'$gt':scenario.scores.avgVelocityScore}}).count() + 1;
 
 		return pos;
 	},
 	'isCreateScenario'(){
 		return Template.scenarioSelector.RV.isCreateScenario.get();
+	},
+	'scenarioLoaded'(){
+		return Template.scenarioSelector.RV.scenarioLoaded.get();
 	}
 
 

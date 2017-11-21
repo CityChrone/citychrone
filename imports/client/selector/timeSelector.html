@@ -1,7 +1,7 @@
 <template name="timeSelector">
 <div>
-	 <span class="h4 text-muted text-left"> time: </span>
-	 <select class="timepicker" data-width="fit" data-style="btn-default btn-sm">
+	 <div class="h4 text-muted text-left"> time: </div>
+	 <select class="timepicker" data-width="75%" data-style="btn-default btn-sm">
 	 {{#if isScenario}}
 	{{#each getTimes}}
       <option {{isochroneAvg}}>{{time}}</option>
@@ -9,6 +9,16 @@
 	{{render}}
 	{{/if}}
 	</select>
+	<a href='#' class="btn" id="helpTimeButton">
+			<span class="text h4">
+			 <i class="fa fa-question-circle" aria-hidden="true"></i>
+			</span>
+	</a>
 
 </div>
+
+	<div class='marginBar text-left' id='helpTime'>
+		Times of the day on which the layers are computed.
+	</div>
+
 </template>
