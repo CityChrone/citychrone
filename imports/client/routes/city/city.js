@@ -179,11 +179,11 @@ Template.city.onRendered(function() {
 
 	Meteor.call('giveDataBuildScenario', city,['centerCity'], function(err, data){
 		//center City
-		Template.city.RV.cityCenter.set({'centerCity' : data['centerCity'], 'zoom': 12});
-		
-	});
+		console.log("loaded center city")
 
-	Meteor.call('giveDataBuildScenario', city,['listPoints','oneHex'] , function(err, data){
+		Template.city.RV.cityCenter.set({'centerCity' : data['centerCity'], 'zoom': 12});
+
+		Meteor.call('giveDataBuildScenario', city,['listPoints','oneHex'] , function(err, data){
 
 		//listPoints
 		let listPoints = data['listPoints']
@@ -205,6 +205,9 @@ Template.city.onRendered(function() {
 		Template.city.function.checkDataLoaded();
 
  	});
+
+	});
+
 
 });
 

@@ -9,6 +9,11 @@
 		{{addDataToMap}}
 		{{loadGeojsonToMap}}
 	{{/if}}
+{{else}}
+<div class="text text-center h1" style="width: 1px; height: 1px; top: 45%; left: 45%; position: absolute; margin: auto; color:">
+<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+<span class="sr-only">Loading...</span>
+</div>
 {{/if}}
 
 </template>
