@@ -2,6 +2,7 @@
 'use strict';
 
 module.exports = rbush;
+module.exports.default = rbush;
 
 var quickselect = require('quickselect');
 
@@ -91,7 +92,7 @@ rbush.prototype = {
             return this;
         }
 
-        // recursively build the tree with the given data from stratch using OMT algorithm
+        // recursively build the tree with the given data from scratch using OMT algorithm
         var node = this._build(data.slice(), 0, data.length - 1, 0);
 
         if (!this.data.children.length) {
@@ -564,13 +565,14 @@ function multiSelect(arr, left, right, n, compare) {
 },{"quickselect":2}],2:[function(require,module,exports){
 'use strict';
 
-module.exports = partialSort;
+module.exports = quickselect;
+module.exports.default = quickselect;
 
-// Floyd-Rivest selection algorithm:
-// Rearrange items so that all items in the [left, k] range are smaller than all items in (k, right];
-// The k-th element will have the (k - left + 1)th smallest value in [left, right]
+function quickselect(arr, k, left, right, compare) {
+    quickselectStep(arr, k, left || 0, right || (arr.length - 1), compare || defaultCompare);
+};
 
-function partialSort(arr, k, left, right, compare) {
+function quickselectStep(arr, k, left, right, compare) {
 
     while (right > left) {
         if (right - left > 600) {
@@ -581,7 +583,7 @@ function partialSort(arr, k, left, right, compare) {
             var sd = 0.5 * Math.sqrt(z * s * (n - s) / n) * (m - n / 2 < 0 ? -1 : 1);
             var newLeft = Math.max(left, Math.floor(k - m * s / n + sd));
             var newRight = Math.min(right, Math.floor(k + (n - m) * s / n + sd));
-            partialSort(arr, k, newLeft, newRight, compare);
+            quickselectStep(arr, k, newLeft, newRight, compare);
         }
 
         var t = arr[k];

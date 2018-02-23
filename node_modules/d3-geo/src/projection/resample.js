@@ -1,6 +1,6 @@
 import {cartesian} from "../cartesian";
 import {abs, asin, atan2, cos, epsilon, radians, sqrt} from "../math";
-import {transform} from "../transform";
+import {transformer} from "../transform";
 
 var maxDepth = 16, // maximum depth of subdivision
     cosMinDistance = cos(30 * radians); // cos(minimum angular distance)
@@ -10,7 +10,7 @@ export default function(project, delta2) {
 }
 
 function resampleNone(project) {
-  return transform({
+  return transformer({
     point: function(x, y) {
       x = project(x, y);
       this.stream.point(x[0], x[1]);

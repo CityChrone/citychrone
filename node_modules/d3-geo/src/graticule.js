@@ -11,7 +11,7 @@ function graticuleY(x0, x1, dx) {
   return function(y) { return x.map(function(x) { return [x, y]; }); };
 }
 
-export default function() {
+export default function graticule() {
   var x1, x0, X1, X0,
       y1, y0, Y1, Y0,
       dx = 10, dy = dx, DX = 90, DY = 360,
@@ -98,4 +98,8 @@ export default function() {
   return graticule
       .extentMajor([[-180, -90 + epsilon], [180, 90 - epsilon]])
       .extentMinor([[-180, -80 - epsilon], [180, 80 + epsilon]]);
+}
+
+export function graticule10() {
+  return graticule()();
 }

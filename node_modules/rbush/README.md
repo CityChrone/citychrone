@@ -19,20 +19,30 @@ Open web console to see benchmarks;
 click on buttons to insert or remove items;
 click to perform search under the cursor.
 
-* [uniformly distributed random data](http://mourner.github.io/rbush/viz/viz-uniform.html)
 * [randomly clustered data](http://mourner.github.io/rbush/viz/viz-cluster.html)
+* [uniformly distributed random data](http://mourner.github.io/rbush/viz/viz-uniform.html)
+
+## Install
+
+Install with NPM (`npm install rbush`), or use CDN links for browsers:
+[rbush.js](https://unpkg.com/rbush@2.0.1/rbush.js),
+[rbush.min.js](https://unpkg.com/rbush@2.0.1/rbush.min.js)
 
 ## Usage
 
 ### Creating a Tree
 
 ```js
-var tree = rbush(9);
+var tree = rbush();
 ```
 
 An optional argument to `rbush` defines the maximum number of entries in a tree node.
-It drastically affects the performance, so you should adjust it
-considering the type of data and search queries you perform.
+`9` (used by default) is a reasonable choice for most applications.
+Higher value means faster insertion and slower search, and vice versa.
+
+```js
+var tree = rbush(16);
+```
 
 ### Adding Data
 
@@ -65,6 +75,7 @@ which is useful when you only have a copy of the object you need removed (e.g. l
 tree.remove(itemCopy, function (a, b) {
     return a.id === b.id;
 });
+```
 
 Remove all items:
 
@@ -83,6 +94,8 @@ as a second argument to `rbush` like this:
 var tree = rbush(9, ['[0]', '[1]', '[0]', '[1]']); // accept [x, y] points
 tree.insert([20, 50]);
 ```
+
+If you're indexing a static list of points (you don't need to add/remove points after indexing), you should use [kdbush](https://github.com/mourner/kdbush) which performs point indexing 5-8x faster than RBush.
 
 ### Bulk-Inserting Data
 

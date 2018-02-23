@@ -1,4 +1,4 @@
-import {atan, atan2, cos, epsilon, halfPi, log, pow, sign, sin, sqrt, tan} from "../math";
+import {abs, atan, atan2, cos, epsilon, halfPi, log, pow, sign, sin, sqrt, tan} from "../math";
 import {conicProjection} from "./conic";
 import {mercatorRaw} from "./mercator";
 
@@ -22,7 +22,7 @@ export function conicConformalRaw(y0, y1) {
 
   project.invert = function(x, y) {
     var fy = f - y, r = sign(n) * sqrt(x * x + fy * fy);
-    return [atan2(x, fy) / n, 2 * atan(pow(f / r, 1 / n)) - halfPi];
+    return [atan2(x, abs(fy)) / n * sign(fy), 2 * atan(pow(f / r, 1 / n)) - halfPi];
   };
 
   return project;
