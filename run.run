@@ -1,0 +1,2 @@
+L_NODE_FLAGS="--max-old-space-size=16384" NODE_OPTIONS="--max-old-space-size=16384" MONGO_URL=mongodb://localhost:27017/meteor meteor run 
+
