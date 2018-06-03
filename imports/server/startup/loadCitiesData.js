@@ -66,7 +66,7 @@ export let addDataFromZip = function(nameFile){
 											        console.log('readed', nameFile)
 										        	//console.log("loaded", city+".zip", 'scenario def',scenarioDB.find({'city':city, 'default':true}).count(), ' newScenario', newScenario, citiesData[city]['centerCity'])
 										        	if(scenarioDB.find({'city':city, 'default':true}).count()==0){
-														//computeScenario(city, citiesData[city]);
+														computeScenario(city, citiesData[city]);
 										  
 										        		console.log("computeScenario", city)
 										        	}
