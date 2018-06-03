@@ -15,6 +15,8 @@ process.on('unhandledRejection', console.log.bind(console))
 
 var worker = require("/public/workers/ICSACore.js");
 
+var _ = require('lodash');
+
 var avgEmAll = function (arrays) {
 	result = []
 	for(var i = 0; i < arrays[0].length; i++){
@@ -47,6 +49,7 @@ export const cutArrayC = function(startTime, arrayC){
 				//console.log("break!!!")
 			}
 	}
+	//console.log(_)
 
 	arrayCCut = _.slice(arrayC, indexStart - 2, indexEnd+2);
 	console.log("cutted array!!",startTime,  indexStart, indexEnd, arrayC.length, arrayCCut.length)

@@ -1,5 +1,7 @@
+
 import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
+var _ = require('lodash');
 
 import { scenarioDB } from '/imports/DBs/scenarioDB.js';
 import '/imports/server/methods.js';
@@ -13,11 +15,9 @@ import fs from 'fs';
 import '/imports/server/router.js';
 import {loadCity} from '/imports/server/startup/loadCitiesData.js';
 
-var _;
  
 
 Meteor.startup(() => {
-  _ = lodash;
   loadCity()
 
 
