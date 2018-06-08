@@ -26,8 +26,22 @@ let createControl = function(templates, position, map, classToStyle="", toAdd = 
 		}
 	});
 	var t = new Co();
-	if (toAdd)
-		map.addControl(t);
+	if (toAdd){
+			map.addControl(t);
+		    //console.log($(".panel-body"), $(".leaflet-control-container"),$(".leaflet-top").find("*"))
+		  $(".leaflet-top").mouseover((e)=>{
+		    //console.log("enter!!", e)
+		    Template.map.data.map.scrollWheelZoom.disable();
+		    Template.map.data.map.touchZoom.disable();
+		  });
+		  $(".leaflet-top").mouseout((e)=>{
+		    //console.log("out!!")
+
+		    Template.map.data.map.scrollWheelZoom.enable();
+		    Template.map.data.map.touchZoom.enable();
+		  })
+	}
+
 	return t;
 };
 

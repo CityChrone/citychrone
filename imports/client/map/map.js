@@ -100,7 +100,6 @@ Template.map.onRendered(function() {
   	});
 
     //L.Icon.Default.imagePath = '/pipo/images/';
-
   Template.map.data.ControlbaseMap = L.control.layers(Template.map.data.baseMaps).addTo(Template.map.data.map);
 
   Template.map.data.mapScale = L.control.scale({position : 'bottomright'}).addTo(Template.map.data.map);

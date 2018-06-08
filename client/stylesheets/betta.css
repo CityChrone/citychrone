@@ -50,7 +50,7 @@ Font Montserrata
 
 .leaflet-left .leaflet-control .panel-body {
     height: 95vh !important;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .leaflet-right .panel-body {

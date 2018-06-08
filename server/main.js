@@ -19,12 +19,13 @@ import {loadCity} from '/imports/server/startup/loadCitiesData.js';
 
 Meteor.startup(() => {
   loadCity()
-
+  scenarioDB.rawCollection().createIndex({ "city": 1, 'scores.avgVelocityScore':-1, 'creationDate':-1});
+  scenarioDB.rawCollection().createIndex({'scores.avgVelocityScore':-1, 'creationDate':-1});
 
   Meteor.publish('scenario', function scenarioList(city) {
     let sort = {'scores.avgVelocityScore':-1, 'creationDate':-1};
     let field = {'moments':0, 'P2S2Add': 0, 'S2S2Add':0, 'lines':0};
-    console.log(sort, field);
+    console.log("subscribe New scenari0!!", sort, field);
     return scenarioDB.find({'city':city}, {sort:sort, 'fields':field});
   });
 
