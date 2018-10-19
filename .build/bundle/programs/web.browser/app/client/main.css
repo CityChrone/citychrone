@@ -1,0 +1,316 @@
+/* CSS declarations go here */
+body {
+    padding: 0;
+    margin: 0;
+}
+
+html, body, #mapid  {
+  height: 100%;
+  width: 100%;
+  font: 14px/16px Montserrat, sans-serif;
+}
+
+.leftBar {
+      width: 250px;
+      /*color: #E36E3C;*/
+        opacity:0.9;
+  /*background: #FFF url(http://citychrone.org/wp-content/uploads/2017/04/sfondo_5.png) no-repeat;*/
+
+}
+
+.marginBar{
+  margin: 10px;
+}
+
+.legendColor {
+     align-content: left; 
+      margin-right: 20px;
+         margin-top: 4px;
+
+}
+
+.colorSpan {
+   width: 17px;
+   height: 17px;
+   font: 10px/12px Montserrat, sans-serif;
+   float: left;
+   margin-right: 9px;
+   margin-top: 0px;
+   opacity: 0.7;
+}
+
+.modal{
+    z-index: 7000;
+  }
+
+.progress {
+    background: rgba(0, 0, 0, .7);
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 6999;
+}
+
+
+
+
+/* SHARING BUTTON!!! */
+.resp-sharing-button__link,
+.resp-sharing-button__icon {
+  display: inline-block
+}
+
+.resp-sharing-button__link {
+  text-decoration: none;
+  color: #fff;
+  margin: 0.5em
+}
+
+.resp-sharing-button {
+  border-radius: 5px;
+  transition: 25ms ease-out;
+  padding: 0.5em 0.75em;
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif
+}
+
+.resp-sharing-button__icon svg {
+  width: 1em;
+  height: 1em;
+  margin-right: 0.4em;
+  vertical-align: top
+}
+
+.resp-sharing-button--small svg {
+  margin: 0;
+  vertical-align: middle
+}
+
+/* Non solid icons get a stroke */
+.resp-sharing-button__icon {
+  stroke: #fff;
+  fill: none
+}
+
+/* Solid icons get a fill */
+.resp-sharing-button__icon--solid,
+.resp-sharing-button__icon--solidcircle {
+  fill: #fff;
+  stroke: none
+}
+
+.resp-sharing-button--twitter {
+  background-color: #55acee
+}
+
+.resp-sharing-button--twitter:hover {
+  background-color: #2795e9
+}
+
+.resp-sharing-button--pinterest {
+  background-color: #bd081c
+}
+
+.resp-sharing-button--pinterest:hover {
+  background-color: #8c0615
+}
+
+.resp-sharing-button--facebook {
+  background-color: #3b5998
+}
+
+.resp-sharing-button--facebook:hover {
+  background-color: #2d4373
+}
+
+.resp-sharing-button--tumblr {
+  background-color: #35465C
+}
+
+.resp-sharing-button--tumblr:hover {
+  background-color: #222d3c
+}
+
+.resp-sharing-button--reddit {
+  background-color: #5f99cf
+}
+
+.resp-sharing-button--reddit:hover {
+  background-color: #3a80c1
+}
+
+.resp-sharing-button--google {
+  background-color: #dd4b39
+}
+
+.resp-sharing-button--google:hover {
+  background-color: #c23321
+}
+
+.resp-sharing-button--linkedin {
+  background-color: #0077b5
+}
+
+.resp-sharing-button--linkedin:hover {
+  background-color: #046293
+}
+
+.resp-sharing-button--email {
+  background-color: #777
+}
+
+.resp-sharing-button--email:hover {
+  background-color: #5e5e5e
+}
+
+.resp-sharing-button--xing {
+  background-color: #1a7576
+}
+
+.resp-sharing-button--xing:hover {
+  background-color: #114c4c
+}
+
+.resp-sharing-button--whatsapp {
+  background-color: #25D366
+}
+
+.resp-sharing-button--whatsapp:hover {
+  background-color: #1da851
+}
+
+.resp-sharing-button--hackernews {
+background-color: #FF6600
+}
+.resp-sharing-button--hackernews:hover, .resp-sharing-button--hackernews:focus {   background-color: #FB6200 }
+
+.resp-sharing-button--vk {
+  background-color: #507299
+}
+
+.resp-sharing-button--vk:hover {
+  background-color: #43648c
+}
+
+.resp-sharing-button--facebook {
+  background-color: #3b5998;
+  border-color: #3b5998;
+}
+
+.resp-sharing-button--facebook:hover,
+.resp-sharing-button--facebook:active {
+  background-color: #2d4373;
+  border-color: #2d4373;
+}
+
+.resp-sharing-button--twitter {
+  background-color: #55acee;
+  border-color: #55acee;
+}
+
+.resp-sharing-button--twitter:hover,
+.resp-sharing-button--twitter:active {
+  background-color: #2795e9;
+  border-color: #2795e9;
+}
+
+.resp-sharing-button--google {
+  background-color: #dd4b39;
+  border-color: #dd4b39;
+}
+
+.resp-sharing-button--google:hover,
+.resp-sharing-button--google:active {
+  background-color: #c23321;
+  border-color: #c23321;
+}
+
+.resp-sharing-button--linkedin {
+  background-color: #0077b5;
+  border-color: #0077b5;
+}
+
+.resp-sharing-button--linkedin:hover,
+.resp-sharing-button--linkedin:active {
+  background-color: #046293;
+  border-color: #046293;
+}
+
+
+/*
+.addStop {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+.addStop h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+
+.fontSmall{
+   width: 9px;
+   height: 9px;
+   font: 12px/14px Arial, Helvetica, sans-serif;
+}
+*/
+
+/*
+@font-face {
+  font-family: "fontcustom";
+  src: url(".fontcustom/fontcustom_ddab3355b1b7f2a98b1f23eec4837bcd.eot?") format("embedded-opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "fontcustom";
+  src: url("data:application/x-font-woff;charset=utf-8;base64,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") format("woff"),
+       url("fontcustom/fontcustom_ddab3355b1b7f2a98b1f23eec4837bcd.ttf") format("truetype"),
+       url("fontcustom/fontcustom_ddab3355b1b7f2a98b1f23eec4837bcd.svg#fontcustom") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "fontcustom";
+    src: url("fontcustom/fontcustom_ddab3355b1b7f2a98b1f23eec4837bcd.svg#fontcustom") format("svg");
+  }
+}
+
+[data-icon]:before { content: attr(data-icon); }
+
+[data-icon]:before,
+.icon-blog:before,
+.icon-hex:before,
+.icon-hex_black_many:before,
+.icon-hex_white_many:before,
+.icon-isoRounded:before,
+.icon-isoSimple:before {
+  display: inline-block;
+  font-family: "fontcustom";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+.icon-blog:before { content: "\f105"; }
+.icon-hex:before { content: "\f106"; }
+.icon-hex_black_many:before { content: "\f107"; }
+.icon-hex_white_many:before { content: "\f108"; }
+.icon-isoRounded:before { content: "\f109"; }
+.icon-isoSimple:before { content: "\f10a"; }
+*/

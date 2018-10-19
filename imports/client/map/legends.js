@@ -50,7 +50,8 @@ Template.legends.helpers({
 
 Template.legends.events({
 	'click .toggleButton'(e){
-		//console.log(closed, Template.instance())
+
+		//console.log(closed, Template.instance().$('.toggleContent').hasClass('hidden'))
 		//console.log(Template.instance().$('.toggleContent').parent(2), Template.instance().$('.toggleContent').attr('class'))
 					//console.log(Template.instance().$('.toggleContent').parents().eq(0), Template.instance().$('.toggleContent').parents().eq(1))
 
@@ -64,6 +65,7 @@ Template.legends.events({
 		}
 
 		Template.instance().$('.toggleContent').toggleClass('hidden')
+		//Template.instance().$('.toggleContent').Class('panel-body')
 		//console.log(Template.instance().$('.leaflet-control').attr('class'))
 		
 	},

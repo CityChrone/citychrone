@@ -1,0 +1,2587 @@
+{
+  "minifier": {
+    "name": "standard-minifier-js",
+    "version": "2.3.2"
+  },
+  "totalMinifiedBytes": 2814338,
+  "totalMinifiedGzipBytes": 771129,
+  "minifiedBytesByPackage": {
+    "packages/meteor.js": 8958,
+    "packages/meteor-base.js": 31,
+    "packages/mobile-experience.js": 37,
+    "packages/babel-compiler.js": 34,
+    "packages/ecmascript.js": 30,
+    "packages/modules-runtime.js": 4023,
+    "packages/modules.js": [
+      1836134,
+      {
+        "node_modules": {
+          "meteor": {
+            "modules": {
+              "client.js": 124,
+              "css.js": 261,
+              "install-packages.js": 2284,
+              "process.js": 347,
+              "reify.js": 149,
+              "stubs.js": 97,
+              "node_modules": {
+                "reify": {
+                  "lib": {
+                    "runtime": {
+                      "index.js": 906,
+                      "utils.js": 1217,
+                      "entry.js": 3349
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "leaflet": {
+            "dist": {
+              "leaflet.css": 14647,
+              "leaflet-src.js": 139718
+            },
+            "package.json": 78
+          },
+          "turf": {
+            "package.json": 65,
+            "index.js": 1549
+          },
+          "turf-isolines": {
+            "package.json": 74,
+            "index.js": 947,
+            "conrec.js": 3253
+          },
+          "turf-tin": {
+            "package.json": 69,
+            "index.js": 1716
+          },
+          "turf-helpers": {
+            "package.json": 73,
+            "index.js": 1973
+          },
+          "turf-inside": {
+            "package.json": 72,
+            "index.js": 455
+          },
+          "turf-invariant": {
+            "package.json": 75,
+            "index.js": 1413
+          },
+          "turf-grid": {
+            "package.json": 69,
+            "index.js": 232
+          },
+          "turf-point": {
+            "package.json": 70,
+            "index.js": 346
+          },
+          "turf-bbox": {
+            "package.json": 70,
+            "index.js": 215
+          },
+          "turf-meta": {
+            "package.json": 70,
+            "index.js": 1354
+          },
+          "turf-planepoint": {
+            "package.json": 76,
+            "index.js": 524
+          },
+          "turf-square": {
+            "package.json": 72,
+            "index.js": 289
+          },
+          "turf-distance": {
+            "package.json": 74,
+            "index.js": 330
+          },
+          "turf-convex": {
+            "package.json": 72,
+            "index.js": 274
+          },
+          "convex-hull": {
+            "package.json": 68,
+            "ch.js": 230,
+            "lib": {
+              "ch1d.js": 177,
+              "ch2d.js": 210,
+              "chnd.js": 547
+            }
+          },
+          "monotone-convex-hull-2d": {
+            "package.json": 83,
+            "index.js": 665
+          },
+          "robust-orientation": {
+            "package.json": 84,
+            "orientation.js": 2568
+          },
+          "two-product": {
+            "package.json": 77,
+            "two-product.js": 205
+          },
+          "robust-sum": {
+            "package.json": 75,
+            "robust-sum.js": 887
+          },
+          "robust-scale": {
+            "package.json": 79,
+            "robust-scale.js": 425
+          },
+          "two-sum": {
+            "package.json": 69,
+            "two-sum.js": 130
+          },
+          "robust-subtract": {
+            "package.json": 81,
+            "robust-diff.js": 893
+          },
+          "incremental-convex-hull": {
+            "package.json": 81,
+            "ich.js": 4247
+          },
+          "simplicial-complex": {
+            "package.json": 81,
+            "topology.js": 3318
+          },
+          "bit-twiddle": {
+            "package.json": 73,
+            "twiddle.js": 2259
+          },
+          "union-find": {
+            "package.json": 70,
+            "index.js": 616
+          },
+          "affine-hull": {
+            "package.json": 69,
+            "aff.js": 508
+          },
+          "turf-within": {
+            "package.json": 72,
+            "index.js": 261
+          },
+          "turf-concave": {
+            "package.json": 73,
+            "index.js": 618
+          },
+          "turf-union": {
+            "package.json": 71,
+            "index.js": 267
+          },
+          "jsts": {
+            "package.json": 72,
+            "dist": {
+              "jsts.min.js": 445095
+            }
+          },
+          "turf-difference": {
+            "package.json": 76,
+            "index.js": 510
+          },
+          "turf-collect": {
+            "package.json": 73,
+            "index.js": 255
+          },
+          "turf-flip": {
+            "package.json": 70,
+            "index.js": 143
+          },
+          "turf-simplify": {
+            "package.json": 74,
+            "index.js": 1551
+          },
+          "simplify-js": {
+            "package.json": 74,
+            "simplify.js": 899
+          },
+          "turf-bezier": {
+            "package.json": 72,
+            "index.js": 358,
+            "spline.js": 2365
+          },
+          "turf-tag": {
+            "package.json": 69,
+            "index.js": 315
+          },
+          "turf-sample": {
+            "package.json": 72,
+            "index.js": 255
+          },
+          "turf-envelope": {
+            "package.json": 74,
+            "index.js": 100
+          },
+          "turf-bbox-polygon": {
+            "package.json": 78,
+            "index.js": 155
+          },
+          "turf-midpoint": {
+            "package.json": 74,
+            "index.js": 168
+          },
+          "turf-bearing": {
+            "package.json": 73,
+            "index.js": 277
+          },
+          "turf-destination": {
+            "package.json": 77,
+            "index.js": 385
+          },
+          "turf-buffer": {
+            "package.json": 72,
+            "index.js": 449
+          },
+          "geojson-normalize": {
+            "package.json": 77,
+            "index.js": 507
+          },
+          "turf-center": {
+            "package.json": 72,
+            "index.js": 145
+          },
+          "turf-centroid": {
+            "package.json": 74,
+            "index.js": 173
+          },
+          "turf-combine": {
+            "package.json": 73,
+            "index.js": 834
+          },
+          "turf-explode": {
+            "package.json": 73,
+            "index.js": 186
+          },
+          "turf-tesselate": {
+            "package.json": 75,
+            "index.js": 881
+          },
+          "earcut": {
+            "package.json": 71,
+            "src": {
+              "earcut.js": 5745
+            }
+          },
+          "turf-intersect": {
+            "package.json": 75,
+            "index.js": 340
+          },
+          "turf-nearest": {
+            "package.json": 73,
+            "index.js": 180
+          },
+          "turf-random": {
+            "package.json": 72,
+            "index.js": 333
+          },
+          "geojson-random": {
+            "package.json": 74,
+            "index.js": 1187
+          },
+          "turf-kinks": {
+            "package.json": 71,
+            "index.js": 790
+          },
+          "turf-point-on-surface": {
+            "package.json": 82,
+            "index.js": 1662
+          },
+          "turf-area": {
+            "package.json": 70,
+            "index.js": 256
+          },
+          "geojson-area": {
+            "package.json": 72,
+            "index.js": 785
+          },
+          "wgs84": {
+            "package.json": 65,
+            "index.js": 114
+          },
+          "turf-along": {
+            "package.json": 71,
+            "index.js": 492
+          },
+          "turf-line-distance": {
+            "package.json": 79,
+            "index.js": 840
+          },
+          "turf-line-slice": {
+            "package.json": 76,
+            "index.js": 546
+          },
+          "turf-point-on-line": {
+            "package.json": 79,
+            "index.js": 1352
+          },
+          "turf-point-grid": {
+            "package.json": 76,
+            "index.js": 342
+          },
+          "turf-square-grid": {
+            "package.json": 77,
+            "index.js": 415
+          },
+          "turf-triangle-grid": {
+            "package.json": 79,
+            "index.js": 749
+          },
+          "turf-hex-grid": {
+            "package.json": 74,
+            "index.js": 1080
+          },
+          "mathjs": {
+            "package.json": 66,
+            "index.js": 121,
+            "core.js": 47,
+            "lib": {
+              "core": {
+                "core.js": 895,
+                "typed.js": 6483,
+                "function": {
+                  "import.js": 2575,
+                  "config.js": 872
+                }
+              },
+              "utils": {
+                "object.js": 2135,
+                "bignumber": {
+                  "isBigNumber.js": 91,
+                  "formatter.js": 1141,
+                  "nearlyEqual.js": 289,
+                  "constants.js": 283,
+                  "bitAnd.js": 607,
+                  "bitwise.js": 1022,
+                  "bitNot.js": 257,
+                  "bitOr.js": 541,
+                  "bitXor.js": 518,
+                  "leftShift.js": 386,
+                  "rightArithShift.js": 437
+                },
+                "number.js": 3461,
+                "collection": {
+                  "isMatrix.js": 101,
+                  "deepMap.js": 134,
+                  "isCollection.js": 106,
+                  "deepForEach.js": 173,
+                  "reduce.js": 634,
+                  "containsCollections.js": 136,
+                  "scatter.js": 366
+                },
+                "emitter.js": 162,
+                "string.js": 1423,
+                "latex.js": 1760,
+                "index.js": 215,
+                "array.js": 3710,
+                "types.js": 302,
+                "boolean.js": 78,
+                "function.js": 559,
+                "customs.js": 954
+              },
+              "error": {
+                "ArgumentsError.js": 462,
+                "DimensionError.js": 514,
+                "IndexError.js": 652,
+                "index.js": 307
+              },
+              "index.js": 116,
+              "type": {
+                "index.js": 175,
+                "bignumber": {
+                  "index.js": 71,
+                  "BigNumber.js": 445,
+                  "function": {
+                    "bignumber.js": 472
+                  }
+                },
+                "boolean.js": 503,
+                "chain": {
+                  "index.js": 63,
+                  "Chain.js": 1003,
+                  "function": {
+                    "chain.js": 167
+                  }
+                },
+                "complex": {
+                  "index.js": 67,
+                  "Complex.js": 1479,
+                  "function": {
+                    "complex.js": 880
+                  }
+                },
+                "fraction": {
+                  "index.js": 69,
+                  "Fraction.js": 286,
+                  "function": {
+                    "fraction.js": 565
+                  }
+                },
+                "matrix": {
+                  "index.js": 241,
+                  "Matrix.js": 2012,
+                  "DenseMatrix.js": 6661,
+                  "SparseMatrix.js": 11896,
+                  "Spa.js": 1332,
+                  "function": {
+                    "matrix.js": 531,
+                    "index.js": 363,
+                    "sparse.js": 371
+                  },
+                  "utils": {
+                    "algorithm01.js": 859,
+                    "algorithm04.js": 1137,
+                    "algorithm10.js": 607,
+                    "algorithm13.js": 806,
+                    "algorithm14.js": 525,
+                    "algorithm03.js": 909,
+                    "algorithm07.js": 841,
+                    "algorithm12.js": 621,
+                    "algorithm05.js": 1110,
+                    "algorithm11.js": 692,
+                    "algorithm02.js": 936,
+                    "algorithm09.js": 987,
+                    "algorithm06.js": 1034,
+                    "algorithm08.js": 1071
+                  },
+                  "FibonacciHeap.js": 2315,
+                  "ImmutableDenseMatrix.js": 2333,
+                  "MatrixIndex.js": 2614,
+                  "Range.js": 2266
+                },
+                "number.js": 683,
+                "resultset": {
+                  "index.js": 45,
+                  "ResultSet.js": 538
+                },
+                "string.js": 452,
+                "unit": {
+                  "index.js": 139,
+                  "Unit.js": 36702,
+                  "function": {
+                    "unit.js": 495,
+                    "createUnit.js": 535,
+                    "splitUnit.js": 204
+                  },
+                  "physicalConstants.js": 3496
+                }
+              },
+              "function": {
+                "relational": {
+                  "equalScalar.js": 643,
+                  "smaller.js": 1838,
+                  "larger.js": 1832,
+                  "equal.js": 1369,
+                  "unequal.js": 1903,
+                  "largerEq.js": 1840,
+                  "compare.js": 1846,
+                  "compareNatural.js": 1649,
+                  "index.js": 172,
+                  "deepEqual.js": 398,
+                  "smallerEq.js": 1843
+                },
+                "arithmetic": {
+                  "add.js": 1437,
+                  "addScalar.js": 607,
+                  "subtract.js": 1959,
+                  "unaryMinus.js": 491,
+                  "multiplyScalar.js": 626,
+                  "divideScalar.js": 621,
+                  "pow.js": 1796,
+                  "multiply.js": 6830,
+                  "abs.js": 387,
+                  "fix.js": 543,
+                  "round.js": 1998,
+                  "divide.js": 710,
+                  "sign.js": 466,
+                  "sqrt.js": 468,
+                  "index.js": 440,
+                  "cbrt.js": 1134,
+                  "ceil.js": 372,
+                  "cube.js": 430,
+                  "dotDivide.js": 1370,
+                  "dotMultiply.js": 1286,
+                  "dotPow.js": 1306,
+                  "exp.js": 319,
+                  "floor.js": 380,
+                  "gcd.js": 1900,
+                  "hypot.js": 628,
+                  "lcm.js": 1952,
+                  "log.js": 570,
+                  "log10.js": 575,
+                  "mod.js": 1584,
+                  "norm.js": 1918,
+                  "nthRoot.js": 2718,
+                  "square.js": 416,
+                  "unaryPlus.js": 533,
+                  "xgcd.js": 900
+                },
+                "matrix": {
+                  "eye.js": 1496,
+                  "zeros.js": 966,
+                  "subset.js": 2133,
+                  "concat.js": 1138,
+                  "inv.js": 1748,
+                  "det.js": 1325,
+                  "range.js": 1837,
+                  "transpose.js": 1339,
+                  "trace.js": 1100,
+                  "index.js": 351,
+                  "cross.js": 907,
+                  "diag.js": 1656,
+                  "dot.js": 781,
+                  "filter.js": 540,
+                  "flatten.js": 324,
+                  "forEach.js": 416,
+                  "kron.js": 845,
+                  "map.js": 394,
+                  "ones.js": 963,
+                  "partitionSelect.js": 993,
+                  "reshape.js": 492,
+                  "resize.js": 1244,
+                  "size.js": 412,
+                  "sort.js": 996,
+                  "squeeze.js": 383
+                },
+                "utils": {
+                  "isNumeric.js": 332,
+                  "typeof.js": 494,
+                  "clone.js": 159,
+                  "isZero.js": 419,
+                  "isPositive.js": 398,
+                  "isNegative.js": 391,
+                  "isInteger.js": 333,
+                  "index.js": 167,
+                  "isPrime.js": 507,
+                  "isNaN.js": 422
+                },
+                "string": {
+                  "format.js": 205,
+                  "index.js": 55,
+                  "print.js": 436
+                },
+                "statistics": {
+                  "max.js": 687,
+                  "mean.js": 718,
+                  "min.js": 688,
+                  "sum.js": 596,
+                  "index.js": 163,
+                  "mad.js": 500,
+                  "median.js": 1038,
+                  "mode.js": 427,
+                  "prod.js": 505,
+                  "quantileSeq.js": 2579,
+                  "std.js": 396,
+                  "var.js": 1011
+                },
+                "index.js": 297,
+                "algebra": {
+                  "index.js": 219,
+                  "derivative.js": 7857,
+                  "simplify.js": 5886,
+                  "simplify": {
+                    "simplifyConstant.js": 2566,
+                    "util.js": 1491,
+                    "simplifyCore.js": 2886,
+                    "resolve.js": 660
+                  },
+                  "rationalize.js": 6358,
+                  "decomposition": {
+                    "qr.js": 1727,
+                    "lup.js": 2565,
+                    "slu.js": 691
+                  },
+                  "sparse": {
+                    "cs_sqr.js": 1120,
+                    "cs_amd.js": 3419,
+                    "cs_flip.js": 122,
+                    "cs_fkeep.js": 341,
+                    "cs_tdfs.js": 229,
+                    "cs_permute.js": 437,
+                    "cs_etree.js": 410,
+                    "cs_post.js": 332,
+                    "cs_counts.js": 846,
+                    "cs_leaf.js": 314,
+                    "cs_lu.js": 1111,
+                    "cs_spsolve.js": 614,
+                    "cs_reach.js": 350,
+                    "cs_dfs.js": 435,
+                    "cs_marked.js": 129,
+                    "cs_mark.js": 151,
+                    "cs_unflip.js": 156,
+                    "cs_ipvec.js": 212
+                  },
+                  "solver": {
+                    "lsolve.js": 1368,
+                    "utils": {
+                      "solveValidation.js": 1626
+                    },
+                    "lusolve.js": 1030,
+                    "usolve.js": 1379
+                  }
+                },
+                "complex": {
+                  "conj.js": 331,
+                  "index.js": 71,
+                  "arg.js": 361,
+                  "im.js": 351,
+                  "re.js": 334
+                },
+                "bitwise": {
+                  "index.js": 144,
+                  "bitAnd.js": 1447,
+                  "bitNot.js": 451,
+                  "bitOr.js": 1439,
+                  "bitXor.js": 1444,
+                  "leftShift.js": 1739,
+                  "rightArithShift.js": 1769,
+                  "rightLogShift.js": 1692
+                },
+                "combinatorics": {
+                  "index.js": 99,
+                  "bellNumbers.js": 443,
+                  "stirlingS2.js": 835,
+                  "composition.js": 572,
+                  "catalan.js": 491
+                },
+                "probability": {
+                  "factorial.js": 495,
+                  "gamma.js": 2107,
+                  "combinations.js": 968,
+                  "index.js": 186,
+                  "kldivergence.js": 1018,
+                  "multinomial.js": 535,
+                  "permutations.js": 951,
+                  "pickRandom.js": 156,
+                  "distribution.js": 2891,
+                  "seededRNG.js": 266,
+                  "random.js": 148,
+                  "randomInt.js": 154
+                },
+                "geometry": {
+                  "index.js": 61,
+                  "intersect.js": 3218,
+                  "distance.js": 6639
+                },
+                "logical": {
+                  "index.js": 71,
+                  "and.js": 1634,
+                  "not.js": 429,
+                  "or.js": 1491,
+                  "xor.js": 1500
+                },
+                "set": {
+                  "index.js": 224,
+                  "setCartesian.js": 650,
+                  "setDifference.js": 868,
+                  "setDistinct.js": 577,
+                  "setIntersect.js": 825,
+                  "setIsSubset.js": 717,
+                  "setMultiplicity.js": 476,
+                  "setPowerset.js": 716,
+                  "setSize.js": 525,
+                  "setSymDifference.js": 496,
+                  "setUnion.js": 488
+                },
+                "special": {
+                  "index.js": 39,
+                  "erf.js": 1714
+                },
+                "trigonometry": {
+                  "index.js": 329,
+                  "acos.js": 405,
+                  "acosh.js": 521,
+                  "acot.js": 378,
+                  "acoth.js": 476,
+                  "acsc.js": 431,
+                  "acsch.js": 411,
+                  "asec.js": 431,
+                  "asech.js": 578,
+                  "asin.js": 408,
+                  "asinh.js": 388,
+                  "atan.js": 355,
+                  "atan2.js": 1432,
+                  "atanh.js": 468,
+                  "cos.js": 450,
+                  "cosh.js": 514,
+                  "cot.js": 499,
+                  "coth.js": 525,
+                  "csc.js": 499,
+                  "csch.js": 607,
+                  "sec.js": 499,
+                  "sech.js": 531,
+                  "sin.js": 453,
+                  "sinh.js": 517,
+                  "tan.js": 453,
+                  "tanh.js": 520
+                },
+                "unit": {
+                  "index.js": 38,
+                  "to.js": 797
+                }
+              },
+              "constants.js": 1532,
+              "version.js": 35,
+              "expression": {
+                "index.js": 132,
+                "embeddedDocs": {
+                  "index.js": 12140,
+                  "construction": {
+                    "bignumber.js": 354,
+                    "boolean.js": 335,
+                    "complex.js": 296,
+                    "createUnit.js": 395,
+                    "fraction.js": 334,
+                    "index.js": 481,
+                    "matrix.js": 422,
+                    "number.js": 418,
+                    "sparse.js": 370,
+                    "splitUnit.js": 282,
+                    "string.js": 291,
+                    "unit.js": 297
+                  },
+                  "constants": {
+                    "e.js": 224,
+                    "false.js": 149,
+                    "i.js": 262,
+                    "Infinity.js": 247,
+                    "LN2.js": 191,
+                    "LN10.js": 196,
+                    "LOG2E.js": 199,
+                    "LOG10E.js": 204,
+                    "NaN.js": 138,
+                    "null.js": 145,
+                    "pi.js": 273,
+                    "phi.js": 342,
+                    "SQRT1_2.js": 202,
+                    "SQRT2.js": 192,
+                    "tau.js": 234,
+                    "true.js": 146,
+                    "version.js": 173
+                  },
+                  "function": {
+                    "algebra": {
+                      "derivative.js": 665,
+                      "lsolve.js": 329,
+                      "lup.js": 388,
+                      "lusolve.js": 339,
+                      "simplify.js": 334,
+                      "rationalize.js": 516,
+                      "slu.js": 442,
+                      "usolve.js": 359,
+                      "qr.js": 354
+                    },
+                    "arithmetic": {
+                      "abs.js": 172,
+                      "add.js": 216,
+                      "cbrt.js": 515,
+                      "ceil.js": 293,
+                      "cube.js": 227,
+                      "divide.js": 230,
+                      "dotDivide.js": 262,
+                      "dotMultiply.js": 266,
+                      "dotPow.js": 216,
+                      "exp.js": 262,
+                      "fix.js": 283,
+                      "floor.js": 298,
+                      "gcd.js": 232,
+                      "hypot.js": 278,
+                      "lcm.js": 199,
+                      "log.js": 474,
+                      "log10.js": 253,
+                      "mod.js": 274,
+                      "multiply.js": 229,
+                      "norm.js": 378,
+                      "nthRoot.js": 352,
+                      "pow.js": 205,
+                      "round.js": 430,
+                      "sign.js": 252,
+                      "sqrt.js": 243,
+                      "square.js": 244,
+                      "subtract.js": 223,
+                      "unaryMinus.js": 257,
+                      "unaryPlus.js": 217,
+                      "xgcd.js": 354
+                    },
+                    "bitwise": {
+                      "bitAnd.js": 512,
+                      "bitNot.js": 365,
+                      "bitOr.js": 481,
+                      "bitXor.js": 502,
+                      "leftShift.js": 283,
+                      "rightArithShift.js": 304,
+                      "rightLogShift.js": 302
+                    },
+                    "combinatorics": {
+                      "bellNumbers.js": 397,
+                      "catalan.js": 333,
+                      "composition.js": 305,
+                      "stirlingS2.js": 439
+                    },
+                    "complex": {
+                      "arg.js": 271,
+                      "conj.js": 273,
+                      "re.js": 220,
+                      "im.js": 225
+                    },
+                    "expression": {
+                      "eval.js": 256,
+                      "help.js": 218
+                    },
+                    "geometry": {
+                      "distance.js": 278,
+                      "intersect.js": 337
+                    },
+                    "logical": {
+                      "and.js": 269,
+                      "not.js": 231,
+                      "or.js": 262,
+                      "xor.js": 307
+                    },
+                    "matrix": {
+                      "concat.js": 497,
+                      "cross.js": 299,
+                      "det.js": 303,
+                      "diag.js": 718,
+                      "dot.js": 379,
+                      "eye.js": 397,
+                      "filter.js": 270,
+                      "flatten.js": 284,
+                      "forEach.js": 295,
+                      "inv.js": 278,
+                      "kron.js": 265,
+                      "map.js": 279,
+                      "ones.js": 409,
+                      "partitionSelect.js": 386,
+                      "range.js": 475,
+                      "resize.js": 332,
+                      "reshape.js": 325,
+                      "size.js": 321,
+                      "sort.js": 441,
+                      "squeeze.js": 346,
+                      "subset.js": 529,
+                      "trace.js": 353,
+                      "transpose.js": 282,
+                      "zeros.js": 399
+                    },
+                    "probability": {
+                      "combinations.js": 248,
+                      "factorial.js": 233,
+                      "gamma.js": 310,
+                      "kldivergence.js": 257,
+                      "multinomial.js": 417,
+                      "permutations.js": 284,
+                      "pickRandom.js": 530,
+                      "random.js": 307,
+                      "randomInt.js": 317
+                    },
+                    "relational": {
+                      "compare.js": 394,
+                      "compareNatural.js": 563,
+                      "deepEqual.js": 398,
+                      "equal.js": 358,
+                      "larger.js": 357,
+                      "largerEq.js": 343,
+                      "smaller.js": 356,
+                      "smallerEq.js": 354,
+                      "unequal.js": 392
+                    },
+                    "set": {
+                      "setCartesian.js": 360,
+                      "setDifference.js": 465,
+                      "setDistinct.js": 314,
+                      "setIntersect.js": 389,
+                      "setIsSubset.js": 444,
+                      "setMultiplicity.js": 380,
+                      "setPowerset.js": 355,
+                      "setSize.js": 448,
+                      "setSymDifference.js": 428,
+                      "setUnion.js": 370
+                    },
+                    "special": {
+                      "erf.js": 251
+                    },
+                    "statistics": {
+                      "mad.js": 369,
+                      "max.js": 410,
+                      "mean.js": 385,
+                      "median.js": 420,
+                      "min.js": 410,
+                      "mode.js": 412,
+                      "prod.js": 279,
+                      "quantileSeq.js": 780,
+                      "std.js": 507,
+                      "sum.js": 276,
+                      "var.js": 463
+                    },
+                    "trigonometry": {
+                      "acos.js": 217,
+                      "acosh.js": 247,
+                      "acot.js": 214,
+                      "acoth.js": 267,
+                      "acsc.js": 221,
+                      "acsch.js": 249,
+                      "asec.js": 219,
+                      "asech.js": 190,
+                      "asin.js": 215,
+                      "asinh.js": 241,
+                      "atan.js": 218,
+                      "atanh.js": 246,
+                      "atan2.js": 299,
+                      "cos.js": 253,
+                      "cosh.js": 198,
+                      "cot.js": 215,
+                      "coth.js": 213,
+                      "csc.js": 214,
+                      "csch.js": 233,
+                      "sec.js": 212,
+                      "sech.js": 231,
+                      "sin.js": 250,
+                      "sinh.js": 189,
+                      "tan.js": 233,
+                      "tanh.js": 216
+                    },
+                    "units": {
+                      "to.js": 201
+                    },
+                    "utils": {
+                      "clone.js": 288,
+                      "format.js": 252,
+                      "isNaN.js": 260,
+                      "isInteger.js": 269,
+                      "isNegative.js": 298,
+                      "isNumeric.js": 448,
+                      "isPositive.js": 297,
+                      "isPrime.js": 288,
+                      "isZero.js": 256,
+                      "typeof.js": 216
+                    }
+                  },
+                  "core": {
+                    "config.js": 241,
+                    "import.js": 265,
+                    "typed.js": 252
+                  }
+                },
+                "function": {
+                  "index.js": 94,
+                  "compile.js": 282,
+                  "eval.js": 470,
+                  "help.js": 378,
+                  "parse.js": 181,
+                  "parser.js": 163
+                },
+                "parse.js": 9170,
+                "node": {
+                  "AccessorNode.js": 2335,
+                  "compile.js": 431,
+                  "Node.js": 3326,
+                  "IndexNode.js": 3200,
+                  "RangeNode.js": 2943,
+                  "SymbolNode.js": 2065,
+                  "utils": {
+                    "access.js": 599,
+                    "assign.js": 672,
+                    "getUniqueArgumentName.js": 76
+                  },
+                  "ArrayNode.js": 1877,
+                  "AssignmentNode.js": 4131,
+                  "BlockNode.js": 1981,
+                  "ConditionalNode.js": 3482,
+                  "ConstantNode.js": 2597,
+                  "FunctionAssignmentNode.js": 3165,
+                  "ObjectNode.js": 2432,
+                  "OperatorNode.js": 7675,
+                  "FunctionNode.js": 5053,
+                  "ParenthesisNode.js": 1451,
+                  "index.js": 340,
+                  "UpdateNode.js": 199
+                },
+                "keywords.js": 48,
+                "operators.js": 3332,
+                "transform": {
+                  "error.transform.js": 155,
+                  "index.js": 256,
+                  "concat.transform.js": 361,
+                  "filter.transform.js": 806,
+                  "utils": {
+                    "compileInlineExpression.js": 335
+                  },
+                  "forEach.transform.js": 627,
+                  "index.transform.js": 591,
+                  "map.transform.js": 757,
+                  "max.transform.js": 411,
+                  "mean.transform.js": 414,
+                  "min.transform.js": 411,
+                  "range.transform.js": 262,
+                  "subset.transform.js": 278
+                },
+                "Parser.js": 1026,
+                "Help.js": 1175
+              },
+              "json": {
+                "index.js": 43,
+                "reviver.js": 191
+              }
+            }
+          },
+          "typed-function": {
+            "package.json": 83,
+            "typed-function.js": 13302
+          },
+          "tiny-emitter": {
+            "package.json": 72,
+            "index.js": 590
+          },
+          "decimal.js": {
+            "decimal.js": 31204
+          },
+          "complex.js": {
+            "package.json": 69,
+            "complex.js": 7577
+          },
+          "escape-latex": {
+            "package.json": 79,
+            "dist": {
+              "index.js": 751
+            }
+          },
+          "fraction.js": {
+            "package.json": 71,
+            "fraction.js": 4808
+          },
+          "javascript-natural-sort": {
+            "package.json": 89,
+            "naturalSort.js": 999
+          },
+          "seed-random": {
+            "package.json": 71,
+            "index.js": 1245
+          },
+          "leaflet-providers": {
+            "package.json": 90,
+            "leaflet-providers.js": 12911
+          },
+          "@babel": {
+            "runtime": {
+              "helpers": {
+                "typeof.js": 500,
+                "toConsumableArray.js": 176,
+                "inheritsLoose.js": 147,
+                "extends.js": 270,
+                "assertThisInitialized.js": 151
+              },
+              "core-js": {
+                "symbol": {
+                  "iterator.js": 66
+                },
+                "symbol.js": 57,
+                "array": {
+                  "from.js": 61
+                },
+                "object": {
+                  "create.js": 64,
+                  "assign.js": 64
+                }
+              },
+              "node_modules": {
+                "core-js": {
+                  "library": {
+                    "fn": {
+                      "symbol": {
+                        "iterator.js": 143,
+                        "index.js": 214
+                      },
+                      "array": {
+                        "from.js": 135
+                      },
+                      "object": {
+                        "create.js": 139,
+                        "assign.js": 102
+                      }
+                    },
+                    "modules": {
+                      "es6.string.iterator.js": 258,
+                      "_string-at.js": 317,
+                      "_to-integer.js": 102,
+                      "_defined.js": 103,
+                      "_iter-define.js": 1014,
+                      "_library.js": 29,
+                      "_export.js": 784,
+                      "_global.js": 188,
+                      "_core.js": 80,
+                      "_ctx.js": 303,
+                      "_a-function.js": 113,
+                      "_hide.js": 167,
+                      "_object-dp.js": 334,
+                      "_an-object.js": 121,
+                      "_is-object.js": 94,
+                      "_ie8-dom-define.js": 168,
+                      "_descriptors.js": 123,
+                      "_fails.js": 74,
+                      "_dom-create.js": 147,
+                      "_to-primitive.js": 342,
+                      "_property-desc.js": 111,
+                      "_redefine.js": 39,
+                      "_has.js": 84,
+                      "_iterators.js": 29,
+                      "_iter-create.js": 255,
+                      "_object-create.js": 577,
+                      "_object-dps.js": 225,
+                      "_object-keys.js": 127,
+                      "_object-keys-internal.js": 261,
+                      "_to-iobject.js": 94,
+                      "_iobject.js": 143,
+                      "_cof.js": 86,
+                      "_array-includes.js": 291,
+                      "_to-length.js": 113,
+                      "_to-absolute-index.js": 121,
+                      "_shared-key.js": 107,
+                      "_shared.js": 124,
+                      "_uid.js": 129,
+                      "_enum-bug-keys.js": 133,
+                      "_html.js": 77,
+                      "_set-to-string-tag.js": 173,
+                      "_wks.js": 190,
+                      "_object-gpo.js": 290,
+                      "_to-object.js": 81,
+                      "web.dom.iterable.js": 668,
+                      "es6.array.iterator.js": 415,
+                      "_add-to-unscopables.js": 39,
+                      "_iter-step.js": 66,
+                      "_wks-ext.js": 30,
+                      "es6.symbol.js": 3582,
+                      "_meta.js": 608,
+                      "_wks-define.js": 226,
+                      "_enum-keys.js": 208,
+                      "_object-gops.js": 47,
+                      "_object-pie.js": 42,
+                      "_is-array.js": 94,
+                      "_object-gopn-ext.js": 316,
+                      "_object-gopn.js": 163,
+                      "_object-gopd.js": 313,
+                      "es6.object.to-string.js": 12,
+                      "es7.symbol.async-iterator.js": 48,
+                      "es7.symbol.observable.js": 45,
+                      "es6.array.from.js": 654,
+                      "_iter-call.js": 161,
+                      "_is-array-iter.js": 150,
+                      "_create-property.js": 134,
+                      "core.get-iterator-method.js": 187,
+                      "_classof.js": 343,
+                      "_iter-detect.js": 303,
+                      "es6.object.create.js": 80,
+                      "es6.object.assign.js": 84,
+                      "_object-assign.js": 538
+                    }
+                  }
+                }
+              },
+              "package.json": 1203
+            }
+          },
+          "d3-scale-chromatic": {
+            "package.json": 96,
+            "dist": {
+              "d3-scale-chromatic.js": 18648
+            }
+          },
+          "d3-interpolate": {
+            "package.json": 89,
+            "build": {
+              "d3-interpolate.js": 7129
+            }
+          },
+          "d3-color": {
+            "package.json": 77,
+            "build": {
+              "d3-color.js": 9271
+            }
+          },
+          "d3": {
+            "package.json": 71,
+            "build": {
+              "d3.node.js": 2093
+            }
+          },
+          "d3-array": {
+            "package.json": 77,
+            "build": {
+              "d3-array.js": 5862
+            }
+          },
+          "d3-axis": {
+            "package.json": 75,
+            "build": {
+              "d3-axis.js": 2857
+            }
+          },
+          "d3-brush": {
+            "package.json": 77,
+            "build": {
+              "d3-brush.js": 8397
+            }
+          },
+          "d3-dispatch": {
+            "package.json": 83,
+            "build": {
+              "d3-dispatch.js": 1743
+            }
+          },
+          "d3-drag": {
+            "package.json": 75,
+            "build": {
+              "d3-drag.js": 3567
+            }
+          },
+          "d3-selection": {
+            "package.json": 84,
+            "dist": {
+              "d3-selection.js": 13372
+            }
+          },
+          "d3-transition": {
+            "package.json": 87,
+            "build": {
+              "d3-transition.js": 10231
+            }
+          },
+          "d3-timer": {
+            "package.json": 77,
+            "build": {
+              "d3-timer.js": 1762
+            }
+          },
+          "d3-ease": {
+            "package.json": 75,
+            "build": {
+              "d3-ease.js": 3080
+            }
+          },
+          "d3-chord": {
+            "package.json": 77,
+            "build": {
+              "d3-chord.js": 2652
+            }
+          },
+          "d3-path": {
+            "package.json": 75,
+            "build": {
+              "d3-path.js": 2081
+            }
+          },
+          "d3-collection": {
+            "package.json": 87,
+            "build": {
+              "d3-collection.js": 2789
+            }
+          },
+          "d3-dsv": {
+            "package.json": 73,
+            "build": {
+              "d3-dsv.js": 1991
+            }
+          },
+          "d3-force": {
+            "package.json": 77,
+            "build": {
+              "d3-force.js": 7843
+            }
+          },
+          "d3-quadtree": {
+            "package.json": 83,
+            "build": {
+              "d3-quadtree.js": 5424
+            }
+          },
+          "d3-format": {
+            "package.json": 79,
+            "build": {
+              "d3-format.js": 4575
+            }
+          },
+          "d3-geo": {
+            "package.json": 73,
+            "build": {
+              "d3-geo.js": 34706
+            }
+          },
+          "d3-hierarchy": {
+            "package.json": 85,
+            "build": {
+              "d3-hierarchy.js": 13594
+            }
+          },
+          "d3-polygon": {
+            "package.json": 81,
+            "build": {
+              "d3-polygon.js": 1502
+            }
+          },
+          "d3-queue": {
+            "package.json": 77,
+            "build": {
+              "d3-queue.js": 1982
+            }
+          },
+          "d3-random": {
+            "package.json": 79,
+            "build": {
+              "d3-random.js": 1215
+            }
+          },
+          "d3-request": {
+            "package.json": 86,
+            "build": {
+              "d3-request.node.js": 3003
+            }
+          },
+          "xmlhttprequest": {
+            "package.json": 89,
+            "lib": {
+              "XMLHttpRequest.js": 6337
+            }
+          },
+          "meteor-node-stubs": {
+            "deps": {
+              "url.js": 22,
+              "child_process.js": 12,
+              "http.js": 33,
+              "stream.js": 35,
+              "https.js": 34,
+              "buffer.js": 25,
+              "events.js": 25,
+              "util.js": 30,
+              "process.js": 36
+            },
+            "node_modules": {
+              "url": {
+                "package.json": 64,
+                "url.js": 7526,
+                "node_modules": {
+                  "punycode": {
+                    "package.json": 71,
+                    "punycode.js": 2694
+                  }
+                },
+                "util.js": 227
+              },
+              "querystring": {
+                "package.json": 53,
+                "index.js": 93,
+                "decode.js": 546,
+                "encode.js": 527
+              },
+              "http-browserify": {
+                "package.json": 75,
+                "index.js": 2540,
+                "lib": {
+                  "request.js": 3024,
+                  "response.js": 1547
+                }
+              },
+              "events": {
+                "package.json": 69,
+                "events.js": 3564
+              },
+              "stream-browserify": {
+                "package.json": 77,
+                "index.js": 1114
+              },
+              "inherits": {
+                "package.json": 107,
+                "inherits_browser.js": 317
+              },
+              "readable-stream": {
+                "package.json": 293,
+                "readable.js": 82,
+                "writable.js": 82,
+                "duplex.js": 80,
+                "lib": {
+                  "internal": {
+                    "streams": {
+                      "stream.js": 101,
+                      "stream-browser.js": 51,
+                      "BufferList.js": 935
+                    }
+                  },
+                  "_stream_readable.js": 9802,
+                  "_stream_duplex.js": 730,
+                  "_stream_writable.js": 5883,
+                  "_stream_transform.js": 1916,
+                  "_stream_passthrough.js": 215
+                },
+                "readable-browser.js": 255,
+                "writable-browser.js": 57,
+                "duplex-browser.js": 55,
+                "transform.js": 52,
+                "passthrough.js": 54
+              },
+              "process-nextick-args": {
+                "package.json": 80,
+                "index.js": 689
+              },
+              "isarray": {
+                "package.json": 67,
+                "index.js": 106
+              },
+              "safe-buffer": {
+                "package.json": 96,
+                "browser.js": 38
+              },
+              "buffer": {
+                "package.json": 66,
+                "index.js": 19963
+              },
+              "base64-js": {
+                "package.json": 69,
+                "index.js": 1382
+              },
+              "ieee754": {
+                "package.json": 67,
+                "index.js": 881
+              },
+              "util": {
+                "package.json": 133,
+                "support": {
+                  "isBuffer.js": 78,
+                  "isBufferBrowser.js": 156
+                },
+                "util.js": 6085
+              },
+              "util-deprecate": {
+                "package.json": 96,
+                "browser.js": 385
+              },
+              "string_decoder": {
+                "package.json": 87,
+                "lib": {
+                  "string_decoder.js": 3631
+                }
+              },
+              "Base64": {
+                "package.json": 69,
+                "base64.js": 763
+              },
+              "https-browserify": {
+                "package.json": 76,
+                "index.js": 196
+              },
+              "process": {
+                "browser.js": 1608
+              }
+            },
+            "package.json": 78,
+            "index.js": 280,
+            "map.json": 950
+          },
+          "d3-scale": {
+            "package.json": 77,
+            "build": {
+              "d3-scale.js": 18748
+            }
+          },
+          "d3-time": {
+            "package.json": 75,
+            "build": {
+              "d3-time.js": 5588
+            }
+          },
+          "d3-time-format": {
+            "package.json": 89,
+            "build": {
+              "d3-time-format.js": 9000
+            }
+          },
+          "d3-shape": {
+            "package.json": 77,
+            "build": {
+              "d3-shape.js": 28617
+            }
+          },
+          "d3-voronoi": {
+            "package.json": 81,
+            "build": {
+              "d3-voronoi.js": 9159
+            }
+          },
+          "d3-zoom": {
+            "package.json": 75,
+            "build": {
+              "d3-zoom.js": 8857
+            }
+          },
+          "kdbush": {
+            "package.json": 71,
+            "src": {
+              "kdbush.js": 644,
+              "sort.js": 691,
+              "range.js": 454,
+              "within.js": 487
+            }
+          },
+          "rbush": {
+            "package.json": 65,
+            "index.js": 5736
+          },
+          "quickselect": {
+            "package.json": 71,
+            "index.js": 609
+          },
+          "rbush-knn": {
+            "package.json": 69,
+            "index.js": 539
+          },
+          "tinyqueue": {
+            "package.json": 69,
+            "index.js": 858
+          },
+          "leaflet-path-drag": {
+            "package.json": 77,
+            "index.js": 137,
+            "src": {
+              "SVG.js": 201,
+              "SVG.VML.js": 715,
+              "Canvas.js": 873,
+              "Path.Transform.js": 317,
+              "Path.Drag.js": 4911
+            }
+          },
+          "jszip": {
+            "package.json": 133,
+            "lib": {
+              "index.js": 588,
+              "object.js": 3559,
+              "utf8.js": 2494,
+              "utils.js": 4454,
+              "support.js": 619,
+              "base64.js": 1148,
+              "nodejsUtils.js": 363,
+              "external.js": 109,
+              "stream": {
+                "GenericWorker.js": 2141,
+                "StreamHelper.js": 1897,
+                "ConvertWorker.js": 269,
+                "DataWorker.js": 1292,
+                "DataLengthProbe.js": 362,
+                "Crc32Probe.js": 292
+              },
+              "nodejs": {
+                "NodejsStreamOutputAdapter.js": 361,
+                "NodejsStreamInputAdapter.js": 702
+              },
+              "defaults.js": 196,
+              "compressedObject.js": 1079,
+              "crc32.js": 500,
+              "zipObject.js": 1636,
+              "generate": {
+                "index.js": 643,
+                "ZipFileWorker.js": 4272
+              },
+              "compressions.js": 234,
+              "flate.js": 993,
+              "signature.js": 218,
+              "load.js": 1344,
+              "zipEntries.js": 4601,
+              "reader": {
+                "readerFor.js": 375,
+                "ArrayReader.js": 844,
+                "DataReader.js": 927,
+                "StringReader.js": 510,
+                "NodeBufferReader.js": 274,
+                "Uint8ArrayReader.js": 306
+              },
+              "zipEntry.js": 3701
+            },
+            "node_modules": {
+              "core-js": {
+                "library": {
+                  "fn": {
+                    "set-immediate.js": 91
+                  },
+                  "modules": {
+                    "web.immediate.js": 103,
+                    "_export.js": 784,
+                    "_global.js": 188,
+                    "_core.js": 80,
+                    "_ctx.js": 303,
+                    "_a-function.js": 113,
+                    "_hide.js": 167,
+                    "_object-dp.js": 334,
+                    "_an-object.js": 121,
+                    "_is-object.js": 94,
+                    "_ie8-dom-define.js": 168,
+                    "_descriptors.js": 123,
+                    "_fails.js": 74,
+                    "_dom-create.js": 147,
+                    "_to-primitive.js": 342,
+                    "_property-desc.js": 111,
+                    "_task.js": 958,
+                    "_invoke.js": 343,
+                    "_html.js": 76,
+                    "_cof.js": 86
+                  }
+                }
+              }
+            }
+          },
+          "readable-stream": {
+            "package.json": 98,
+            "readable.js": 312,
+            "lib": {
+              "_stream_readable.js": 9313,
+              "_stream_duplex.js": 771,
+              "_stream_writable.js": 5595,
+              "_stream_transform.js": 1912,
+              "_stream_passthrough.js": 252
+            }
+          },
+          "process-nextick-args": {
+            "package.json": 80,
+            "index.js": 689
+          },
+          "isarray": {
+            "package.json": 67,
+            "index.js": 106
+          },
+          "core-util-is": {
+            "package.json": 75,
+            "lib": {
+              "util.js": 979
+            }
+          },
+          "inherits": {
+            "package.json": 107,
+            "inherits_browser.js": 317
+          },
+          "util-deprecate": {
+            "package.json": 96,
+            "browser.js": 385
+          },
+          "string_decoder": {
+            "package.json": 76,
+            "index.js": 2301
+          },
+          "lie": {
+            "package.json": 115,
+            "lib": {
+              "index.js": 34,
+              "browser.js": 2872
+            }
+          },
+          "immediate": {
+            "package.json": 121,
+            "lib": {
+              "index.js": 40,
+              "browser.js": 792
+            }
+          },
+          "pako": {
+            "package.json": 46,
+            "index.js": 160,
+            "lib": {
+              "utils": {
+                "common.js": 1103,
+                "strings.js": 1680
+              },
+              "deflate.js": 2244,
+              "zlib": {
+                "deflate.js": 14408,
+                "trees.js": 6653,
+                "adler32.js": 197,
+                "crc32.js": 258,
+                "messages.js": 212,
+                "zstream.js": 242,
+                "inflate.js": 12102,
+                "inffast.js": 1818,
+                "inftrees.js": 1637,
+                "constants.js": 423,
+                "gzheader.js": 189
+              },
+              "inflate.js": 2607
+            }
+          },
+          "jszip-utils": {
+            "package.json": 74,
+            "lib": {
+              "index.js": 802
+            }
+          },
+          "core-js": {
+            "modules": {
+              "es6.symbol.js": 3582,
+              "_global.js": 188,
+              "_has.js": 84,
+              "_descriptors.js": 123,
+              "_fails.js": 74,
+              "_export.js": 530,
+              "_core.js": 80,
+              "_hide.js": 167,
+              "_object-dp.js": 334,
+              "_an-object.js": 121,
+              "_is-object.js": 94,
+              "_ie8-dom-define.js": 168,
+              "_dom-create.js": 147,
+              "_to-primitive.js": 342,
+              "_property-desc.js": 111,
+              "_redefine.js": 496,
+              "_uid.js": 129,
+              "_ctx.js": 303,
+              "_a-function.js": 113,
+              "_meta.js": 608,
+              "_shared.js": 124,
+              "_set-to-string-tag.js": 173,
+              "_wks.js": 190,
+              "_wks-ext.js": 30,
+              "_wks-define.js": 226,
+              "_library.js": 29,
+              "_enum-keys.js": 208,
+              "_object-keys.js": 127,
+              "_object-keys-internal.js": 261,
+              "_to-iobject.js": 94,
+              "_iobject.js": 143,
+              "_cof.js": 86,
+              "_defined.js": 103,
+              "_array-includes.js": 291,
+              "_to-length.js": 113,
+              "_to-integer.js": 102,
+              "_to-absolute-index.js": 121,
+              "_shared-key.js": 107,
+              "_enum-bug-keys.js": 133,
+              "_object-gops.js": 47,
+              "_object-pie.js": 42,
+              "_is-array.js": 94,
+              "_object-create.js": 577,
+              "_object-dps.js": 225,
+              "_html.js": 77,
+              "_object-gopn-ext.js": 316,
+              "_object-gopn.js": 163,
+              "_object-gopd.js": 313,
+              "es6.map.js": 346,
+              "_collection-strong.js": 1600,
+              "_redefine-all.js": 104,
+              "_an-instance.js": 140,
+              "_for-of.js": 520,
+              "_iter-call.js": 161,
+              "_is-array-iter.js": 150,
+              "_iterators.js": 29,
+              "core.get-iterator-method.js": 187,
+              "_classof.js": 343,
+              "_iter-define.js": 1014,
+              "_iter-create.js": 255,
+              "_object-gpo.js": 290,
+              "_to-object.js": 81,
+              "_iter-step.js": 66,
+              "_set-species.js": 219,
+              "_validate-collection.js": 151,
+              "_collection.js": 1283,
+              "_iter-detect.js": 303,
+              "_inherit-if-required.js": 198,
+              "_set-proto.js": 444,
+              "es6.set.js": 280,
+              "es6.string.iterator.js": 258,
+              "_string-at.js": 317,
+              "es6.array.is-array.js": 75,
+              "es6.array.from.js": 654,
+              "_create-property.js": 134,
+              "es6.array.of.js": 312,
+              "es6.array.join.js": 211,
+              "_strict-method.js": 143,
+              "es6.array.slice.js": 419,
+              "es6.array.sort.js": 308,
+              "es6.array.for-each.js": 189,
+              "_array-methods.js": 491,
+              "_array-species-create.js": 101,
+              "_array-species-constructor.js": 257,
+              "es6.array.map.js": 177,
+              "es6.array.filter.js": 183,
+              "es6.array.some.js": 179,
+              "es6.array.every.js": 181,
+              "es6.array.reduce.js": 199,
+              "_array-reduce.js": 368,
+              "es6.array.reduce-right.js": 209,
+              "es6.array.index-of.js": 251,
+              "es6.array.last-index-of.js": 429,
+              "es6.array.copy-within.js": 128,
+              "_array-copy-within.js": 367,
+              "_add-to-unscopables.js": 134,
+              "es6.array.fill.js": 109,
+              "_array-fill.js": 279,
+              "es6.array.find.js": 256,
+              "es6.array.find-index.js": 264,
+              "es6.array.species.js": 41,
+              "es6.array.iterator.js": 415,
+              "es6.function.bind.js": 71,
+              "_bind.js": 476,
+              "_invoke.js": 343,
+              "es6.function.name.js": 215,
+              "es6.function.has-instance.js": 317,
+              "es6.math.acosh.js": 257,
+              "_math-log1p.js": 102,
+              "es6.math.asinh.js": 173,
+              "es6.math.atanh.js": 146,
+              "es6.math.cbrt.js": 130,
+              "_math-sign.js": 86,
+              "es6.math.clz32.js": 129,
+              "es6.math.cosh.js": 104,
+              "es6.math.expm1.js": 98,
+              "_math-expm1.js": 191,
+              "es6.math.fround.js": 76,
+              "_math-fround.js": 271,
+              "es6.math.hypot.js": 230,
+              "es6.math.imul.js": 252,
+              "es6.math.log10.js": 101,
+              "es6.math.log1p.js": 74,
+              "es6.math.log2.js": 97,
+              "es6.math.sign.js": 72,
+              "es6.math.sinh.js": 232,
+              "es6.math.tanh.js": 168,
+              "es6.math.trunc.js": 106,
+              "es6.object.create.js": 80,
+              "es6.object.define-property.js": 111,
+              "es6.object.define-properties.js": 112,
+              "es6.object.get-own-property-descriptor.js": 161,
+              "_object-sap.js": 185,
+              "es6.object.get-prototype-of.js": 143,
+              "es6.object.keys.js": 134,
+              "es6.object.get-own-property-names.js": 99,
+              "es6.object.freeze.js": 149,
+              "es6.object.seal.js": 147,
+              "es6.object.prevent-extensions.js": 160,
+              "es6.object.is-frozen.js": 125,
+              "es6.object.is-sealed.js": 125,
+              "es6.object.is-extensible.js": 131,
+              "es6.object.assign.js": 84,
+              "_object-assign.js": 538,
+              "es6.object.is.js": 73,
+              "_same-value.js": 94,
+              "es6.object.set-prototype-of.js": 88,
+              "es6.object.to-string.js": 198,
+              "es6.regexp.constructor.js": 753,
+              "_is-regexp.js": 158,
+              "_flags.js": 206,
+              "es6.regexp.to-string.js": 439,
+              "es6.regexp.flags.js": 132,
+              "es6.regexp.match.js": 191,
+              "_fix-re-wks.js": 379,
+              "es6.regexp.replace.js": 191,
+              "es6.regexp.search.js": 192,
+              "es6.regexp.split.js": 1286,
+              "es6.string.from-code-point.js": 385,
+              "es6.string.raw.js": 252,
+              "es6.string.trim.js": 104,
+              "_string-trim.js": 390,
+              "_string-ws.js": 108,
+              "es6.string.code-point-at.js": 132,
+              "es6.string.ends-with.js": 357,
+              "_string-context.js": 167,
+              "_fails-is-regexp.js": 153,
+              "es6.string.includes.js": 228,
+              "es6.string.repeat.js": 80,
+              "_string-repeat.js": 237,
+              "es6.string.starts-with.js": 339,
+              "es6.string.anchor.js": 118,
+              "_string-html.js": 357,
+              "es6.string.big.js": 113,
+              "es6.string.blink.js": 117,
+              "es6.string.bold.js": 112,
+              "es6.string.fixed.js": 114,
+              "es6.string.fontcolor.js": 125,
+              "es6.string.fontsize.js": 123,
+              "es6.string.italics.js": 115,
+              "es6.string.link.js": 116,
+              "es6.string.small.js": 117,
+              "es6.string.strike.js": 119,
+              "es6.string.sub.js": 113,
+              "es6.string.sup.js": 113,
+              "es6.weak-map.js": 886,
+              "_collection-weak.js": 1095,
+              "web.dom.iterable.js": 886,
+              "es6.weak-set.js": 265,
+              "es7.array.includes.js": 211,
+              "es7.array.flat-map.js": 330,
+              "_flatten-into-array.js": 409,
+              "es7.array.flatten.js": 336,
+              "es7.object.get-own-property-descriptors.js": 279,
+              "_own-keys.js": 196,
+              "es7.object.values.js": 115,
+              "_object-to-array.js": 231,
+              "es7.object.entries.js": 116,
+              "es7.object.define-getter.js": 262,
+              "_object-forced-pam.js": 172,
+              "es7.object.define-setter.js": 262,
+              "es7.object.lookup-getter.js": 299,
+              "es7.object.lookup-setter.js": 299,
+              "es7.string.pad-start.js": 237,
+              "_string-pad.js": 289,
+              "_user-agent.js": 78,
+              "es7.string.pad-end.js": 235,
+              "es6.number.epsilon.js": 75,
+              "es6.number.is-finite.js": 132,
+              "es6.number.is-integer.js": 80,
+              "_is-integer.js": 113,
+              "es6.number.is-nan.js": 84,
+              "es6.number.is-safe-integer.js": 148,
+              "es6.number.max-safe-integer.js": 85,
+              "es6.number.min-safe-integer.js": 86,
+              "es6.number.parse-float.js": 113,
+              "_parse-float.js": 200,
+              "es6.number.parse-int.js": 107,
+              "_parse-int.js": 228,
+              "es6.typed.uint8-array.js": 103,
+              "_typed-array.js": 6990,
+              "_typed.js": 382,
+              "_typed-buffer.js": 3650,
+              "_to-index.js": 177,
+              "_species-constructor.js": 180,
+              "es6.typed.uint32-array.js": 104
+            },
+            "es6": {
+              "array.js": 793,
+              "function.js": 167,
+              "math.js": 574,
+              "object.js": 757,
+              "regexp.js": 299,
+              "string.js": 951,
+              "weak-map.js": 157,
+              "weak-set.js": 155
+            },
+            "es7": {
+              "array.js": 158,
+              "object.js": 344
+            }
+          },
+          "component-emitter": {
+            "package.json": 77,
+            "index.js": 1214
+          },
+          "debug": {
+            "package.json": 100,
+            "src": {
+              "browser.js": 1691,
+              "debug.js": 1385
+            }
+          },
+          "ms": {
+            "package.json": 61,
+            "index.js": 1240
+          }
+        }
+      }
+    ],
+    "packages/ecmascript-runtime.js": 38,
+    "packages/babel-runtime.js": [
+      1484,
+      {
+        "node_modules": {
+          "meteor": {
+            "babel-runtime": {
+              "babel-runtime.js": 604,
+              "node_modules": {
+                "meteor-babel-helpers": {
+                  "package.json": 80,
+                  "index.js": 389
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "packages/promise.js": [
+      5536,
+      {
+        "node_modules": {
+          "meteor": {
+            "promise": {
+              "client.js": 85,
+              "common.js": 523,
+              "node_modules": {
+                "meteor-promise": {
+                  "package.json": 113,
+                  "promise_client.js": 266
+                },
+                "promise": {
+                  "lib": {
+                    "es6-extensions.js": 1220,
+                    "core.js": 1868
+                  }
+                },
+                "asap": {
+                  "package.json": 241,
+                  "raw.js": 63,
+                  "browser-raw.js": 671
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "packages/url.js": [
+      1064,
+      {
+        "node_modules": {
+          "meteor": {
+            "url": {
+              "url_client.js": 152,
+              "url_common.js": 605
+            }
+          }
+        }
+      }
+    ],
+    "packages/http.js": [
+      3371,
+      {
+        "node_modules": {
+          "meteor": {
+            "http": {
+              "httpcall_client.js": 2095,
+              "httpcall_common.js": 932
+            }
+          }
+        }
+      }
+    ],
+    "packages/dynamic-import.js": [
+      4620,
+      {
+        "node_modules": {
+          "meteor": {
+            "dynamic-import": {
+              "client.js": 1583,
+              "cache.js": 1964,
+              "common.js": 60,
+              "dynamic-versions.js": 614
+            }
+          }
+        }
+      }
+    ],
+    "packages/ecmascript-runtime-client.js": [
+      1722,
+      {
+        "node_modules": {
+          "meteor": {
+            "ecmascript-runtime-client": {
+              "runtime.js": 1327
+            }
+          }
+        }
+      }
+    ],
+    "packages/base64.js": [
+      1995,
+      {
+        "node_modules": {
+          "meteor": {
+            "base64": {
+              "base64.js": 1494
+            }
+          }
+        }
+      }
+    ],
+    "packages/ejson.js": [
+      7045,
+      {
+        "node_modules": {
+          "meteor": {
+            "ejson": {
+              "ejson.js": 5577,
+              "stringify.js": 936
+            }
+          }
+        }
+      }
+    ],
+    "packages/diff-sequence.js": [
+      2886,
+      {
+        "node_modules": {
+          "meteor": {
+            "diff-sequence": {
+              "diff.js": 2338
+            }
+          }
+        }
+      }
+    ],
+    "packages/geojson-utils.js": [
+      5171,
+      {
+        "node_modules": {
+          "meteor": {
+            "geojson-utils": {
+              "main.js": 48,
+              "geojson-utils.js": 4784
+            }
+          }
+        }
+      }
+    ],
+    "packages/id-map.js": [
+      1833,
+      {
+        "node_modules": {
+          "meteor": {
+            "id-map": {
+              "id-map.js": 1314
+            }
+          }
+        }
+      }
+    ],
+    "packages/random.js": [
+      3709,
+      {
+        "node_modules": {
+          "meteor": {
+            "random": {
+              "random.js": 3217
+            }
+          }
+        }
+      }
+    ],
+    "packages/mongo-id.js": 1683,
+    "packages/ordered-dict.js": [
+      3975,
+      {
+        "node_modules": {
+          "meteor": {
+            "ordered-dict": {
+              "ordered_dict.js": 3437
+            }
+          }
+        }
+      }
+    ],
+    "packages/tracker.js": 4889,
+    "packages/minimongo.js": [
+      48415,
+      {
+        "node_modules": {
+          "meteor": {
+            "minimongo": {
+              "minimongo_client.js": 52,
+              "common.js": 13296,
+              "cursor.js": 5202,
+              "local_collection.js": 20837,
+              "matcher.js": 2940,
+              "minimongo_common.js": 247,
+              "observe_handle.js": 100,
+              "sorter.js": 4772
+            }
+          }
+        }
+      }
+    ],
+    "packages/check.js": [
+      6412,
+      {
+        "node_modules": {
+          "meteor": {
+            "check": {
+              "match.js": 5591,
+              "isPlainObject.js": 279
+            }
+          }
+        }
+      }
+    ],
+    "packages/retry.js": [
+      1484,
+      {
+        "node_modules": {
+          "meteor": {
+            "retry": {
+              "retry.js": 970
+            }
+          }
+        }
+      }
+    ],
+    "packages/callback-hook.js": [
+      1794,
+      {
+        "node_modules": {
+          "meteor": {
+            "callback-hook": {
+              "hook.js": 1281
+            }
+          }
+        }
+      }
+    ],
+    "packages/ddp-common.js": [
+      5451,
+      {
+        "node_modules": {
+          "meteor": {
+            "ddp-common": {
+              "namespace.js": 16,
+              "heartbeat.js": 1687,
+              "utils.js": 1504,
+              "method_invocation.js": 587,
+              "random_stream.js": 699
+            }
+          }
+        }
+      }
+    ],
+    "packages/reload.js": [
+      2071,
+      {
+        "node_modules": {
+          "meteor": {
+            "reload": {
+              "reload.js": 1570
+            }
+          }
+        }
+      }
+    ],
+    "packages/socket-stream-client.js": [
+      37997,
+      {
+        "node_modules": {
+          "meteor": {
+            "socket-stream-client": {
+              "browser.js": 3453,
+              "common.js": 2864,
+              "sockjs-0.3.4.js": 30411,
+              "urls.js": 733
+            }
+          }
+        }
+      }
+    ],
+    "packages/ddp-client.js": [
+      25490,
+      {
+        "node_modules": {
+          "meteor": {
+            "ddp-client": {
+              "client": {
+                "client.js": 161,
+                "client_convenience.js": 920
+              },
+              "common": {
+                "MethodInvoker.js": 1379,
+                "livedata_connection.js": 20988,
+                "namespace.js": 1076
+              }
+            }
+          }
+        }
+      }
+    ],
+    "packages/ddp.js": 78,
+    "packages/ddp-server.js": 30,
+    "packages/allow-deny.js": [
+      6140,
+      {
+        "node_modules": {
+          "meteor": {
+            "allow-deny": {
+              "allow-deny.js": 5463
+            }
+          }
+        }
+      }
+    ],
+    "packages/mongo.js": [
+      9260,
+      {
+        "node_modules": {
+          "meteor": {
+            "mongo": {
+              "local_collection_driver.js": 438,
+              "collection.js": 7898
+            }
+          }
+        }
+      }
+    ],
+    "packages/blaze-html-templates.js": 40,
+    "packages/reactive-var.js": 818,
+    "packages/jquery.js": [
+      97268,
+      {
+        "node_modules": {
+          "meteor": {
+            "jquery": {
+              "main.js": 134,
+              "jquery.js": 96820
+            }
+          }
+        }
+      }
+    ],
+    "packages/standard-minifier-js.js": 40,
+    "packages/webapp.js": [
+      887,
+      {
+        "node_modules": {
+          "meteor": {
+            "webapp": {
+              "webapp_client.js": 372
+            }
+          }
+        }
+      }
+    ],
+    "packages/server-render.js": [
+      1983,
+      {
+        "node_modules": {
+          "meteor": {
+            "server-render": {
+              "client.js": 267,
+              "client-sink.js": 1168
+            }
+          }
+        }
+      }
+    ],
+    "packages/shim-common.js": 31,
+    "packages/es5-shim.js": [
+      576,
+      {
+        "node_modules": {
+          "meteor": {
+            "es5-shim": {
+              "console.js": 289
+            }
+          }
+        }
+      }
+    ],
+    "packages/underscore.js": 14349,
+    "packages/reactive-dict.js": [
+      4498,
+      {
+        "node_modules": {
+          "meteor": {
+            "reactive-dict": {
+              "migration.js": 781,
+              "reactive-dict.js": 3067
+            }
+          }
+        }
+      }
+    ],
+    "packages/fortawesome_fontawesome.js": 43,
+    "packages/shell-server.js": 32,
+    "packages/twbs_bootstrap.js": 36789,
+    "packages/stevezhu_lodash.js": 71836,
+    "packages/momentjs_moment.js": 53094,
+    "packages/kookoskar_bootstrap-select.js": 30128,
+    "packages/okgrow_analytics.js": [
+      192397,
+      {
+        "node_modules": {
+          "meteor": {
+            "okgrow:analytics": {
+              "client": {
+                "main.js": 1143
+              },
+              "node_modules": {
+                "@okgrow": {
+                  "auto-analytics": {
+                    "package.json": 2212,
+                    "index.js": 44,
+                    "dist": {
+                      "index.js": 2106,
+                      "helpers.js": 789
+                    },
+                    "vendor": {
+                      "analytics.min.js": 185415
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "packages/less.js": 24,
+    "packages/observe-sequence.js": 2915,
+    "packages/deps.js": 111,
+    "packages/htmljs.js": 10030,
+    "packages/blaze.js": 38671,
+    "packages/spacebars.js": 2928,
+    "packages/templating-compiler.js": 39,
+    "packages/templating-runtime.js": 3045,
+    "packages/templating.js": 103,
+    "packages/joshowens_shareit.js": 9650,
+    "packages/json.js": 3213,
+    "packages/fourseven_scss.js": 34,
+    "packages/ui.js": 137,
+    "packages/iron_core.js": 3519,
+    "packages/iron_dynamic-template.js": 8486,
+    "packages/iron_layout.js": 5404,
+    "packages/iron_url.js": 5414,
+    "packages/iron_middleware-stack.js": 4259,
+    "packages/iron_location.js": 3744,
+    "packages/iron_controller.js": 3837,
+    "packages/iron_router.js": 19829,
+    "packages/livedata.js": 105,
+    "packages/hot-code-push.js": 33,
+    "packages/launch-screen.js": 787,
+    "packages/spiderable.js": 1044,
+    "packages/autoupdate.js": [
+      2409,
+      {
+        "node_modules": {
+          "meteor": {
+            "autoupdate": {
+              "autoupdate_client.js": 1756
+            }
+          }
+        }
+      }
+    ],
+    "app/global-imports.js": 1376,
+    "app/app.js": [
+      133333,
+      {
+        "imports": {
+          "client": {
+            "map": {
+              "geojson": {
+                "legendGeojson.html": 83,
+                "template.legendGeojson.js": 927,
+                "colorHex.js": 4292,
+                "findClosestPoint.js": 634,
+                "hexagonCity.js": 709,
+                "hexsGeojson.js": 5203,
+                "legendGeojson.js": 1811,
+                "unionHexs.js": 2659
+              },
+              "metroLines": {
+                "metroLinesDraw.html": 84,
+                "template.metroLinesDraw.js": 146,
+                "line.js": 265,
+                "metroLinesDraw.js": 7422
+              },
+              "popUps": {
+                "popUpGeojson.html": 82,
+                "template.popUpGeojson.js": 2936,
+                "popUpMarker.html": 81,
+                "template.popUpMarker.js": 612,
+                "popUpGeojson.js": 1556,
+                "popUpMarker.js": 880
+              },
+              "legends.html": 77,
+              "template.legends.js": 500,
+              "map.html": 73,
+              "template.map.js": 201,
+              "markers": {
+                "cityMarker.js": 1326,
+                "stopMarker.js": 3704
+              },
+              "events.js": 1003,
+              "legends.js": 1616,
+              "map.js": 3515
+            },
+            "routes": {
+              "city": {
+                "city.html": 74,
+                "template.city.js": 1298,
+                "city.js": 4685
+              },
+              "newScenario": {
+                "budget.html": 76,
+                "template.budget.js": 904,
+                "computeScenario.html": 85,
+                "template.computeScenario.js": 1512,
+                "newScenario.html": 81,
+                "template.newScenario.js": 871,
+                "newScenarioButtons.html": 88,
+                "template.newScenarioButtons.js": 1306,
+                "saveScenario.html": 82,
+                "template.saveScenario.js": 1814,
+                "budget.js": 2709,
+                "computeScenario.js": 9789,
+                "newScenario.js": 4923,
+                "newScenarioButtons.js": 1939,
+                "saveScenario.js": 905,
+                "workerCSAUtil.js": 1954
+              },
+              "world": {
+                "world.html": 75,
+                "template.world.js": 163,
+                "world.js": 1382
+              }
+            },
+            "explanation": {
+              "citychroneDescription.html": 91,
+              "template.citychroneDescription.js": 2709,
+              "logos.html": 75,
+              "template.logos.js": 350,
+              "quantityDescription.html": 89,
+              "template.quantityDescription.js": 3050,
+              "titleBar.html": 78,
+              "template.titleBar.js": 310,
+              "citychroneDescription.js": 551,
+              "quantityDescription.js": 507,
+              "titleBar.js": 430
+            },
+            "otherTemplate": {
+              "modalEnd.html": 78,
+              "template.modalEnd.js": 2354,
+              "scenarioList.html": 82,
+              "template.scenarioList.js": 4314,
+              "modalEnd.js": 1905,
+              "scenarioList.js": 3851
+            },
+            "selector": {
+              "buttonsChangePage.html": 87,
+              "template.buttonsChangePage.js": 233,
+              "quantitySelector.html": 86,
+              "template.quantitySelector.js": 2868,
+              "scenarioSelector.html": 86,
+              "template.scenarioSelector.js": 2203,
+              "socialButtons.html": 83,
+              "template.socialButtons.js": 359,
+              "timeSelector.html": 82,
+              "template.timeSelector.js": 1127,
+              "toWorldSelector.html": 85,
+              "template.toWorldSelector.js": 349,
+              "buttonsChangePage.js": 477,
+              "quantitySelector.js": 2644,
+              "scenarioSelector.js": 1960,
+              "socialButtons.js": 941,
+              "timeSelector.js": 2109,
+              "toWorldSelector.js": 553
+            },
+            "lib": {
+              "leaflet.spin.js": 979,
+              "spin.js": 4423
+            },
+            "initClient.js": 201,
+            "routes.js": 1029
+          },
+          "lib": {
+            "newScenarioLib": {
+              "addNewLines.js": 2093,
+              "addNewStops.js": 2667
+            },
+            "utils.js": 471
+          },
+          "DBs": {
+            "scenarioDB.js": 1842
+          },
+          "parameters.js": 924
+        },
+        "client": {
+          "main.js": 150
+        }
+      }
+    ]
+  }
+}

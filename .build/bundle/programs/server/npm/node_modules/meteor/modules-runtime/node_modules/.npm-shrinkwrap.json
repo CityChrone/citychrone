@@ -1,0 +1,10 @@
+{
+  "lockfileVersion": 1,
+  "dependencies": {
+    "install": {
+      "version": "0.10.4",
+      "resolved": "https://registry.npmjs.org/install/-/install-0.10.4.tgz",
+      "integrity": "sha512-+IRyOastuPmLVx9zlVXJoKErSqz1Ma5at9A7S8yfsj3W+Kg95faPoh3bPDtMrZ/grz4PRmXzrswmlzfLlYyLOw=="
+    }
+  }
+}

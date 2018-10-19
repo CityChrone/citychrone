@@ -192,7 +192,7 @@ class geoJsonClass{
 
         //console.log('shellify',this.shell, pointShellify, points)
         for (let low in pointShellify) {
-            geoJsonUnion = unionPoints(pointShellify[low],  this.hexClass);
+            let geoJsonUnion = unionPoints(pointShellify[low],  this.hexClass);
             //console.log('union', low, geoJsonUnion, this.shell)
             geoJsonUnion['properties'] = {}
             geoJsonUnion['properties'][this.quantity] = low;

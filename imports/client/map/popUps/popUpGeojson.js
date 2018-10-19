@@ -22,16 +22,17 @@ Template.popUpGeojson.helpers({
 		let city = Router.current().params.city;
 		let scenarioDef = scenarioDB.findOne({'city':city, 'default':true});
 		let selColor = color(feature, false);
-		time = Object.keys(scenarioDef['moments'])[0]
+		let time = Object.keys(scenarioDef['moments'])[0]
 		let val = scenarioDef['moments'][time][feature][this.pos];
 		return "background-color:"+ selColor(val)+';';
 	},
 	'toString'(feature, val){
 		console.log(val, feature)
 		$("#accessPopupChart").html('');
+		let valFixed = 0
 		switch(feature){
 			case 'velocityScore':
-				let valFixed = parseFloat(val).toFixed(1);
+				valFixed = parseFloat(val).toFixed(1);
 				if(val > 0){ return valFixed.toString() + ' km/h';}
 				else { return 'Not Av.';}
 				break;
@@ -56,11 +57,12 @@ Template.popUpGeojson.helpers({
 
 		if(scenarioDef){
 				$("#accessPopupChart").html('');
-				time = Object.keys(scenarioDef['moments'])[0]
+				let time = Object.keys(scenarioDef['moments'])[0]
 				let val = scenarioDef['moments'][time][feature][this.pos];
+				let valFixed = 0
 				switch(feature){
 					case 'velocityScore':
-						let valFixed = parseFloat(val).toFixed(1);
+						valFixed = parseFloat(val).toFixed(1);
 						if(val > 0){ return valFixed.toString() + ' km/h';}
 						else { return 'Not Av.';}
 						break;

@@ -6,13 +6,14 @@ import { Blaze } from 'meteor/blaze';
 import '/imports/client/routes/newScenario/computeScenario.html';
 import { makeWorkers } from '/imports/client/routes/newScenario/workerCSAUtil.js'
 import { scenarioDB, initScenario } from '/imports/DBs/scenarioDB.js'
-import { maxTimeWalk, maxDistanceWalk, maxDuration} from '/imports/parameters.js';
+import { maxTimeWalk, maxDistanceWalk, maxDuration, timesOfDay} from '/imports/parameters.js';
 import * as addNewStops from '/imports/lib/newScenarioLib/addNewStops.js'
 import * as parameters from '/imports/parameters.js';
 import * as addNewConnections from '/imports/lib/newScenarioLib/addNewLines.js';
 import {markerEvent} from '/imports/client/map/events.js';
 import JSZip from "jszip";
 import JSZipUtils from 'jszip-utils';
+import {cutArrayC} from "/imports/lib/utils.js";
 
 import '/imports/client/routes/newScenario/saveScenario.js';
 
@@ -204,6 +205,7 @@ Template.computeScenario.collection.stops = new Mongo.Collection(null)
   Template.computeScenario.data.countStep = 500;
   Template.computeScenario.data.dataToLoad = 6;
   Template.computeScenario.data.recomputeAll = false;
+  Template.computeScenario.data.arrayN = []
 
   //********. Reactive Var ************ 
   Template.computeScenario.RV = {};
@@ -214,9 +216,9 @@ Template.computeScenario.collection.stops = new Mongo.Collection(null)
 
   //******** webWorker *************
   Template.computeScenario.worker = {}
-  Template.computeScenario.worker.numCSAWorker = 6
+  Template.computeScenario.worker.numCSAWorker = 2
   Template.computeScenario.worker.CSA = makeWorkers(Template.computeScenario.worker.numCSAWorker)
-  Template.computeScenario.worker.CSAClusterPoints = 50;
+  Template.computeScenario.worker.CSAClusterPoints = 10;
   Template.computeScenario.worker.CSAPointsComputed = 0;
 });
 
@@ -241,6 +243,7 @@ let checkDataLoaded = function(num = -1) {
 
 
 	//TO REMOVE!!
+	console.log("recompute !!", Router.current().params.query.recompute)
 		if(Router.current().params.query.recompute){
 			let recomputeParam = Router.current().params.query.recompute;
 			if(recomputeParam){
@@ -289,12 +292,15 @@ let loadComputeScenarioData = function(city, RV){
 };
 
 let loadArrayC = function(risp){
-      Template.computeScenario.worker.CSA.forEach((worker)=>{
-                  worker.postMessage({'arrayCDef' : risp});
-      });
+    Template.computeScenario.worker.CSA.forEach((worker)=>{
+    	//console.log(risp);
+    	let startingTime = timesOfDay[0];
+		let arrayC = cutArrayC(startingTime, risp)
+    	worker.postMessage({'arrayCDef' : arrayC});
+    });
       //console.log('data ArrayC loaded');
-      checkDataLoaded(-1);
-    }
+    checkDataLoaded(-1);
+}
 
 let loadArrayN = function(risp){
 	let P2PDef = {pos : risp.P2PPos, time : risp.P2PTime};
@@ -305,7 +311,7 @@ let loadArrayN = function(risp){
 	    worker.postMessage({'P2SDef' : P2SDef});
 	    worker.postMessage({'S2SDef' : S2SDef});
 	});      
-	//console.log('data arrayN loaded');
+	Template.computeScenario.data.arrayN = risp;
 	checkDataLoaded(-1);
 }
 
@@ -320,11 +326,12 @@ let loadArrayPop = function(risp){
 }
 
 
-let loadArrayStops = function(risp){
+let loadArrayStops = function(risp, arrayN){
 	risp.forEach(function(stop){
-    stop.temp = false;
-    stop._id = stop.pos.toString();
-      Template.computeScenario.collection.stops.insert(stop);
+	    stop.temp = false;
+	    stop._id = stop.pos.toString();
+	    stop.S2SPos = arrayN["S2SPos"][stop.pos]
+	    Template.computeScenario.collection.stops.insert(stop);
     });
     //console.log('data stops loaded');
     checkDataLoaded(-1);
@@ -358,29 +365,29 @@ let loadDatacity = function(zip){
     					zip.file("S2STime.txt").async("string").then(function (data3){
     						arrayN['S2STime'] = JSON.parse(data3);
     						loadArrayN(arrayN)
+    						zip.file("listPoints.txt").async("string").then(function (data3){
+						    	let listPoints = JSON.parse(data3);
+						    	let arrayPop = []
+						    	listPoints.forEach((p)=>{
+						    		arrayPop.push(p.pop)
+						    	});
+						    	loadArrayPop(arrayPop)
+					    	});
+						    zip.file("listStops.txt").async("string").then(function (data3){
+								let listStops = JSON.parse(data3);
+								loadArrayStops(listStops, arrayN)
+							});
+							zip.file("cityData.txt").async("string").then(function (data2){
+								let cityData = JSON.parse(data2)
+								loadAreaHex(cityData['areaHex']);
+							});    		
+
 						});
 					});
 				});
 			});
 		});
     });
-    zip.file("listPoints.txt").async("string").then(function (data3){
-    	let listPoints = JSON.parse(data3);
-    	let arrayPop = []
-    	listPoints.forEach((p)=>{
-    		arrayPop.push(p.pop)
-    	});
-    	loadArrayPop(arrayPop)
-    });
-
-    zip.file("listStops.txt").async("string").then(function (data3){
-		let listStops = JSON.parse(data3);
-		loadArrayStops(listStops)
-	});
-	zip.file("cityData.txt").async("string").then(function (data2){
-		let cityData = JSON.parse(data2)
-		loadAreaHex(cityData['areaHex']);
-	});    		
 };
 
 const computeNewScenario = function(){
@@ -394,7 +401,9 @@ const computeNewScenario = function(){
 	let serverOSRM = Template.computeScenario.data.serverOSRM;
 
 	Template.computeScenario.worker.CSAPointsComputed = 0;
-	let promiseAddStop = addNewStops.updateArrays(city, stopsCollection, pointsCollection, scenario, serverOSRM);
+	console.log("in new Scenario")
+	let promiseAddStop = addNewStops.updateArraysNew(city, stopsCollection, pointsCollection, scenario, Template.computeScenario.data.arrayN);
+	//let promiseAddStop = addNewStops.updateArrays(city, stopsCollection, pointsCollection, scenario, serverOSRM);
 
 
 	Promise.all(promiseAddStop).then(values => {

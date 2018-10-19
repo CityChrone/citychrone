@@ -1,0 +1,661 @@
+{
+  "format": "web-program-pre1",
+  "manifest": [
+    {
+      "path": "98bdca0ba0bf8816f9c484a6eb6bbab207275842.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/98bdca0ba0bf8816f9c484a6eb6bbab207275842.js?meteor_js_resource=true",
+      "size": 2814338,
+      "hash": "98bdca0ba0bf8816f9c484a6eb6bbab207275842"
+    },
+    {
+      "path": "98bdca0ba0bf8816f9c484a6eb6bbab207275842.stats.json",
+      "where": "client",
+      "type": "json",
+      "cacheable": true,
+      "url": "/98bdca0ba0bf8816f9c484a6eb6bbab207275842.stats.json?meteor_js_resource=true",
+      "size": 78495,
+      "hash": "bfc47a41f18ee0d6fb748174a8681b93aee42365"
+    },
+    {
+      "path": "packages/fortawesome_fontawesome/upstream/css/font-awesome.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/fortawesome_fontawesome/upstream/css/font-awesome.css?hash=14cd6c4630fb35cb6adc9fd6ebdacb9d43bf2bdc",
+      "size": 37414,
+      "hash": "14cd6c4630fb35cb6adc9fd6ebdacb9d43bf2bdc"
+    },
+    {
+      "path": "packages/twbs_bootstrap/dist/css/bootstrap.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/twbs_bootstrap/dist/css/bootstrap.css?hash=81b5a1b526e5ee2eb5af5a8d3ffb705e9db2ade5",
+      "size": 146082,
+      "hash": "81b5a1b526e5ee2eb5af5a8d3ffb705e9db2ade5"
+    },
+    {
+      "path": "packages/kookoskar_bootstrap-select/lib/bootstrap-select.min.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/kookoskar_bootstrap-select/lib/bootstrap-select.min.css?hash=0dc4fc3c3973fc052812aaeb19ccfeafeb171ede",
+      "size": 5682,
+      "hash": "0dc4fc3c3973fc052812aaeb19ccfeafeb171ede"
+    },
+    {
+      "path": "packages/joshowens_shareit/client/views/social.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/joshowens_shareit/client/views/social.less.css?hash=c8df80e96e2c6f824fc8f2be210ceb46380b3e62",
+      "sourceMap": "packages/joshowens_shareit/client/views/social.less.css.map",
+      "sourceMapUrl": "/packages/joshowens_shareit/client/views/c8df80e96e2c6f824fc8f2be210ceb46380b3e62.map",
+      "size": 382,
+      "hash": "c8df80e96e2c6f824fc8f2be210ceb46380b3e62"
+    },
+    {
+      "path": "app/client/stylesheets/OSMBuildings.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/client/stylesheets/OSMBuildings.css?hash=510fe113a8235d00f908843d7df619c5569757a5",
+      "size": 458,
+      "hash": "510fe113a8235d00f908843d7df619c5569757a5"
+    },
+    {
+      "path": "app/client/stylesheets/betta.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/client/stylesheets/betta.css?hash=d60ebe6d3befadf211c7dda4399e3759b6866109",
+      "size": 1433,
+      "hash": "d60ebe6d3befadf211c7dda4399e3759b6866109"
+    },
+    {
+      "path": "app/client/stylesheets/legends.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/client/stylesheets/legends.css?hash=a935fc8bd5a38f5b71687661b64f386a4b5f796b",
+      "size": 327,
+      "hash": "a935fc8bd5a38f5b71687661b64f386a4b5f796b"
+    },
+    {
+      "path": "app/client/stylesheets/transition.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/client/stylesheets/transition.css?hash=02b4c1f772b927acefb6e012061a46df885f2e54",
+      "size": 35160,
+      "hash": "02b4c1f772b927acefb6e012061a46df885f2e54"
+    },
+    {
+      "path": "app/client/main.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/client/main.css?hash=380df5ec866d7f87533e73cec16d4f7d9bfe0812",
+      "size": 9019,
+      "hash": "380df5ec866d7f87533e73cec16d4f7d9bfe0812"
+    },
+    {
+      "path": "packages/es5-shim/es5-shim-sham.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/es5-shim/es5-shim-sham.js",
+      "size": 107174,
+      "hash": "c75e7bf8f84078ec1aac4edd37d060bb60ef8fc2"
+    },
+    {
+      "path": "packages/es5-shim/es5-shim-sham.min.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/es5-shim/es5-shim-sham.min.js",
+      "size": 27347,
+      "hash": "f611834e690a71f04d03591a455670d90218faaa"
+    },
+    {
+      "path": "packages/fortawesome_fontawesome/upstream/fonts/fontawesome-webfont.eot",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/fortawesome_fontawesome/upstream/fonts/fontawesome-webfont.eot",
+      "size": 165742,
+      "hash": "5e3a1a9b72af1d842682f7e0a5c305922c583e3f"
+    },
+    {
+      "path": "packages/fortawesome_fontawesome/upstream/fonts/fontawesome-webfont.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/fortawesome_fontawesome/upstream/fonts/fontawesome-webfont.svg",
+      "size": 444379,
+      "hash": "2958ef6f1890fda3f47468dedc70c2e1b2dd9511"
+    },
+    {
+      "path": "packages/fortawesome_fontawesome/upstream/fonts/fontawesome-webfont.ttf",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/fortawesome_fontawesome/upstream/fonts/fontawesome-webfont.ttf",
+      "size": 165548,
+      "hash": "dbaed61bd8235d7e12522b21ce66fb90a4f9740d"
+    },
+    {
+      "path": "packages/fortawesome_fontawesome/upstream/fonts/fontawesome-webfont.woff",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/fortawesome_fontawesome/upstream/fonts/fontawesome-webfont.woff",
+      "size": 98024,
+      "hash": "951644ff8c02065fd58f609d142e45daaaa5370f"
+    },
+    {
+      "path": "packages/fortawesome_fontawesome/upstream/fonts/fontawesome-webfont.woff2",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/fortawesome_fontawesome/upstream/fonts/fontawesome-webfont.woff2",
+      "size": 77160,
+      "hash": "a34ffd10b2a49d55d6247e351520ffdf556e0bb1"
+    },
+    {
+      "path": "packages/fortawesome_fontawesome/upstream/fonts/FontAwesome.otf",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/fortawesome_fontawesome/upstream/fonts/FontAwesome.otf",
+      "size": 134808,
+      "hash": "cd12480a6626f5faf89ddd7ebb00edf64059498d"
+    },
+    {
+      "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
+      "size": 20127,
+      "hash": "30407a683746065f032a7a61ff50f24b008cc8b3"
+    },
+    {
+      "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
+      "size": 108738,
+      "hash": "79a351a269ccbdab7745962bfd40cf86c2b9bc95"
+    },
+    {
+      "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
+      "size": 45404,
+      "hash": "3a900bcba1505bbef235f1b497513a1bd894f434"
+    },
+    {
+      "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
+      "size": 23424,
+      "hash": "434169edd7cbbb36bb43e25d78c7ceb26beac9b4"
+    },
+    {
+      "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
+      "size": 18028,
+      "hash": "b3253b854b958bb4f2e4c2dae5ff45c8237dc1d6"
+    },
+    {
+      "path": "app/cities/Adelaide_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Adelaide_citychrone.zip",
+      "size": 5235660,
+      "hash": "5bcb19dda32dfc13e8992f32a9530cbfd15df8e7"
+    },
+    {
+      "path": "app/cities/Athens_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Athens_citychrone.zip",
+      "size": 6139459,
+      "hash": "c27c384618129bd3053291e9bb03236cca833c84"
+    },
+    {
+      "path": "app/cities/Berlin_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Berlin_citychrone.zip",
+      "size": 7078058,
+      "hash": "32757714e02a30cf2249c860aceca9eb0c21903d"
+    },
+    {
+      "path": "app/cities/Boston_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Boston_citychrone.zip",
+      "size": 5720440,
+      "hash": "ff0667d3fd330770e0bd16b2f4aeffc13fb8b7ab"
+    },
+    {
+      "path": "app/cities/Brisbane_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Brisbane_citychrone.zip",
+      "size": 5550596,
+      "hash": "9ef51e9fe705594e3992b7f3dada6b94f6ce5fe4"
+    },
+    {
+      "path": "app/cities/Budapest_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Budapest_citychrone.zip",
+      "size": 5605156,
+      "hash": "3aab1f6b27da97963c8aa46a48cc60178d05c7e0"
+    },
+    {
+      "path": "app/cities/Catania_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Catania_citychrone.zip",
+      "size": 966917,
+      "hash": "c0522c8256e4ff6cb696919e6776b7aab400c0c8"
+    },
+    {
+      "path": "app/cities/Chicago_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Chicago_citychrone.zip",
+      "size": 22324407,
+      "hash": "187704911a9421757986c91f8a2a810eef460beb"
+    },
+    {
+      "path": "app/cities/Florence_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Florence_citychrone.zip",
+      "size": 2904214,
+      "hash": "0af07e880f14157a5d1e7524c43f40005c525e94"
+    },
+    {
+      "path": "app/cities/Helsinki_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Helsinki_citychrone.zip",
+      "size": 8568629,
+      "hash": "fe76d7c88d136eb66dea08ff41b775dea69e9942"
+    },
+    {
+      "path": "app/cities/London_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/London_citychrone.zip",
+      "size": 31640710,
+      "hash": "c0e82c23de326e90ce432d9a2e9ae218f1652750"
+    },
+    {
+      "path": "app/cities/Los Angeles_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Los Angeles_citychrone.zip",
+      "size": 19482410,
+      "hash": "96df9a07b22977c2fa8f6dc4c879f792d13a3d17"
+    },
+    {
+      "path": "app/cities/Madrid_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Madrid_citychrone.zip",
+      "size": 29192111,
+      "hash": "7e62893f51c0e01d7240244e8e82d252211b1dc9"
+    },
+    {
+      "path": "app/cities/Manchester_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Manchester_citychrone.zip",
+      "size": 5333774,
+      "hash": "3d9f11293cc4b3546b41e1c557c3f4600232cde7"
+    },
+    {
+      "path": "app/cities/Melbourne_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Melbourne_citychrone.zip",
+      "size": 13281121,
+      "hash": "f44a5c1b663c5a4d0492f0e55217db733bfe56cc"
+    },
+    {
+      "path": "app/cities/Mexico City_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Mexico City_citychrone.zip",
+      "size": 10424220,
+      "hash": "1a768c263ba031071861e2c23c6f81b20dc8694a"
+    },
+    {
+      "path": "app/cities/Milan_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Milan_citychrone.zip",
+      "size": 6243176,
+      "hash": "0fe9ce69a6b86e0f934a5cde9128a543a6d4bec8"
+    },
+    {
+      "path": "app/cities/Montreal_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Montreal_citychrone.zip",
+      "size": 16867030,
+      "hash": "0b7a3d65c4b8a8ed808180a937f2e51d72b2ef70"
+    },
+    {
+      "path": "app/cities/Naples_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Naples_citychrone.zip",
+      "size": 1943941,
+      "hash": "897059340656c24b9a41ad8a8a5c57d0bf64f086"
+    },
+    {
+      "path": "app/cities/New York_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/New York_citychrone.zip",
+      "size": 53245692,
+      "hash": "e30bbc04a3f546f40e1794213ed387c7d8a96f7a"
+    },
+    {
+      "path": "app/cities/Oslo_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Oslo_citychrone.zip",
+      "size": 3027118,
+      "hash": "5ae9917bd4a57a8ea4efd83b19e3771b347c1d68"
+    },
+    {
+      "path": "app/cities/Paris_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Paris_citychrone.zip",
+      "size": 69801909,
+      "hash": "dae5ebde64f042b2426135e1cc84044118b4f5ba"
+    },
+    {
+      "path": "app/cities/Philadelphia_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Philadelphia_citychrone.zip",
+      "size": 11807236,
+      "hash": "329073e7dde9c80be895c85f57b16af580d1e13e"
+    },
+    {
+      "path": "app/cities/Prague_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Prague_citychrone.zip",
+      "size": 5366756,
+      "hash": "5e4a687857b3d7d69ebfb259c6745ecb72480814"
+    },
+    {
+      "path": "app/cities/Rome_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Rome_citychrone.zip",
+      "size": 10469258,
+      "hash": "a57611d4b232aba9ebe5cc4b31310128c07c343c"
+    },
+    {
+      "path": "app/cities/San Diego_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/San Diego_citychrone.zip",
+      "size": 3420535,
+      "hash": "443b71efbd023233fa5a2654e21441e954a78ddb"
+    },
+    {
+      "path": "app/cities/San Francisco_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/San Francisco_citychrone.zip",
+      "size": 18369773,
+      "hash": "09421f87dbbde3845886cc76b5bd2e0ad5c5b1dc"
+    },
+    {
+      "path": "app/cities/Sydney_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Sydney_citychrone.zip",
+      "size": 16098480,
+      "hash": "0113c1219fcf685d1e0ff0a371624f5deffcd7bd"
+    },
+    {
+      "path": "app/cities/Toulouse_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Toulouse_citychrone.zip",
+      "size": 2155608,
+      "hash": "ef4a6bbccb6f5893994f865f73b82da7fd09afe6"
+    },
+    {
+      "path": "app/cities/Turin_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Turin_citychrone.zip",
+      "size": 3924093,
+      "hash": "c22d0cbd9b28102774bab185193d7ecace36c2ef"
+    },
+    {
+      "path": "app/cities/Vienna_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Vienna_citychrone.zip",
+      "size": 2985260,
+      "hash": "5c7da80a2ac5a21b5db78b5869564866d02160c5"
+    },
+    {
+      "path": "app/cities/Washington_citychrone.zip",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cities/Washington_citychrone.zip",
+      "size": 16731519,
+      "hash": "44fddf29200c6e2e047f54c91e6d531bc0b59786"
+    },
+    {
+      "path": "app/images/citychroneSharing.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/citychroneSharing.png",
+      "size": 1793706,
+      "hash": "cf89bfcdac95d70d345642b900be9837dc78662e"
+    },
+    {
+      "path": "app/images/isi_logo.jpg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/isi_logo.jpg",
+      "size": 115446,
+      "hash": "b23c1d7488b22f532fe2f6e24cca3d00253cff75"
+    },
+    {
+      "path": "app/images/kreyon_logo.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/kreyon_logo.png",
+      "size": 12073,
+      "hash": "bfb6e4df23be68eff86a904a9b09925373bd3862"
+    },
+    {
+      "path": "app/images/layers-2x.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/layers-2x.png",
+      "size": 1259,
+      "hash": "556e01bf7902efd4d8675f4956fb1b8295bfa720"
+    },
+    {
+      "path": "app/images/layers.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/layers.png",
+      "size": 696,
+      "hash": "b3e46b55f559b2ed95126e1c70234b911f663eee"
+    },
+    {
+      "path": "app/images/marker-icon-2x.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/marker-icon-2x.png",
+      "size": 2586,
+      "hash": "3cf410720bc264ea3d977cd6352425c71ede346d"
+    },
+    {
+      "path": "app/images/marker-icon.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/marker-icon.png",
+      "size": 1466,
+      "hash": "89c470aeeac5e980be2a67bd37459907475d97c2"
+    },
+    {
+      "path": "app/images/marker-shadow.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/marker-shadow.png",
+      "size": 618,
+      "hash": "f533258e0790913f64b9583b0d17190424d5c734"
+    },
+    {
+      "path": "app/images/sapienza_logo.jpg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/sapienza_logo.jpg",
+      "size": 172951,
+      "hash": "58e34fcbd032a233225e65e2fdb6216126f6f1d8"
+    },
+    {
+      "path": "app/images/sdyn_logo.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/sdyn_logo.png",
+      "size": 46254,
+      "hash": "4979ebd54a20fabde1bd37024ddff0ff38b85313"
+    },
+    {
+      "path": "app/images/smartDataLogo.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/smartDataLogo.png",
+      "size": 86489,
+      "hash": "0653ece85bf6ffdd72e6ec275b314ea1e68fffe3"
+    },
+    {
+      "path": "app/images/smartData_logo.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/smartData_logo.png",
+      "size": 183480,
+      "hash": "0786e5f6a616413fe9046f51cf3a23477021a4ee"
+    },
+    {
+      "path": "app/images/templeton_logo.jpeg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/templeton_logo.jpeg",
+      "size": 5949,
+      "hash": "420ebc8000353bf63b7928236278642aaabef20c"
+    },
+    {
+      "path": "app/workers/ICSACore.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/workers/ICSACore.js",
+      "size": 5792,
+      "hash": "e627b3d8b0ebc1e88d5b4687de54bdf5140eae7e"
+    },
+    {
+      "path": "app/workers/mergeArrays.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/workers/mergeArrays.js",
+      "size": 2164,
+      "hash": "bf7605e3af549fcbbaea9fd1d5d11fb8e29c6ad1"
+    },
+    {
+      "path": "app/workers/workerCSA.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/workers/workerCSA.js",
+      "size": 4380,
+      "hash": "38ef5ed9fd6913f0e297ea528bfa106a8073acd6"
+    },
+    {
+      "path": "head.html",
+      "where": "internal",
+      "type": "head",
+      "hash": "8e9cc7de42974b91cb0c2e754fe24dc6d879f468"
+    }
+  ]
+}

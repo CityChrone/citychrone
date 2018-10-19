@@ -53,8 +53,8 @@ const mergeArrayN = function(arrayNDef, arrayN2Add, field){
             let newArray = new Uint32Array(newLength);
             newArray.set(originArray);
             newArray.set(toAdd, originArray.length);
-            if(field == "pos" && pos==2550)
-                console.log(originArray,pos, arrayN2Add[pos][field], newArray, originArray.length)
+            //if(field == "pos" && pos==2550)
+                //console.log(originArray,pos, arrayN2Add[pos][field], newArray, originArray.length)
 
             return newArray}
         else{

@@ -1,0 +1,10 @@
+{
+  "lockfileVersion": 1,
+  "dependencies": {
+    "lolex": {
+      "version": "1.4.0",
+      "resolved": "https://registry.npmjs.org/lolex/-/lolex-1.4.0.tgz",
+      "integrity": "sha1-LycSsbwYDendzF06epbvPAuxYq0="
+    }
+  }
+}

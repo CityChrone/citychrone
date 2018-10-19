@@ -119,7 +119,7 @@ const ICSA = function(point, Tpoint, Tstop, arrayN, arrayC, startTime){
 		TstopN[P2SPos[posPoint][i]] = P2STime[posPoint][i] + startTime;
 	}
 
-
+	//console.log(arrayC[3], arrayC[arrayC.length-2]);
 	//CSA-Algorithm core
 	for (var c_i = 0, totC = arrayC.length; c_i < totC; c_i += 4) {
 		let posStopStart = arrayC[c_i];

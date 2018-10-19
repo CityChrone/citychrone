@@ -11,6 +11,7 @@ import { createControl } from '/imports/client/map/legends.js';
 import '/imports/client/explanation/citychroneDescription.js';
 
 import '/imports/client/routes/world/world.html';
+import '/imports/client/routes/world/startingModal.js';
 
 
 Template.world.helpers({
@@ -22,6 +23,9 @@ Template.world.events({});
 Template.world.onCreated(function(){
 	Template.world.data = {};
 	Template.world.data.citiesMarkers = []
+
+	Template.world.var = {}
+	Template.world.var.firstTime = true;
 });
 
 Template.world.onRendered(function(){
@@ -55,6 +59,12 @@ Template.world.onRendered(function(){
 
 	let controlTL = createControl([Template.citychroneDescription],"topleft",  Template.map.data.map, 'leftBar', true);
   	//let controlTR = createControl([], "topright", Template.map.data.map, true);
+
+  	if (Template.world.var.firstTime){
+  		$("#startingModal").modal();
+  		Template.world.var.firstTime = false;
+  	}
+
 
 });
 

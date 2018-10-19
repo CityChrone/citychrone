@@ -11,6 +11,9 @@ import { timesOfDay, maxDuration } from '/imports/parameters.js'
 
 import {loadCity, citiesData} from '/imports/server/startup/loadCitiesData.js';
 
+import {cutArrayC} from '/imports/lib/utils.js';
+
+
 process.on('unhandledRejection', console.log.bind(console))
 
 var worker = require("/public/workers/ICSACore.js");
@@ -31,30 +34,6 @@ var avgEmAll = function (arrays) {
   return result
 }
 
-
-
-export const cutArrayC = function(startTime, arrayC){
-	let endTime = startTime + 4*3600.;
-	let indexEnd = 0;
-	let indexStart = 0;
-	for(indexEnd = 2; indexEnd < arrayC.length; indexEnd+=4){
-			if(parseInt(arrayC[indexEnd]) > endTime){
-				break;
-				//console.log("break!!!")
-			}
-	}
-	for(indexStart = 2; indexStart < arrayC.length; indexStart+=4){
-			if(parseInt(arrayC[indexStart]) >= startTime){
-				break;
-				//console.log("break!!!")
-			}
-	}
-	//console.log(_)
-
-	arrayCCut = _.slice(arrayC, indexStart - 2, indexEnd+2);
-	console.log("cutted array!!",startTime,  indexStart, indexEnd, arrayC.length, arrayCCut.length)
-	return arrayCCut;
-};  
 
 export const computeScenario = function(city, dataCity,startTimes = timesOfDay){
 	Meteor.setTimeout(()=>{

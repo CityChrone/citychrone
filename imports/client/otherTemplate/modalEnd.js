@@ -35,7 +35,8 @@ Template.modalEnd.helpers({
 		if(quantity == 'pos'){
 			//Template.scenarioList.data.pos += 1;
 			let pos = 0;
-			pos = scenarioDB.find({'city':scenario.city, 'scores.avgVelocityScore': {$gt: scenario.scores.sumVelocityScore}}, 
+			//scenarioDB.find({'city':scenario.city, 'scores.avgVelocityScore':{'$gt':scenario.scores.avgVelocityScore}}).count() + 1;
+			pos = scenarioDB.find({'city':scenario.city, 'scores.avgVelocityScore': {$gt: scenario.scores.avgVelocityScore}}, 
 				{ 
 					sort: {'scores.avgVelocityScore': -1, creationDate: -1 }                                                                                                                   // 39
 			}).count()
