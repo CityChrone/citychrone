@@ -71,7 +71,7 @@ const cutArrayC = function(startTime, arrayC, maxTime = maxDuration){
     }
     //console.log(_)
 
-    arrayCCut = _.slice(arrayC, indexStart - 2, indexEnd+2);
+    arrayCCut = arrayC.slice(indexStart - 2, indexEnd+2);
     console.log("cutted array!!",startTime,  indexStart, indexEnd, arrayC.length, arrayCCut.length)
     return arrayCCut;
 };  
