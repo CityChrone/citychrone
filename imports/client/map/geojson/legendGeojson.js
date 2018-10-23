@@ -11,7 +11,7 @@ const makeColorLegend = function(shell, color, functionToShell){
 	for (let i = 0; i < shell.length - 1; i++) {
 		objColor.push({
 			'color': color((shell[i] + shell[i + 1])/2),
-			'html': functionToShell(shell[i]) + '-' + functionToShell(shell[i + 1])
+			'html': functionToShell(shell[i]) + "\u2014"  + functionToShell(shell[i + 1])
 		});
 	}
 	if(shell.length >1){
@@ -47,8 +47,8 @@ let dataQuantity = function(quantity){
 			case 'socialityScore':
 				return {
 					title: field2text['socialityScore'],
-					'unity': '[individuals]',
-					'functionToShell' : (val) => { return (val/1000.).toString() + 'K';}
+					'unity': '[Milions People]',
+					'functionToShell' : (val) => { return (val/1000000.).toString();}
 				};
 			case 'population':
 				return {

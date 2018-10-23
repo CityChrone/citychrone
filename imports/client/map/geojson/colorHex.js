@@ -6,24 +6,37 @@ import d3 from 'd3'
 //const shell = [0.,5., 7.,8.,9.,10.,12.,14,16, 20.];
 //const shell = [0, 5, 7, 9, 11, 13, 15, 17, 20 ];
 //const shell = [0.,3., 5.,7.,9.,11.,13.,15,17, 20.];
-export const maxValueIso = 2. * 3600.
-export const maxValuePotPop = 1000000;
 
-export const numBinIso = 8.;
-export const numBinPop = 20;
+// Primary color:
 
-export const colorVelList = ['#000000', '#993404', "#f16913", "#fdae6b", '#74c476', '#31a354', '#006d2c', "#6baed6", "#4292c6", "#2171b5", '#08519c', '#f768a1', '#dd3497', '#ae017e', '#49006a'];
-export const shellVel = [0., 2., 4., 5, 6., 7, 8., 9, 10., 11, 12., 13, 15, 17.];
-export const colorVel = function(val) {
-	let i = 0;
-	//let maxV = 16.;
-	for (i = 0; i < shellVel.length; i++) {
-		if (val < shellVel[i]) break;
-	}
-	let color = colorVelList[i];
-	return color
-};
+let r_0 = "#FEB1B3";
+let r_1 = "#EF4E65" ;
+let r_2 = "#E4203B" ;
+let r_3 = "#9B0015" ;
+let r_4 = "#740010" ;
 
+//*** Secondary color (1):
+
+ let y_0 = "#C77307";
+let y_1 = "#FBB252";
+let y_2 = "#F09621" ;
+let y_3 = "#A35C00";
+let y_4 = "#7A4500";
+//*** Secondary color (2):
+
+let b_0 = "#0C5080" ;
+let b_1 = "#3C77A1" ;
+let b_2 = "#1E669A";
+let b_3 = "#064069";
+let b_4 = "#032F4E";
+
+//*** Complement color:
+
+  let g_0 = "#2DA906" ;
+   let g_1 = "#68D546" ;
+  let g_2 = "#46CB1C";
+  let g_3 = "#218A00";
+  let g_4 = "#196700";
 
 let colorV = ['#fde0dd','#fcc5c0','#fa9fb5','#f768a1','#dd3497','#ae017e','#7a0177','#49006a']
 let red = d3Inter.interpolateReds
@@ -34,14 +47,44 @@ let blue = d3Inter.interpolateBlues
 let purple = d3Inter.interpolateRdPu;
 let yellowOrangeRed = d3Inter.interpolateYlOrRd
 let orangeRed = d3Inter.interpolateOrRd
+let spectral = d3Inter.interpolateSpectral
+let redPurple = d3Inter.interpolateRdPu
+let plasma = d3Inter.interpolatePlasma
 let third = orangeRed;
-let fourth = purple;
+let fourth = redPurple;
 let second =  blue;
 let first = grey;
-export const shellPotPop =  [0, 50000, 100000, 200000, 300000, 400000, 500000, 600000,700000,800000, 900000, 1000000,1500000, 2000000,2500000, 3000000]
-//export const colorPotPop = d3.scaleSequential(d3Inter.interpolateSpectral).domain([0, maxValuePotPop]).clamp(true)
-export const colorPopList = ['#000000', first(0.7), first(0.4), second(1), second(0.85), second(0.7),second(0.5),second(0.3), third(0.3), third(0.4), third(0.5),third(0.6),third(0.7), fourth(0.5), fourth(0.6),fourth(0.8),fourth(1)];
-console.log(colorPopList)
+
+
+export const maxValueIso = 2. * 3600.
+export const maxValuePotPop = 1000000;
+
+export const numBinIso = 8.;
+export const numBinPop = 20;
+
+//export const colorVelList = ['#000000',grey(0.8), "#f16913","#fdae6b",  '#74c476', '#31a354', '#006d2c', "#4292c6", "#2171b5", '#08519c', "#26188A", "#800080FF"];
+export const colorVelList = ['#000000',spectral(0.),spectral(0.1),spectral(0.2),spectral(0.3),spectral(0.4),spectral(0.7),spectral(0.8),spectral(0.85),spectral(0.9),spectral(0.95),spectral(1)];
+
+//export const colorVelList = ['#000000', red(0.6), red(0.4), red(0.2), y_3,y_2, y_1, "#6baed6", "#4292c6", "#2171b5", '#08519c', g_1, g_2, g_3, g_4];
+export const shellVel = [0., 2., 4., 5, 6., 7, 8., 9, 10., 12., 14];
+//export const shellVel = [0., 2., 4., 5,  6., 7,  8., 10.,  12., 14];
+
+export const colorVel = function(val) {
+	let i = 0;
+	//let maxV = 16.;
+	for (i = 0; i < shellVel.length; i++) {
+		if (val < shellVel[i]) break;
+	}
+	let color = colorVelList[i];
+	//color = spectral(val/shellVel[shellVel.length-1])
+	return color
+};
+
+
+//export const shellPotPop =  [0, 50000, 100000, 200000, 300000, 400000, 500000, 600000,700000,800000, 900000, 1000000,1500000, 2000000,2500000, 3000000]
+export const shellPotPop =  [0, 50000, 100000, 200000, 400000, 600000, 800000, 1000000,1500000, 2000000, 3000000]
+//export const colorPopList = ['#000000', first(0.9), first(0.7), second(0.7), second(0.5), second(0.3), third(0.3), third(0.5), third(0.7), fourth(0.7),fourth(0.85)];
+export const colorPopList = colorVelList;
 export const colorPotPop = function(val) {
 	let i = 0;
 	//let maxV = 16.;
@@ -56,8 +99,6 @@ export const colorPotPop = function(val) {
 		return colorPopList[colorPopList.length-1];
 	}
 };
-
-
 
 //export const colorPotPop = logBase
 export const maxValueVelDiff = 2.;

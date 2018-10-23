@@ -1,14 +1,9 @@
 <template name="timeSelector">
-<div>
-	 <span class="h5 text-muted text-left"> Time
- 		<a href='#' class="h4" id="helpTimeButton">
-		<sup>
-		 <i class="fa fa-question-circle"  aria-hidden="true"></i>
-		</sup>
-	</a>
+<div  style="padding-top: 10px;">
+	 <span class="h5 text text-left"> Time
 
 	 : </span>
-	 <select class="timepicker" data-width="55%" data-style="btn-default btn-sm">
+	 <select class="timepicker" data-width="35%" data-style="btn-default btn-sm">
 	 {{#if isScenario}}
 	{{#each getTimes}}
       <option {{isochroneAvg}}>{{time}}</option>
@@ -16,6 +11,11 @@
 	{{render}}
 	{{/if}}
 	</select>
+ 		<a href='#' class="h4" id="helpTimeButton">
+		<sup>
+		 <i class="fa fa-question-circle"  aria-hidden="true"></i>
+		</sup>
+	</a>
 
 </div>
 

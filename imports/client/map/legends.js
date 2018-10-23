@@ -56,13 +56,24 @@ Template.legends.events({
 					//console.log(Template.instance().$('.toggleContent').parents().eq(0), Template.instance().$('.toggleContent').parents().eq(1))
 
 		if(Template.instance().$('.toggleContent').parents().eq(1).hasClass('leftBar')){
-			console.log(Template.instance().$('.toggleContent').parents().eq(0), Template.instance().$('.toggleContent').parents().eq(1))
 			Template.instance().$('.toggleContent').parents().eq(1).toggleClass('leftBar')
 			Template.instance().$('.toggleContent').parents().eq(1).toggleClass('ToleftBar')
 		}else if(Template.instance().$('.toggleContent').parents().eq(1).hasClass('ToleftBar')){
 			Template.instance().$('.toggleContent').parents().eq(1).toggleClass('leftBar')
 			Template.instance().$('.toggleContent').parents().eq(1).toggleClass('ToleftBar')
 		}
+
+		if(Template.instance().$('.toggleContent').parents().eq(0).hasClass('panel-body-closed')){
+			Template.instance().$('.toggleContent').parents().eq(0).toggleClass('panel-body-closed')
+			Template.instance().$('.toggleContent').parents().eq(0).toggleClass('panel-body')
+
+		}else {
+			Template.instance().$('.toggleContent').parents().eq(0).toggleClass('panel-body-closed')
+			Template.instance().$('.toggleContent').parents().eq(0).toggleClass('panel-body')
+		}
+
+
+
 
 		Template.instance().$('.toggleContent').toggleClass('hidden')
 		//Template.instance().$('.toggleContent').Class('panel-body')

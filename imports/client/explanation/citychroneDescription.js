@@ -9,7 +9,12 @@ import '/imports/client/explanation/logos.html';
 Template.citychroneDescription.helpers({
 });
 
-Template.citychroneDescription.events({});
+Template.citychroneDescription.events({
+	'click .more_info'(e){
+		console.log("more info");
+		$("#startingModal").modal();
+	} 
+});
 
 
 Template.citychroneDescription.onCreated(function(){});

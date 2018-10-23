@@ -33,7 +33,7 @@ Template.world.onRendered(function(){
 	Template.map.data.map.addLayer(Template.map.data.baseMaps['B&WLite'])
 	
 	Meteor.call('giveListCitiesScenario', function(err, risp){
-		console.log(risp)
+		//console.log(risp)
 		let markerArray = []
 		risp.forEach((city)=>{
 			//console.log(city)
@@ -60,9 +60,9 @@ Template.world.onRendered(function(){
 	let controlTL = createControl([Template.citychroneDescription],"topleft",  Template.map.data.map, 'leftBar', true);
   	//let controlTR = createControl([], "topright", Template.map.data.map, true);
 
-  	if (Template.world.var.firstTime){
+  	if (!("firstTime" in Template.body)){
   		$("#startingModal").modal();
-  		Template.world.var.firstTime = false;
+  		Template.body.firstTime = false;
   	}
 
 

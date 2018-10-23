@@ -45,12 +45,21 @@ Font Montserrata
     border: 1px solid #ddd;
     border-radius: 4px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
-    padding: 15px;
+    padding: 12px;
 }
+
+.info_button .leaflet-left .panel-body {
+    padding: 0px;
+}
+
 
 .leaflet-left .leaflet-control .panel-body {
     height: 95vh !important;
     overflow-y: scroll;
+}
+
+.panel-body-closed {
+    height: 5vh !important;
 }
 
 .leaflet-right .panel-body {
@@ -60,5 +69,5 @@ Font Montserrata
    border: 1px solid #ddd;
    border-radius: 4px;
    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
-   padding: 15px;
+   padding: 12px;
 }
