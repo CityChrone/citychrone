@@ -201,19 +201,20 @@ let loadScenarioData = function(city, RV){
 	    Template.newScenario.RV.ScenarioGeojsonId.set(scenarioDef._id);
 
      // console.log("Default scenario caricato ", Template.timeSelector.timeSelectedRV.get(),Template.newScenario.RV.currentScenario.get());
+ 	
+ 	    if(Router.current().params.query.id){
+			let _id = Router.current().params.query.id;
+			let MongoID = new Mongo.ObjectID(_id)
+			//console.log(MongoID, _id, Mongo)
+		 	Meteor.subscribe('scenarioID', city, MongoID, function() {
+				loadScenario();
+				//console.log('scenarioID')
+		      	//Template.city.function.checkDataLoaded(-1);
+		 	});
+	 	}else{
+	 		loadScenario();
+ 		}
  	});
-    if(Router.current().params.query.id){
-		let _id = Router.current().params.query.id;
-		let MongoID = new Mongo.ObjectID(_id)
-		//console.log(MongoID, _id, Mongo)
-	 	Meteor.subscribe('scenarioID', city, MongoID, function() {
-			loadScenario();
-			//console.log('scenarioID')
-	      	//Template.city.function.checkDataLoaded(-1);
-	 	});
- 	}else{
- 		loadScenario();
- 	}
 
 }
 
