@@ -31,7 +31,7 @@ Template.world.onCreated(function(){
 Template.world.onRendered(function(){
 	Template.map.data.map.removeLayer(Template.map.data.baseMaps['Default'])
 	Template.map.data.map.addLayer(Template.map.data.baseMaps['B&WLite'])
-	
+
 	Meteor.call('giveListCitiesScenario', function(err, risp){
 		//console.log(risp)
 		let markerArray = []
@@ -53,6 +53,21 @@ Template.world.onRendered(function(){
     	});
         Template.map.data.map.fitBounds(group.getBounds(), {'padding' : [150,10]}); 
         Template.map.data.map.spin(false);
+        Meteor.call('giveListCitiesScenarioNum', function(err, num_scenario_cities){
+        	console.log(num_scenario_cities)
+        	for (city in num_scenario_cities){
+        		let num = num_scenario_cities[city]
+        	}
+        	for (m in group._layers){
+        		let city = group._layers[m].city.city
+        		let new_s = group._layers[m]._popup._content
+        		new_s = new_s.slice(0, new_s.length - 6 )
+        		group._layers[m]._popup._content = new_s + num_scenario_cities[city] + "</div>"
+        		console.log(city, group._layers[m]._popup._content )
+        	}
+        	console.log(group)
+		});
+
 	});
 
 

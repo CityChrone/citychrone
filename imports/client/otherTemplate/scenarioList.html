@@ -3,7 +3,9 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
         <h4 class="modal-title" id="gridSystemModalLabel">
         Scenarios
         {{#with scenarioDef}}
@@ -11,21 +13,21 @@
         {{/with}}
         </h4>
       </div>
-      <div class="modal-body container col-md-12" id="scenarioModalBody">
-      
+      <div class="modal-body" id="scenarioModalBody">
+
       {{#with GiveCurrentScenario}}
               {{>modalEnd}}
       {{/with}}
       <hr/>
-      <div class="table-responsive col-md-12">
+      <div class="">
         <table class="table table-hover">
           <thead>
             <tr>
               <th class = "col-xs-1">#</th>
-              <th class = "col-xs-1">title</th>
+              <th class = "col-xs-2">title</th>
               <th class = "col-xs-2">author</th>
-              <th class = "col-xs-1">Velocity Score<br> (difference)</th>
-              <th class = "col-xs-1">Sociality Score<br>(difference)</th>
+              <th class = "col-xs-2">Velocity Score<br> [km/h] </th>
+              <th class = "col-xs-2">Sociality Score<br>[milions of people]</th>
               <th class = "col-xs-1">cost [M€]</th>
               <th class = "col-xs-1">date</th>
               <!--<th>see map</th>!-->
@@ -54,10 +56,10 @@
 <tr class="a score {{isCurrent _id}} showScenario" id = "{{giveID _id}}" style="cursor: pointer">
   <td class = "col-xs-1">{{pos}}</td>
 
-  <td class = "col-xs-3">{{name}}</td>
+  <td class = "col-xs-2">{{name}}</td>
   <td class = "col-xs-2">{{author}}</td>
-  <td class = "col-xs-1">{{score "avgVelocityScore"}}</td>
-  <td class = "col-xs-1">{{score "avgSocialityScore"}}</td>
+  <td class = "col-xs-2">{{score "avgVelocityScore"}}</td>
+  <td class = "col-xs-2">{{score "avgSocialityScore"}}</td>
   <td class = "col-xs-1">{{toFixed budget 0}}M€</td>
   <td class = "col-xs-1">{{niceDate creationDate}}</td>
   <!--<td><buttom class="btn btn-default showScenario" id = "{{giveID _id}}">see result</buttom></td>!-->
@@ -69,4 +71,3 @@
 <buttom class="btn btn-primary showScenarioDef" id = "{{giveID _id}}">Load Default Scenario</buttom>
 
 </template>
-

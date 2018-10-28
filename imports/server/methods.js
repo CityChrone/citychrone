@@ -61,5 +61,16 @@ Meteor.methods({
   },
   'giveListCitiesScenario' : function(){
     return listCities;
+  },
+  'giveListCitiesScenarioNum' : function(){
+    dict_cities = {}; 
+    for (c in listCities){
+      city_name = listCities[c]["city"]
+      num_scenario = scenarioDB.find({'city':city_name, "default":false}).count();
+      console.log(city_name, listCities[c], num_scenario)
+      dict_cities[city_name] = num_scenario
+    }
+    //scenarioDB.find({'city':city}).forEach(function(myDoc) { });
+    return dict_cities;
   }
 });

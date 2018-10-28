@@ -39,7 +39,7 @@ Template.scenarioList.events({
 
 Template.scenarioList.helpers({
 	'scenarioLoaded'(){
-		
+
 		return Template.scenarioList.RV.scenarioLoaded.get();
 	},
 	'getScenarioList'(){
@@ -81,7 +81,7 @@ Template.scenarioList.onCreated(()=>{
 
 });
 
-Template.scenarioList.onRendered(function(){	
+Template.scenarioList.onRendered(function(){
 	let currentView = this.view;
 
 	/*$('#scenarioModal').on('hide.bs.modal', function(e){
@@ -134,7 +134,7 @@ Template.scenarioListRow.helpers({
 	'score'(quantity){
 		//console.log(quantity)
 		if(quantity == 'avgVelocityScore') return this.scores[quantity].toFixed(3);
-		if(quantity == 'avgSocialityScore') return this.scores[quantity].toFixed(0);
+		if(quantity == 'avgSocialityScore') return (this.scores[quantity]/1000000).toFixed(3);
 	},
 	'checkID'(_id){
 		// if(Template.body.template.scenario.nameInserted.get()){
@@ -191,5 +191,3 @@ Template.scenarioDefButton.helpers({
 
 	},
 });
-
-

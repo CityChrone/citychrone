@@ -24,7 +24,7 @@ const recompute = function(){
 	Template.computeScenario.data.ended.set(false);
 		Template.computeScenario.data.nameScenarioSet.set(true);
 	Template.computeScenario.worker.CSAPointsComputed = 0;
-	
+
 	if(!Template.computeScenario.RV.dataLoaded.get()) //se non ho caricato i dati (o non ho finito il nuovo calcolo) non faccio nulla
 		return;
 	if(Template.computeScenario.data.newHexsComputed && !Template.computeScenario.data.mapEdited.get()) //se ho iniziato il calcolo o l'ho già finito
@@ -38,7 +38,7 @@ const recompute = function(){
 	if(!$('#endMetro').hasClass('hidden')){
 		$('#endMetro').trigger('click'); //finisco di aggiungere la linea
 	}
-	
+
 	let scenario = Template.newScenario.RV.currentScenario.get()
 
 	let city = Template.computeScenario.data.city
@@ -106,9 +106,12 @@ Template.computeScenario.helpers({
 				Meteor.call('updateScenario', {'$set':{'recomputed':true}},()=>{
 					let city = Template.computeScenario.data.city
 					Meteor.call('findOne', {'recomputed':false, 'city': city, '_id':{'$ne':scenario._id}},(err,newScenario)=>{
-						//console.log("goooo", err, newScenario);
-						Router.go('/newScenario/' + newScenario.city + '?id=' + newScenario._id + '&recompute=true&all=true');
-						//console.log("goooo2");
+						console.log("goooo", err, newScenario);
+						let address = '/newScenario/' + newScenario.city + '?id=' + newScenario._id + '&recompute=true&all=true'
+						//Router.go(address);
+						window.open(address, "_self")
+						console.log("goooo2");
+						this.next();
 					});
 				});
 			}
@@ -133,7 +136,7 @@ Template.computeScenario.events({
 		Template.computeScenario.data.ended.set(false);
  		Template.computeScenario.data.nameScenarioSet.set(false);
 		Template.computeScenario.worker.CSAPointsComputed = 0;
-		
+
 		if(!Template.computeScenario.RV.dataLoaded.get()) //se non ho caricato i dati (o non ho finito il nuovo calcolo) non faccio nulla
 			return;
 		if(Template.computeScenario.data.newHexsComputed && !Template.computeScenario.data.mapEdited.get()) //se ho iniziato il calcolo o l'ho già finito
@@ -183,10 +186,10 @@ Template.computeScenario.onCreated(function(){
  Template.computeScenario.function = {};
  Template.computeScenario.function.loading = function(load = true){
  	if(load){
- 		$("#block").addClass("progress");	
+ 		$("#block").addClass("progress");
  		markerEvent(Template.metroLinesDraw.data.StopsMarker,'off');
  	}else{
- 		 $("#block").removeClass("progress");	
+ 		 $("#block").removeClass("progress");
  		markerEvent(Template.metroLinesDraw.data.StopsMarker,'on');
  	}
  };
@@ -207,7 +210,7 @@ Template.computeScenario.collection.stops = new Mongo.Collection(null)
   Template.computeScenario.data.recomputeAll = false;
   Template.computeScenario.data.arrayN = []
 
-  //********. Reactive Var ************ 
+  //********. Reactive Var ************
   Template.computeScenario.RV = {};
   Template.computeScenario.RV.dataLoaded = new ReactiveVar(false); //true when finished load data
   Template.computeScenario.RV.toSave = new ReactiveVar(false); //set true when the user have to insert the name and uthor of the scenario
@@ -231,7 +234,7 @@ Template.computeScenario.onRendered(function(){
 
 });
 
-	
+
 let checkDataLoaded = function(num = -1) {
 	Template.computeScenario.data.dataToLoad  += num
 	console.log(Template.computeScenario.data.dataToLoad)
@@ -272,7 +275,7 @@ let loadComputeScenarioData = function(city, RV){
         checkDataLoaded(-1);
     })
 
-    
+
 	if( !('citiesData' in Template.body)) Template.body.citiesData = {};
 
 	if( !(city in Template.body.citiesData)){
@@ -310,7 +313,7 @@ let loadArrayN = function(risp){
 	    worker.postMessage({'P2PDef' : P2PDef});
 	    worker.postMessage({'P2SDef' : P2SDef});
 	    worker.postMessage({'S2SDef' : S2SDef});
-	});      
+	});
 	Template.computeScenario.data.arrayN = risp;
 	checkDataLoaded(-1);
 }
@@ -380,7 +383,7 @@ let loadDatacity = function(zip){
 							zip.file("cityData.txt").async("string").then(function (data2){
 								let cityData = JSON.parse(data2)
 								loadAreaHex(cityData['areaHex']);
-							});    		
+							});
 
 						});
 					});
@@ -393,7 +396,7 @@ let loadDatacity = function(zip){
 const computeNewScenario = function(){
 
 	Template.computeScenario.data.countLimit = 0;
-	
+
 	let city = Template.computeScenario.data.city;
 	let stopsCollection = Template.computeScenario.collection.stops;
 	let pointsCollection = Template.newScenario.collection.points;
@@ -464,6 +467,3 @@ const computeNewScenario = function(){
 		}, 500)
 	});
 };
-
-
-

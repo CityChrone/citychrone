@@ -5,7 +5,7 @@ import * as util from "/imports/lib/utils.js"
 const deleteEmptyItem = function(array2Add){
 	for(let key in array2Add){
 		if(array2Add[key].pos.length == 0)
-			delete array2Add[key]; 
+			delete array2Add[key];
 	}
 };
 
@@ -116,7 +116,7 @@ const computeNeigh = function(stop, stops, P2S2Add, S2S2Add, points, serverOSRM)
   								vels.push(dist/timePointN)
 	                  			err.push(100. * Math.abs(time - timePointN) / time)
 
-  								//console.log(stop.pos, posPointN, timePointN.toFixed(0), time.toFixed(0), 
+  								//console.log(stop.pos, posPointN, timePointN.toFixed(0), time.toFixed(0),
   								//	(100. * (time - timePointN) / time).toFixed(0) , "%", (dist/timePointN).toFixed(1),
   								//	average(vels).toFixed(1), average(err).toFixed(1))
 	                  			countPointAdded+=1;
@@ -175,7 +175,7 @@ const computeNeigh = function(stop, stops, P2S2Add, S2S2Add, points, serverOSRM)
   				for(let stopN_i = 0; stopN_i < stopsNList.length; stopN_i++){
   					let p = coordinates_stops[stopN_i]
 		            let time = util.time_walking_distance_exitimation(start_coor[1], start_coor[0], p[1], p[0]);
-  					
+
   					let posStopN = stopsNList[stopN_i].pos
 		            let timeStopN = stopsNList[stopN_i].time;
   					if(stopsNList[stopN_i].time < parameters.maxTimeWalk && posStop != posStopN){
@@ -185,7 +185,7 @@ const computeNeigh = function(stop, stops, P2S2Add, S2S2Add, points, serverOSRM)
   						let dist = util.getDistanceFromLatLonInKm(start_coor[1], start_coor[0], p[1], p[0]) * 1000;
   						err.push(100.*Math.abs(time - timeStopN) / time)
 	    				vels.push(dist/timeStopN);
-  						//console.log(stop.pos, posStopN, timeStopN.toFixed(0), time.toFixed(0), 
+  						//console.log(stop.pos, posStopN, timeStopN.toFixed(0), time.toFixed(0),
   						//			(100. * (time - timeStopN) / time).toFixed(0) , "%", (dist/timeStopN).toFixed(1),
   						//			average(vels).toFixed(1), average(err).toFixed(1))
 
@@ -245,69 +245,70 @@ const computeNeighNew = function(stop, stops, P2S2Add, S2S2Add, points, arrayN){
 			//console.log(pointN)
           	pointsNList.push(pointN);
     });
-
-
-	let closestPoint = points.find({'point':NearSphere}).fetch()[0]
-	let closestStop = stops.find({'point':NearSphere, "temp":{"$ne":true}}).fetch()[0]
-	//console.log(closestPoint, closestStop)
-
-	let dist_point = util.getDistanceFromLatLonInKm(closestPoint.coor[1], closestPoint.coor[0],stop.coor[1], stop.coor[0]);
-	let dist_stop = util.getDistanceFromLatLonInKm(closestStop.point.coordinates[1], closestStop.point.coordinates[0],stop.coor[1], stop.coor[0]);
+	let num_points = points.find({'point':NearSphere}).count();
+	let num_stops = stops.find({'point':NearSphere, "temp":{"$ne":true}}).count();
+	if (num_points + num_stops > 0){
+		let closestPoint = points.find({'point':NearSphere}).fetch()[0]
+		let closestStop = stops.find({'point':NearSphere, "temp":{"$ne":true}}).fetch()[0]
+		let dist_point = 1e+16;
+		let dist_stop = 1e+16;
+		if(num_points > 0) dist_point = util.getDistanceFromLatLonInKm(closestPoint.coor[1], closestPoint.coor[0],stop.coor[1], stop.coor[0]);
+		if(num_stops > 0) dist_stop = util.getDistanceFromLatLonInKm(closestStop.point.coordinates[1], closestStop.point.coordinates[0],stop.coor[1], stop.coor[0]);
 	//console.log( dist_point, dist_stop)
 
-	if (dist_stop <= dist_point){
-		let pos_stop_closest = closestStop.pos;
-		let pos_to_add = S2SPos[pos_stop_closest]
-		let time_to_add = S2STime[pos_stop_closest]
-		pos_to_add.push(pos_stop_closest)
-		time_to_add.push(0)
-		S2S2Add[posStop].pos = pos_to_add
-		S2S2Add[posStop].time = time_to_add
+		if (dist_stop <= dist_point){
+			let pos_stop_closest = closestStop.pos;
+			let pos_to_add = S2SPos[pos_stop_closest]
+			let time_to_add = S2STime[pos_stop_closest]
+			pos_to_add.push(pos_stop_closest)
+			time_to_add.push(0)
+			S2S2Add[posStop].pos = pos_to_add
+			S2S2Add[posStop].time = time_to_add
 
-		//updating the neighbor stops
-		for (pos_i = 0; pos_i < S2S2Add[posStop].pos.length; pos_i++){
-			pos_update = S2S2Add[posStop].pos[pos_i]
-			S2S2Add[pos_update].pos.push(posStop)
-			S2S2Add[pos_update].time.push(S2S2Add[posStop].time[pos_i])
-		}
+			//updating the neighbor stops
+			for (pos_i = 0; pos_i < S2S2Add[posStop].pos.length; pos_i++){
+				pos_update = S2S2Add[posStop].pos[pos_i]
+				S2S2Add[pos_update].pos.push(posStop)
+				S2S2Add[pos_update].time.push(S2S2Add[posStop].time[pos_i])
+			}
 
-		//updating the neighbor points
-		for(let pointN_i = 0; pointN_i < pointsNList.length; pointN_i++){
-			let pos_point = pointsNList[pointN_i].pos
-			if (P2SPos[pos_point].includes(pos_stop_closest)){
-	            	let index_stop_closest = P2SPos[pos_point].indexOf(pos_stop_closest)
-	            	let time_stop_closest = P2STime[pos_point][index_stop_closest]
-	            	P2S2Add[pos_point].pos.push(posStop)
-	            	P2S2Add[pos_point].time.push(time_stop_closest)
+			//updating the neighbor points
+			for(let pointN_i = 0; pointN_i < pointsNList.length; pointN_i++){
+				let pos_point = pointsNList[pointN_i].pos
+				if (P2SPos[pos_point].includes(pos_stop_closest)){
+		            	let index_stop_closest = P2SPos[pos_point].indexOf(pos_stop_closest)
+		            	let time_stop_closest = P2STime[pos_point][index_stop_closest]
+		            	P2S2Add[pos_point].pos.push(posStop)
+		            	P2S2Add[pos_point].time.push(time_stop_closest)
+				}
 			}
 		}
-	}
-	else{
-		let pos_point_closest = closestPoint.pos;
-		let pos_to_add = P2SPos[pos_point_closest]
-		let time_to_add = P2STime[pos_point_closest]
-		S2S2Add[posStop].pos = pos_to_add
-		S2S2Add[posStop].time = time_to_add
+		else{
+			let pos_point_closest = closestPoint.pos;
+			let pos_to_add = P2SPos[pos_point_closest]
+			let time_to_add = P2STime[pos_point_closest]
+			S2S2Add[posStop].pos = pos_to_add
+			S2S2Add[posStop].time = time_to_add
 
-		//updating the neighbor stops
-		for (pos_i = 0; pos_i < S2S2Add[posStop].pos.length; pos_i++){
-			pos_update = S2S2Add[posStop].pos[pos_i]
-			S2S2Add[pos_update].pos.push(posStop)
-			S2S2Add[pos_update].time.push(S2S2Add[posStop].time[pos_i])
+			//updating the neighbor stops
+			for (pos_i = 0; pos_i < S2S2Add[posStop].pos.length; pos_i++){
+				pos_update = S2S2Add[posStop].pos[pos_i]
+				S2S2Add[pos_update].pos.push(posStop)
+				S2S2Add[pos_update].time.push(S2S2Add[posStop].time[pos_i])
+			}
+
+			//updating the neighbor points
+			neigh_points_pos = P2PPos[pos_point_closest]
+			P2S2Add[pos_point_closest].pos.push(posStop)
+			P2S2Add[pos_point_closest].time.push(0)
+
+			for(let pointN_i = 0; pointN_i < neigh_points_pos.length; pointN_i++){
+				let pos_point = neigh_points_pos[pointN_i]
+				P2S2Add[pos_point].pos.push(posStop)
+				P2S2Add[pos_point].time.push(P2PTime[pos_point_closest][pointN_i])
+				//console.log(pos_point, P2S2Add[pos_point])
+			}
 		}
-
-		//updating the neighbor points
-		neigh_points_pos = P2PPos[pos_point_closest]
-		P2S2Add[pos_point_closest].pos.push(posStop)
-		P2S2Add[pos_point_closest].time.push(0)
-
-		for(let pointN_i = 0; pointN_i < neigh_points_pos.length; pointN_i++){
-			let pos_point = neigh_points_pos[pointN_i]
-			P2S2Add[pos_point].pos.push(posStop)
-			P2S2Add[pos_point].time.push(P2PTime[pos_point_closest][pointN_i])
-			//console.log(pos_point, P2S2Add[pos_point])
-		}
-
 	}
 	//console.log("called resolved point", stop,  dist_point, dist_stop, S2S2Add[posStop], P2PPos[closestPoint.pos])
 }
@@ -318,7 +319,7 @@ const updateArrays = function(city, stopsCollection, pointsCollections, scenario
 	//make copy of default arrays
 
 	stopsCollection.remove({temp:true});
-	
+
 	let metroLinesFetched = scenario.lines;
 
 	//console.log(metroLinesFetched)
@@ -363,7 +364,7 @@ const updateArraysNew = function(city, stopsCollection, pointsCollections, scena
 	//make copy of default arrays
 	console.log("updateArraysNew")
 	stopsCollection.remove({temp:true});
-	
+
 	let metroLinesFetched = scenario.lines;
 
 	//console.log(metroLinesFetched)

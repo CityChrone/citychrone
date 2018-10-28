@@ -1,22 +1,22 @@
 <template name="scenarioSelector">
 <div>
 	{{#if isSelected}}
-		<hr /> 
+		<hr />
 		<button  class = "btn btn-lg btn-default btn-block" data-toggle="modal" data-target="#scenarioModal" type="submit">
-			<div class="text"> 
-				<span class ="h4">Scenario</span>  
+			<div class="text">
+				<span class ="h4">Scenario</span>
 			</div>
-		
+
 			<div class="col-xs-12 small">
 			  	<div class = "row">
 					<div class = "text-left col-xs-6" >title:</div>
-					<div class="text text-right col-xs-6" id="scenarioTitle">
+					<div class="text text-right col-xs-6" id="scenarioTitle" style="overflow: hidden;">
 						{{title}}
 					</div>
 				</div>
 				<div class = "row">
 					<div class = "text text-left col-xs-6" >author:</div>
-					<div class="text text-right col-xs-6" id="scenarioAuthor">
+					<div class="text text-right col-xs-6" id="scenarioAuthor" style="overflow: hidden;">
 						{{author}}
 					</div>
 				</div>
@@ -42,7 +42,7 @@
 </div>
 {{/if}}
 
-<!-- <button class = "btn btn-primary btn-lg btn-block scenarioButton" data-toggle="modal" data-target="#scenarioModal"> 
+<!-- <button class = "btn btn-primary btn-lg btn-block scenarioButton" data-toggle="modal" data-target="#scenarioModal">
 		<i class="fa fa-trophy"></i>
 	Ranking
 </button> !-->

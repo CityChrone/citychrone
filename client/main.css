@@ -10,6 +10,11 @@ html, body, #mapid  {
   font: 14px/16px Montserrat, sans-serif;
 }
 
+td {
+  word-wrap:break-word;
+  word-break:break-all;
+}
+
 .leftBar {
       width: 250px;
       /*color: #E36E3C;*/
@@ -23,7 +28,7 @@ html, body, #mapid  {
 }
 
 .legendColor {
-     align-content: left; 
+     align-content: left;
       margin-right: 20px;
          margin-top: 4px;
 
@@ -42,6 +47,10 @@ html, body, #mapid  {
 .modal{
     z-index: 7000;
   }
+
+.video_modal{
+   height:150px;
+}
 
 .progress {
     background: rgba(0, 0, 0, .7);

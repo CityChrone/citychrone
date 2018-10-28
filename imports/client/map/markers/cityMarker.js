@@ -1,7 +1,7 @@
 import {Template} from 'meteor/templating';
 
 export class cityMarker {
-  
+
   constructor(city, color = '#d95f02') {
   	//console.log(city)
   		this.latlng = city.latlng
@@ -14,7 +14,7 @@ export class cityMarker {
 		this.marker.on('mouseover', function(e){
 			let marker = e.target;
 			marker.setStyle({	weight : 10,
-				opacity : 0.4}); 
+				opacity : 0.4});
 			marker.openPopup();
 		});
 		this.marker.on('mouseout', function(e){
@@ -26,7 +26,7 @@ export class cityMarker {
 
 
 		});
-	
+
 		this.marker.on('click', function(e){
 			//analytics.track("click cityMarker", {
 	  		//	city: e.target.city.city,
@@ -37,11 +37,14 @@ export class cityMarker {
 			onCLickMarker(e);
 		});
 
-		let newScenarioPopUp = this.newScenario ? '<div class="text-center" style="color:#b2182b;">with new scenario section</div>': "";
-		this.marker.bindPopup('<div class="text-center">' + city.city + '</div>' + newScenarioPopUp,{'closeButton':false});
+		let newScenarioPopUp = '<div class="text-center">scenarios </div>';
+		let city_color =  this.newScenario ?
+					'<div class="text-center red">' + city.city + '</div>' :
+					'<div class="text-center orange">' + city.city + '</div>'
+		this.marker.bindPopup(city_color + newScenarioPopUp,{'closeButton':false});
 		return this.marker;
 	}
-	
+
 	/*get marker(){
 		return this.marker
 	}*/
@@ -74,12 +77,10 @@ export const radiusCircle = function(){
 export const styleMarker = function(color){
 	colorIn = color
 	colorOut = 'white'
-	return {'color': colorOut, 
+	return {'color': colorOut,
 	'weight':1,
-	'fillColor' : colorIn, 
-	'fillOpacity':1,			
+	'fillColor' : colorIn,
+	'fillOpacity':1,
 	'opacity' : 1
 	};
 };
-
-
