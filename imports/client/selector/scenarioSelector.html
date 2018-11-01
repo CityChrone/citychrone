@@ -1,35 +1,34 @@
 <template name="scenarioSelector">
 <div>
 	{{#if isSelected}}
-		<hr />
-		<button  class = "btn btn-lg btn-default btn-block" data-toggle="modal" data-target="#scenarioModal" type="submit">
+	<hr class="divider_small"/>
+	<div data-toggle="modal" data-target="#scenarioModal" type="submit" >
+		<button  class = "btn btn-lg btn-light btn-block"  data-toggle="tooltip" data-placement="right" 
+		title="click for select different scenario">
 			<div class="text">
-				<span class ="h4">Scenario</span>
+				<span class ="h5">Scenario</span>
 			</div>
-
-			<div class="col-xs-12 small">
-			  	<div class = "row">
-					<div class = "text-left col-xs-6" >title:</div>
-					<div class="text text-right col-xs-6" id="scenarioTitle" style="overflow: hidden;">
-						{{title}}
+					<div class = "small text-left ">
+					 	<span class=" text-muted ">title: </span>
+						<span id="scenarioTitle" style="overflow: hidden;">{{title}}</span>
 					</div>
-				</div>
-				<div class = "row">
-					<div class = "text text-left col-xs-6" >author:</div>
-					<div class="text text-right col-xs-6" id="scenarioAuthor" style="overflow: hidden;">
-						{{author}}
-					</div>
+					<div class = "small text-left ">
+					<span class = "text-muted" >author:</span>
+					<span id="scenarioAuthor" style="overflow: hidden;">
+					{{author}}
+					</span>
 				</div>
 				{{#if isCreateScenario}}
-				<div class = "row">
-					<div class = "text text-left col-xs-6">rank position:</div>
-					<div class="text text-right col-xs-6" id="scenarioAuthor">
+					<div class = "text-left small">
+						<span class=" text-muted ">rank position:
+						</span>
+					<span class="" id="scenarioAuthor">
 						{{rankPosition}}
-					</div>
+					</span>
 				</div>
 				{{/if}}
-			</div>
 		</button>
+	</div>
 	{{/if}}
 </div>
 

@@ -75,10 +75,11 @@ Template.legends.events({
 
 
 
-		Template.instance().$('.toggleContent').toggleClass('hidden')
+		//Template.instance().$('.toggleContent').toggleClass('hidden')
+			Template.instance().$('.toggleContent').toggle()
 		//Template.instance().$('.toggleContent').Class('panel-body')
 		//console.log(Template.instance().$('.leaflet-control').attr('class'))
-		
+
 	},
 });
 

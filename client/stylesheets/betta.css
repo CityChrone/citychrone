@@ -4,6 +4,7 @@ Secondario: Arancione #f28a40
 Terziario: Blu #359bed
 Font Montserrata
 */
+
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
@@ -38,14 +39,17 @@ Font Montserrata
   background: transparent;
 }
 
+
 .leaflet-left .panel-body {
     opacity: 0.9;
-    background: #FFF url(http://citychrone.org/wp-content/uploads/2017/04/sfondo_5.png) no-repeat;
+    background: #FFF;
     background-attachment: fixed;
     border: 1px solid #ddd;
     border-radius: 4px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
-    padding: 12px;
+    padding: 8px;
+    padding-top: 5px;
+
 }
 
 .info_button .leaflet-left .panel-body {
@@ -54,8 +58,11 @@ Font Montserrata
 
 
 .leaflet-left .leaflet-control .panel-body {
-    height: 95vh !important;
+    height: 84vh !important;
     overflow-y: scroll;
+    max-height: 500px;
+    margin-top: 5vh !important;
+    margin-bottom: 5vh !important;
 }
 
 .panel-body-closed {

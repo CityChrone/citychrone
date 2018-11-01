@@ -49,7 +49,7 @@ Template.quantitySelector.events({
 	'click #helpQuantityButton'(e){
 		console.log(e)
 		$("#helpQuantity").toggle('slow');
-	}
+	},
 });
 
 Template.quantitySelector.helpers({
@@ -100,7 +100,7 @@ Template.quantitySelector.helpers({
 
 	    //if('selectpicker' in $('#quantityPicker'))
 	    
-	    Meteor.setTimeout(function(){$('#quantityPicker').selectpicker('refresh')}, 500);
+	   // Meteor.setTimeout(function(){$('#quantityPicker').selectpicker('refresh')}, 500);
 	    let dis = templateRV.currentScenario.get().default ? 'disabled' : '';
 	    return dis;
 
@@ -114,7 +114,10 @@ Template.quantitySelector.helpers({
 
 
 Template.quantitySelector.onRendered(function() {
-	this.$('#quantityPicker').selectpicker('render');
+
+	$('#quantityPicker').selectpicker("refresh");
+	$('[data-toggle="tooltip"]').tooltip({"html":true})
+	//console.log($('#quantityPicker'))
 
 	$("#helpQuantity").hide();
 

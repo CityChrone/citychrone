@@ -15,8 +15,20 @@ td {
   word-break:break-all;
 }
 
+hr.divider {
+ margin: 0.8em;
+ border-width: 1px;
+}
+
+hr.divider_small {
+ margin: 0.5em;
+ border-width: 1px;
+}
+
+
+
 .leftBar {
-      width: 250px;
+      width: 200px;
       /*color: #E36E3C;*/
       opacity:0.9;
   /*background: #FFF url(http://citychrone.org/wp-content/uploads/2017/04/sfondo_5.png) no-repeat;*/

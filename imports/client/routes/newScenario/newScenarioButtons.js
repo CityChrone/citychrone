@@ -24,31 +24,32 @@ Template.newScenarioButtons.onCreated(function(){
 Template.newScenarioButtons.events({
 	'click #buttonAddCompute'(e) {
 		//adding metroLine
-		if(!$('#addLine').hasClass('hidden')){ //addLine è visibile, devo iniziare ad aggiungere
-			//console.log(e);
+		if(!$('#addLine').is(':hidden')){ //addLine è visibile, devo iniziare ad aggiungere
+			console.log(e);
 			$('#buttonAddCompute').removeClass('active');
-			$('#buttonAddCompute').removeClass('btn-default');
-			$('#buttonAddCompute').addClass('btn-danger');
+			$('#buttonAddCompute').removeClass('btn-outline-secondary');
+			$('#buttonAddCompute').addClass('btn-outline-danger');
 			if(!Template.metroLinesDraw.RV.mapEdited.get()){
 				Template.metroLinesDraw.RV.mapEdited.set(true);
 			}
 			addNewLine()
 
-			$('.computeDone').toggleClass('hidden');
+			$('.computeDone').toggle();
+			//console.log("prima remove")
 			$('#buttonAddCompute').removeClass('active');
 
 		}else{
 			stopAddingStops();
 			$('#buttonAddCompute').removeClass('active');
-			$('#buttonAddCompute').removeClass('btn-danger');
-			$('#buttonAddCompute').addClass('btn-default');
-			$('.computeDone').toggleClass('hidden');
+			$('#buttonAddCompute').removeClass('btn-outline-danger');
+			$('#buttonAddCompute').addClass('btn-outline-secondary');
+			$('.computeDone').toggle();
 			$('#buttonAddCompute').removeClass('active');
 			//console.log('merker Clicked', Template.body.data.markerClicked);
 		}
 	},
 	'click #reload'(){
-		if(!$('#endMetro').hasClass('hidden')){
+		if(!$('#endMetro').is(':hidden')){
 			$('#buttonAddCompute').trigger('click');
 		}	
 		let scenarioDef = Template.newScenario.data.scenarioDefault;

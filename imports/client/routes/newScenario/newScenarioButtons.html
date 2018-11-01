@@ -1,34 +1,34 @@
 <template name="newScenarioButtons">
 
 
-<div class="h3 text-danger text-center">
+<div class="h5 text-center">
   Create New Scenario of {{city}}
   <br>
-  <small> beta version </small>
+  <small class="text-danger"> beta version </small>
 </div>
 
 {{>budget}}
 <div class = "text-center">
-<button class="btn btn-default " data-toggle="button" type="button"  id="buttonAddCompute" onclick="this.blur();">
-  <span class="computeDone" id="addLine" >
+<button class="btn btn-outline-secondary" type="button"  id="buttonAddCompute" onclick="this.blur();">
+  <span class="computeDone " id="addLine" >
   	<i class="fa fa-subway"></i>
-    Add Metro
+    <small>Add Metro</small>
   </span>
-  <span class="computeDone hidden"  id="endMetro" >
+  <span class="computeDone"  id="endMetro" style="display: none;">
   	Stop Add
   </span>
 
 </button>
 
-  <button class="btn btn-default " type="button" id="reload" onclick="this.blur();" >
+  <button class="btn btn-outline-secondary" type="button" id="reload" onclick="this.blur();" >
   	<i class="fa fa-trash-o" aria-hidden="true"></i>
-     Reset
+     <small>Reset</small>
  </button>
 </div>
 
 {{#if isCreateScenario}}
 <div>
-  <button href='#' class="btn btn-danger btn-lg btn-block" id="createNewScenarioButton">
+  <button href='#' class="btn btn-danger btn-lg" id="createNewScenarioButton">
     Create New Scenario
   </button>
 </div>

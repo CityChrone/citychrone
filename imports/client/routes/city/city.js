@@ -27,8 +27,8 @@ import '/imports/client/explanation/titleBar.js';
 Template.city.helpers({
 	'loadGeojsonToMap'(){
 		//console.log('loadGeojsonToMap',)
-			if(Template.city.RV.currentScenario.get()){
-				//console.log('loadGeojsonToMap after')
+			if(Template.city.RV.currentScenario.get() && Template.city.RV.dataLoaded.get()){
+				console.log('loadGeojsonToMap after')
 				let scenario = Template.city.RV.currentScenario.get();
 				let time = Template.timeSelector.timeSelectedRV.get();
 				//console.log('time',time)				
@@ -82,11 +82,11 @@ Template.city.helpers({
 			}
 		}
 
-		if(Router.current().params.query.id){
+		if(Router.current().params.query.id && Template.city.RV.dataLoaded.get()){
 			let _id = Router.current().params.query.id;
 			let MongoID = new Mongo.ObjectID(_id)
 			let currentScenario = scenarioDB.findOne({'_id':MongoID, 'city':Template.city.data.city, 'moments':{'$exists':true}});
-			//console.log("currentScenario", currentScenario)
+			console.log("currentScenario", currentScenario)
 			if(currentScenario){
 				Template.city.RV.currentScenario.set(currentScenario);
 			    let times = Object.keys(currentScenario.moments);
@@ -196,7 +196,7 @@ Template.city.onRendered(function() {
 		}           
 		fillPointTree(Template.city.collection.points); 
 		Template.city.data.geoJson.setPoints(Template.city.collection.points);
-		
+		console.log("point loaded")
 		//oneHex
 		let oneHex = data['oneHex']
 		Template.city.data.hexClass = new hexagonCity(oneHex.coordinates[0]);

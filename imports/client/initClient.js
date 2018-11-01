@@ -7,12 +7,12 @@ ShareIt.configure({
       'googleplus' : null,
       'pinterest':null
   },
-  classes: " large btn", // string (default: 'large btn')
+  classes: "btn btn-outline-light btn-sm small", // string (default: 'large btn')
                         // The classes that will be placed on the sharing buttons, bootstrap by default.
   iconOnly: true,      // boolean (default: false)
                         // Don't put text on the sharing buttons
-  applyColors: true,     // boolean (default: true)
+  applyColors: false,     // boolean (default: true)
                         // apply classes to inherit each social networks background color
-  faSize: 'fa-lg fa fa-fw',            // font awesome size
+  faSize: 'fa-sm fa fa-fw',            // font awesome size
   faClass: ''		  // font awesome classes like square
 });

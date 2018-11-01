@@ -37,8 +37,8 @@ Template.popUpGeojson.helpers({
 				else { return 'Not Av.';}
 				break;
 			case 'socialityScore':		
-				valFixed = parseFloat(val/1000).toFixed(0);
-				if(val > 0){ return valFixed.toString() + 'K';}
+				valFixed = parseFloat(val/1000000).toFixed(2);
+				if(val > 0){ return valFixed.toString() + 'M';}
 				else { return 'Not Av.';}
 				break;
 			case 'population':
@@ -67,8 +67,8 @@ Template.popUpGeojson.helpers({
 						else { return 'Not Av.';}
 						break;
 					case 'socialityScore':		
-						valFixed = parseFloat(val/1000).toFixed(0);
-						if(val > 0){ return valFixed.toString() + 'K';}
+						valFixed = parseFloat(val/1000000).toFixed(2);
+						if(val > 0){ return valFixed.toString() + 'M';}
 						else { return 'Not Av.';}
 						break;
 		

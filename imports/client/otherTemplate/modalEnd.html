@@ -1,40 +1,27 @@
 <template name="modalEnd">
-<!--<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id='modalEnd'>
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h2 class="modal-title text-center" id="gridSystemModalLabel">
-        computation completed
-        </h2>
-      </div>
-      <div class="modal-body" id="endModalBody">
-!-->
-  <div class="text-center">
+
   {{#if firstTime}}
-      <div class="lead text-success"> congratulation! computation ended.</div>
+      <div class="text-success text-center h3"> congratulation! computation ended.
+      </div>
   {{/if}}
-       <h4>
-       Scenario Selected: <b><em>{{scenarioInfo "name"}}</em></b>  
-       
-        <div><small> author: <em>{{scenarioInfo "author"}}</em> </small></div>
-       </h4>
-       <ul class="list-inline">
-         <li class="text"> <b>Ranking Position {{scenarioInfo "pos"}} </b></li>
-         <li class="text"> Velocity Score {{scenarioInfo "avgVelocityScore"}}</li>
-         <li class="text"> Sociality Score {{scenarioInfo "avgSocialityScore"}}</li>
-       </ul>
+  <div class="container">
+      <div class="row">
+
+        <div class="text-left col">
+           <h4>
+           Scenario Selected: <b>{{scenarioInfo "name"}}</b>  
+           
+            <div> author: <b>{{scenarioInfo "author"}}</b></div>
+           </h4>
+        </div>
+      <div class="text-left col">
+         <div class="text">Ranking Position: <b>{{scenarioInfo "pos"}} </b></div>
+         <div class="text">Velocity Score: {{scenarioInfo "avgVelocityScore"}}</div>
+         <div class="text">Sociality Score: {{scenarioInfo "avgSocialityScore"}}</div>
+    </div>
+  </div>
     <span class = "text" id="shareButtonScenario" style="{float:center;}">
       {{>shareit shareData}}
     </span>
   </div>
-       <!--
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-!-->
 </template>

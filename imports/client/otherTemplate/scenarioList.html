@@ -3,33 +3,32 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
         <h4 class="modal-title" id="gridSystemModalLabel">
-        Scenarios
         {{#with scenarioDef}}
           {{>scenarioDefButton}}
         {{/with}}
         </h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
       </div>
       <div class="modal-body" id="scenarioModalBody">
 
       {{#with GiveCurrentScenario}}
               {{>modalEnd}}
       {{/with}}
-      <hr/>
       <div class="">
-        <table class="table table-hover">
+        <table class="table table-hover ">
           <thead>
-            <tr>
-              <th class = "col-xs-1">#</th>
-              <th class = "col-xs-2">title</th>
-              <th class = "col-xs-2">author</th>
-              <th class = "col-xs-2">Velocity Score<br> [km/h] </th>
-              <th class = "col-xs-2">Sociality Score<br>[milions of people]</th>
-              <th class = "col-xs-1">cost [M€]</th>
-              <th class = "col-xs-1">date</th>
+            <tr class="d-flex align-bottom">
+              <th class="col align-bottom">#</th>
+              <th class="col-3">title</th>
+              <th class="col-3">author</th>
+              <th class="col">Velocity Score<div class="small">[km/h]</div></th>
+              <th class="col">Sociality Score <div class="small">[milions of people]</div></th>
+              <th class="col">cost<div class="small">[M€]</div></th>
+              <th class="col-2">date</th>
               <!--<th>see map</th>!-->
             </tr>
           </thead>
@@ -53,15 +52,14 @@
 </template>
 
 <template name='scenarioListRow'>
-<tr class="a score {{isCurrent _id}} showScenario" id = "{{giveID _id}}" style="cursor: pointer">
-  <td class = "col-xs-1">{{pos}}</td>
-
-  <td class = "col-xs-2">{{name}}</td>
-  <td class = "col-xs-2">{{author}}</td>
-  <td class = "col-xs-2">{{score "avgVelocityScore"}}</td>
-  <td class = "col-xs-2">{{score "avgSocialityScore"}}</td>
-  <td class = "col-xs-1">{{toFixed budget 0}}M€</td>
-  <td class = "col-xs-1">{{niceDate creationDate}}</td>
+<tr class="a score {{isCurrent _id}} showScenario d-flex" id = "{{giveID _id}}" style="cursor: pointer">
+  <th class="col align-bottom">{{pos}}</th>
+  <td class="col-3 align-bottom">{{name}}</td>
+  <td class="col-3 align-bottom">{{author}}</td>
+  <td class="col align-bottom">{{score "avgVelocityScore"}}</td>
+  <td class="col align-bottom">{{score "avgSocialityScore"}}</td>
+  <td class="col align-bottom">{{toFixed budget 0}}</td>
+  <td class="col-2 align-bottom">{{niceDate creationDate}}</td>
   <!--<td><buttom class="btn btn-default showScenario" id = "{{giveID _id}}">see result</buttom></td>!-->
 </tr>
 

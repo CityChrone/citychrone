@@ -1,126 +1,117 @@
 <template name="startingModal">
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id='startingModal'>
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title h1 text-center" id="title-start">
-          <span style="color: #f16913">C</span>ity<span style="color: #31a354">C</span>hro<span style="color: #2171b5">n</span>e
-        </h4>
-      </div>
-      <div class="modal-body container col-md-12" id="body-start">
-      	<div class="row">
-      		<div class="col-md-12">
-      			<div class="h2 text text">
-      				What is it?
-      			</div>
-      			<div class="text h4">
-      			The CityChrone project is a scientific study about public transport performances in cities.
-      			</div>
-      		</div>
-
-      		<div class="col-md-12">
-      			<div class="h2 text">
-      				What can I do?
-      			</div>
-      		</div>
-      	</div>
-
-
-		<div class="row">
-    <div class="col-md-12 ">
-      <div class="media">
-        <div class="media-left">
-          <a href="#" >
-            <video controls class="embed-responsive-item video_modal">
-                <source src="/video/select_a_city.mp4" type="video/mp4">
-            </video>
-          </a>
-        </div>
-        <div class="media-body">
-          <h3 class="media-heading">Visualize</h3>
-              <p class="text">
-              You can visualize interactive maps about performances of public transports in cities.
-              </p>
-              <p class="text">
-              Compare various areas and different cities!
-              </p>
+  <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id='startingModal'>
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title h1 text-center" id="title-start">
+            <span style="color: #f16913">C</span>ity<span style="color: #31a354">C</span>hro<span style="color: #2171b5">n</span>e
+          </h4>
+          <span class="text-right"><button type="button " class="btn btn-outline-secondary" data-dismiss="modal">Close</button></span>
 
         </div>
-      </div>
-    </div>
 
-    <div class="col-md-12 " style="padding-top: 10px;">
-      <div class="media">
-        <div class="media-left">
-          <a href="#" >
-            <video controls class="embed-responsive-item video_modal">
-                <source src="/video/explore_citychrone.mp4" type="video/mp4">
-            </video>
-          </a>
+        <div class="modal-body" id="body-start">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="h2 text">
+                  What is it?
+                </div>
+                <div class="text h4">
+                  The CityChrone project is a scientific study about public transport performances in cities.
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <h1 class="h2 text">
+                  What can I do?
+                </h1>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="embed-responsive embed-responsive-16by9" >
+                  <video controls class="embed-responsive-item">
+                    <source src="/video/select_a_city.mp4" type="video/mp4"/>
+                  </video>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <h3 class="">Visualize</h3>
+                <p class="text">
+                  You can visualize interactive maps about performances of public transports in cities.
+                </p>
+                <p class="text">
+                  Compare various areas and different cities!
+                </p>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6" style="padding-top: 10px;">
+                <div class="embed-responsive embed-responsive-16by9"  >
+                  <video controls class="embed-responsive-item">
+                    <source src="/video/explore_citychrone.mp4" type="video/mp4"/>
+                  </video>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <h3 class="media-heading">Punctual Information
+                </h3>
+                <p class="text">
+                  Punctual information about performance of public transports.
+                </p>
+                <p class="text">
+                  Computation of <a href="https://en.wikipedia.org/wiki/Isochrone_map" target="_blank">isochrone maps
+                  </a>
+                  by public transports from each point in the city.
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 " style="padding-top: 10px;">
+                <div class="embed-responsive embed-responsive-16by9" >
+                  <video controls class="embed-responsive-item" >
+                    <source src="/video/new_scenario.mp4" type="video/mp4"/>
+                  </video>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <h3 class="media-heading">Create new scenarios</h3>
+                <p class="text">
+                  You can create new public transportation scenario (adding new metro lines).
+                </p>
+
+                <p class="text">
+                  You have a limited amount of budget: find the best solutions that optimize displacements in your city and climb the ranks.
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 " style="padding-top: 10px;">
+                <div class="embed-responsive embed-responsive-16by9" >
+                  <video controls class="embed-responsive-item">
+                    <source src="/video/check_the_results.mp4" type="video/mp4"/>
+                  </video>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <h3 class="media-heading">Explore the impacts of the scenarios created by users
+                </h3>
+                <p class="text">
+                  Check on maps the impacts of new scenarios.
+                </p>
+                <p class="text">
+                  Climb the rankings!
+                </p>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
         </div>
-        <div class="media-body">
-          <h3 class="media-heading">Punctual Information</h3>
-              <p class="text">
-                 Punctual information about performance of public transports.
-              </p>
-
-              <p class="text">
-                Computation of <a href="https://en.wikipedia.org/wiki/Isochrone_map" target="_blank">isochrone maps</a> by public transports from each point in the city.
-              </p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-12 " style="padding-top: 10px;">
-      <div class="media">
-        <div class="media-left">
-          <a href="#" >
-            <video controls class="embed-responsive-item video_modal" >
-                <source src="/video/new_scenario.mp4" type="video/mp4">
-            </video>
-          </a>
-        </div>
-        <div class="media-body">
-          <h3 class="media-heading">Create new scenarios</h3>
-              <p class="text">
-                You can create new public transportation scenario (adding new metro lines).
-              </p>
-
-              <p class="text">
-                You have a limited amount of budget: find the best solutions that optimize displacements in your city and climb the ranks.
-              </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-12 " style="padding-top: 10px;">
-      <div class="media">
-        <div class="media-left">
-          <a href="#" >
-            <video controls class="embed-responsive-item video_modal">
-                <source src="/video/check_the_results.mp4" type="video/mp4">
-            </video>
-          </a>
-        </div>
-        <div class="media-body">
-          <h3 class="media-heading">Explore the impacts of the scenarios created by users</h3>
-              <p class="text">
-                Check on maps the impacts of new scenarios.
-              </p>
-
-              <p class="text">
-                Climb the rankings!
-              </p>
-        </div>
-      </div>
-    </div>
-
-
-  		</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div>
 </template>

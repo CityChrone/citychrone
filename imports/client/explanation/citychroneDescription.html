@@ -1,54 +1,56 @@
 <template name="citychroneDescription">
-	<div id="textdiv" class="h2 text-center"> Select a city</div>
-	
-	<div class="row">
-	<div class="col-xs-1">
-	<div class="circleLegend orangeColor"></div>
-	</div>
-	<div class="col-xs-10">
-	 Mobility Maps
-	</div>
-	</div>
-	<div class="row" style="padding-top: 5px;">
-	<div class="col-xs-1">
-	  <div class="circleLegend redColor"  style="padding-top: 5px;"></div>
-	</div>
-	<div class="col-xs-10">
-		Mobility Maps + <span class="textRed">Create New 
-	Scenario!</span>
-	</div>
+	<div id="textdiv" class="h3 text-center"> Select a city</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-1">
+				<div class="circleLegend orangeColor"></div>
+			</div>
+			<div class="col-9">
+				Mobility Maps
+			</div>
+		</div>
+		<div class="row" style="padding-top=3px;">
+			<div class="col-1">
+				<span class="circleLegend redColor"  style="">
+				</span>
+			</div>
+			<div class="col-9">
+				Mobility Maps <span class="textRed small">+  Create 
+					Scenario</span>
+			</div>
+		</div>
 	</div>
 
-	<!--[Click a <span style="color:#d95f02">circle</span>-<span style="color:#d95f02">marker</span> to select a city,
-	in the <span style="color:#b2182b">red one</span> you can test new scenario]
-	!-->
-	<hr/>
+		<!--[Click a <span style="color:#d95f02">circle</span>-<span style="color:#d95f02">marker</span> to select a city,
+		in the <span style="color:#b2182b">red one</span> you can test new scenario]
+		!-->
+		<hr class="divider_small" />
 
-	<div class="text-info text-center h4">
-	 <a href="http://project.citychrone.org" target="_blank">CityChrone Project</a>
-	 <div>
-	<small class="text-muted">
-	Urban science studies.
-	</small>
-	</div>
-	</div>
-	<div class="text-left h5">
-Simple and meaningful maps about public transports performances and quality in cities. Create new public transportation scenario (adding new metro lines) to explore and test new solutions. 
-<!--	CityChrone is a project where knowledge about cities can be shared and visualized. We study the efficiency of public transport systems, allowing easy comparison between different areas and even different cities.
-	The project will continue, we will add new informations and will improve the user interactions, allowing him to test different scenarios [<a href="https://www.youtube.com/watch?v=l6sm8VOwJSA" target="_blank">video</a>].!-->
-	</div>
-	<div class="text-center">
-	<a class="more_info" href="#"> <u class="more_info">More info</u> </a>
-</div>
+		<div class="text-info text-center h5">
+			<a href="http://project.citychrone.org" target="_blank">CityChrone Project</a>
+			<div>
+				<small class="text-muted">
+					Urban science studies.
+				</small>
+			</div>
+		</div>
+		<div class="text-justify small" style="padding:4px;">
+			Simple and meaningful maps about public transports performances and quality in cities. Create new public transportation scenario (adding new metro lines) to explore and test new solutions.
+			<!--	CityChrone is a project where knowledge about cities can be shared and visualized. We study the efficiency of public transport systems, allowing easy comparison between different areas and even different cities.
+			The project will continue, we will add new informations and will improve the user interactions, allowing him to test different scenarios [<a href="https://www.youtube.com/watch?v=l6sm8VOwJSA" target="_blank">video</a>].!-->
+		</div>
+		<div class="text-center">
+			<a class="more_info" href="#"> <u class="more_info">More info</u> </a>
+		</div>
 
-	<hr/>
-	<div>
-	Made with <i class="fa fa-heart pulse" style="color : red;"></i> in Turin.
-	 {{>logos}}
+		<hr class="divider" />
+		<div class="small">
+			Made with <i class="fa fa-heart pulse" style="color : red;"></i> in Turin.
+			{{>logos}}
+			<div class="">Webmaster: <a target="_blank" href="http://indacobiazzo.me">Indaco Biazzo</a></div>
+		</div>
 
-   {{>socialButtons}}
-   	<hr/>
-	 <div class="small h7">Webmaster: <a target="_blank" href="http://indacobiazzo.me">Indaco Biazzo</a></div>
-	</div>
+		{{>socialButtons}}
 
-</template>
+	</template>

@@ -172,9 +172,10 @@ export const addNewSubLine = function(marker){
 	markerEvent(Template.metroLinesDraw.data.StopsMarker,'off');
 	mapClickAddStopEvent(Template.map.data.map, 'on');
 
-	$('.computeDone').toggleClass('hidden');
-	$('#buttonAddCompute').removeClass('btn-success');
-	$('#buttonAddCompute').addClass('btn-danger');
+	$('.computeDone').toggle();
+	$('#buttonAddCompute').removeClass('btn-outline-secondary');
+	$('#buttonAddCompute').addClass('btn-outline-danger');
+	$('#buttonAddCompute').removeClass('active');
 	Template.metroLinesDraw.data.markerClicked = marker;
 	marker.setStyle(styleMarkerClicked);
 	//return true;

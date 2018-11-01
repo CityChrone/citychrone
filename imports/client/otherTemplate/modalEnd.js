@@ -30,7 +30,7 @@ Template.modalEnd.helpers({
 			//else
 			//	return 0;
 		}
-		if(quantity == 'avgSocialityScore') return this.scores[quantity].toFixed(0);
+		if(quantity == 'avgSocialityScore') return (this.scores[quantity]/1000000).toFixed(2)+"M";
 		if(quantity == 'name' || quantity == 'author') return scenario[quantity];
 		if(quantity == 'pos'){
 			//Template.scenarioList.data.pos += 1;

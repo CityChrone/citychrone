@@ -26,6 +26,12 @@ Template.scenarioSelector.onCreated(function(){
 });
 
 Template.scenarioSelector.onRendered(function(){
+
+	$('[data-toggle="tooltip"]').tooltip({"html":true})
+	console.log($('[data-toggle="tooltip"]'), $('[data-toggle="tooltip"]'))
+	//$('[data-toggle="tooltip"]').tooltip({"html":true})
+
+
 });
 
 
@@ -47,6 +53,9 @@ Template.scenarioSelector.helpers({
 	        templateRV = Template.city.RV
 	    }
 		return templateRV.currentScenario.get()
+	},
+	'tooltip' () {
+		$('[data-toggle="tooltip"]').tooltip({"html":true})
 	},
 	'title'(){
 		//let returned = scenarioDB.findOne({'_id':Template.city.RV.currentScenario.get()})

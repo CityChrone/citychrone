@@ -20,10 +20,8 @@ reactive-dict@1.2.1
 fortawesome:fontawesome
 shell-server@0.4.0
 http@1.4.1
-twbs:bootstrap
 stevezhu:lodash
 momentjs:moment
-kookoskar:bootstrap-select
 okgrow:analytics@3.0.5
 joshowens:shareit
 json
@@ -31,3 +29,4 @@ dynamic-import@0.5.0
 fourseven:scss
 iron:router
 underscore@1.0.10
+alexwine:bootstrap-4

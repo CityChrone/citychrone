@@ -1,11 +1,11 @@
 <template name="quantitySelector">
 	{{#if isNewScenario}}
 		 <div class="text-muted small text-left">scenario default</div>
-		{{/if}}
+	{{/if}}
 
-	<span class="h5 text text-left">Quantity:
-	</span>
-	<select class="selectpicker" data-width="60%" id="quantityPicker" data-style="btn-default btn-sm">
+	<div class="text text-left">Quantity:
+	</div>
+	<select class="selectpicker " data-width="80%" id="quantityPicker" data-style="btn btn-light btn-sm">
 		<option class="" id="velocityScore">
 			{{nameQuantity "velocityScore"}}
 		</option>
@@ -19,7 +19,7 @@
 			{{nameQuantity "population"}}
 		</option>
 
-		
+
 	  	<option data-divider="true"></option>
 		<option class="" id="velocityScoreDiff" {{notDefault}}>
 			{{nameQuantity "velocityScoreDiff"}}
@@ -40,21 +40,21 @@
 		!-->
 
 		</select>
-					<a href='#' class="h4" id="helpQuantityButton">
-		<sup>
-				 <i class="fa fa-question-circle" aria-hidden="true"></i>
-		</sup>
-			</a>
+		<span href='#' class="h4" id="helpQuantityButton" data-toggle="tooltip" data-placement="right" title="click for info">
+			<sup>
+					 <i class="fa fa-question-circle" aria-hidden="true"></i>
+			</sup>
+		</span>
 
 	<span class='marginBar text-left' id='helpQuantity'>
 	{{> quantityDescription}}
 	</span>
-		
-	{{#if showTime}}	
+
+	{{#if showTime}}
 		<span class='text-left'>
 			{{> timeSelector}}
 		</span>
 	{{/if}}
-	
+
 
 </template>

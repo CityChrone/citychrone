@@ -1,28 +1,28 @@
 <template name='popUpGeojson'>
-		<div class="text-center text">current scenario </div>
+		<div class="text-center">current scenario </div>
 
-		<div class=' text-muted text-center'>
-			{{nameQuantity "velocityScore"}} : 
-			<span class ='label' style='{{labelColor 'velocityScore' this.velocityScore}}'>  {{ toString 'velocityScore' this.velocityScore}} </span>
+		<div class=' text-center'>
+			<span class="text-muted ">{{nameQuantity "velocityScore"}} : </span>
+			<span class ='badge' style='{{labelColor 'velocityScore' this.velocityScore}}'>  {{ toString 'velocityScore' this.velocityScore}} </span>
 		</div>
-		<div class=' text-muted text-center'>
-			{{nameQuantity "socialityScore"}} : 
-			<span class ='label' style='{{labelColor 'socialityScore' this.socialityScore}}'>  {{ toString 'socialityScore' this.socialityScore}} </span>
+		<div class='text-center'>
+			<span class="text-muted ">{{nameQuantity "socialityScore"}} : </span>
+			<span class ='badge' style='{{labelColor 'socialityScore' this.socialityScore}}'>  {{ toString 'socialityScore' this.socialityScore}} </span>
 		</div>
-		<div class=' text-muted text-center'>
-			{{nameQuantity "population"}} : 
-			<span class ='label' style='{{labelColor 'population' this.population}}'>  {{ toString 'population' this.population}} <i class="fa fa-male" aria-hidden="true"></i></span>
+		<div class='text-center'>
+			<span class="text-muted ">{{nameQuantity "population"}} : </span>
+			<span class ='badge' style='{{labelColor 'population' this.population}}'>  {{ toString 'population' this.population}} <i class="fa fa-male" aria-hidden="true"></i></span>
 		</div>
 
 		{{#if isNotDefault}}
 		<div class="text-center text">default </div>
-		<div class=' text-muted text-center'>
-			{{nameQuantity "velocityScore"}} : 
-			<span class ='label' style='{{labelColorDef 'velocityScore'}}'>  {{ toStringDef 'velocityScore' this.velocityScore}} </span>
+		<div class='text-center'>
+			<span class="text-muted ">{{nameQuantity "velocityScore"}} : </span>
+			<span class ='badge' style='{{labelColorDef 'velocityScore'}}'>  {{ toStringDef 'velocityScore' this.velocityScore}} </span>
 		</div>
-		<div class=' text-muted text-center'>
-			{{nameQuantity "socialityScore"}} : 
-			<span class ='label' style='{{labelColorDef 'socialityScore'}}'>  {{ toStringDef 'socialityScore' this.socialityScore}} </span>
+		<div class='text-center'>
+			<span class="text-muted ">{{nameQuantity "socialityScore"}} : </span>
+			<span class ='badge' style='{{labelColorDef 'socialityScore'}}'>  {{ toStringDef 'socialityScore' this.socialityScore}} </span>
 		</div>
 		{{/if}}
 </template>

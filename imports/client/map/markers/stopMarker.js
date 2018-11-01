@@ -79,7 +79,7 @@ export const radiusCircle = function(zoom=10){
 export const stopOnCLickPopUp = function(e){
 	//console.log("stopOnCLickPopUp")
 
-	if($('#endMetro').hasClass("hidden")){
+	if($('#endMetro').is(':hidden')){
 		let marker = e.target;
 		const container = L.DomUtil.create('div', 'markerPopup');
 		L.DomEvent.disableClickPropagation(container);
