@@ -29,8 +29,8 @@ Template.map.onRendered(function() {
      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       });
     Template.map.data.here = L.tileLayer.provider('HERE.normalDayTransit',{
-        app_id : 'IbEW2PDzNwdzV4pFf35t',
-        app_code : 'yIfUWrkTbLG_cdWMxlLK5g',
+        app_id : 'nXsNURHqhL8o3oxXpeGt',
+        app_code : 'T_Zl3cx-On6P7Rk0OinOow',
         minZoom: 2,
         maxZoom: 20,
         tileSize: 256,
