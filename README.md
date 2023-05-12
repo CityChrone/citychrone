@@ -1,2 +1,2 @@
 # citychrone
-Citychrone Platform
+The main repository for the [Citychrone](citychrone.org) Platform.
