@@ -29,8 +29,8 @@ Template.world.onCreated(function () {
 });
 
 Template.world.onRendered(function () {
-	Template.map.data.map.removeLayer(Template.map.data.baseMaps['Default'])
-	Template.map.data.map.addLayer(Template.map.data.baseMaps['B&W'])
+	//Template.map.data.map.removeLayer(Template.map.data.baseMaps['Default'])
+	//Template.map.data.map.addLayer(Template.map.data.baseMaps['B&W'])
 
 	Meteor.call('giveListCitiesScenario', function (err, risp) {
 		//console.log(risp)
